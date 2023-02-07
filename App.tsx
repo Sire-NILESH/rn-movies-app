@@ -53,10 +53,8 @@ export default function App() {
       <SafeAreaView className="flex-1 bg-stone-900">
         <View className="flex-1">
           {allScreenProps ? (
-            <ScrollView className="space-y-10 mb-5">
+            <ScrollView className="space-y-10">
               <Banner netflixOriginals={allScreenProps.trendingNow} />
-              {/* <Row title=""></Row> */}
-
               <Row title="Trending Now" movies={allScreenProps.trendingNow} />
               <Row title="Comedies" movies={allScreenProps.comedyMovies} />
               <Row title="Top Rated" movies={allScreenProps.topRated} />

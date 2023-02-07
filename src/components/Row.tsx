@@ -14,7 +14,7 @@ function Row({ title, movies }: Props) {
   const handleClick = (direction: string) => {};
 
   return (
-    <View className="h-40 space-y-1">
+    <View className="h-40 space-y-1 mb-4">
       <Text className="pl-5 w-56 text-sm font-semibold text-[#e5e5e5]">
         {title}
       </Text>

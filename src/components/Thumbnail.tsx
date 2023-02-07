@@ -31,13 +31,16 @@ function Thumbnail({ movie }: Props) {
           }}
           className="relative rounded-md object-cover h-32 w-[240px]"
         />
-        <View className="absolute  flex-row items-end pb-2 justify-between px-2 h-32 w-[240px] rounded-md overflow-hidden bg-black/10">
-          <Text className="font-semibold text-gray-100 text-base w-32">
-            {movie.title ? movie.title : movie.original_name}
-          </Text>
-          <Text className=" text-gray-100 text-xs">
-            {movie.release_date ? movie.release_date : movie.first_air_date}
-          </Text>
+        {/* Movie Title and date box */}
+        <View className="absolute  flex-row items-end pb-2 px-2 h-32 w-[240px] rounded-md overflow-hidden bg-black/10">
+          <View className="flex-row items-center justify-between w-full">
+            <Text className="font-semibold text-gray-100 text-base w-32">
+              {movie.title ? movie.title : movie.original_name}
+            </Text>
+            <Text className=" text-gray-100 text-xs">
+              {movie.release_date ? movie.release_date : movie.first_air_date}
+            </Text>
+          </View>
         </View>
       </Pressable>
     </View>

@@ -32,3 +32,14 @@ export interface Element {
     | "Trailer"
     | "Teaser";
 }
+
+export interface HomeCollectionProps {
+  netflixOriginals: Movie[];
+  trendingNow: Movie[];
+  topRated: Movie[];
+  actionMovies: Movie[];
+  comedyMovies: Movie[];
+  horrorMovies: Movie[];
+  romanceMovies: Movie[];
+  documentaries: Movie[];
+}

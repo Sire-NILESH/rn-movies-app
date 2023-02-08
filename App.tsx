@@ -1,23 +1,13 @@
+import { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import {
-  Image,
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { SafeAreaView } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
+
 import { useLogging } from "./src/hooks/useLogging";
-import CustomButton from "./src/components/ui/CustomButton";
-import PrimaryButton from "./src/components/ui/PrimaryButton";
-import Banner from "./src/components/Banner";
-import Thumbnail from "./src/components/Thumbnail";
-import { ScrollView } from "react-native-gesture-handler";
-import { useEffect } from "react";
 import { getAllScreenProps } from "./src/utils/requests";
-import { useState } from "react";
 import { Movie } from "./src/typings";
-import Row from "./src/components/Row";
+import routes from "./src/config/routes";
 
 interface Props {
   netflixOriginals: Movie[];
@@ -29,6 +19,8 @@ interface Props {
   romanceMovies: Movie[];
   documentaries: Movie[];
 }
+
+const Stack = createStackNavigator();
 
 export default function App() {
   const [logging] = useLogging("App Screen");
@@ -51,32 +43,17 @@ export default function App() {
     <>
       <StatusBar style="light" />
       <SafeAreaView className="flex-1 bg-stone-900">
-        <View className="flex-1">
-          {allScreenProps ? (
-            <ScrollView className="space-y-10">
-              <Banner netflixOriginals={allScreenProps.trendingNow} />
-              <Row title="Trending Now" movies={allScreenProps.trendingNow} />
-              <Row title="Comedies" movies={allScreenProps.comedyMovies} />
-              <Row title="Top Rated" movies={allScreenProps.topRated} />
-
-              {/* My List */}
-              {/* {list.length > 0 && <Row title="My List" movies={list} />} */}
-              <Row
-                title="Action Thrillers"
-                movies={allScreenProps.actionMovies}
-              />
-              <Row title="Scary Movies" movies={allScreenProps.horrorMovies} />
-              <Row
-                title="Romance Movies"
-                movies={allScreenProps.romanceMovies}
-              />
-              <Row
-                title="Documentaries"
-                movies={allScreenProps.documentaries}
-              />
-            </ScrollView>
-          ) : null}
-        </View>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home">
+            {routes.map((r, i) => (
+              <Stack.Screen key={i} name={r.name}>
+                {(props) => {
+                  return <r.component name={r.name} {...props} />;
+                }}
+              </Stack.Screen>
+            ))}
+          </Stack.Navigator>
+        </NavigationContainer>
       </SafeAreaView>
     </>
   );

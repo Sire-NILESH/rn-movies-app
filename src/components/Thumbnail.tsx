@@ -33,7 +33,7 @@ function Thumbnail({ movie }: Props) {
         />
         {/* Movie Title and date box */}
         <View className="absolute  flex-row items-end pb-2 px-2 h-32 w-[240px] rounded-md overflow-hidden bg-black/10">
-          <View className="flex-row items-center justify-between w-full">
+          <View className="flex-row items-end justify-between w-full">
             <Text className="font-semibold text-gray-100 text-base w-32">
               {movie.title ? movie.title : movie.original_name}
             </Text>

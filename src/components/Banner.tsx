@@ -13,6 +13,7 @@ import {
 import CustomButton from "./ui/CustomButton";
 import { Colors } from "./../utils/Colors";
 import { LinearGradient } from "expo-linear-gradient";
+import Header from "./Header";
 
 interface Props {
   netflixOriginals: Movie[];
@@ -41,7 +42,8 @@ function Banner({ netflixOriginals }: Props) {
   // });
 
   return (
-    <View className="flex-1 py-16 w-[100%]">
+    <View className="flex-1 py-10 w-[100%]">
+      <Header />
       <View
         className="absolute top-0 left-0 w-[100%] flex-1 h-full"
         style={[{ height: screenDimensions.height }]}
@@ -85,7 +87,7 @@ function Banner({ netflixOriginals }: Props) {
             <CustomButton
               width={100}
               height={40}
-              radius={10}
+              radius={5}
               color="white"
               border={0}
               method={infoButtonPressHandler}
@@ -99,7 +101,7 @@ function Banner({ netflixOriginals }: Props) {
             <CustomButton
               width={140}
               height={40}
-              radius={10}
+              radius={5}
               color={Colors.gray["600"]}
               border={0}
               method={infoButtonPressHandler}

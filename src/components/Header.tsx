@@ -27,9 +27,9 @@ function Header() {
 
   return (
     //  <View className={`${isScrolled && "bg-[#141414]"}`}>
-    <View className="flex-row justify-between items-start w-[100%] h-[100] pt-5 px-4 z-30 ">
+    <View className="flex-row justify-between items-start w-[100%] h-[100] pt-4 px-4 z-30 ">
       <View className="">
-        <Text className="font-semibold text-3xl text-yellow-100">
+        <Text className="font-semibold text-3xl text-yellow-50">
           🍿 Popcorn
         </Text>
 

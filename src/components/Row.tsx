@@ -1,7 +1,8 @@
 // import { DocumentData } from 'firebase/firestore'
+// import { FlatList } from "react-native-gesture-handler";
 import { Movie } from "../typings";
 import Thumbnail from "./Thumbnail";
-import { ScrollView, Text, View } from "react-native";
+import { Text, View, FlatList } from "react-native";
 
 interface Props {
   title: string;
@@ -19,11 +20,17 @@ function Row({ title, movies }: Props) {
         {title}
       </Text>
 
-      <ScrollView horizontal={true} className="ml-2 h-32">
-        {movies.map((movie) => (
-          <Thumbnail key={movie.id} movie={movie} />
-        ))}
-      </ScrollView>
+      <FlatList
+        className="ml-2 h-32"
+        data={movies}
+        renderItem={(movie) => (
+          <Thumbnail movie={movie.item} orientation="landscape" />
+        )}
+        keyExtractor={(movie) => {
+          return String(movie.id);
+        }}
+        horizontal
+      ></FlatList>
     </View>
   );
 }

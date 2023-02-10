@@ -44,7 +44,7 @@ export default function App() {
       <StatusBar style="light" />
       <SafeAreaView className="flex-1 bg-stone-900">
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Home">
+          <Stack.Navigator initialRouteName="TV Shows">
             {routes.map((r, i) => (
               <Stack.Screen key={i} name={r.name}>
                 {(props) => {

@@ -14,6 +14,8 @@ import CustomButton from "./ui/CustomButton";
 import { Colors } from "./../utils/Colors";
 import { LinearGradient } from "expo-linear-gradient";
 import Header from "./Header";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import MoviesScreen from "./../screens/Movies";
 
 interface Props {
   netflixOriginals: Movie[];
@@ -26,6 +28,9 @@ function Banner({ netflixOriginals }: Props) {
   // const [showModal, setShowModal] = useRecoilState(modalState);
   // const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
 
+  const navigation = useNavigation();
+  const route = useRoute();
+
   useEffect(() => {
     setMovie(
       netflixOriginals[Math.floor(Math.random() * netflixOriginals.length)]
@@ -35,6 +40,8 @@ function Banner({ netflixOriginals }: Props) {
   function infoButtonPressHandler(): void {
     // setCurrentMovie(movie);
     // setShowModal(true);
+    // @ts-ignore
+    navigation.push("Movies");
   }
   // const [dimensions, setDimensions] = useState({
   //   window: windowDimensions,
@@ -43,7 +50,7 @@ function Banner({ netflixOriginals }: Props) {
 
   return (
     <View className="flex-1 py-10 w-[100%]">
-      <Header />
+      {route.name === "Home" ? <Header /> : null}
       <View
         className="absolute top-0 left-0 w-[100%] flex-1 h-full"
         style={[{ height: screenDimensions.height }]}

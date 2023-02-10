@@ -6,6 +6,7 @@ export interface Genre {
 export interface Movie {
   title: string;
   backdrop_path: string;
+  adult: boolean;
   media_type?: string | string[];
   release_date?: string;
   first_air_date: string;

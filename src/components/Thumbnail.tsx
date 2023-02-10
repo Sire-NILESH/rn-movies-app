@@ -8,14 +8,26 @@ interface Props {
   // When using firebase
   //   movie: Movie | DocumentData;
   movie: Movie;
+  orientation: "portrait" | "landscape";
 }
 
-function Thumbnail({ movie }: Props) {
+const thumbnailDimensions = {
+  landscape: { width: 245, height: 128, imageWidth: 240, movieTitleWidth: 128 },
+  portrait: { width: 128, height: 245, imageWidth: 240, movieTitleWidth: 128 },
+};
+
+function Thumbnail({ movie, orientation }: Props) {
   //   const [showModal, setShowModal] = useRecoilState(modalState);
   //   const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
   //   console.log(movie);
+
+  const dimensions = thumbnailDimensions[orientation];
+
   return (
-    <View className={"h-32 w-[245px]"}>
+    <View
+      className={"h-32 w-[245px]"}
+      style={{ width: dimensions.width, height: dimensions.height }}
+    >
       <Pressable
         className="flex-1"
         onPress={() => {
@@ -29,12 +41,23 @@ function Thumbnail({ movie }: Props) {
               movie.backdrop_path || movie.poster_path
             }`,
           }}
-          className="relative rounded-md object-cover h-32 w-[240px]"
+          className="relative rounded-md object-cover"
+          // className="relative rounded-md object-cover h-32 w-[240px]"
+          style={{ width: dimensions.imageWidth, height: dimensions.height }}
         />
         {/* Movie Title and date box */}
-        <View className="absolute  flex-row items-end pb-2 px-2 h-32 w-[240px] rounded-md overflow-hidden bg-black/10">
+        <View
+          className="absolute flex-row items-end pb-2 px-2 rounded-md overflow-hidden bg-black/10"
+          style={{ width: dimensions.imageWidth, height: dimensions.height }}
+        >
+          {/* <View className="absolute  flex-row items-end pb-2 px-2 h-32 w-[240px] rounded-md overflow-hidden bg-black/10"> */}
           <View className="flex-row items-end justify-between w-full">
-            <Text className="font-semibold text-gray-100 text-base w-32">
+            <Text
+              className="font-semibold text-gray-100 text-base"
+              style={{ lineHeight: 18, width: dimensions.movieTitleWidth }}
+            >
+              {/* <Text className="font-semibold text-gray-100 text-base w-32"> */}
+              {/* {movie.title ? movie.title : movie.original_name} */}
               {movie.title ? movie.title : movie.original_name}
             </Text>
             <Text className=" text-gray-100 text-xs">

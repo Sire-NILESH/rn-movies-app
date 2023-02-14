@@ -6,6 +6,7 @@ import { getMoviesScreenProps } from "../utils/requests";
 import Banner from "../components/Banner";
 import Row from "../components/Row";
 import { Colors } from "../utils/Colors";
+import HeaderSearchButton from "../components/ui/HeaderSearchButton";
 
 interface Props {
   netflixOriginals: Movie[];
@@ -42,6 +43,8 @@ const MoviesScreen: React.FC<IStackScreenProps> = (props) => {
       headerTitleAlign: "center",
       headerTintColor: Colors.gray[100],
       headerShown: true,
+      headerShadowVisible: false,
+      headerRight: (props) => <HeaderSearchButton searchCategory="movie" />,
     });
   }, []);
 
@@ -50,7 +53,7 @@ const MoviesScreen: React.FC<IStackScreenProps> = (props) => {
       <View className="flex-1">
         {moviesScreenProps ? (
           <ScrollView className="space-y-10">
-            <Banner netflixOriginals={moviesScreenProps.trendingNow} />
+            <Banner movieList={moviesScreenProps.trendingNow} />
             <Row title="Trending Now" movies={moviesScreenProps.trendingNow} />
             <Row title="Comedies" movies={moviesScreenProps.comedyMovies} />
             <Row title="Top Rated" movies={moviesScreenProps.topRated} />

@@ -1,8 +1,9 @@
+import { useNavigation } from "@react-navigation/native";
 import { modalState, movieState } from "../atoms/modalAtom";
 // import { useRecoilState } from "recoil";
 // import { DocumentData } from "firebase/firestore";
 import { Movie } from "../typings";
-import { View, Image, Pressable, Text } from "react-native";
+import { View, Image, Pressable, Text, Dimensions } from "react-native";
 
 interface Props {
   // When using firebase
@@ -11,28 +12,44 @@ interface Props {
   orientation: "portrait" | "landscape";
 }
 
+const windowWidth = Dimensions.get("window").width;
+// const windowHeight = Dimensions.get("window").height;
+
 const thumbnailDimensions = {
-  landscape: { width: 245, height: 128, imageWidth: 240, movieTitleWidth: 128 },
-  portrait: { width: 128, height: 245, imageWidth: 240, movieTitleWidth: 128 },
+  landscape: {
+    width: 245,
+    height: 128,
+    imageWidth: 240,
+    movieTitleWidth: 128,
+    aspectRatio: 1,
+  },
+  portrait: {
+    width: windowWidth * 0.31,
+    height: 180,
+    imageWidth: windowWidth * 0.31,
+    movieTitleWidth: windowWidth * 0.31,
+    // aspectRatio: 18 / 9,
+  },
 };
 
 function Thumbnail({ movie, orientation }: Props) {
-  //   const [showModal, setShowModal] = useRecoilState(modalState);
-  //   const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
-  //   console.log(movie);
-
   const dimensions = thumbnailDimensions[orientation];
+
+  const navigation = useNavigation();
 
   return (
     <View
-      className={"h-32 w-[245px]"}
-      style={{ width: dimensions.width, height: dimensions.height }}
+      className={"h-32 w-[245px] ml-1"}
+      style={{
+        width: dimensions.width,
+        height: dimensions.height,
+      }}
     >
       <Pressable
         className="flex-1"
         onPress={() => {
-          //  setCurrentMovie(movie);
-          //  setShowModal(true);
+          console.log(movie);
+          navigation.navigate("More Info", { movie: movie });
         }}
       >
         <Image
@@ -42,7 +59,6 @@ function Thumbnail({ movie, orientation }: Props) {
             }`,
           }}
           className="relative rounded-md object-cover"
-          // className="relative rounded-md object-cover h-32 w-[240px]"
           style={{ width: dimensions.imageWidth, height: dimensions.height }}
         />
         {/* Movie Title and date box */}
@@ -50,17 +66,26 @@ function Thumbnail({ movie, orientation }: Props) {
           className="absolute flex-row items-end pb-2 px-2 rounded-md overflow-hidden bg-black/10"
           style={{ width: dimensions.imageWidth, height: dimensions.height }}
         >
-          {/* <View className="absolute  flex-row items-end pb-2 px-2 h-32 w-[240px] rounded-md overflow-hidden bg-black/10"> */}
-          <View className="flex-row items-end justify-between w-full">
+          <View
+            className="flex-row items-end justify-between w-full"
+            style={[
+              orientation === "portrait"
+                ? { flexDirection: "column", alignItems: "flex-start" }
+                : null,
+            ]}
+          >
             <Text
-              className="font-semibold text-gray-100 text-base"
-              style={{ lineHeight: 18, width: dimensions.movieTitleWidth }}
+              className="font-semibold text-gray-100 text-xs"
+              style={[
+                orientation === "landscape"
+                  ? { lineHeight: 18, width: dimensions.movieTitleWidth }
+                  : null,
+              ]}
+              // style={{ lineHeight: 18, width: dimensions.movieTitleWidth }}
             >
-              {/* <Text className="font-semibold text-gray-100 text-base w-32"> */}
-              {/* {movie.title ? movie.title : movie.original_name} */}
               {movie.title ? movie.title : movie.original_name}
             </Text>
-            <Text className=" text-gray-100 text-xs">
+            <Text className=" text-gray-300 text-xs">
               {movie.release_date ? movie.release_date : movie.first_air_date}
             </Text>
           </View>
@@ -71,4 +96,3 @@ function Thumbnail({ movie, orientation }: Props) {
 }
 
 export default Thumbnail;
-// uri: "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",

@@ -15,6 +15,15 @@ import { Movie } from "../typings";
 // genre
 // const data = fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US').then((data)=>data.json()).then((res)=>console.log(res)).catch((err)=>console.log(err.message))
 
+// tv details
+// const data = fetch('https://api.themoviedb.org/3/tv/1396?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US').then((data)=>data.json()).then((res)=>console.log(res)).catch((err)=>console.log(err.message))
+
+// tv details
+// const data = fetch('https://api.themoviedb.org/3/movie/76600?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US').then((data)=>data.json()).then((res)=>console.log(res)).catch((err)=>console.log(err.message))
+
+// providers
+// const data = fetch('https://api.themoviedb.org/3/watch/providers/regions?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US').then((data)=>data.json()).then((res)=>console.log(res)).catch((err)=>console.log(err.message))
+
 // eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlM2UxNzMyZjhmNDk1YTFiMTkxNDk0YjQ5YjgxMzY2OSIsInN1YiI6IjYzZGY4MTFhY2QyMDQ2MDBjMzBiMDA0ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.A7ER6WylpDsZnk2qUkrhDWweWQ1moBHYFkiXwwU51cw
 const API_KEY = "e3e1732f8f495a1b191494b49b813669";
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -26,14 +35,21 @@ export const searchRequest = async (
   mediaType: "movie" | "tv" | "multi",
   abortController: AbortController
 ) => {
-  const url = `${BASE_URL}/search/${mediaType}?api_key=${API_KEY}&query=${searchText}&language=en-US&page=1&include_adult=true`;
+  const url = `${BASE_URL}/search/${mediaType}?api_key=${API_KEY}&query=${searchText}&language=en-US&page=1&include_adult=false`;
   // const abortController = new AbortController();
   const data = await fetch(url, { signal: abortController.signal })
     .then((res) => res.json())
-    .catch((err) => console.log(err.message));
+    .catch((err) => {
+      if (err.message === "Aborted") {
+        console.log(err.message);
+        return;
+      }
+      throw err;
+    });
 
   console.log("fetching", searchText);
-  return { props: data.results };
+
+  if (data?.results) return { props: data?.results };
 };
 
 export const tvRequests = {
@@ -146,14 +162,37 @@ export const getTVScreenProps = async () => {
 
   return {
     props: {
-      netflixOriginals: netflixOriginals.results,
+      netflixOriginals: netflixOriginals.results.sort(function (
+        a: Movie,
+        b: Movie
+      ) {
+        return b.vote_average - a.vote_average;
+      }),
       trendingNow: trendingNow.results,
-      topRated: topRated.results,
-      animationTvShows: animationTvShows.results,
-      comedyTvShows: comedyTvShows.results,
-      crimeTvShows: crimeTvShows.results,
-      romanceTvShows: romanceTvShows.results,
-      documentaries: documentaries.results,
+      topRated: topRated.results.sort(function (a: Movie, b: Movie) {
+        return b.vote_average - a.vote_average;
+      }),
+      animationTvShows: animationTvShows.results.sort(function (
+        a: Movie,
+        b: Movie
+      ) {
+        return b.vote_average - a.vote_average;
+      }),
+      comedyTvShows: comedyTvShows.results.sort(function (a: Movie, b: Movie) {
+        return b.vote_average - a.vote_average;
+      }),
+      crimeTvShows: crimeTvShows.results.sort(function (a: Movie, b: Movie) {
+        return b.vote_average - a.vote_average;
+      }),
+      romanceTvShows: romanceTvShows.results.sort(function (
+        a: Movie,
+        b: Movie
+      ) {
+        return b.vote_average - a.vote_average;
+      }),
+      documentaries: documentaries.results.sort(function (a: Movie, b: Movie) {
+        return b.vote_average - a.vote_average;
+      }),
     },
   };
 };
@@ -204,26 +243,32 @@ export const getAllScreenProps = async () => {
   };
 };
 
-const genres = {
-  genres: [
-    { id: 28, name: "Action" },
-    { id: 12, name: "Adventure" },
-    { id: 16, name: "Animation" },
-    { id: 35, name: "Comedy" },
-    { id: 80, name: "Crime" },
-    { id: 99, name: "Documentary" },
-    { id: 18, name: "Drama" },
-    { id: 10751, name: "Family" },
-    { id: 14, name: "Fantasy" },
-    { id: 36, name: "History" },
-    { id: 27, name: "Horror" },
-    { id: 10402, name: "Music" },
-    { id: 9648, name: "Mystery" },
-    { id: 10749, name: "Romance" },
-    { id: 878, name: "Science Fiction" },
-    { id: 10770, name: "TV Movie" },
-    { id: 53, name: "Thriller" },
-    { id: 10752, name: "War" },
-    { id: 37, name: "Western" },
-  ],
+export const idToGenresMapped = {
+  "28": "Action",
+  "12": "Adventure",
+  "16": "Animation",
+  "35": "Comedy",
+  "80": "Crime",
+  "99": "Documentary",
+  "18": "Drama",
+  "10751": "Family",
+  "14": "Fantasy",
+  "36": "History",
+  "27": "Horror",
+  "10402": "Music",
+  "9648": "Mystery",
+  "10749": "Romance",
+  "878": "Science Fiction",
+  "10770": "TV Movie",
+  "53": "Thriller",
+  "10752": "War",
+  "10768": "War & Politics",
+  "37": "Western",
+  "10767": "Talk",
+  "10766": "Soap",
+  "10765": "Sci-Fi & Fantasy",
+  "10764": "Reality",
+  "10763": "News",
+  "10762": "Kids",
+  "10759": "Action & Adventure",
 };

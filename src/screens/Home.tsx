@@ -51,7 +51,7 @@ const HomeScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       <View className="flex-1">
         {allScreenProps ? (
           <ScrollView className="space-y-10">
-            <Banner netflixOriginals={allScreenProps.trendingNow} />
+            <Banner movieList={allScreenProps.trendingNow} />
             <Row title="Trending Now" movies={allScreenProps.trendingNow} />
             <Row title="Comedies" movies={allScreenProps.comedyMovies} />
             <Row title="Top Rated" movies={allScreenProps.topRated} />

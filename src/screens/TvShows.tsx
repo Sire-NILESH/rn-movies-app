@@ -1,4 +1,5 @@
-import { View, Text, ScrollView, Pressable } from "react-native";
+// import { useMemo } from "react";
+import { View, ScrollView, SafeAreaView } from "react-native";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/StackScreenProps";
 import { Movie } from "../typings";
@@ -6,11 +7,11 @@ import { getTVScreenProps } from "../utils/requests";
 import Banner from "../components/Banner";
 import Row from "../components/Row";
 import { Colors } from "../utils/Colors";
-import IconButton from "./../components/ui/IconButton";
-import MoviesScreen from "./Movies";
-import { StackNavigationProp } from "@react-navigation/stack";
+
+// import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useNavigation } from "@react-navigation/native";
+import HeaderSearchButton from "../components/ui/HeaderSearchButton";
 
 interface Props {
   netflixOriginals: Movie[];
@@ -23,27 +24,6 @@ interface Props {
   documentaries: Movie[];
 }
 
-function SearchButton() {
-  const navigation = useNavigation();
-
-  function onPressHandler() {
-    console.log("onPressHandler");
-    // navigation.navigate('SearchScreen');
-    navigation.navigate("Search Screen");
-  }
-
-  return (
-    <Pressable onPress={onPressHandler} className="mr-4">
-      <IconButton
-        name="search-outline"
-        size={24}
-        color={Colors.gray[100]}
-        // method={onPressHandler}
-      />
-    </Pressable>
-  );
-}
-
 const TvShowsScreen: React.FC<IStackScreenProps> = (props) => {
   const [tvShowsScreenProps, setTvShowsScreenProps] = useState<Props | null>(
     null
@@ -53,12 +33,17 @@ const TvShowsScreen: React.FC<IStackScreenProps> = (props) => {
   useEffect(() => {
     async function fetchRequests() {
       const data = await getTVScreenProps();
-      // console.log(data.props.actionMovies);
-      // console.log(data.props.horrorTvShows);
       setTvShowsScreenProps(data.props);
     }
     fetchRequests();
   }, []);
+  // const memoVal = useMemo(() => {
+  //   async function fetchRequests() {
+  //     const data = await getTVScreenProps();
+  //     setTvShowsScreenProps(data.props);
+  //   }
+  //   fetchRequests();
+  // }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -70,16 +55,19 @@ const TvShowsScreen: React.FC<IStackScreenProps> = (props) => {
       headerTitleAlign: "center",
       headerTintColor: Colors.gray[100],
       headerShown: true,
-      headerRight: (props) => <SearchButton />,
+      presentation: "card",
+      animationTypeForReplace: "push",
+
+      headerRight: (props) => <HeaderSearchButton searchCategory="tv" />,
     });
   }, []);
 
   return (
-    <View className="flex-1 bg-stone-900">
+    <SafeAreaView className="flex-1 bg-stone-900">
       <View className="flex-1">
         {tvShowsScreenProps ? (
           <ScrollView className="space-y-10">
-            <Banner netflixOriginals={tvShowsScreenProps.trendingNow} />
+            <Banner movieList={tvShowsScreenProps.trendingNow} />
             <Row title="Trending Now" movies={tvShowsScreenProps.trendingNow} />
             <Row title="Comedies" movies={tvShowsScreenProps.comedyTvShows} />
             <Row title="Top Rated" movies={tvShowsScreenProps.topRated} />
@@ -99,7 +87,7 @@ const TvShowsScreen: React.FC<IStackScreenProps> = (props) => {
           </ScrollView>
         ) : null}
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

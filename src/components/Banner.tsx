@@ -18,12 +18,12 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import MoviesScreen from "./../screens/Movies";
 
 interface Props {
-  netflixOriginals: Movie[];
+  movieList: Movie[];
 }
 const windowDimensions = Dimensions.get("window");
 const screenDimensions = Dimensions.get("screen");
 
-function Banner({ netflixOriginals }: Props) {
+function Banner({ movieList }: Props) {
   const [movie, setMovie] = useState<Movie | null>(null);
   // const [showModal, setShowModal] = useRecoilState(modalState);
   // const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
@@ -32,10 +32,8 @@ function Banner({ netflixOriginals }: Props) {
   const route = useRoute();
 
   useEffect(() => {
-    setMovie(
-      netflixOriginals[Math.floor(Math.random() * netflixOriginals.length)]
-    );
-  }, [netflixOriginals]);
+    setMovie(movieList[Math.floor(Math.random() * movieList.length)]);
+  }, [movieList]);
 
   function infoButtonPressHandler(): void {
     // setCurrentMovie(movie);

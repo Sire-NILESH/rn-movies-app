@@ -6,6 +6,7 @@ import MoreInfoScreen from "../screens/MoreInfo";
 import MoviesScreen from "../screens/Movies";
 import TvShowsScreen from "./../screens/TvShows";
 import SearchScreen from "./../screens/Search";
+import TileListScreen from "../screens/TileList";
 
 const routes: IRouteProps[] = [
   {
@@ -35,6 +36,10 @@ const routes: IRouteProps[] = [
   {
     name: "More Info",
     component: MoreInfoScreen,
+  },
+  {
+    name: "Tiles",
+    component: TileListScreen,
   },
 ];
 

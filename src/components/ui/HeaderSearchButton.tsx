@@ -7,34 +7,41 @@ import {
 } from "@react-navigation/native";
 import IconButton from "./IconButton";
 import { Colors } from "./../../utils/Colors";
-import { Movie } from "../../typings";
+import { Movie, MovieMedia, TvMedia } from "../../typings";
 import { IStackScreenProps } from "../../library/StackScreenProps";
 
 interface IProps {
   gotoList?: boolean;
-  movies?: Movie[];
+  medias?: MovieMedia[] | TvMedia[];
   title?: string | null;
   searchCategory?: string | null;
+  disabled?: boolean;
 }
 
 export default function HeaderSearchButton({
   gotoList,
   title,
-  movies,
+  medias,
   searchCategory,
+  disabled,
 }: IProps) {
   const navigation = useNavigation();
 
   function onPressHandler() {
     if (gotoList === true) {
-      navigation.navigate("Tiles", { title, movies });
+      navigation.navigate("Tiles", { title, medias });
     } else {
       navigation.navigate("Search Screen", { searchCategory: searchCategory });
     }
   }
 
+  // if (disabled && disabled === true) return <></>;
+
   return (
-    <Pressable onPress={onPressHandler} className="mr-4">
+    <Pressable
+      onPress={disabled && disabled === true ? null : onPressHandler}
+      className="mr-4"
+    >
       <IconButton
         name="search-outline"
         size={24}

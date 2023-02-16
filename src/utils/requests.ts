@@ -1,4 +1,4 @@
-import { Movie } from "../typings";
+import { MediaTypes, Movie, MovieMedia, TvMedia } from "../typings";
 
 // Movie search
 // const data = fetch('https://api.themoviedb.org/3/search/movie?api_key=e3e1732f8f495a1b191494b49b813669&query=batman&language=en-US&page=1&include_adult=false').then((data)=>data.json()).then((res)=>console.log(res))
@@ -32,7 +32,7 @@ const movieText = "batman";
 
 export const searchRequest = async (
   searchText: string,
-  mediaType: "movie" | "tv" | "multi",
+  mediaType: MediaTypes,
   abortController: AbortController
 ) => {
   const url = `${BASE_URL}/search/${mediaType}?api_key=${API_KEY}&query=${searchText}&language=en-US&page=1&include_adult=false`;
@@ -49,7 +49,7 @@ export const searchRequest = async (
 
   console.log("fetching", searchText);
 
-  if (data?.results) return { props: data?.results };
+  if (data?.results) return { props: data?.results, mediaType: mediaType };
 };
 
 export const tvRequests = {
@@ -64,12 +64,12 @@ export const tvRequests = {
 };
 export const allRequests = {
   fetchTrending: `${BASE_URL}/trending/all/week?api_key=${API_KEY}&language=en-US`,
-  fetchNetflixOriginals: `${BASE_URL}/discover/tv?api_key=${API_KEY}&with_networks=213`,
+  fetchNetflixOriginalsShows: `${BASE_URL}/discover/tv?api_key=${API_KEY}&with_networks=213`,
   fetchTopRated: `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=en-US`,
   fetchActionMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=28`,
-  fetchComedyMovies: `${BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&with_genres=35`,
+  fetchComedyShows: `${BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&with_genres=35`,
   fetchHorrorMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=27`,
-  fetchRomanceMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=10749`,
+  fetchRomanceShows: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=10749`,
   fetchDocumentaries: `${BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&with_genres=99`,
 };
 export const movieRequests = {
@@ -106,15 +106,42 @@ export const getMoviesScreenProps = async () => {
   ]);
 
   netflixOriginals.results.forEach(
-    (content: Movie) => (content.type = "movie")
+    (content: MovieMedia) => (content.type = "movie")
   );
-  trendingNow.results.forEach((content: Movie) => (content.type = "movie"));
-  topRated.results.forEach((content: Movie) => (content.type = "movie"));
-  actionMovies.results.forEach((content: Movie) => (content.type = "movie"));
-  comedyMovies.results.forEach((content: Movie) => (content.type = "movie"));
-  horrorMovies.results.forEach((content: Movie) => (content.type = "movie"));
-  romanceMovies.results.forEach((content: Movie) => (content.type = "movie"));
-  documentaries.results.forEach((content: Movie) => (content.type = "movie"));
+  trendingNow.results.forEach(
+    (content: MovieMedia) => (content.type = "movie")
+  );
+  topRated.results.forEach((content: MovieMedia) => (content.type = "movie"));
+  actionMovies.results.forEach(
+    (content: MovieMedia) => (content.type = "movie")
+  );
+  comedyMovies.results.forEach(
+    (content: MovieMedia) => (content.type = "movie")
+  );
+  horrorMovies.results.forEach(
+    (content: MovieMedia) => (content.type = "movie")
+  );
+  romanceMovies.results.forEach(
+    (content: MovieMedia) => (content.type = "movie")
+  );
+  documentaries.results.forEach(
+    (content: MovieMedia) => (content.type = "movie")
+  );
+
+  // const temp = [
+  //   netflixOriginals,
+  //   trendingNow,
+  //   topRated,
+  //   actionMovies,
+  //   comedyMovies,
+  //   horrorMovies,
+  //   romanceMovies,
+  //   documentaries,
+  // ].map((media: MovieMedia[]) =>
+  //   media.sort(function (a: MovieMedia, b: MovieMedia) {
+  //     return b.vote_average - a.vote_average;
+  //   })
+  // );
 
   return {
     props: {
@@ -151,93 +178,121 @@ export const getTVScreenProps = async () => {
     fetch(tvRequests.fetchDocumentaries).then((res) => res.json()),
   ]);
 
-  netflixOriginals.results.forEach((content: Movie) => (content.type = "tv"));
-  trendingNow.results.forEach((content: Movie) => (content.type = "tv"));
-  topRated.results.forEach((content: Movie) => (content.type = "tv"));
-  animationTvShows.results.forEach((content: Movie) => (content.type = "tv"));
-  comedyTvShows.results.forEach((content: Movie) => (content.type = "tv"));
-  crimeTvShows.results.forEach((content: Movie) => (content.type = "tv"));
-  romanceTvShows.results.forEach((content: Movie) => (content.type = "tv"));
-  documentaries.results.forEach((content: Movie) => (content.type = "tv"));
+  // netflixOriginals.results
+  //   .forEach((content: TvMedia) => (content.type = "tv"))
+  //   .results.sort(function (a: TvMedia, b: TvMedia) {
+  //     return b.vote_average - a.vote_average;
+  //   });
+  // trendingNow.results
+  //   .forEach((content: TvMedia) => (content.type = "tv"))
+  //   .results.sort(function (a: TvMedia, b: TvMedia) {
+  //     return b.vote_average - a.vote_average;
+  //   });
+  // topRated.results
+  //   .forEach((content: TvMedia) => (content.type = "tv"))
+  //   .results.sort(function (a: TvMedia, b: TvMedia) {
+  //     return b.vote_average - a.vote_average;
+  //   });
+  // animationTvShows.results
+  //   .forEach((content: TvMedia) => (content.type = "tv"))
+  //   .results.sort(function (a: TvMedia, b: TvMedia) {
+  //     return b.vote_average - a.vote_average;
+  //   });
+  // comedyTvShows.results
+  //   .forEach((content: TvMedia) => (content.type = "tv"))
+  //   .results.sort(function (a: TvMedia, b: TvMedia) {
+  //     return b.vote_average - a.vote_average;
+  //   });
+  // crimeTvShows.results
+  //   .forEach((content: TvMedia) => (content.type = "tv"))
+  //   .results.sort(function (a: TvMedia, b: TvMedia) {
+  //     return b.vote_average - a.vote_average;
+  //   });
+  // romanceTvShows.results
+  //   .forEach((content: TvMedia) => (content.type = "tv"))
+  //   .results.sort(function (a: TvMedia, b: TvMedia) {
+  //     return b.vote_average - a.vote_average;
+  //   });
+  // documentaries.results
+  //   .forEach((content: TvMedia) => (content.type = "tv"))
+  //   .results.sort(function (a: TvMedia, b: TvMedia) {
+  //     return b.vote_average - a.vote_average;
+  //   });
 
-  return {
-    props: {
-      netflixOriginals: netflixOriginals.results.sort(function (
-        a: Movie,
-        b: Movie
-      ) {
-        return b.vote_average - a.vote_average;
-      }),
-      trendingNow: trendingNow.results,
-      topRated: topRated.results.sort(function (a: Movie, b: Movie) {
-        return b.vote_average - a.vote_average;
-      }),
-      animationTvShows: animationTvShows.results.sort(function (
-        a: Movie,
-        b: Movie
-      ) {
-        return b.vote_average - a.vote_average;
-      }),
-      comedyTvShows: comedyTvShows.results.sort(function (a: Movie, b: Movie) {
-        return b.vote_average - a.vote_average;
-      }),
-      crimeTvShows: crimeTvShows.results.sort(function (a: Movie, b: Movie) {
-        return b.vote_average - a.vote_average;
-      }),
-      romanceTvShows: romanceTvShows.results.sort(function (
-        a: Movie,
-        b: Movie
-      ) {
-        return b.vote_average - a.vote_average;
-      }),
-      documentaries: documentaries.results.sort(function (a: Movie, b: Movie) {
-        return b.vote_average - a.vote_average;
-      }),
-    },
-  };
-};
+  // const temp = [
+  //   netflixOriginals.results,
+  //   trendingNow.results,
+  //   topRated.results,
+  //   animationTvShows.results,
+  //   comedyTvShows.results,
+  //   crimeTvShows.results,
+  //   romanceTvShows.results,
+  //   documentaries.results,
+  // ].map((medias: TvMedia[]) =>
+  //   medias.sort(function (a: TvMedia, b: TvMedia) {
+  //     return b.vote_average - a.vote_average;
+  //   })
+  // );
 
-export const getAllScreenProps = async () => {
-  const [
-    netflixOriginals,
-    trendingNow,
-    topRated,
-    actionMovies,
-    comedyMovies,
-    horrorMovies,
-    romanceMovies,
-    documentaries,
-  ] = await Promise.all([
-    fetch(allRequests.fetchNetflixOriginals).then((res) => res.json()),
-    fetch(allRequests.fetchTrending).then((res) => res.json()),
-    fetch(allRequests.fetchTopRated).then((res) => res.json()),
-    fetch(allRequests.fetchActionMovies).then((res) => res.json()),
-    fetch(allRequests.fetchComedyMovies).then((res) => res.json()),
-    fetch(allRequests.fetchHorrorMovies).then((res) => res.json()),
-    fetch(allRequests.fetchRomanceMovies).then((res) => res.json()),
-    fetch(allRequests.fetchDocumentaries).then((res) => res.json()),
-  ]);
-
-  netflixOriginals.results.forEach((content: Movie) => (content.type = "tv"));
-  trendingNow.results.forEach(
-    (content: Movie) => (content.type = content.media_type)
-  );
-  topRated.results.forEach((content: Movie) => (content.type = "movie"));
-  actionMovies.results.forEach((content: Movie) => (content.type = "movie"));
-  comedyMovies.results.forEach((content: Movie) => (content.type = "tv"));
-  horrorMovies.results.forEach((content: Movie) => (content.type = "movie"));
-  romanceMovies.results.forEach((content: Movie) => (content.type = "tv"));
-  documentaries.results.forEach((content: Movie) => (content.type = "tv"));
+  // console.log(temp);
 
   return {
     props: {
       netflixOriginals: netflixOriginals.results,
       trendingNow: trendingNow.results,
       topRated: topRated.results,
+      animationTvShows: animationTvShows.results,
+      comedyTvShows: comedyTvShows.results,
+      crimeTvShows: crimeTvShows.results,
+      romanceTvShows: romanceTvShows.results,
+      documentaries: documentaries.results,
+    },
+  };
+};
+
+export const getAllScreenProps = async () => {
+  const [
+    netflixOriginalsShows,
+    trendingNow,
+    topRated,
+    actionMovies,
+    comedyShows,
+    horrorMovies,
+    romanceShows,
+    documentaries,
+  ] = await Promise.all([
+    fetch(allRequests.fetchNetflixOriginalsShows).then((res) => res.json()),
+    fetch(allRequests.fetchTrending).then((res) => res.json()),
+    fetch(allRequests.fetchTopRated).then((res) => res.json()),
+    fetch(allRequests.fetchActionMovies).then((res) => res.json()),
+    fetch(allRequests.fetchComedyShows).then((res) => res.json()),
+    fetch(allRequests.fetchHorrorMovies).then((res) => res.json()),
+    fetch(allRequests.fetchRomanceShows).then((res) => res.json()),
+    fetch(allRequests.fetchDocumentaries).then((res) => res.json()),
+  ]);
+
+  netflixOriginalsShows.results.forEach(
+    (content: Movie) => (content.type = "tv")
+  );
+  trendingNow.results.forEach(
+    (content: Movie) => (content.type = content.media_type)
+  );
+  topRated.results.forEach((content: Movie) => (content.type = "movie"));
+  actionMovies.results.forEach((content: Movie) => (content.type = "movie"));
+  comedyShows.results.forEach((content: Movie) => (content.type = "tv"));
+  horrorMovies.results.forEach((content: Movie) => (content.type = "movie"));
+  romanceShows.results.forEach((content: Movie) => (content.type = "tv"));
+  documentaries.results.forEach((content: Movie) => (content.type = "tv"));
+
+  return {
+    props: {
+      netflixOriginalsShows: netflixOriginalsShows.results,
+      trendingNow: trendingNow.results,
+      topRated: topRated.results,
       actionMovies: actionMovies.results,
-      comedyMovies: comedyMovies.results,
+      comedyShows: comedyShows.results,
       horrorMovies: horrorMovies.results,
-      romanceMovies: romanceMovies.results,
+      romanceShows: romanceShows.results,
       documentaries: documentaries.results,
     },
   };

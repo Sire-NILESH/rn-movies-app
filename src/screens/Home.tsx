@@ -3,20 +3,22 @@ import { View, ScrollView } from "react-native";
 
 import { IStackScreenProps } from "../library/StackScreenProps";
 import { useLogging } from "../hooks/useLogging";
-import { Movie } from "../typings";
+import { Movie, MovieMedia, TvMedia } from "../typings";
 import { getAllScreenProps } from "../utils/requests";
 import Banner from "../components/Banner";
 import Row from "../components/Row";
+import Header from "./../components/Header";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface CollectionProps {
-  netflixOriginals: Movie[];
-  trendingNow: Movie[];
-  topRated: Movie[];
-  actionMovies: Movie[];
-  comedyMovies: Movie[];
-  horrorMovies: Movie[];
-  romanceMovies: Movie[];
-  documentaries: Movie[];
+  netflixOriginalsShows: TvMedia[];
+  trendingNow: MovieMedia[];
+  topRated: MovieMedia[];
+  actionMovies: MovieMedia[];
+  comedyShows: TvMedia[];
+  horrorMovies: MovieMedia[];
+  romanceShows: TvMedia[];
+  documentaries: TvMedia[];
 }
 
 // interface IProps extends IStackScreenProps, CollectionProps {}
@@ -41,7 +43,15 @@ const HomeScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerShown: false,
+      header: () => {
+        return (
+          <SafeAreaView>
+            <Header />
+          </SafeAreaView>
+        );
+      },
+      headerTransparent: true,
+      headerShown: true,
     });
   }, []);
 
@@ -51,20 +61,20 @@ const HomeScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       <View className="flex-1">
         {allScreenProps ? (
           <ScrollView className="space-y-10">
-            <Banner movieList={allScreenProps.trendingNow} />
-            <Row title="Trending Now" movies={allScreenProps.trendingNow} />
-            <Row title="Comedies" movies={allScreenProps.comedyMovies} />
-            <Row title="Top Rated" movies={allScreenProps.topRated} />
+            <Banner mediaList={allScreenProps.trendingNow} />
+            <Row title="Trending Now" medias={allScreenProps.trendingNow} />
+            <Row title="Comedies" medias={allScreenProps.comedyShows} />
+            <Row title="Top Rated" medias={allScreenProps.topRated} />
 
             {/* My List */}
             {/* {list.length > 0 && <Row title="My List" movies={list} />} */}
             <Row
               title="Action Thrillers"
-              movies={allScreenProps.actionMovies}
+              medias={allScreenProps.actionMovies}
             />
-            <Row title="Scary Movies" movies={allScreenProps.horrorMovies} />
-            <Row title="Romance Movies" movies={allScreenProps.romanceMovies} />
-            <Row title="Documentaries" movies={allScreenProps.documentaries} />
+            <Row title="Scary Movies" medias={allScreenProps.horrorMovies} />
+            <Row title="Romance Movies" medias={allScreenProps.romanceShows} />
+            <Row title="Documentaries" medias={allScreenProps.documentaries} />
           </ScrollView>
         ) : null}
       </View>

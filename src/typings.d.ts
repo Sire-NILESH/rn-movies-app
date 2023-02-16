@@ -3,6 +3,36 @@ export interface Genre {
   name: string;
 }
 
+export type MediaTypes = "movie" | "tv" | "multi";
+
+export interface Media {
+  id: number;
+  adult: boolean;
+  media_type?: string | string[];
+  genre_ids: number[];
+  overview: string;
+  origin_country: string[];
+  original_language: string;
+  popularity: number;
+  poster_path: string;
+  vote_average: number;
+  vote_count: number;
+  type: MediaTypes;
+  backdrop_path: string;
+}
+
+export interface MovieMedia extends Media {
+  title: string;
+  original_title: string;
+  release_date?: string;
+}
+
+export interface TvMedia extends Media {
+  name: string;
+  original_name: string;
+  first_air_date: string;
+}
+
 export interface Movie {
   title: string;
   backdrop_path: string;

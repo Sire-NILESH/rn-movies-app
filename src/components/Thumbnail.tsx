@@ -2,13 +2,14 @@ import { useNavigation } from "@react-navigation/native";
 import { modalState, movieState } from "../atoms/modalAtom";
 // import { useRecoilState } from "recoil";
 // import { DocumentData } from "firebase/firestore";
-import { Movie } from "../typings";
+import { Movie, MovieMedia, TvMedia } from "../typings";
 import { View, Image, Pressable, Text, Dimensions } from "react-native";
+import { isMovie } from "../utils/helpers/helper";
 
 interface Props {
   // When using firebase
   //   movie: Movie | DocumentData;
-  movie: Movie;
+  media: MovieMedia | TvMedia;
   orientation: "portrait" | "landscape";
 }
 
@@ -32,7 +33,7 @@ const thumbnailDimensions = {
   },
 };
 
-function Thumbnail({ movie, orientation }: Props) {
+function Thumbnail({ media, orientation }: Props) {
   const dimensions = thumbnailDimensions[orientation];
 
   const navigation = useNavigation();
@@ -48,19 +49,24 @@ function Thumbnail({ movie, orientation }: Props) {
       <Pressable
         className="flex-1"
         onPress={() => {
-          console.log(movie);
-          navigation.navigate("More Info", { movie: movie });
+          console.log(media);
+          navigation.navigate("More Info", { media: media });
         }}
       >
         <Image
-          source={{
-            uri: `https://image.tmdb.org/t/p/w500${
-              movie.backdrop_path || movie.poster_path
-            }`,
-          }}
+          source={
+            media.backdrop_path || media.poster_path
+              ? {
+                  uri: `https://image.tmdb.org/t/p/w500${
+                    media.backdrop_path || media.poster_path
+                  }`,
+                }
+              : require("../../assets/images/placeholders/posterPlaceHolder.webp")
+          }
           className="relative rounded-md object-cover"
           style={{ width: dimensions.imageWidth, height: dimensions.height }}
         />
+
         {/* Movie Title and date box */}
         <View
           className="absolute flex-row items-end pb-2 px-2 rounded-md overflow-hidden bg-black/10"
@@ -83,10 +89,14 @@ function Thumbnail({ movie, orientation }: Props) {
               ]}
               // style={{ lineHeight: 18, width: dimensions.movieTitleWidth }}
             >
-              {movie.title ? movie.title : movie.original_name}
+              {media && isMovie(media) ? media.title : media.name}
+              {/* {movie.title ? movie.title : movie.original_name} */}
             </Text>
             <Text className=" text-gray-300 text-xs">
-              {movie.release_date ? movie.release_date : movie.first_air_date}
+              {media && isMovie(media)
+                ? media.release_date
+                : media.first_air_date}
+              {/* {movie.release_date ? movie.release_date : movie.first_air_date} */}
             </Text>
           </View>
         </View>

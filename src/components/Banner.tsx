@@ -1,4 +1,4 @@
-import { Movie } from "../typings";
+import { Movie, MovieMedia, TvMedia } from "../typings";
 import { useState, useEffect } from "react";
 import { useRecoilState } from "./../../node_modules/recoil/index.d";
 import { modalState, movieState } from "./../atoms/modalAtom";
@@ -15,16 +15,16 @@ import { Colors } from "./../utils/Colors";
 import { LinearGradient } from "expo-linear-gradient";
 import Header from "./Header";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import MoviesScreen from "./../screens/Movies";
+import { isMovie } from "./../utils/helpers/helper";
 
 interface Props {
-  movieList: Movie[];
+  mediaList: MovieMedia[] | TvMedia[];
 }
 const windowDimensions = Dimensions.get("window");
 const screenDimensions = Dimensions.get("screen");
 
-function Banner({ movieList }: Props) {
-  const [movie, setMovie] = useState<Movie | null>(null);
+function Banner({ mediaList }: Props) {
+  const [media, setMedia] = useState<MovieMedia | TvMedia | null>(null);
   // const [showModal, setShowModal] = useRecoilState(modalState);
   // const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
 
@@ -32,8 +32,17 @@ function Banner({ movieList }: Props) {
   const route = useRoute();
 
   useEffect(() => {
-    setMovie(movieList[Math.floor(Math.random() * movieList.length)]);
-  }, [movieList]);
+    if (mediaList) {
+      setMedia(mediaList[Math.floor(Math.random() * mediaList.length)]);
+    }
+  }, [mediaList]);
+
+  function playButtonPressHandler(): void {
+    // setCurrentMovie(movie);
+    // setShowModal(true);
+    // @ts-ignore
+    navigation.push("Home");
+  }
 
   function infoButtonPressHandler(): void {
     // setCurrentMovie(movie);
@@ -46,9 +55,20 @@ function Banner({ movieList }: Props) {
   //   screen: screenDimensions,
   // });
 
+  // function isMovie(media: MovieMedia | TvMedia ): media is MovieMedia {
+  //   return (media as MovieMedia).title !== undefined;
+  // }
+
+  // media && isMovie(media)
+  //   ? console.log(media.title)
+  //   : console.log(media?.first_air_date);
+
   return (
     <View className="flex-1 py-10 w-[100%]">
-      {route.name === "Home" ? <Header /> : null}
+      {/* {route.name === "Home" ? <Header /> : null} */}
+      {route.name === "Home" ? (
+        <View className="h-[80px] w-full">{/* <Text> T</Text> */}</View>
+      ) : null}
       <View
         className="absolute top-0 left-0 w-[100%] flex-1 h-full"
         style={[{ height: screenDimensions.height }]}
@@ -64,7 +84,7 @@ function Banner({ movieList }: Props) {
           <ImageBackground //wrapping the main entry screen with this <ImageBackground> component
             source={{
               uri: `https://image.tmdb.org/t/p/w500${
-                movie?.backdrop_path || movie?.poster_path
+                media?.backdrop_path || media?.poster_path
               }`,
             }}
             resizeMode="cover" //similar to web, "cover", "contain", etc.
@@ -75,10 +95,12 @@ function Banner({ movieList }: Props) {
       </View>
       <View className="px-4">
         <Text className="text-2xl font-bold text-gray-100 ">
-          {movie?.title || movie?.name || movie?.original_name}
+          {/* {movie?.title || movie?.name || movie?.original_name} */}
+          {/* {getTitle()} */}
+          {isMovie(media) ? media.title : media?.original_name}
         </Text>
         <Text className="max-w-xs text-xs text-gray-100">
-          {movie?.overview}
+          {media?.overview}
         </Text>
 
         <View className="flex-row space-x-3">
@@ -95,7 +117,7 @@ function Banner({ movieList }: Props) {
               radius={5}
               color="white"
               border={0}
-              method={infoButtonPressHandler}
+              method={playButtonPressHandler}
               shadow={false}
             >
               <Text className="font-bold">Play</Text>

@@ -2,7 +2,7 @@
 import { View, ScrollView, SafeAreaView } from "react-native";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/StackScreenProps";
-import { Movie } from "../typings";
+import { Movie, MovieMedia, TvMedia } from "../typings";
 import { getTVScreenProps } from "../utils/requests";
 import Banner from "../components/Banner";
 import Row from "../components/Row";
@@ -14,14 +14,14 @@ import { useNavigation } from "@react-navigation/native";
 import HeaderSearchButton from "../components/ui/HeaderSearchButton";
 
 interface Props {
-  netflixOriginals: Movie[];
-  trendingNow: Movie[];
-  topRated: Movie[];
-  animationTvShows: Movie[];
-  comedyTvShows: Movie[];
-  crimeTvShows: Movie[];
-  romanceTvShows: Movie[];
-  documentaries: Movie[];
+  netflixOriginals: TvMedia[];
+  trendingNow: TvMedia[];
+  topRated: TvMedia[];
+  animationTvShows: TvMedia[];
+  comedyTvShows: TvMedia[];
+  crimeTvShows: TvMedia[];
+  romanceTvShows: TvMedia[];
+  documentaries: TvMedia[];
 }
 
 const TvShowsScreen: React.FC<IStackScreenProps> = (props) => {
@@ -67,22 +67,22 @@ const TvShowsScreen: React.FC<IStackScreenProps> = (props) => {
       <View className="flex-1">
         {tvShowsScreenProps ? (
           <ScrollView className="space-y-10">
-            <Banner movieList={tvShowsScreenProps.trendingNow} />
-            <Row title="Trending Now" movies={tvShowsScreenProps.trendingNow} />
-            <Row title="Comedies" movies={tvShowsScreenProps.comedyTvShows} />
-            <Row title="Top Rated" movies={tvShowsScreenProps.topRated} />
+            <Banner mediaList={tvShowsScreenProps.trendingNow} />
+            <Row title="Trending Now" medias={tvShowsScreenProps.trendingNow} />
+            <Row title="Comedies" medias={tvShowsScreenProps.comedyTvShows} />
+            <Row title="Top Rated" medias={tvShowsScreenProps.topRated} />
 
             {/* My List */}
             {/* {list.length > 0 && <Row title="My List" movies={list} />} */}
             <Row
               title="Animations"
-              movies={tvShowsScreenProps.animationTvShows}
+              medias={tvShowsScreenProps.animationTvShows}
             />
-            <Row title="Crime" movies={tvShowsScreenProps.crimeTvShows} />
-            <Row title="Romance" movies={tvShowsScreenProps.romanceTvShows} />
+            <Row title="Crime" medias={tvShowsScreenProps.crimeTvShows} />
+            <Row title="Romance" medias={tvShowsScreenProps.romanceTvShows} />
             <Row
               title="Documentaries"
-              movies={tvShowsScreenProps.documentaries}
+              medias={tvShowsScreenProps.documentaries}
             />
           </ScrollView>
         ) : null}

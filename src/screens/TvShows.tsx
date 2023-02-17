@@ -19,11 +19,13 @@ interface IProps {
 }
 
 const genresToShow: IGenre[] = [
-  { id: 35, name: "Comedy" },
-  { id: 18, name: "Drama" },
-  { id: 16, name: "Animation" },
-  { id: 10751, name: "Family" },
   { id: 80, name: "Crime" },
+  { id: 35, name: "Comedy" },
+  { id: 10767, name: "Talk" },
+  { id: 16, name: "Animation" },
+  { id: 10765, name: "Sci-Fi & Fantasy" },
+  { id: 10751, name: "Family" },
+  { id: 18, name: "Drama" },
   { id: 99, name: "Documentary" },
 ];
 
@@ -37,7 +39,7 @@ const TvShowsScreen: React.FC<IStackScreenProps> = (props) => {
   useEffect(() => {
     async function fetchRequests() {
       // const data = await getTVScreenProps();
-      const data = await getScreenProps(genresToShow);
+      const data = await getScreenProps(genresToShow, "tv");
       setTvShowsScreenProps(data);
     }
     fetchRequests();

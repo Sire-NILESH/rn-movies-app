@@ -85,11 +85,14 @@ export const movieRequests = {
   fetchDocumentaries: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=99`,
 };
 
-export const getScreenProps = async (getTheseGenreMedias: IGenre[]) => {
+export const getScreenProps = async (
+  getTheseGenreMedias: IGenre[],
+  mediaType: MediaTypes
+) => {
   const data = await Promise.all([
     ...getTheseGenreMedias.map((genre) =>
       fetch(
-        `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=${genre.id}`
+        `${BASE_URL}/discover/${mediaType}?api_key=${API_KEY}&language=en-US&with_genres=${genre.id}`
       ).then((res) => res.json())
     ),
   ]);

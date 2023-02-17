@@ -35,7 +35,7 @@ const MoviesScreen: React.FC<IStackScreenProps> = (props) => {
   useEffect(() => {
     async function fetchRequests() {
       // const data = await getMoviesScreenProps();
-      const data = await getScreenProps(genresToShow);
+      const data = await getScreenProps(genresToShow, "movie");
       // console.log(data.props);
       setMoviesScreenProps(data);
     }

@@ -1,4 +1,4 @@
-import { MediaTypes, Movie, MovieMedia, TvMedia } from "../typings";
+import { IGenre, MediaTypes, Movie, MovieMedia, TvMedia } from "../typings";
 
 // Movie search
 // const data = fetch('https://api.themoviedb.org/3/search/movie?api_key=e3e1732f8f495a1b191494b49b813669&query=batman&language=en-US&page=1&include_adult=false').then((data)=>data.json()).then((res)=>console.log(res))
@@ -85,7 +85,31 @@ export const movieRequests = {
   fetchDocumentaries: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=99`,
 };
 
-// export const getMoviesScreenProps = async () => {
+export const getScreenProps = async (getTheseGenreMedias: IGenre[]) => {
+  const data = await Promise.all([
+    ...getTheseGenreMedias.map((genre) =>
+      fetch(
+        `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=${genre.id}`
+      ).then((res) => res.json())
+    ),
+  ]);
+
+  // console.log("------------------------------------", data[0].results);
+  //  data?[0].results[i]
+
+  const results = getTheseGenreMedias.map((genre, i) => {
+    return {
+      genreId: genre.id,
+      genreName: genre.name,
+      genreMedias: data[i].results,
+    };
+  });
+
+  return results;
+
+  // console.log("---------------results---------------------", results[7]);
+};
+
 export const getMoviesScreenProps = async () => {
   const [
     netflixOriginals,

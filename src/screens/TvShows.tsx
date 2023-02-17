@@ -2,48 +2,46 @@
 import { View, ScrollView, SafeAreaView } from "react-native";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/StackScreenProps";
-import { Movie, MovieMedia, TvMedia } from "../typings";
-import { getTVScreenProps } from "../utils/requests";
+import { IGenre, TvMedia } from "../typings";
+import { getScreenProps } from "../utils/requests";
 import Banner from "../components/Banner";
 import Row from "../components/Row";
 import { Colors } from "../utils/Colors";
 
 // import { SafeAreaView } from "react-native-safe-area-context";
 
-import { useNavigation } from "@react-navigation/native";
 import HeaderSearchButton from "../components/ui/HeaderSearchButton";
 
-interface Props {
-  netflixOriginals: TvMedia[];
-  trendingNow: TvMedia[];
-  topRated: TvMedia[];
-  animationTvShows: TvMedia[];
-  comedyTvShows: TvMedia[];
-  crimeTvShows: TvMedia[];
-  romanceTvShows: TvMedia[];
-  documentaries: TvMedia[];
+interface IProps {
+  genreId: number;
+  genreName: string;
+  genreMedias: TvMedia[];
 }
 
+const genresToShow: IGenre[] = [
+  { id: 35, name: "Comedy" },
+  { id: 18, name: "Drama" },
+  { id: 16, name: "Animation" },
+  { id: 10751, name: "Family" },
+  { id: 80, name: "Crime" },
+  { id: 99, name: "Documentary" },
+];
+
 const TvShowsScreen: React.FC<IStackScreenProps> = (props) => {
-  const [tvShowsScreenProps, setTvShowsScreenProps] = useState<Props | null>(
+  const [tvShowsScreenProps, setTvShowsScreenProps] = useState<IProps[] | null>(
     null
   );
+
   const { navigation, route } = props;
 
   useEffect(() => {
     async function fetchRequests() {
-      const data = await getTVScreenProps();
-      setTvShowsScreenProps(data.props);
+      // const data = await getTVScreenProps();
+      const data = await getScreenProps(genresToShow);
+      setTvShowsScreenProps(data);
     }
     fetchRequests();
   }, []);
-  // const memoVal = useMemo(() => {
-  //   async function fetchRequests() {
-  //     const data = await getTVScreenProps();
-  //     setTvShowsScreenProps(data.props);
-  //   }
-  //   fetchRequests();
-  // }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -67,23 +65,19 @@ const TvShowsScreen: React.FC<IStackScreenProps> = (props) => {
       <View className="flex-1">
         {tvShowsScreenProps ? (
           <ScrollView className="space-y-10">
-            <Banner mediaList={tvShowsScreenProps.trendingNow} />
-            <Row title="Trending Now" medias={tvShowsScreenProps.trendingNow} />
-            <Row title="Comedies" medias={tvShowsScreenProps.comedyTvShows} />
-            <Row title="Top Rated" medias={tvShowsScreenProps.topRated} />
+            <Banner mediaList={tvShowsScreenProps[0].genreMedias} />
 
-            {/* My List */}
-            {/* {list.length > 0 && <Row title="My List" movies={list} />} */}
-            <Row
-              title="Animations"
-              medias={tvShowsScreenProps.animationTvShows}
-            />
-            <Row title="Crime" medias={tvShowsScreenProps.crimeTvShows} />
-            <Row title="Romance" medias={tvShowsScreenProps.romanceTvShows} />
-            <Row
-              title="Documentaries"
-              medias={tvShowsScreenProps.documentaries}
-            />
+            {tvShowsScreenProps.map((m) => {
+              if (m && m.genreMedias.length > 0) {
+                return (
+                  <Row
+                    key={m.genreId}
+                    title={m.genreName}
+                    medias={m.genreMedias}
+                  />
+                );
+              } else null;
+            })}
           </ScrollView>
         ) : null}
       </View>
@@ -92,4 +86,3 @@ const TvShowsScreen: React.FC<IStackScreenProps> = (props) => {
 };
 
 export default TvShowsScreen;
-// props: { navigation: StackNavigationProp<any> }

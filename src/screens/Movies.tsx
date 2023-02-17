@@ -1,47 +1,43 @@
 import { View, Text, ScrollView } from "react-native";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/StackScreenProps";
-import { Movie, MovieMedia } from "../typings";
-import { getMoviesScreenProps } from "../utils/requests";
+import { IGenre, MovieMedia } from "../typings";
+import { getScreenProps } from "../utils/requests";
 import Banner from "../components/Banner";
 import Row from "../components/Row";
 import { Colors } from "../utils/Colors";
 import HeaderSearchButton from "../components/ui/HeaderSearchButton";
 
 interface IProps {
-  netflixOriginals: MovieMedia[];
-  trendingNow: MovieMedia[];
-  topRated: MovieMedia[];
-  actionMovies: MovieMedia[];
-  comedyMovies: MovieMedia[];
-  horrorMovies: MovieMedia[];
-  romanceMovies: MovieMedia[];
-  documentaries: MovieMedia[];
+  genreId: number;
+  genreName: string;
+  genreMedias: MovieMedia[];
 }
 
+const genresToShow: IGenre[] = [
+  { id: 35, name: "Comedy" },
+  { id: 12, name: "Adventure" },
+  { id: 18, name: "Drama" },
+  { id: 28, name: "Action" },
+  { id: 16, name: "Animation" },
+  { id: 27, name: "Horror" },
+  { id: 878, name: "Science Fiction" },
+  { id: 99, name: "Documentary" },
+];
+
 const MoviesScreen: React.FC<IStackScreenProps> = (props) => {
-  const [moviesScreenProps, setMoviesScreenProps] = useState<IProps | null>(
+  const [moviesScreenProps, setMoviesScreenProps] = useState<IProps[] | null>(
     null
   );
-
-  const genresToShow = [
-    { id: 35, name: "Comedy" },
-    { id: 12, name: "Adventure" },
-    { id: 18, name: "Drama" },
-    { id: 28, name: "Action" },
-    { id: 16, name: "Animation" },
-    { id: 27, name: "Horror" },
-    { id: 878, name: "Science Fiction" },
-    { id: 99, name: "Documentary" },
-  ];
 
   const { navigation, route } = props;
 
   useEffect(() => {
     async function fetchRequests() {
-      const data = await getMoviesScreenProps();
+      // const data = await getMoviesScreenProps();
+      const data = await getScreenProps(genresToShow);
       // console.log(data.props);
-      setMoviesScreenProps(data.props);
+      setMoviesScreenProps(data);
     }
     fetchRequests();
   }, []);
@@ -65,26 +61,19 @@ const MoviesScreen: React.FC<IStackScreenProps> = (props) => {
       <View className="flex-1">
         {moviesScreenProps ? (
           <ScrollView className="space-y-10">
-            <Banner mediaList={moviesScreenProps.trendingNow} />
-            <Row title="Trending Now" medias={moviesScreenProps.trendingNow} />
-            <Row title="Comedies" medias={moviesScreenProps.comedyMovies} />
-            <Row title="Top Rated" medias={moviesScreenProps.topRated} />
+            <Banner mediaList={moviesScreenProps[0].genreMedias} />
 
-            {/* My List */}
-            {/* {list.length > 0 && <Row title="My List" movies={list} />} */}
-            <Row
-              title="Action Thrillers"
-              medias={moviesScreenProps.actionMovies}
-            />
-            <Row title="Scary Movies" medias={moviesScreenProps.horrorMovies} />
-            <Row
-              title="Romance Movies"
-              medias={moviesScreenProps.romanceMovies}
-            />
-            <Row
-              title="Documentaries"
-              medias={moviesScreenProps.documentaries}
-            />
+            {moviesScreenProps.map((m) => {
+              if (m && m.genreMedias.length > 0) {
+                return (
+                  <Row
+                    key={m.genreId}
+                    title={m.genreName}
+                    medias={m.genreMedias}
+                  />
+                );
+              } else null;
+            })}
           </ScrollView>
         ) : null}
       </View>

@@ -10,6 +10,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { MediaTypes, Movie, MovieMedia, TvMedia } from "../typings";
 import HeaderSearchButton from "./../components/ui/HeaderSearchButton";
 import { isMovie, isMovieArray } from "./../utils/helpers/helper";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 interface ISearchResults {
   props: MovieMedia[] | TvMedia[];
@@ -37,6 +38,7 @@ const SearchInput: React.FC<ISearchInputProps> = (props) => {
 const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [logging] = useLogging("Search Screen");
   const { navigation, route } = props;
+  // @ts-ignore
   const searchCategory = route.params?.searchCategory as MediaTypes;
   const [searchQuery, setSearchQuery] = useState<string | null>(null);
   const [searchQueryResult, setSearchQueryResult] =
@@ -103,30 +105,19 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       headerShown: true,
       presentation: "modal",
       headerShadowVisible: false,
-      headerRight:
-        // searchQueryResult?.props.length && searchQueryResult?.props.length > 0
-        //   ? (props) => (
-        //       <HeaderSearchButton
-        //         gotoList={true}
-        //         medias={searchQueryResult.props}
-        //         title={searchQuery}
-        //       />
-        //     )
-        //   : undefined,
-        // searchQueryResult?.props.length && searchQueryResult?.props.length > 0
-        (props) => (
-          <HeaderSearchButton
-            gotoList={true}
-            medias={searchQueryResult?.props}
-            title={searchQuery}
-            disabled={
-              searchQueryResult?.props.length &&
-              searchQueryResult?.props.length > 0
-                ? false
-                : true
-            }
-          />
-        ),
+      headerRight: (props) => (
+        <HeaderSearchButton
+          gotoList={true}
+          medias={searchQueryResult?.props}
+          title={searchQuery}
+          disabled={
+            searchQueryResult?.props.length &&
+            searchQueryResult?.props.length > 0
+              ? false
+              : true
+          }
+        />
+      ),
     });
   }, [searchQueryResult]);
 
@@ -136,17 +127,33 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       <SafeAreaView className="flex-1 bg-stone-800">
         <View className="flex-1 pb-2">
           {/* Search List suggestions */}
-          {searchQuery !== null &&
-          searchQuery.length >= 2 &&
-          searchQueryResult?.props &&
-          isMovieArray(searchQueryResult?.props)
-            ? renderFlatList(searchQueryResult?.props, searchCategory)
-            : searchQuery !== null &&
-              searchQuery.length >= 2 &&
-              searchQueryResult?.props &&
-              !isMovieArray(searchQueryResult?.props)
-            ? renderFlatList(searchQueryResult?.props, searchCategory)
-            : null}
+          {
+            searchQuery !== null &&
+            searchQuery.length >= 2 &&
+            searchQueryResult &&
+            searchQueryResult?.props.length > 0
+              ? isMovieArray(searchQueryResult?.props)
+                ? renderFlatList(
+                    searchQueryResult?.props,
+                    searchCategory,
+                    navigation
+                  )
+                : !isMovieArray(searchQueryResult?.props)
+                ? renderFlatList(
+                    searchQueryResult?.props,
+                    searchCategory,
+                    navigation
+                  )
+                : null
+              : null
+            // (
+            // <View className="flex-1 flex-row items-center">
+            //   <Text className="flex-1 text-center text-stone-500 text-3xl">
+            //     No results ಥ_ಥ
+            //   </Text>
+            // </View>
+            // )
+          }
         </View>
       </SafeAreaView>
     </>
@@ -157,9 +164,10 @@ export default SearchScreen;
 
 function renderFlatList(
   searchQueryResult: MovieMedia[] | TvMedia[] | null,
-  searchCategory: MediaTypes
+  searchCategory: MediaTypes,
+  navigation: StackNavigationProp<any>
 ) {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   function navigateTo(
     media: MovieMedia | TvMedia,
@@ -167,11 +175,13 @@ function renderFlatList(
     searchCategory: MediaTypes
   ): void {
     if ("title" in media) {
+      // @ts-ignore
       navigation.navigate(to, {
         media: media, //MovieMedia
         mediaType: searchCategory,
       });
     } else {
+      // @ts-ignore
       navigation.navigate(to, {
         media: media, //TvMedia
         mediaType: searchCategory,

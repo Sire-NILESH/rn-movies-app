@@ -62,6 +62,7 @@ export const tvRequests = {
   fetchRomanceTvShows: `${BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&with_genres=10749`,
   fetchDocumentaries: `${BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&with_genres=99`,
 };
+
 export const allRequests = {
   fetchTrending: `${BASE_URL}/trending/all/week?api_key=${API_KEY}&language=en-US`,
   fetchNetflixOriginalsShows: `${BASE_URL}/discover/tv?api_key=${API_KEY}&with_networks=213`,
@@ -72,6 +73,7 @@ export const allRequests = {
   fetchRomanceShows: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=10749`,
   fetchDocumentaries: `${BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&with_genres=99`,
 };
+
 export const movieRequests = {
   fetchTrending: `${BASE_URL}/trending/movie/week?api_key=${API_KEY}&language=en-US`,
   fetchNetflixOriginals: `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_networks=213`,
@@ -105,28 +107,28 @@ export const getMoviesScreenProps = async () => {
     fetch(movieRequests.fetchDocumentaries).then((res) => res.json()),
   ]);
 
-  netflixOriginals.results.forEach(
-    (content: MovieMedia) => (content.type = "movie")
-  );
-  trendingNow.results.forEach(
-    (content: MovieMedia) => (content.type = "movie")
-  );
-  topRated.results.forEach((content: MovieMedia) => (content.type = "movie"));
-  actionMovies.results.forEach(
-    (content: MovieMedia) => (content.type = "movie")
-  );
-  comedyMovies.results.forEach(
-    (content: MovieMedia) => (content.type = "movie")
-  );
-  horrorMovies.results.forEach(
-    (content: MovieMedia) => (content.type = "movie")
-  );
-  romanceMovies.results.forEach(
-    (content: MovieMedia) => (content.type = "movie")
-  );
-  documentaries.results.forEach(
-    (content: MovieMedia) => (content.type = "movie")
-  );
+  // netflixOriginals.results.forEach(
+  //   (content: MovieMedia) => (content.type = "movie")
+  // );
+  // trendingNow.results.forEach(
+  //   (content: MovieMedia) => (content.type = "movie")
+  // );
+  // topRated.results.forEach((content: MovieMedia) => (content.type = "movie"));
+  // actionMovies.results.forEach(
+  //   (content: MovieMedia) => (content.type = "movie")
+  // );
+  // comedyMovies.results.forEach(
+  //   (content: MovieMedia) => (content.type = "movie")
+  // );
+  // horrorMovies.results.forEach(
+  //   (content: MovieMedia) => (content.type = "movie")
+  // );
+  // romanceMovies.results.forEach(
+  //   (content: MovieMedia) => (content.type = "movie")
+  // );
+  // documentaries.results.forEach(
+  //   (content: MovieMedia) => (content.type = "movie")
+  // );
 
   // const temp = [
   //   netflixOriginals,
@@ -178,46 +180,14 @@ export const getTVScreenProps = async () => {
     fetch(tvRequests.fetchDocumentaries).then((res) => res.json()),
   ]);
 
-  // netflixOriginals.results
-  //   .forEach((content: TvMedia) => (content.type = "tv"))
-  //   .results.sort(function (a: TvMedia, b: TvMedia) {
-  //     return b.vote_average - a.vote_average;
-  //   });
-  // trendingNow.results
-  //   .forEach((content: TvMedia) => (content.type = "tv"))
-  //   .results.sort(function (a: TvMedia, b: TvMedia) {
-  //     return b.vote_average - a.vote_average;
-  //   });
-  // topRated.results
-  //   .forEach((content: TvMedia) => (content.type = "tv"))
-  //   .results.sort(function (a: TvMedia, b: TvMedia) {
-  //     return b.vote_average - a.vote_average;
-  //   });
-  // animationTvShows.results
-  //   .forEach((content: TvMedia) => (content.type = "tv"))
-  //   .results.sort(function (a: TvMedia, b: TvMedia) {
-  //     return b.vote_average - a.vote_average;
-  //   });
-  // comedyTvShows.results
-  //   .forEach((content: TvMedia) => (content.type = "tv"))
-  //   .results.sort(function (a: TvMedia, b: TvMedia) {
-  //     return b.vote_average - a.vote_average;
-  //   });
-  // crimeTvShows.results
-  //   .forEach((content: TvMedia) => (content.type = "tv"))
-  //   .results.sort(function (a: TvMedia, b: TvMedia) {
-  //     return b.vote_average - a.vote_average;
-  //   });
-  // romanceTvShows.results
-  //   .forEach((content: TvMedia) => (content.type = "tv"))
-  //   .results.sort(function (a: TvMedia, b: TvMedia) {
-  //     return b.vote_average - a.vote_average;
-  //   });
-  // documentaries.results
-  //   .forEach((content: TvMedia) => (content.type = "tv"))
-  //   .results.sort(function (a: TvMedia, b: TvMedia) {
-  //     return b.vote_average - a.vote_average;
-  //   });
+  // netflixOriginals.results.forEach((content: TvMedia) => (content.type = "tv"));
+  // trendingNow.results.forEach((content: TvMedia) => (content.type = "tv"));
+  // topRated.results.forEach((content: TvMedia) => (content.type = "tv"));
+  // animationTvShows.results.forEach((content: TvMedia) => (content.type = "tv"));
+  // comedyTvShows.results.forEach((content: TvMedia) => (content.type = "tv"));
+  // crimeTvShows.results.forEach((content: TvMedia) => (content.type = "tv"));
+  // romanceTvShows.results.forEach((content: TvMedia) => (content.type = "tv"));
+  // documentaries.results.forEach((content: TvMedia) => (content.type = "tv"));
 
   // const temp = [
   //   netflixOriginals.results,
@@ -271,18 +241,18 @@ export const getAllScreenProps = async () => {
     fetch(allRequests.fetchDocumentaries).then((res) => res.json()),
   ]);
 
-  netflixOriginalsShows.results.forEach(
-    (content: Movie) => (content.type = "tv")
-  );
-  trendingNow.results.forEach(
-    (content: Movie) => (content.type = content.media_type)
-  );
-  topRated.results.forEach((content: Movie) => (content.type = "movie"));
-  actionMovies.results.forEach((content: Movie) => (content.type = "movie"));
-  comedyShows.results.forEach((content: Movie) => (content.type = "tv"));
-  horrorMovies.results.forEach((content: Movie) => (content.type = "movie"));
-  romanceShows.results.forEach((content: Movie) => (content.type = "tv"));
-  documentaries.results.forEach((content: Movie) => (content.type = "tv"));
+  // netflixOriginalsShows.results.forEach(
+  //   (content: Movie) => (content.type = "tv")
+  // );
+  // trendingNow.results.forEach(
+  //   (content: Movie) => (content.type = content.media_type)
+  // );
+  // topRated.results.forEach((content: Movie) => (content.type = "movie"));
+  // actionMovies.results.forEach((content: Movie) => (content.type = "movie"));
+  // comedyShows.results.forEach((content: Movie) => (content.type = "tv"));
+  // horrorMovies.results.forEach((content: Movie) => (content.type = "movie"));
+  // romanceShows.results.forEach((content: Movie) => (content.type = "tv"));
+  // documentaries.results.forEach((content: Movie) => (content.type = "tv"));
 
   return {
     props: {
@@ -296,6 +266,21 @@ export const getAllScreenProps = async () => {
       documentaries: documentaries.results,
     },
   };
+};
+
+export const fetchGenres = async (media: MediaTypes) => {
+  const url = `https://api.themoviedb.org/3/genre/${media}/list?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US`;
+  const data = await fetch(url)
+    .then((data) => data.json())
+    .catch((err) => {
+      console.log(err.message);
+      throw new Error(err.message);
+    });
+
+  if (data) {
+    // console.log("from requests", data);
+    return { props: data?.genres };
+  }
 };
 
 export const idToGenresMapped = {
@@ -327,3 +312,44 @@ export const idToGenresMapped = {
   "10762": "Kids",
   "10759": "Action & Adventure",
 };
+
+export const movieGenres = [
+  { id: 28, name: "Action" },
+  { id: 12, name: "Adventure" },
+  { id: 16, name: "Animation" },
+  { id: 35, name: "Comedy" },
+  { id: 80, name: "Crime" },
+  { id: 99, name: "Documentary" },
+  { id: 18, name: "Drama" },
+  { id: 10751, name: "Family" },
+  { id: 14, name: "Fantasy" },
+  { id: 36, name: "History" },
+  { id: 27, name: "Horror" },
+  { id: 10402, name: "Music" },
+  { id: 9648, name: "Mystery" },
+  { id: 10749, name: "Romance" },
+  { id: 878, name: "Science Fiction" },
+  { id: 10770, name: "TV Movie" },
+  { id: 53, name: "Thriller" },
+  { id: 10752, name: "War" },
+  { id: 37, name: "Western" },
+];
+
+export const tvGenres = [
+  { id: 10759, name: "Action & Adventure" },
+  { id: 16, name: "Animation" },
+  { id: 35, name: "Comedy" },
+  { id: 80, name: "Crime" },
+  { id: 99, name: "Documentary" },
+  { id: 18, name: "Drama" },
+  { id: 10751, name: "Family" },
+  { id: 10762, name: "Kids" },
+  { id: 9648, name: "Mystery" },
+  { id: 10763, name: "News" },
+  { id: 10764, name: "Reality" },
+  { id: 10765, name: "Sci-Fi & Fantasy" },
+  { id: 10766, name: "Soap" },
+  { id: 10767, name: "Talk" },
+  { id: 10768, name: "War & Politics" },
+  { id: 37, name: "Western" },
+];

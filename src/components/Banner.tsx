@@ -41,14 +41,14 @@ function Banner({ mediaList }: Props) {
     // setCurrentMovie(movie);
     // setShowModal(true);
     // @ts-ignore
-    navigation.push("Home");
+    navigation.navigate("More Info", { media: media });
   }
 
   function infoButtonPressHandler(): void {
     // setCurrentMovie(movie);
     // setShowModal(true);
     // @ts-ignore
-    navigation.push("Movies");
+    navigation.navigate("More Info", { media: media });
   }
   // const [dimensions, setDimensions] = useState({
   //   window: windowDimensions,
@@ -93,7 +93,9 @@ function Banner({ mediaList }: Props) {
           ></ImageBackground>
         </LinearGradient>
       </View>
-      <View className="px-4">
+
+      {/* Text Contents and Buttons */}
+      <View className="px-4 mt-10">
         <Text className="text-2xl font-bold text-gray-100 ">
           {/* {movie?.title || movie?.name || movie?.original_name} */}
           {/* {getTitle()} */}

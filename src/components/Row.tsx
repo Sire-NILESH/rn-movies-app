@@ -98,9 +98,11 @@ function renderFooterItemFunction(
         android_ripple={{ color: Colors.stone[600] }}
         onPress={() => {
           if (isMovieArray(medias)) {
+            // @ts-ignore
             navigation.navigate("Tiles", { title, medias });
           } else {
             {
+              // @ts-ignore
               navigation.navigate("Tiles", { title, medias });
             }
           }

@@ -50,6 +50,7 @@ function Thumbnail({ media, orientation }: Props) {
         className="flex-1"
         onPress={() => {
           console.log(media);
+          // @ts-ignore
           navigation.navigate("More Info", { media: media });
         }}
       >

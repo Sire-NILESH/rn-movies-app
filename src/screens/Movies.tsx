@@ -8,7 +8,7 @@ import Row from "../components/Row";
 import { Colors } from "../utils/Colors";
 import HeaderSearchButton from "../components/ui/HeaderSearchButton";
 
-interface Props {
+interface IProps {
   netflixOriginals: MovieMedia[];
   trendingNow: MovieMedia[];
   topRated: MovieMedia[];
@@ -20,9 +20,21 @@ interface Props {
 }
 
 const MoviesScreen: React.FC<IStackScreenProps> = (props) => {
-  const [moviesScreenProps, setMoviesScreenProps] = useState<Props | null>(
+  const [moviesScreenProps, setMoviesScreenProps] = useState<IProps | null>(
     null
   );
+
+  const genresToShow = [
+    { id: 35, name: "Comedy" },
+    { id: 12, name: "Adventure" },
+    { id: 18, name: "Drama" },
+    { id: 28, name: "Action" },
+    { id: 16, name: "Animation" },
+    { id: 27, name: "Horror" },
+    { id: 878, name: "Science Fiction" },
+    { id: 99, name: "Documentary" },
+  ];
+
   const { navigation, route } = props;
 
   useEffect(() => {

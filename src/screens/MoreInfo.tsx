@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, ScrollView } from "react-native";
 import { useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/StackScreenProps";
 import { Colors } from "../utils/Colors";
@@ -9,8 +9,10 @@ import { isMovie } from "./../utils/helpers/helper";
 
 const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const { navigation, route } = props;
+  // @ts-ignore
   let media: MovieMedia | TvMedia = route.params?.media;
-  const mediaType: MediaTypes =
+
+  const mediaType: MediaTypes = // @ts-ignore
     route.params?.mediaType !== undefined ? route.params?.mediaType : "movie";
 
   function getTitle(): string {
@@ -18,11 +20,13 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     return media.name;
   }
 
-  // function getReleaseDate(): string | undefined {
-  //   if ("release_date" in media) return media.release_date;
-  //   else if ("first_air_date" in media) return media.first_air_date;
-  //   return undefined;
-  // }
+  // const fields = [
+  //   { "Original Title": "" },
+  //   { Rating: "" },
+  //   { Release: "" },
+  //   { genre: "" },
+  //   { original: "" },
+  // ];
 
   // Header settings
   useLayoutEffect(() => {
@@ -40,7 +44,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   }, []);
 
   return (
-    <View className="flex-1 bg-stone-800">
+    <ScrollView className="flex-1 bg-stone-800 pb-24">
       {/* {route.params && <Text className="text-3xl">{movie?.title}</Text>} */}
       <View className="h-[300]">
         {/* <Banner movieList={[movie]} /> */}
@@ -59,23 +63,34 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         />
       </View>
 
-      {/* Text */}
-      <View className="flex-1 -mt-2 pt-6 bg-stone-800 space-y-5 px-4 rounded-t-xl">
+      {/* Text px-4 */}
+      <View className="flex-1 -mt-2 pt-6 bg-gray-800 rounded-t-xl">
         {/* Title */}
-        <View>
+        <View className="px-4">
           <Text className="text-2xl font-bold text-gray-100 object-cover">
             {/* {movie.title ? movie.title : movie.original_name} */}
             {getTitle()}
           </Text>
+          {isMovie(media) && media.original_title !== media.title ? (
+            <Text className="text-xs text-gray-100 pt-2">
+              Original Title:{"  "}
+              <Text className="text-gray-400">{media.original_title}</Text>
+            </Text>
+          ) : !isMovie(media) && media.original_name !== media.name ? (
+            <Text className="text-xs text-gray-100 pt-2">
+              Original Title:{"  "}
+              <Text className="text-gray-400">{media.original_name}</Text>
+            </Text>
+          ) : null}
         </View>
 
         {/* Other metrics */}
-        <View className="space-y-1">
-          <Text className="text-gray-100">
+        <View className="mt-5">
+          <Text className="text-gray-100 py-2 px-4 bg-stone-900">
             Rating:{"  "}
             <Text className="text-gray-400">{media.vote_average}/10</Text>
           </Text>
-          <Text className="text-gray-100">
+          <Text className="text-gray-100 py-2 px-4 bg-stone-800">
             Release:{"  "}
             <Text className="text-gray-400">
               {/* {getReleaseDate()} */}
@@ -83,7 +98,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               {/* {media.release_date ? media.release_date : media.first_air_date} */}
             </Text>
           </Text>
-          <Text className="text-gray-100">
+          <Text className="text-gray-100 py-2 px-4 bg-stone-900">
             Genre:{"  "}
             {media.genre_ids.map((id) => (
               <Text key={id} className="text-gray-400">
@@ -93,8 +108,14 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               </Text>
             ))}
           </Text>
+          <Text className="text-gray-100 py-2 px-4 bg-stone-800">
+            Media:{"  "}
+            <Text className="text-gray-400">
+              {isMovie(media) ? "Movie" : "TV"}
+            </Text>
+          </Text>
           {media.original_language ? (
-            <Text className="text-gray-100">
+            <Text className="text-gray-100 py-2 px-4 bg-stone-900">
               Original Language:{"  "}
               <Text className="text-gray-400">
                 {/*  @ts-ignore */}
@@ -106,13 +127,13 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
         {/* Description */}
         {media.overview ? (
-          <View className="flex-1 ">
+          <View className="px-4 py-4 bg-stone-800">
             <Text className="text-lg text-gray-100">Overview</Text>
             <Text className="text-gray-400">{media.overview}</Text>
           </View>
         ) : null}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

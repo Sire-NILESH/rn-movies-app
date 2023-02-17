@@ -5,6 +5,11 @@ export interface Genre {
 
 export type MediaTypes = "movie" | "tv" | "multi";
 
+export interface IGenre {
+  id: number;
+  name: string;
+}
+
 export interface Media {
   id: number;
   adult: boolean;

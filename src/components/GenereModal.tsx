@@ -3,18 +3,21 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useEffect, useLayoutEffect, useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Colors } from "./../utils/Colors";
-import { fetchGenres, movieGenres } from "./../utils/requests";
+import { fetchGenres, movieGenres, tvGenres } from "./../utils/requests";
+import { MediaTypes } from "../typings";
 
 interface IProps {
   isVisible: boolean;
   onClose: () => void;
-  setUserSelectedGenresHandler(genreId: number[]): void;
+  mediaListType: MediaTypes;
+  closeWithConfirm: (genresIdList: number[]) => void;
 }
 
 const GenereModal: React.FC<IProps> = ({
   isVisible,
   onClose,
-  setUserSelectedGenresHandler,
+  mediaListType,
+  closeWithConfirm,
 }) => {
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
 
@@ -31,8 +34,10 @@ const GenereModal: React.FC<IProps> = ({
 
   function onConfirmHandler() {
     // Lift the Genre state up
-    if (selectedGenres.length > 0) setUserSelectedGenresHandler(selectedGenres);
-    onClose();
+    // if (selectedGenres.length > 0) setUserSelectedGenresHandler(selectedGenres);
+    // onClose();
+
+    closeWithConfirm(selectedGenres);
   }
 
   //   const [movieGenres, setMovieGenres] = useState<IGenre[] | null>(null);
@@ -49,8 +54,7 @@ const GenereModal: React.FC<IProps> = ({
   //     fetchMovieGenres();
   //   }, []);
 
-  const movieGenresList = movieGenres;
-  //   console.log(movieGenresList);
+  const mediaGenreList = mediaListType === "movie" ? movieGenres : tvGenres;
 
   return (
     <Modal
@@ -65,8 +69,16 @@ const GenereModal: React.FC<IProps> = ({
           <Text className="text-gray-50 text-base">Choose Genres</Text>
           {/* Header Buttons */}
           <View className="flex-row w-[20%] justify-between">
-            <Pressable onPress={onConfirmHandler}>
-              <MaterialIcons name="done" color={Colors.gray[100]} size={18} />
+            <Pressable
+              disabled={selectedGenres.length > 0 ? false : true}
+              onPress={onConfirmHandler}
+            >
+              <MaterialIcons
+                name="done"
+                color={Colors.gray[100]}
+                size={18}
+                style={{ opacity: selectedGenres.length > 0 ? 1 : 0 }}
+              />
             </Pressable>
             <Pressable onPress={onClose}>
               <MaterialIcons name="close" color={Colors.gray[100]} size={18} />
@@ -77,7 +89,7 @@ const GenereModal: React.FC<IProps> = ({
           {movieGenres ? (
             <View className="flex-1">
               <FlatList
-                data={movieGenresList}
+                data={mediaGenreList}
                 keyExtractor={(item) => String(item.id)}
                 renderItem={(itemObj) => (
                   <View
@@ -92,8 +104,6 @@ const GenereModal: React.FC<IProps> = ({
                       size={20}
                       fillColor={Colors.stone[500]}
                       unfillColor={Colors.stone[800]}
-                      //  text="Custom Checkbox"
-                      //  iconStyle={{ borderColor: "red" }}
                       innerIconStyle={{ borderWidth: 1 }}
                       onPress={(isChecked: boolean) => {
                         isChecked === true

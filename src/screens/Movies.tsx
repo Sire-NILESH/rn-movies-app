@@ -70,6 +70,7 @@ const MoviesScreen: React.FC<IStackScreenProps> = (props) => {
                     key={m.genreId}
                     title={m.genreName}
                     medias={m.genreMedias}
+                    genreIdOfList={m.genreId}
                   />
                 );
               } else null;

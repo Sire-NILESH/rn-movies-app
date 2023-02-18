@@ -1,13 +1,15 @@
-import { View, Text, FlatList, Pressable } from "react-native";
-import { useLayoutEffect, useState } from "react";
+import { View, FlatList, Pressable, ActivityIndicator } from "react-native";
+import { useLayoutEffect, useState, useEffect } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { IStackScreenProps } from "../library/StackScreenProps";
 import { Colors } from "../utils/Colors";
 import Thumbnail from "../components/Thumbnail";
 import HeaderSearchButton from "../components/ui/HeaderSearchButton";
-import { MovieMedia, TvMedia } from "../typings";
+import { MediaTypes, MovieMedia, TvMedia } from "../typings";
 import { isMovieArray } from "../utils/helpers/helper";
 import GenereModal from "../components/GenereModal";
+import { getMediasProps } from "../utils/requests";
+import GenreTags from "../components/GenreTags";
 
 const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [showGenresModal, setShowGenresModal] = useState<boolean>(false);
@@ -16,13 +18,38 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   // @ts-ignore
   const {
     title,
-    medias,
+    medias: mediaList,
     genreId,
-  }: { title: string; medias: MovieMedia[] | TvMedia[]; genreId?: number } =
-    route.params;
+  }: {
+    title: string;
+    medias: MovieMedia[] | TvMedia[];
+    genreId?: number;
+  } = route.params;
 
-  console.log("tile list screen, selected genres list", userSelectedGenres);
-  console.log("genre to show", genreId);
+  const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>(mediaList);
+  const [loadingNewMedias, setLoadingNewMedias] = useState<boolean>(false);
+  const [pageNumber, setPageNumber] = useState<number>(1);
+
+  const currentListType: MediaTypes =
+    mediaList && isMovieArray(mediaList) ? "movie" : "tv";
+  console.log(currentListType);
+
+  useEffect(() => {
+    async function loadMedias() {
+      if (!genreId) return;
+      setLoadingNewMedias(true);
+      const genreMediasToFetch =
+        userSelectedGenres.length > 0 ? userSelectedGenres : [genreId];
+      const moreMedias = await getMediasProps(
+        genreMediasToFetch,
+        currentListType,
+        pageNumber
+      );
+      setMedias((prev) => [...prev, ...moreMedias]);
+      setLoadingNewMedias(false);
+    }
+    loadMedias();
+  }, [mediaList, pageNumber, userSelectedGenres]);
 
   const onShowGenresModal = () => {
     setShowGenresModal(true);
@@ -30,6 +57,15 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
   const onCloseGenresModal = () => {
     setShowGenresModal(false);
+  };
+
+  const onCloseWithConfirmGenresModal = (genresIdList: number[]) => {
+    if (genresIdList.length > 0) {
+      setUserSelectedGenres(genresIdList);
+      setPageNumber(1);
+      setMedias([]);
+      setShowGenresModal(false);
+    }
   };
 
   function setUserSelectedGenresHandler(genresIdList: number[]) {
@@ -44,7 +80,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       headerStyle: {
         backgroundColor: Colors.stone[900],
       },
-      headerTitle: title,
+      headerTitle: userSelectedGenres.length > 0 ? "Custom Genres" : title,
       headerTitleAlign: "center",
       headerTintColor: Colors.gray[100],
       headerShown: true,
@@ -64,25 +100,50 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         </View>
       ),
     });
-  }, []);
+  }, [userSelectedGenres]);
 
   return (
-    <View className="flex-1 bg-stone-900 px-2 py-2">
+    <View className="relative flex-1 bg-stone-900 px-2 py-2">
+      {userSelectedGenres.length > 0 ? (
+        <GenreTags genreIdList={userSelectedGenres} />
+      ) : null}
       {showGenresModal ? (
         <GenereModal
-          setUserSelectedGenresHandler={setUserSelectedGenresHandler}
+          mediaListType={currentListType}
           isVisible={showGenresModal}
           onClose={onCloseGenresModal}
+          closeWithConfirm={onCloseWithConfirmGenresModal}
         />
       ) : null}
-      {isMovieArray(medias) ? renderFlatList(medias) : renderFlatList(medias)}
+      <View className="flex-1">
+        {medias && medias.length > 0 && isMovieArray(medias)
+          ? renderFlatList(medias, loadingNewMedias, setPageNumber)
+          : renderFlatList(medias, loadingNewMedias, setPageNumber)}
+      </View>
     </View>
   );
 };
 
 export default TileListScreen;
 
-function renderFlatList(medias: any) {
+function renderFlatList(
+  medias: any,
+  loadingNewMedias: boolean,
+  setPageNumber: React.Dispatch<React.SetStateAction<number>>
+) {
+  const loadMoreItem = () => {
+    setPageNumber((prev) => prev + 1);
+  };
+
+  // Footer loader component
+  const renderLoader = () => {
+    return loadingNewMedias ? (
+      <View className="items-center my-2">
+        <ActivityIndicator size="large" color="#aaa" />
+      </View>
+    ) : null;
+  };
+
   return (
     <FlatList
       bounces
@@ -98,6 +159,8 @@ function renderFlatList(medias: any) {
         return String(media.id);
       }}
       numColumns={3}
+      ListFooterComponent={renderLoader}
+      onEndReached={loadMoreItem}
     />
   );
 }

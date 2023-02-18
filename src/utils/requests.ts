@@ -24,6 +24,9 @@ import { IGenre, MediaTypes, Movie, MovieMedia, TvMedia } from "../typings";
 // providers
 // const data = fetch('https://api.themoviedb.org/3/watch/providers/regions?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US').then((data)=>data.json()).then((res)=>console.log(res)).catch((err)=>console.log(err.message))
 
+// trailer videos
+// const data = fetch('https://api.themoviedb.org/3/movie/646389/videos?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US').then((data)=>data.json()).then((res)=>console.log(res)).catch((err)=>console.log(err.message))
+
 // eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlM2UxNzMyZjhmNDk1YTFiMTkxNDk0YjQ5YjgxMzY2OSIsInN1YiI6IjYzZGY4MTFhY2QyMDQ2MDBjMzBiMDA0ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.A7ER6WylpDsZnk2qUkrhDWweWQ1moBHYFkiXwwU51cw
 const API_KEY = "e3e1732f8f495a1b191494b49b813669";
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -97,9 +100,6 @@ export const getScreenProps = async (
     ),
   ]);
 
-  // console.log("------------------------------------", data[0].results);
-  //  data?[0].results[i]
-
   const results = getTheseGenreMedias.map((genre, i) => {
     return {
       genreId: genre.id,
@@ -109,8 +109,22 @@ export const getScreenProps = async (
   });
 
   return results;
+};
 
-  // console.log("---------------results---------------------", results[7]);
+export const getMediasProps = async (
+  getTheseGenreMedias: number[],
+  mediaType: MediaTypes,
+  pageNumber: number
+) => {
+  const commaSeparatedGenres = getTheseGenreMedias.join(",");
+  console.log("medias loading...", pageNumber);
+  const data = await fetch(
+    `${BASE_URL}/discover/${mediaType}?api_key=${API_KEY}&language=en-US&with_genres=${commaSeparatedGenres}&page=${pageNumber}`
+  ).then((res) => res.json());
+
+  // console.log(data.results);
+
+  return data.results;
 };
 
 export const getMoviesScreenProps = async () => {

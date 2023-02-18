@@ -16,9 +16,10 @@ interface Props {
   // When using firebase
   //   movies: Movie[] | DocumentData[]
   medias: TvMedia[] | MovieMedia[];
+  genreIdOfList: number;
 }
 
-function Row({ title, medias }: Props) {
+function Row({ title, medias, genreIdOfList }: Props) {
   // const handleClick = (direction: string) => {};
   const navigation = useNavigation();
 
@@ -31,22 +32,26 @@ function Row({ title, medias }: Props) {
       </View>
 
       {isMovieArray(medias)
-        ? renderFlatList(medias as MovieMedia[], title)
-        : renderFlatList(medias as TvMedia[], title)}
+        ? renderFlatList(medias as MovieMedia[], title, genreIdOfList)
+        : renderFlatList(medias as TvMedia[], title, genreIdOfList)}
     </View>
   );
 }
 
 export default memo(Row);
-// MovieMedia[] | TvMedia[]
-function renderFlatList(medias: MovieMedia[] | TvMedia[], title: string) {
+
+function renderFlatList(
+  medias: MovieMedia[] | TvMedia[],
+  title: string,
+  genreId: number
+) {
   const navigation = useNavigation();
 
   return (
     <>
       {medias && isMovieArray(medias) ? (
         <FlatList
-          ListFooterComponent={renderFooterItemFunction(medias, title)}
+          ListFooterComponent={renderFooterItemFunction(medias, title, genreId)}
           bounces
           className="ml-2 h-32"
           data={medias}
@@ -63,7 +68,7 @@ function renderFlatList(medias: MovieMedia[] | TvMedia[], title: string) {
         />
       ) : (
         <FlatList
-          ListFooterComponent={renderFooterItemFunction(medias, title)}
+          ListFooterComponent={renderFooterItemFunction(medias, title, genreId)}
           bounces
           className="ml-2 h-32"
           data={medias}
@@ -85,9 +90,11 @@ function renderFlatList(medias: MovieMedia[] | TvMedia[], title: string) {
 
 function renderFooterItemFunction(
   medias: MovieMedia[] | TvMedia[],
-  title: string
+  title: string,
+  genreId: number
 ) {
   const navigation = useNavigation();
+
   return (
     <View
       className="w-14 h-14 my-auto rounded-full [elevation: 2] overflow-hidden mx-2"
@@ -99,11 +106,11 @@ function renderFooterItemFunction(
         onPress={() => {
           if (isMovieArray(medias)) {
             // @ts-ignore
-            navigation.navigate("Tiles", { title, medias });
+            navigation.navigate("Tiles", { title, medias, genreId });
           } else {
             {
               // @ts-ignore
-              navigation.navigate("Tiles", { title, medias });
+              navigation.navigate("Tiles", { title, medias, genreId });
             }
           }
         }}

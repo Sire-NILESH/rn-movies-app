@@ -48,9 +48,9 @@ const HomeScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     navigation.setOptions({
       header: () => {
         return (
-          <SafeAreaView>
+          <>
             <Header />
-          </SafeAreaView>
+          </>
         );
       },
       headerTransparent: true,

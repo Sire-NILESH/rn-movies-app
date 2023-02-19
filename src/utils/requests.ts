@@ -1,3 +1,4 @@
+import { IGenresToShowHomeSCreen } from "../screens/Home";
 import { IGenre, MediaTypes, Movie, MovieMedia, TvMedia } from "../typings";
 
 // Movie search
@@ -86,6 +87,28 @@ export const movieRequests = {
   fetchHorrorMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=27`,
   fetchRomanceMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=10749`,
   fetchDocumentaries: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=99`,
+};
+
+export const getHomeScreenProps = async (
+  getTheseGenreMedias: IGenresToShowHomeSCreen[]
+) => {
+  const data = await Promise.all([
+    ...getTheseGenreMedias.map((genre) =>
+      fetch(
+        `${BASE_URL}/discover/${genre.mediaType}?api_key=${API_KEY}&language=en-US&with_genres=${genre.id}`
+      ).then((res) => res.json())
+    ),
+  ]);
+
+  const results = getTheseGenreMedias.map((genre, i) => {
+    return {
+      genreId: genre.id,
+      genreName: genre.name,
+      genreMedias: data[i].results,
+    };
+  });
+
+  return results;
 };
 
 export const getScreenProps = async (

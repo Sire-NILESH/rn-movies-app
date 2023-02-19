@@ -20,10 +20,12 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     title,
     medias: mediaList,
     genreId,
+    noMoreLoads,
   }: {
     title: string;
     medias: MovieMedia[] | TvMedia[];
     genreId?: number;
+    noMoreLoads?: boolean;
   } = route.params;
 
   const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>(mediaList);
@@ -129,7 +131,8 @@ export default TileListScreen;
 function renderFlatList(
   medias: any,
   loadingNewMedias: boolean,
-  setPageNumber: React.Dispatch<React.SetStateAction<number>>
+  setPageNumber: React.Dispatch<React.SetStateAction<number>>,
+  noMoreLoads?: boolean
 ) {
   const loadMoreItem = () => {
     setPageNumber((prev) => prev + 1);

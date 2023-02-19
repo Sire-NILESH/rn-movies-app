@@ -14,7 +14,7 @@ import { isMovie } from "./../utils/helpers/helper";
 interface Props {
   title: string;
   // When using firebase
-  //   movies: Movie[] | DocumentData[]
+  // movies: Movie[] | DocumentData[]
   medias: TvMedia[] | MovieMedia[];
   genreIdOfList: number;
 }

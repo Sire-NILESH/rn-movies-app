@@ -3,40 +3,46 @@ import { View, ScrollView } from "react-native";
 
 import { IStackScreenProps } from "../library/StackScreenProps";
 import { useLogging } from "../hooks/useLogging";
-import { Movie, MovieMedia, TvMedia } from "../typings";
-import { getAllScreenProps } from "../utils/requests";
+import { MediaTypes, MovieMedia, TvMedia } from "../typings";
+import { getHomeScreenProps } from "../utils/requests";
 import Banner from "../components/Banner";
 import Row from "../components/Row";
 import Header from "./../components/Header";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-interface CollectionProps {
-  netflixOriginalsShows: TvMedia[];
-  trendingNow: MovieMedia[];
-  topRated: MovieMedia[];
-  actionMovies: MovieMedia[];
-  comedyShows: TvMedia[];
-  horrorMovies: MovieMedia[];
-  romanceShows: TvMedia[];
-  documentaries: TvMedia[];
+interface IProps {
+  genreId: number;
+  genreName: string;
+  genreMedias: MovieMedia[] | TvMedia[];
 }
 
-// interface IProps extends IStackScreenProps, CollectionProps {}
+export interface IGenresToShowHomeSCreen {
+  id: number;
+  name: string;
+  mediaType: MediaTypes;
+}
 
-// <Button title="About" onPress={() => navigation.navigate("About")} />
-// <Button title="Contact" onPress={() => navigation.navigate("Contact")} />
+const genresToShow: IGenresToShowHomeSCreen[] = [
+  { id: 10765, name: "Sci-Fi & Fantasy", mediaType: "tv" },
+  { id: 28, name: "Action", mediaType: "movie" },
+  { id: 16, name: "Animation", mediaType: "tv" },
+  { id: 35, name: "Comedy", mediaType: "movie" },
+  { id: 18, name: "Drama", mediaType: "tv" },
+  { id: 10752, name: "War", mediaType: "movie" },
+  { id: 99, name: "Documentary", mediaType: "tv" },
+  { id: 10751, name: "Family", mediaType: "movie" },
+];
 
 const HomeScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [logging] = useLogging("Home Screen");
   const { navigation, route } = props;
-  const [allScreenProps, setAllScreenProps] = useState<CollectionProps | null>(
-    null
-  );
+  const [allScreenProps, setAllScreenProps] = useState<IProps[] | null>(null);
 
   useEffect(() => {
     async function fetchRequests() {
-      const data = await getAllScreenProps();
-      setAllScreenProps(data.props);
+      // const data = await getAllScreenProps();
+      const data = await getHomeScreenProps(genresToShow);
+      setAllScreenProps(data);
     }
     fetchRequests();
   }, []);
@@ -57,28 +63,26 @@ const HomeScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
   return (
     <View className="flex-1 bg-stone-900">
-      {/* <SafeAreaView className="flex-1 bg-stone-900"> */}
       <View className="flex-1">
         {allScreenProps ? (
           <ScrollView className="space-y-10">
-            <Banner mediaList={allScreenProps.trendingNow} />
-            <Row title="Trending Now" medias={allScreenProps.trendingNow} />
-            <Row title="Comedies" medias={allScreenProps.comedyShows} />
-            <Row title="Top Rated" medias={allScreenProps.topRated} />
+            <Banner mediaList={allScreenProps[0].genreMedias} />
 
-            {/* My List */}
-            {/* {list.length > 0 && <Row title="My List" movies={list} />} */}
-            <Row
-              title="Action Thrillers"
-              medias={allScreenProps.actionMovies}
-            />
-            <Row title="Scary Movies" medias={allScreenProps.horrorMovies} />
-            <Row title="Romance Movies" medias={allScreenProps.romanceShows} />
-            <Row title="Documentaries" medias={allScreenProps.documentaries} />
+            {allScreenProps.map((m) => {
+              if (m && m.genreMedias.length > 0) {
+                return (
+                  <Row
+                    key={m.genreId}
+                    title={m.genreName}
+                    medias={m.genreMedias}
+                    genreIdOfList={m.genreId}
+                  />
+                );
+              } else null;
+            })}
           </ScrollView>
         ) : null}
       </View>
-      {/* </SafeAreaView> */}
     </View>
   );
 };

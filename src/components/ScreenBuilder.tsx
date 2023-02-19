@@ -1,80 +1,46 @@
-import { StatusBar } from "expo-status-bar";
-import { SafeAreaView, View } from "react-native";
-
-import { ScrollView } from "react-native-gesture-handler";
-import { useEffect } from "react";
-
-import { useState } from "react";
-import { Movie } from "../typings";
+import { View, ScrollView } from "react-native";
+import { MovieMedia, TvMedia } from "../typings";
 import { useLogging } from "./../hooks/useLogging";
-import { getAllScreenProps } from "../utils/requests";
 import Banner from "./Banner";
 import Row from "./Row";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-interface IProps {}
-
-interface CollectionProps {
-  netflixOriginals: Movie[];
-  trendingNow: Movie[];
-  topRated: Movie[];
-  actionMovies: Movie[];
-  comedyMovies: Movie[];
-  horrorMovies: Movie[];
-  romanceMovies: Movie[];
-  documentaries: Movie[];
+interface IMedias {
+  genreId: number;
+  genreName: string;
+  genreMedias: MovieMedia[] | TvMedia[];
 }
 
-const ScreenBuilder: React.FC<IProps> = () => {
+interface IProps {
+  contents: IMedias[];
+}
+
+const ScreenBuilder: React.FC<IProps> = ({ contents }) => {
   const [logging] = useLogging("ScreenBuilder Screen");
-  function handler() {
-    logging.info("hello world");
-  }
-  const [allScreenProps, setAllScreenProps] = useState<CollectionProps | null>(
-    null
-  );
-
-  useEffect(() => {
-    async function fetchRequests() {
-      const data = await getAllScreenProps();
-      setAllScreenProps(data.props);
-    }
-    fetchRequests();
-  }, []);
-
-  // logging.info(allScreenProps);
 
   return (
-    <>
-      <StatusBar style="light" />
-      <SafeAreaView className="flex-1 bg-stone-900">
-        <View className="flex-1">
-          {allScreenProps ? (
-            <ScrollView className="space-y-10">
-              <Banner netflixOriginals={allScreenProps.trendingNow} />
-              <Row title="Trending Now" movies={allScreenProps.trendingNow} />
-              <Row title="Comedies" movies={allScreenProps.comedyMovies} />
-              <Row title="Top Rated" movies={allScreenProps.topRated} />
+    <View className="flex-1 bg-stone-900">
+      <View className="flex-1">
+        {contents ? (
+          <ScrollView className="space-y-10">
+            <Banner mediaList={contents[0].genreMedias} />
 
-              {/* My List */}
-              {/* {list.length > 0 && <Row title="My List" movies={list} />} */}
-              <Row
-                title="Action Thrillers"
-                movies={allScreenProps.actionMovies}
-              />
-              <Row title="Scary Movies" movies={allScreenProps.horrorMovies} />
-              <Row
-                title="Romance Movies"
-                movies={allScreenProps.romanceMovies}
-              />
-              <Row
-                title="Documentaries"
-                movies={allScreenProps.documentaries}
-              />
-            </ScrollView>
-          ) : null}
-        </View>
-      </SafeAreaView>
-    </>
+            {contents.map((m) => {
+              if (m && m.genreMedias.length > 0) {
+                return (
+                  <Row
+                    key={m.genreId}
+                    title={m.genreName}
+                    medias={m.genreMedias}
+                    genreIdOfList={m.genreId}
+                  />
+                );
+              } else null;
+            })}
+          </ScrollView>
+        ) : null}
+      </View>
+    </View>
   );
 };
 

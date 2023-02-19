@@ -1,12 +1,11 @@
-import { View, Text, ScrollView } from "react-native";
+import { View } from "react-native";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/StackScreenProps";
 import { IGenre, MovieMedia } from "../typings";
 import { getScreenProps } from "../utils/requests";
-import Banner from "../components/Banner";
-import Row from "../components/Row";
 import { Colors } from "../utils/Colors";
 import HeaderSearchButton from "../components/ui/HeaderSearchButton";
+import ScreenBuilder from "../components/ScreenBuilder";
 
 interface IProps {
   genreId: number;
@@ -34,9 +33,7 @@ const MoviesScreen: React.FC<IStackScreenProps> = (props) => {
 
   useEffect(() => {
     async function fetchRequests() {
-      // const data = await getMoviesScreenProps();
       const data = await getScreenProps(genresToShow, "movie");
-      // console.log(data.props);
       setMoviesScreenProps(data);
     }
     fetchRequests();
@@ -57,28 +54,13 @@ const MoviesScreen: React.FC<IStackScreenProps> = (props) => {
   }, []);
 
   return (
-    <View className="flex-1 bg-stone-900 ">
-      <View className="flex-1">
-        {moviesScreenProps ? (
-          <ScrollView className="space-y-10">
-            <Banner mediaList={moviesScreenProps[0].genreMedias} />
-
-            {moviesScreenProps.map((m) => {
-              if (m && m.genreMedias.length > 0) {
-                return (
-                  <Row
-                    key={m.genreId}
-                    title={m.genreName}
-                    medias={m.genreMedias}
-                    genreIdOfList={m.genreId}
-                  />
-                );
-              } else null;
-            })}
-          </ScrollView>
-        ) : null}
-      </View>
-    </View>
+    <>
+      {moviesScreenProps ? (
+        <ScreenBuilder contents={moviesScreenProps} />
+      ) : (
+        <View className="flex-1 bg-stone-900" />
+      )}
+    </>
   );
 };
 

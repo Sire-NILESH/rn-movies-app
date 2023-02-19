@@ -105,7 +105,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   }, [userSelectedGenres]);
 
   return (
-    <View className="relative flex-1 bg-stone-900 px-2 py-2">
+    <View className="flex-1 bg-stone-900 px-2 py-2">
       {userSelectedGenres.length > 0 ? (
         <GenreTags genreIdList={userSelectedGenres} />
       ) : null}
@@ -117,7 +117,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           closeWithConfirm={onCloseWithConfirmGenresModal}
         />
       ) : null}
-      <View className="flex-1">
+      <View className="flex-1 relative">
         {medias && medias.length > 0 && isMovieArray(medias)
           ? renderFlatList(medias, loadingNewMedias, setPageNumber)
           : renderFlatList(medias, loadingNewMedias, setPageNumber)}
@@ -131,8 +131,7 @@ export default TileListScreen;
 function renderFlatList(
   medias: any,
   loadingNewMedias: boolean,
-  setPageNumber: React.Dispatch<React.SetStateAction<number>>,
-  noMoreLoads?: boolean
+  setPageNumber: React.Dispatch<React.SetStateAction<number>>
 ) {
   const loadMoreItem = () => {
     setPageNumber((prev) => prev + 1);

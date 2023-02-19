@@ -1,16 +1,12 @@
-// import { useMemo } from "react";
-import { View, ScrollView, SafeAreaView } from "react-native";
+import { View } from "react-native";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/StackScreenProps";
 import { IGenre, TvMedia } from "../typings";
 import { getScreenProps } from "../utils/requests";
-import Banner from "../components/Banner";
-import Row from "../components/Row";
 import { Colors } from "../utils/Colors";
 
-// import { SafeAreaView } from "react-native-safe-area-context";
-
 import HeaderSearchButton from "../components/ui/HeaderSearchButton";
+import ScreenBuilder from "../components/ScreenBuilder";
 
 interface IProps {
   genreId: number;
@@ -38,7 +34,6 @@ const TvShowsScreen: React.FC<IStackScreenProps> = (props) => {
 
   useEffect(() => {
     async function fetchRequests() {
-      // const data = await getTVScreenProps();
       const data = await getScreenProps(genresToShow, "tv");
       setTvShowsScreenProps(data);
     }
@@ -63,28 +58,13 @@ const TvShowsScreen: React.FC<IStackScreenProps> = (props) => {
   }, []);
 
   return (
-    <SafeAreaView className="flex-1 bg-stone-900">
-      <View className="flex-1">
-        {tvShowsScreenProps ? (
-          <ScrollView className="space-y-10">
-            <Banner mediaList={tvShowsScreenProps[0].genreMedias} />
-
-            {tvShowsScreenProps.map((m) => {
-              if (m && m.genreMedias.length > 0) {
-                return (
-                  <Row
-                    key={m.genreId}
-                    title={m.genreName}
-                    medias={m.genreMedias}
-                    genreIdOfList={m.genreId}
-                  />
-                );
-              } else null;
-            })}
-          </ScrollView>
-        ) : null}
-      </View>
-    </SafeAreaView>
+    <>
+      {tvShowsScreenProps ? (
+        <ScreenBuilder contents={tvShowsScreenProps} />
+      ) : (
+        <View className="flex-1 bg-stone-900" />
+      )}
+    </>
   );
 };
 

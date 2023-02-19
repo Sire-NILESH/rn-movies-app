@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import { View, ScrollView } from "react-native";
-
+import { View } from "react-native";
 import { IStackScreenProps } from "../library/StackScreenProps";
 import { useLogging } from "../hooks/useLogging";
 import { MediaTypes, MovieMedia, TvMedia } from "../typings";
 import { getHomeScreenProps } from "../utils/requests";
-import Banner from "../components/Banner";
-import Row from "../components/Row";
 import Header from "./../components/Header";
+import ScreenBuilder from "../components/ScreenBuilder";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 interface IProps {
@@ -40,7 +38,6 @@ const HomeScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
   useEffect(() => {
     async function fetchRequests() {
-      // const data = await getAllScreenProps();
       const data = await getHomeScreenProps(genresToShow);
       setAllScreenProps(data);
     }
@@ -62,28 +59,13 @@ const HomeScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   }, []);
 
   return (
-    <View className="flex-1 bg-stone-900">
-      <View className="flex-1">
-        {allScreenProps ? (
-          <ScrollView className="space-y-10">
-            <Banner mediaList={allScreenProps[0].genreMedias} />
-
-            {allScreenProps.map((m) => {
-              if (m && m.genreMedias.length > 0) {
-                return (
-                  <Row
-                    key={m.genreId}
-                    title={m.genreName}
-                    medias={m.genreMedias}
-                    genreIdOfList={m.genreId}
-                  />
-                );
-              } else null;
-            })}
-          </ScrollView>
-        ) : null}
-      </View>
-    </View>
+    <SafeAreaView className="flex-1 bg-stone-900">
+      {allScreenProps ? (
+        <ScreenBuilder contents={allScreenProps} />
+      ) : (
+        <View className="flex-1 bg-stone-900" />
+      )}
+    </SafeAreaView>
   );
 };
 

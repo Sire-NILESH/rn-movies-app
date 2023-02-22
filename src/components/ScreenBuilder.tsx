@@ -1,45 +1,58 @@
 import { View, ScrollView } from "react-native";
-import { MovieMedia, TvMedia } from "../typings";
-import { useLogging } from "./../hooks/useLogging";
+import { ScreenTypes } from "../typings";
 import Banner from "./Banner";
 import Row from "./Row";
-import { SafeAreaView } from "react-native-safe-area-context";
-
-interface IMedias {
-  genreId: number;
-  genreName: string;
-  genreMedias: MovieMedia[] | TvMedia[];
-}
+import NothingToShow from "./NothingToShow";
+import { showErrorAlert } from "../utils/helpers/helper";
+import useFetchScreenProps from "../hooks/useFetchScreenProps";
+import Loader from "./ui/Loader";
 
 interface IProps {
-  contents: IMedias[];
+  screenType: ScreenTypes;
 }
 
-const ScreenBuilder: React.FC<IProps> = ({ contents }) => {
-  const [logging] = useLogging("ScreenBuilder Screen");
+const ScreenBuilder: React.FC<IProps> = ({ screenType }) => {
+  // This hook is responsible for loading the screen props and error messages for the Home, TV and Movies screens.
+  const { screenProps, loadingProps, errorLoadingProps } =
+    useFetchScreenProps(screenType);
+
+  if (errorLoadingProps && !loadingProps) {
+    showErrorAlert();
+  }
 
   return (
     <View className="flex-1 bg-stone-900">
-      <View className="flex-1">
-        {contents ? (
-          <ScrollView className="space-y-10">
-            <Banner mediaList={contents[0].genreMedias} />
+      {/* Loader */}
+      <Loader loading={loadingProps} />
 
-            {contents.map((m) => {
-              if (m && m.genreMedias.length > 0) {
-                return (
-                  <Row
-                    key={m.genreId}
-                    title={m.genreName}
-                    medias={m.genreMedias}
-                    genreIdOfList={m.genreId}
-                  />
-                );
-              } else null;
-            })}
-          </ScrollView>
-        ) : null}
-      </View>
+      {!loadingProps && !screenProps ? (
+        //   if no props then
+        <NothingToShow />
+      ) : !errorLoadingProps && screenProps ? (
+        //   when no error and props
+        <View className="flex-1">
+          {screenProps ? (
+            <ScrollView className="space-y-10">
+              {screenProps[0].genreMedias ? (
+                <Banner mediaList={screenProps[0].genreMedias} />
+              ) : null}
+
+              {screenProps.map((m) => {
+                if (m.genreMedias?.length > 0) {
+                  return (
+                    <Row
+                      key={m.genreId}
+                      title={m.genreName}
+                      medias={m.genreMedias}
+                      genreIdOfList={m.genreId}
+                    />
+                  );
+                } else null;
+              })}
+            </ScrollView>
+          ) : null}
+        </View>
+      ) : null}
     </View>
   );
 };

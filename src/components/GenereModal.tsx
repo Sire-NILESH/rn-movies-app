@@ -1,10 +1,10 @@
 import { View, Text, Modal, Pressable, FlatList } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Colors } from "./../utils/Colors";
-import { fetchGenres, movieGenres, tvGenres } from "./../utils/requests";
 import { MediaTypes } from "../typings";
+import { movieGenres, tvGenres } from "../utils/helpers/helper";
 
 interface IProps {
   isVisible: boolean;
@@ -26,43 +26,19 @@ const GenereModal: React.FC<IProps> = ({
       setSelectedGenres((prev) => {
         const i = prev.findIndex((genre) => genre === genreId);
         prev.splice(i, 1);
-        // console.log(prev.filter((genre) => genre !== genreId));
         return [...prev];
       });
     } else setSelectedGenres((prev) => [...prev, genreId]);
   }
 
   function onConfirmHandler() {
-    // Lift the Genre state up
-    // if (selectedGenres.length > 0) setUserSelectedGenresHandler(selectedGenres);
-    // onClose();
-
     closeWithConfirm(selectedGenres);
   }
-
-  //   const [movieGenres, setMovieGenres] = useState<IGenre[] | null>(null);
-
-  //   useEffect(() => {
-  //     async function fetchMovieGenres() {
-  //       try {
-  //         const data = await fetchGenres("tv");
-  //         if (data?.props) setMovieGenres(data.props);
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //     }
-  //     fetchMovieGenres();
-  //   }, []);
 
   const mediaGenreList = mediaListType === "movie" ? movieGenres : tvGenres;
 
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={isVisible}
-      // style={{ flex: , backgroundColor: Colors.gray[400] }}
-    >
+    <Modal animationType="slide" transparent={true} visible={isVisible}>
       <View className="absolute my-[20%] mx-[10%] h-[80%] w-[80%] bg-stone-800 rounded-xl pb-2  [elevation:10]">
         <View className="flex-row items-center justify-between h-[42] bg-stone-900 rounded-t-xl px-[20]">
           {/* Header Title */}

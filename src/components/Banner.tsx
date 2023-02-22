@@ -1,7 +1,6 @@
-import { Movie, MovieMedia, TvMedia } from "../typings";
+import { MovieMedia, TvMedia } from "../typings";
 import { useState, useEffect } from "react";
-import { useRecoilState } from "./../../node_modules/recoil/index.d";
-import { modalState, movieState } from "./../atoms/modalAtom";
+
 import {
   Image,
   Text,
@@ -13,7 +12,6 @@ import {
 import CustomButton from "./ui/CustomButton";
 import { Colors } from "./../utils/Colors";
 import { LinearGradient } from "expo-linear-gradient";
-import Header from "./Header";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { isMovie } from "./../utils/helpers/helper";
 
@@ -25,8 +23,6 @@ const screenDimensions = Dimensions.get("screen");
 
 function Banner({ mediaList }: Props) {
   const [media, setMedia] = useState<MovieMedia | TvMedia | null>(null);
-  // const [showModal, setShowModal] = useRecoilState(modalState);
-  // const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -38,30 +34,14 @@ function Banner({ mediaList }: Props) {
   }, [mediaList]);
 
   function playButtonPressHandler(): void {
-    // setCurrentMovie(movie);
-    // setShowModal(true);
     // @ts-ignore
     navigation.navigate("More Info", { media: media });
   }
 
   function infoButtonPressHandler(): void {
-    // setCurrentMovie(movie);
-    // setShowModal(true);
     // @ts-ignore
     navigation.navigate("More Info", { media: media });
   }
-  // const [dimensions, setDimensions] = useState({
-  //   window: windowDimensions,
-  //   screen: screenDimensions,
-  // });
-
-  // function isMovie(media: MovieMedia | TvMedia ): media is MovieMedia {
-  //   return (media as MovieMedia).title !== undefined;
-  // }
-
-  // media && isMovie(media)
-  //   ? console.log(media.title)
-  //   : console.log(media?.first_air_date);
 
   return (
     <View className="flex-1 py-10 w-[100%]">

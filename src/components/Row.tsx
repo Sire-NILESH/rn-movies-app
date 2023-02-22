@@ -1,5 +1,3 @@
-// import { DocumentData } from 'firebase/firestore'
-// import { FlatList } from "react-native-gesture-handler";
 import { MovieMedia, TvMedia } from "../typings";
 import Thumbnail from "./Thumbnail";
 import { Text, View, FlatList } from "react-native";
@@ -13,14 +11,11 @@ import { isMovie } from "./../utils/helpers/helper";
 
 interface Props {
   title: string;
-  // When using firebase
-  // movies: Movie[] | DocumentData[]
   medias: TvMedia[] | MovieMedia[];
   genreIdOfList: number;
 }
 
 function Row({ title, medias, genreIdOfList }: Props) {
-  // const handleClick = (direction: string) => {};
   const navigation = useNavigation();
 
   return (

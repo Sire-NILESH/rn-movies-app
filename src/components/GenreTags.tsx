@@ -1,6 +1,6 @@
 import { View, Text, FlatList } from "react-native";
 import React from "react";
-import { idToGenresMapped } from "./../utils/requests";
+import { idToGenresMapped } from "../utils/helpers/helper";
 
 interface IProps {
   genreIdList: number[];
@@ -27,8 +27,7 @@ interface IGenreProps {
 
 function GerneTag(props: IGenreProps) {
   return (
-    <View className="flex-1 mx-2 bg-black/40 border border-stone-700 px-4 h-8 rounded-lg items-center justify-center">
-      {/* <Text>{idToGenresMapped[String(props.genreId)]}</Text> */}
+    <View className="flex-1 mx-2 bg-black/40 border border-stone-700 px-4 h-8 rounded-xl items-center justify-center">
       <Text className="text-gray-100">
         {/* @ts-ignore */}
         {idToGenresMapped[String(props.genreId)]}

@@ -6,7 +6,6 @@ import { IStackScreenProps } from "../library/StackScreenProps";
 import { Colors } from "./../utils/Colors";
 import { FlatList } from "react-native-gesture-handler";
 import { searchRequest } from "../utils/requests";
-import { useNavigation, useRoute } from "@react-navigation/native";
 import { MediaTypes, Movie, MovieMedia, TvMedia } from "../typings";
 import HeaderSearchButton from "./../components/ui/HeaderSearchButton";
 import { isMovie, isMovieArray } from "./../utils/helpers/helper";
@@ -87,11 +86,6 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   // Header settings
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerStyle: {
-        backgroundColor: Colors.stone[900],
-      },
-      // headerTransparent: true,
-      // headerTitle: "Search",
       headerTitle: (props) => {
         return (
           <SearchInput
@@ -100,11 +94,6 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           />
         );
       },
-      headerTitleAlign: "center",
-      headerTintColor: Colors.gray[100],
-      headerShown: true,
-      presentation: "modal",
-      headerShadowVisible: false,
       headerRight: (props) => (
         <HeaderSearchButton
           gotoList={true}
@@ -127,33 +116,24 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       <SafeAreaView className="flex-1 bg-stone-800">
         <View className="flex-1 pb-2">
           {/* Search List suggestions */}
-          {
-            searchQuery !== null &&
-            searchQuery.length >= 2 &&
-            searchQueryResult &&
-            searchQueryResult?.props.length > 0
-              ? isMovieArray(searchQueryResult?.props)
-                ? renderFlatList(
-                    searchQueryResult?.props,
-                    searchCategory,
-                    navigation
-                  )
-                : !isMovieArray(searchQueryResult?.props)
-                ? renderFlatList(
-                    searchQueryResult?.props,
-                    searchCategory,
-                    navigation
-                  )
-                : null
+          {searchQuery !== null &&
+          searchQuery.length >= 2 &&
+          searchQueryResult &&
+          searchQueryResult?.props.length > 0
+            ? isMovieArray(searchQueryResult?.props)
+              ? renderFlatList(
+                  searchQueryResult?.props,
+                  searchCategory,
+                  navigation
+                )
+              : !isMovieArray(searchQueryResult?.props)
+              ? renderFlatList(
+                  searchQueryResult?.props,
+                  searchCategory,
+                  navigation
+                )
               : null
-            // (
-            // <View className="flex-1 flex-row items-center">
-            //   <Text className="flex-1 text-center text-stone-500 text-3xl">
-            //     No results ಥ_ಥ
-            //   </Text>
-            // </View>
-            // )
-          }
+            : null}
         </View>
       </SafeAreaView>
     </>
@@ -167,8 +147,6 @@ function renderFlatList(
   searchCategory: MediaTypes,
   navigation: StackNavigationProp<any>
 ) {
-  // const navigation = useNavigation();
-
   function navigateTo(
     media: MovieMedia | TvMedia,
     to: string,
@@ -194,7 +172,6 @@ function renderFlatList(
       data={searchQueryResult as TvMedia[]}
       keyExtractor={(item) => String(item.id) + String(Math.random() * 10)}
       renderItem={(mediaObj) => {
-        // movieObj.index === 3 && console.log(movieObj.index);
         return (
           <View
             className="w-full justify-center overflow-clip"
@@ -207,29 +184,19 @@ function renderFlatList(
             <Pressable
               className="flex-1 px-4 py-3"
               onPress={() => {
-                console.log(mediaObj.item);
                 navigateTo(mediaObj.item, "More Info", searchCategory);
-                // navigation.navigate("More Info", {
-                //   media: mediaObj.item,
-                //   mediaType: searchCategory,
-                // });
               }}
             >
               <Text className="text-gray-100">
                 {isMovie(mediaObj.item)
                   ? mediaObj.item.title
                   : mediaObj.item.name}{" "}
-                {/* {getTitle(mediaObj.item)}{" "} */}
-                {/* {mediaObj.item.title
-              ? mediaObj.item.title
-              : mediaObj.item.original_title}{" "} */}
                 <Text className="text-xs">
                   (
                   {isMovie(mediaObj.item)
                     ? mediaObj.item.release_date
                     : mediaObj.item.first_air_date}
-                  ){/* ({getReleaseDate(mediaObj.item)}) */}
-                  {/* ({mediaObj.item.release_date}) */}
+                  )
                 </Text>
               </Text>
             </Pressable>

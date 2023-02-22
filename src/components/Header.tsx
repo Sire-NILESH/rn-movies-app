@@ -1,6 +1,4 @@
-// import { useEffect, useState } from "react";
-// import useAuth from '../hooks/useAuth'
-import { View, Text, Image } from "react-native";
+import { View, Text } from "react-native";
 import { Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -31,7 +29,7 @@ function Header() {
   }
 
   return (
-    <View className="flex-row justify-between items-end w-[100%] h-[80]  px-4 ">
+    <View className="flex-row justify-between items-center w-[100%] h-[80]  px-4 ">
       <View className="flex-4">
         <Text className="font-semibold text-3xl text-yellow-50">
           🍿 Popcorn

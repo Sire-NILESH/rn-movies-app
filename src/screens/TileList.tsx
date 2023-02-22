@@ -34,7 +34,6 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
   const currentListType: MediaTypes =
     mediaList && isMovieArray(mediaList) ? "movie" : "tv";
-  console.log(currentListType);
 
   useEffect(() => {
     async function loadMedias() {
@@ -74,23 +73,15 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     setUserSelectedGenres(genresIdList);
   }
 
-  // console.log(showGenresModal, "---Tiles screen");
-
   // Header settings
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerStyle: {
-        backgroundColor: Colors.stone[900],
-      },
       headerTitle: userSelectedGenres.length > 0 ? "Custom Genres" : title,
-      headerTitleAlign: "center",
-      headerTintColor: Colors.gray[100],
-      headerShown: true,
-      headerShadowVisible: false,
       headerRight: (props) => (
         <View className="flex-row">
+          {/* Search button */}
           <HeaderSearchButton />
-          {/* <Pressable onPress={() => setShowGenresModal((prev) => !prev)}> */}
+          {/* Genre select button */}
           <Pressable onPress={onShowGenresModal}>
             <MaterialCommunityIcons
               name="drama-masks"

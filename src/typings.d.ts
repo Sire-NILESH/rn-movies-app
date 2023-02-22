@@ -10,6 +10,14 @@ export interface IGenre {
   name: string;
 }
 
+export type ScreenTypes = "tv" | "movie" | "home";
+
+export interface IGenresToShowHomeScreen {
+  id: number;
+  name: string;
+  mediaType: MediaTypes;
+}
+
 export interface Media {
   id: number;
   adult: boolean;

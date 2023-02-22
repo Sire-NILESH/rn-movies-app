@@ -1,11 +1,9 @@
 import { View, Text, Image, ScrollView } from "react-native";
 import { useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/StackScreenProps";
-import { Colors } from "../utils/Colors";
-import { MediaTypes, Movie, MovieMedia, TvMedia } from "../typings";
-import { idToGenresMapped } from "../utils/requests";
+import { MediaTypes, MovieMedia, TvMedia } from "../typings";
 import { isoLangs } from "./../utils/helpers/isoLangs";
-import { isMovie } from "./../utils/helpers/helper";
+import { idToGenresMapped, isMovie } from "./../utils/helpers/helper";
 
 const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const { navigation, route } = props;
@@ -20,34 +18,16 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     return media.name;
   }
 
-  // const fields = [
-  //   { "Original Title": "" },
-  //   { Rating: "" },
-  //   { Release: "" },
-  //   { genre: "" },
-  //   { original: "" },
-  // ];
-
   // Header settings
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerStyle: {
-        backgroundColor: Colors.stone[900],
-      },
       headerTitle: getTitle(),
-      // headerTitle: "title" in media ? media.title : media.name,
-      // headerTitle: movie.title ? movie.title : movie.original_name,
-      headerTitleAlign: "center",
-      headerTintColor: Colors.gray[100],
-      headerShown: true,
     });
   }, []);
 
   return (
     <ScrollView className="flex-1 bg-stone-800 pb-24">
-      {/* {route.params && <Text className="text-3xl">{movie?.title}</Text>} */}
       <View className="h-[300]">
-        {/* <Banner movieList={[movie]} /> */}
         <Image
           source={
             media.backdrop_path || media.poster_path

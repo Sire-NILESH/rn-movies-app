@@ -8,7 +8,7 @@ interface IProps {
   border?: number;
   color?: string;
   shadow?: boolean;
-  children?: React.ReactElement;
+  children?: string | JSX.Element | JSX.Element[] | (() => JSX.Element);
 }
 
 const CustomButton: React.FC<IProps> = (props) => {
@@ -24,7 +24,7 @@ const CustomButton: React.FC<IProps> = (props) => {
     >
       <Pressable
         onPress={props.method}
-        className="w-40 h-20  items-center justify-center"
+        className="w-40 h-20  items-center justify-center flex-row"
         android_ripple={{ color: "#eee" }}
         style={[
           props.width ? { width: props.width } : null,

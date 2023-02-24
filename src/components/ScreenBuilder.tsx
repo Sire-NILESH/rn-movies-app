@@ -1,5 +1,5 @@
 import { View, ScrollView } from "react-native";
-import { ScreenTypes } from "../typings";
+import { MovieMedia, ScreenTypes, TvMedia } from "../typings";
 import Banner from "./Banner";
 import Row from "./Row";
 import NothingToShow from "./NothingToShow";
@@ -9,6 +9,12 @@ import Loader from "./ui/Loader";
 
 interface IProps {
   screenType: ScreenTypes;
+}
+
+interface IState {
+  genreId: number;
+  genreName: string;
+  genreMedias: TvMedia[] | MovieMedia[];
 }
 
 const ScreenBuilder: React.FC<IProps> = ({ screenType }) => {
@@ -21,7 +27,7 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType }) => {
   }
 
   return (
-    <View className="flex-1 bg-stone-900">
+    <View className="flex-1 bg-black">
       {/* Loader */}
       <Loader loading={loadingProps} />
 
@@ -37,7 +43,7 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType }) => {
                 <Banner mediaList={screenProps[0].genreMedias} />
               ) : null}
 
-              {screenProps.map((m) => {
+              {screenProps.map((m: IState) => {
                 if (m.genreMedias?.length > 0) {
                   return (
                     <Row

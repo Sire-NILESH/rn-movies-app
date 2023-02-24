@@ -12,7 +12,8 @@ interface IScreenProps {
 }
 
 const useFetcher = (fetcher: any, params: any[]) => {
-  const [screenProps, setScreenProps] = useState<IScreenProps[] | null>(null);
+  const [screenProps, setScreenProps] = useState<any | null>(null);
+  // const [screenProps, setScreenProps] = useState<IScreenProps[] | null>(null);
   const [loadingProps, setLoadingProps] = useState<boolean>(false);
   const [errorLoadingProps, setErrorLoadingProps] = useState<Error | null>(
     null

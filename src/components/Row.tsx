@@ -19,8 +19,8 @@ function Row({ title, medias, genreIdOfList }: Props) {
   const navigation = useNavigation();
 
   return (
-    <View className="h-40 space-y-1 mb-5">
-      <View className="flex-row space-x-4 mb-2">
+    <View className="space-y-1 mb-5">
+      <View className="flex-row space-x-4 mb-1">
         <Text className="pl-5 text-sm font-semibold text-[#e5e5e5]">
           {title}
         </Text>
@@ -40,7 +40,7 @@ function renderFlatList(
   title: string,
   genreId: number
 ) {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   return (
     <>
@@ -48,13 +48,17 @@ function renderFlatList(
         <FlatList
           ListFooterComponent={renderFooterItemFunction(medias, title, genreId)}
           bounces
-          className="ml-2 h-32"
+          className="pl-2 py-1"
+          // className="ml-2 h-32"
           data={medias}
           renderItem={(media) => (
-            <Thumbnail
-              media={isMovie(media.item) ? media.item : media.item}
-              orientation="landscape"
-            />
+            <View className="ml-1">
+              <Thumbnail
+                media={isMovie(media.item) ? media.item : media.item}
+                orientation="portrait"
+                // orientation="landscape"
+              />
+            </View>
           )}
           keyExtractor={(media) => {
             return String(media.id) + String(Math.random() * 20);
@@ -65,13 +69,17 @@ function renderFlatList(
         <FlatList
           ListFooterComponent={renderFooterItemFunction(medias, title, genreId)}
           bounces
-          className="ml-2 h-32"
+          className="px-2 py-1"
+          // className="ml-2 h-32"
           data={medias}
           renderItem={(media) => (
-            <Thumbnail
-              media={isMovie(media.item) ? media.item : media.item}
-              orientation="landscape"
-            />
+            <View className="ml-1">
+              <Thumbnail
+                media={isMovie(media.item) ? media.item : media.item}
+                orientation="portrait"
+                // orientation="landscape"
+              />
+            </View>
           )}
           keyExtractor={(media) => {
             return String(media.id) + String(Math.random() * 20);
@@ -92,7 +100,7 @@ function renderFooterItemFunction(
 
   return (
     <View
-      className="w-14 h-14 my-auto rounded-full [elevation: 2] overflow-hidden mx-2"
+      className="w-14 h-14 my-auto rounded-full [elevation: 2] overflow-hidden mx-5"
       style={{ elevation: 2 }}
     >
       <Pressable

@@ -8,7 +8,7 @@ interface IProps {
 
 const GenreTags: React.FC<IProps> = (props) => {
   return (
-    <View className="w-full h-10 rounded-md mb-1">
+    <View className="w-full justify-center h-8 rounded-md">
       <FlatList
         horizontal
         data={props.genreIdList}

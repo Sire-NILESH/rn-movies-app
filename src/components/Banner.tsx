@@ -14,11 +14,12 @@ import { Colors } from "./../utils/Colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { isMovie } from "./../utils/helpers/helper";
+import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
   mediaList: MovieMedia[] | TvMedia[];
 }
-const windowDimensions = Dimensions.get("window");
+// const windowDimensions = Dimensions.get("window");
 const screenDimensions = Dimensions.get("screen");
 
 function Banner({ mediaList }: Props) {
@@ -55,16 +56,17 @@ function Banner({ mediaList }: Props) {
       >
         <LinearGradient
           colors={[
-            "rgba(0,0,0,0.3)",
+            "rgba(0,0,0,0.5)",
+            "rgba(28, 25, 23, 0.6)",
             "rgba(28, 25, 23, 0.9)",
-            Colors.stone[900],
+            Colors.black,
           ]}
           style={styles.rootScreen}
         >
           <ImageBackground //wrapping the main entry screen with this <ImageBackground> component
             source={{
               uri: `https://image.tmdb.org/t/p/w500${
-                media?.backdrop_path || media?.poster_path
+                media?.poster_path || media?.backdrop_path
               }`,
             }}
             resizeMode="cover" //similar to web, "cover", "contain", etc.
@@ -102,7 +104,10 @@ function Banner({ mediaList }: Props) {
               method={playButtonPressHandler}
               shadow={false}
             >
-              <Text className="font-bold">Play</Text>
+              <View className="flex-row  gap-1 items-center">
+                <Ionicons name="star-outline" size={12} />
+                <Text className="font-bold">Favorite</Text>
+              </View>
             </CustomButton>
           </View>
 
@@ -116,7 +121,10 @@ function Banner({ mediaList }: Props) {
               method={infoButtonPressHandler}
               shadow={false}
             >
-              <Text className="font-bold text-gray-100">More Info i</Text>
+              <View className="flex-row  gap-1 items-center">
+                <Ionicons name="information-circle" size={18} />
+                <Text className="font-bold">More Info</Text>
+              </View>
             </CustomButton>
           </View>
         </View>
@@ -132,7 +140,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   backgroundImage: {
-    // opacity: 0.02,
     zIndex: -100,
   },
 });

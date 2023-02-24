@@ -1,11 +1,4 @@
-import {
-  IGenre,
-  IGenresToShowHomeScreen,
-  MediaTypes,
-  Movie,
-  MovieMedia,
-  TvMedia,
-} from "../typings";
+import { IGenre, IGenresToShowHomeScreen, MediaTypes } from "../typings";
 
 // Movie search
 // const data = fetch('https://api.themoviedb.org/3/search/movie?api_key=e3e1732f8f495a1b191494b49b813669&query=batman&language=en-US&page=1&include_adult=false').then((data)=>data.json()).then((res)=>console.log(res))
@@ -33,6 +26,13 @@ import {
 
 // trailer videos
 // const data = fetch('https://api.themoviedb.org/3/movie/646389/videos?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US').then((data)=>data.json()).then((res)=>console.log(res)).catch((err)=>console.log(err.message))
+
+// related/similar content
+// Movies
+// const data = fetch('https://api.themoviedb.org/3/movie/646389/similar?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US&page=1').then((data)=>data.json()).then((res)=>console.log(res)).catch((err)=>console.log(err.message))
+
+// Recommended content TV
+// const data = fetch('https://api.themoviedb.org/3/movie/646389/similar?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US&page=1').then((data)=>data.json()).then((res)=>console.log(res)).catch((err)=>console.log(err.message))
 
 // eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlM2UxNzMyZjhmNDk1YTFiMTkxNDk0YjQ5YjgxMzY2OSIsInN1YiI6IjYzZGY4MTFhY2QyMDQ2MDBjMzBiMDA0ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.A7ER6WylpDsZnk2qUkrhDWweWQ1moBHYFkiXwwU51cw
 const API_KEY = "e3e1732f8f495a1b191494b49b813669";
@@ -119,8 +119,8 @@ export const getScreenProps = async (
   }
 };
 
-// Is used to load more media(Movie/Tv) on scroll list end in the Tiles list screen.
-export const getMediasProps = async (
+// Is used to load more Genre related media(Movie/Tv) on scroll list end in the Tiles list screen.
+export const getGenreMediasProps = async (
   getTheseGenreMedias: number[],
   mediaType: MediaTypes,
   pageNumber: number
@@ -130,6 +130,28 @@ export const getMediasProps = async (
     `${BASE_URL}/discover/${mediaType}?api_key=${API_KEY}&language=en-US&with_genres=${commaSeparatedGenres}&page=${pageNumber}`
   ).then((res) => res.json());
 
+  return data.results;
+};
+
+// Is used to load more  Related/Similar media(Movie/Tv) on scroll list end in the Related tiles list screen.
+export const getRelatedMediasProps = async (
+  relatedToMediaId: number,
+  mediaType: MediaTypes,
+  pageNumber: number
+) => {
+  const data = await fetch(
+    // https://api.themoviedb.org/3/movie/{movie_id}/recommendations?api_key=<<api_key>>&language=en-US&page=1
+    `${BASE_URL}/${mediaType}/${relatedToMediaId}/recommendations?api_key=${API_KEY}&language=en-US&page=${pageNumber}`
+    // this was for similar only
+    // `${BASE_URL}/${mediaType}/${relatedToMediaId}/similar?api_key=${API_KEY}&language=en-US&page=${pageNumber}`
+  )
+    .then((res) => res.json())
+    .catch((err) => {
+      console.log(err.message);
+      throw new err();
+    });
+
+  console.log(mediaType);
   return data.results;
 };
 

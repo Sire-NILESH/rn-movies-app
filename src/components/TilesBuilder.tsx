@@ -36,6 +36,7 @@ export default function TilesBuilder(props: {
       }}
       numColumns={3}
       ListFooterComponent={renderLoader}
+      onEndReachedThreshold={0.7}
       onEndReached={loadMoreItem}
     />
   );

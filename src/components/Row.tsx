@@ -1,4 +1,4 @@
-import { MovieMedia, TvMedia } from "../typings";
+import { MovieMedia, Trailer, TvMedia } from "../typings";
 import Thumbnail from "./Thumbnail";
 import { Text, View, FlatList } from "react-native";
 import IconButton from "./ui/IconButton";
@@ -8,6 +8,7 @@ import { memo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { isMovieArray } from "../utils/helpers/helper";
 import { isMovie } from "./../utils/helpers/helper";
+import { FlashList } from "@shopify/flash-list";
 
 interface Props {
   title: string;
@@ -46,6 +47,7 @@ function renderFlatList(
     <>
       {medias && isMovieArray(medias) ? (
         <FlatList
+          initialNumToRender={20}
           ListFooterComponent={renderFooterItemFunction(medias, title, genreId)}
           bounces
           className="pl-2 py-1"
@@ -67,6 +69,7 @@ function renderFlatList(
         />
       ) : (
         <FlatList
+          initialNumToRender={20}
           ListFooterComponent={renderFooterItemFunction(medias, title, genreId)}
           bounces
           className="px-2 py-1"
@@ -109,11 +112,11 @@ function renderFooterItemFunction(
         onPress={() => {
           if (isMovieArray(medias)) {
             // @ts-ignore
-            navigation.navigate("Tiles", { title, medias, genreId });
+            navigation.navigate("Tiles", { title, genreId });
           } else {
             {
               // @ts-ignore
-              navigation.navigate("Tiles", { title, medias, genreId });
+              navigation.navigate("Tiles", { title, genreId });
             }
           }
         }}

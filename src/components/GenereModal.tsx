@@ -67,6 +67,7 @@ const GenereModal: React.FC<IProps> = ({
               <FlatList
                 data={mediaGenreList}
                 keyExtractor={(item) => String(item.id)}
+                initialNumToRender={20}
                 renderItem={(itemObj) => (
                   <View
                     className="flex-row px-4"

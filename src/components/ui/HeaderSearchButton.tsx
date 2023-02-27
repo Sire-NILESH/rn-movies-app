@@ -3,6 +3,7 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import IconButton from "./IconButton";
 import { Colors } from "./../../utils/Colors";
+import { MovieMedia, TvMedia } from "../../typings";
 
 interface IProps {
   gotoList?: boolean;
@@ -24,7 +25,7 @@ export default function HeaderSearchButton({
   function onPressHandler() {
     if (gotoList === true) {
       // @ts-ignore
-      navigation.navigate("Tiles", { title, medias });
+      navigation.push("Tiles", { title, medias });
     } else {
       // @ts-ignore
       navigation.navigate("Search Screen", { searchCategory: searchCategory });

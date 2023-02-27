@@ -7,7 +7,23 @@ export function isMovie(
   return media !== null && (media as MovieMedia).title !== undefined;
 }
 
+export function isTv(media: MovieMedia | TvMedia | null): media is TvMedia {
+  return media !== null && (media as TvMedia).name !== undefined;
+}
+
+// export function isTrailer(
+//   media: MovieMedia | TvMedia | null
+// ): media is MovieMedia {
+//   return media !== null && (media as MovieMedia).title !== undefined;
+// }
+
 export function isMovieArray(
+  medias: MovieMedia[] | TvMedia[]
+): medias is MovieMedia[] {
+  return medias !== null && (medias as MovieMedia[])[0].title !== undefined;
+}
+
+export function isTvArray(
   medias: MovieMedia[] | TvMedia[]
 ): medias is MovieMedia[] {
   return medias !== null && (medias as MovieMedia[])[0].title !== undefined;

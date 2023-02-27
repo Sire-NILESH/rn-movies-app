@@ -6,6 +6,7 @@ import TvShowsScreen from "./../screens/TvShows";
 import SearchScreen from "./../screens/Search";
 import TileListScreen from "../screens/TileList";
 import RelatedTileListScreen from "../screens/RelatedTileListScreen";
+import TrailerScreen from "../screens/TrailerScreen";
 
 const routes: IRouteProps[] = [
   {
@@ -35,6 +36,10 @@ const routes: IRouteProps[] = [
   {
     name: "Related",
     component: RelatedTileListScreen,
+  },
+  {
+    name: "Trailer",
+    component: TrailerScreen,
   },
 ];
 

@@ -171,6 +171,7 @@ function renderFlatList(
     <FlatList
       data={searchQueryResult as TvMedia[]}
       keyExtractor={(item) => String(item.id) + String(Math.random() * 10)}
+      initialNumToRender={20}
       renderItem={(mediaObj) => {
         return (
           <View

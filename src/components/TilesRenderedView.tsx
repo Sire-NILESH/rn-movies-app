@@ -1,16 +1,21 @@
 import { View, FlatList, ActivityIndicator } from "react-native";
 
 import Thumbnail from "../components/Thumbnail";
+import memo from "./Row";
 
-export default function TilesRenderedView(props: {
+interface IProps {
+  // export default function TilesRenderedView(props: {
   medias: any;
   loadingNewMedias: boolean;
   blockNewLoads: boolean;
   setPageNumber: React.Dispatch<React.SetStateAction<number>>;
-}) {
+}
+
+const TilesRenderedView: React.FC<IProps> = (props) => {
   const loadMoreItem = () => {
     // Increase the page number by one only if the load new medias is enabled
-    if (!props.blockNewLoads) props.setPageNumber((prev) => prev + 1);
+    if (!props.blockNewLoads && !props.loadingNewMedias)
+      props.setPageNumber((prev) => prev + 1);
   };
 
   // Footer loader component
@@ -28,6 +33,7 @@ export default function TilesRenderedView(props: {
         bounces
         // className="relative h-32"
         data={props.medias}
+        initialNumToRender={15}
         ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
         renderItem={(media) => {
           return (
@@ -42,12 +48,11 @@ export default function TilesRenderedView(props: {
         }}
         numColumns={3}
         ListFooterComponent={renderLoader}
-        onEndReached={() => {
-          if (props.loadingNewMedias === false) {
-            loadMoreItem();
-          }
-        }}
+        onEndReachedThreshold={0.7}
+        onEndReached={loadMoreItem}
       />
     </View>
   );
-}
+};
+export default TilesRenderedView;
+// export default memo(TilesRenderedView);

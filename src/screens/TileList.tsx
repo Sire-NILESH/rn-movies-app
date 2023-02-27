@@ -29,7 +29,10 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     noMoreLoads?: boolean;
   } = route.params;
 
-  const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>(mediaList);
+  // const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>(mediaList);
+  const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>(
+    mediaList ? mediaList : []
+  );
   const [loadingNewMedias, setLoadingNewMedias] = useState<boolean>(false);
   const [blockNewLoads, setBlockNewLoads] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(1);
@@ -83,6 +86,8 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     }
   };
 
+  // console.log("path", route.path);
+
   // Header settings
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -92,14 +97,16 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           {/* Search button */}
           <HeaderSearchButton />
           {/* Genre select button */}
-          <Pressable onPress={onShowGenresModal}>
-            <MaterialCommunityIcons
-              name="drama-masks"
-              size={24}
-              color={Colors.gray[50]}
-              style={{ marginRight: 16 }}
-            />
-          </Pressable>
+          {route.path !== "Search Screen" && (
+            <Pressable onPress={onShowGenresModal}>
+              <MaterialCommunityIcons
+                name="drama-masks"
+                size={24}
+                color={Colors.gray[50]}
+                style={{ marginRight: 16 }}
+              />
+            </Pressable>
+          )}
         </View>
       ),
     });

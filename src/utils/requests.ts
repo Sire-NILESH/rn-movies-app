@@ -34,6 +34,10 @@ import { IGenre, IGenresToShowHomeScreen, MediaTypes } from "../typings";
 // Recommended content TV
 // const data = fetch('https://api.themoviedb.org/3/movie/646389/similar?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US&page=1').then((data)=>data.json()).then((res)=>console.log(res)).catch((err)=>console.log(err.message))
 
+// YT thumbnail download
+// https://medium.com/apis-with-valentine/how-to-download-a-youtube-video-thumbnail-fedb511c88a1
+// https://img.youtube.com/vi/juuhb3W8xT4/maxresdefault.jpg
+
 // eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlM2UxNzMyZjhmNDk1YTFiMTkxNDk0YjQ5YjgxMzY2OSIsInN1YiI6IjYzZGY4MTFhY2QyMDQ2MDBjMzBiMDA0ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.A7ER6WylpDsZnk2qUkrhDWweWQ1moBHYFkiXwwU51cw
 const API_KEY = "e3e1732f8f495a1b191494b49b813669";
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -126,6 +130,7 @@ export const getGenreMediasProps = async (
   pageNumber: number
 ) => {
   const commaSeparatedGenres = getTheseGenreMedias.join(",");
+  console.log(pageNumber);
   const data = await fetch(
     `${BASE_URL}/discover/${mediaType}?api_key=${API_KEY}&language=en-US&with_genres=${commaSeparatedGenres}&page=${pageNumber}`
   ).then((res) => res.json());
@@ -153,6 +158,82 @@ export const getRelatedMediasProps = async (
 
   console.log(mediaType);
   return data.results;
+};
+
+// const data = fetch(
+//   "https://api.themoviedb.org/3/movie/646389/videos?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US"
+// )
+//   .then((data) => data.json())
+//   .then((res) => console.log(res))
+//   .catch((err) => console.log(err.message));
+
+// fucntion to fetch for the list of trailers for the given media and its media type.
+export const fetchTrailers = async (mediaId: number, mediaType: MediaTypes) => {
+  const url = `${BASE_URL}/${mediaType}/${mediaId}/videos?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US`;
+  const data = await fetch(url)
+    .then((data) => data.json())
+    .catch((err) => {
+      console.log(err.message);
+      throw new Error(err.message);
+    });
+
+  if (data) {
+    // console.log("from requests", data);
+    return { props: data?.results };
+  }
+
+  // return {
+  //   props: [
+  //     {
+  //       iso_639_1: "en",
+  //       iso_3166_1: "US",
+  //       name: "Inside Game of Thrones: A Story in Camera Work – BTS (HBO)",
+  //       key: "y2ZJ3lTaREY",
+  //       site: "YouTube",
+  //       size: 1080,
+  //       type: "Behind the Scenes",
+  //       official: true,
+  //       published_at: "2019-03-25T14:00:06.000Z",
+  //       id: "5c999b48c3a36863b73b9d42",
+  //     },
+  //     {
+  //       iso_639_1: "en",
+  //       iso_3166_1: "US",
+  //       name: "Inside Game of Thrones: A Story in Prosthetics – BTS (HBO)",
+  //       key: "f3MUpuRF6Ck",
+  //       site: "YouTube",
+  //       size: 1080,
+  //       type: "Behind the Scenes",
+  //       official: true,
+  //       published_at: "2019-03-11T14:00:03.000Z",
+  //       id: "5c92c2519251412b51773135",
+  //     },
+  //     {
+  //       iso_639_1: "en",
+  //       iso_3166_1: "US",
+  //       name: "GAME OF THRONES - SEASON 1- TRAILER",
+  //       key: "bjqEWgDVPe0",
+  //       published_at: "2017-02-20T15:25:56.000Z",
+  //       site: "YouTube",
+  //       size: 1080,
+  //       type: "Trailer",
+  //       official: true,
+  //       id: "5b5b91c2925141523700502c",
+  //     },
+  //     {
+  //       iso_639_1: "en",
+  //       iso_3166_1: "US",
+  //       name: "Game of Thrones | Season 1 | Official Trailer",
+  //       key: "BpJYNVhGf1s",
+  //       site: "YouTube",
+  //       size: 1080,
+  //       type: "Trailer",
+  //       official: true,
+  //       published_at: "2011-03-04T04:21:14.000Z",
+  //       id: "5c9295200e0a267cd8168bd8",
+  //     },
+  //   ],
+  // };
 };
 
 // fucntion to fetch for the list of genres for the given media type

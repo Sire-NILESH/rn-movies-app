@@ -18,6 +18,7 @@ import GenreTags from "./../components/GenreTags";
 import CustomButton from "../components/ui/CustomButton";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import TrailerButton from "../components/ui/TrailerButton";
 
 const screenDimensions = Dimensions.get("screen");
 
@@ -109,8 +110,8 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
                     }
                   : require("../../assets/images/placeholders/posterPlaceHolder.webp")
               }
-              className="object-fill rounded-l-2xl"
-              style={{ width: "100%", height: "100%" }}
+              className="rounded-l-2xl"
+              style={{ width: "100%", height: "100%", resizeMode: "cover" }}
             />
           </View>
           <View className=" bg-gray-900/80 flex-1 rounded-r-2xl py-6 space-y-4 justify-center">
@@ -168,7 +169,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
       {/* Buttons */}
       <View className="w-full flex-row space-between gap-3 pl-4 mt-5">
-        <View className="flex-1">
+        {/* <View className="flex-1">
           <CustomButton
             color={Colors.stone[900]}
             height={45}
@@ -182,7 +183,11 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             ></Ionicons>
             <Text className="text-gray-100 ml-1">Trailer</Text>
           </CustomButton>
+        </View> */}
+        <View className="flex-1">
+          <TrailerButton mediaType={mediaType} mediaId={media.id} />
         </View>
+
         <View className="flex-1">
           <CustomButton
             color={Colors.stone[900]}

@@ -1,9 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
-import { MovieMedia, Trailer, TvMedia } from "../typings";
+import { Trailer } from "../typings";
 import { View, Image, Pressable, Text, Dimensions } from "react-native";
-import { isMovie } from "../utils/helpers/helper";
+
 import { LinearGradient } from "expo-linear-gradient";
-import { Colors } from "./../utils/Colors";
 
 interface IProps {
   video: Trailer;
@@ -28,21 +27,6 @@ const thumbnailDimensions = {
     movieTitleWidth: windowWidth * 0.31,
   },
 };
-// const thumbnailDimensions = {
-//   landscape: {
-//     width: 245,
-//     height: 128,
-//     imageWidth: 240,
-//     movieTitleWidth: 128,
-//     aspectRatio: 1,
-//   },
-//   portrait: {
-//     width: windowWidth * 0.4,
-//     height: 200,
-//     imageWidth: windowWidth * 0.4,
-//     movieTitleWidth: windowWidth * 0.31,
-//   },
-// };
 
 const TrailerVideoThumbnail: React.FC<IProps> = (props) => {
   const dimensions = thumbnailDimensions[props.orientation];
@@ -51,8 +35,6 @@ const TrailerVideoThumbnail: React.FC<IProps> = (props) => {
 
   return (
     <View
-      // className={"h-32 w-[245px]"}
-      // className={"space-x-2"}
       style={{
         width: dimensions.width,
         height: dimensions.height,
@@ -65,8 +47,7 @@ const TrailerVideoThumbnail: React.FC<IProps> = (props) => {
         <Image
           source={
             props.video.key
-              ? // media.poster_path || media.backdrop_path https://img.youtube.com/vi/kHtsV9z1Q3E/mqdefault.jpg
-                {
+              ? {
                   uri: `https://img.youtube.com/vi/${props.video.key}/mqdefault.jpg`,
                 }
               : require("../../assets/images/placeholders/posterPlaceHolder.webp")

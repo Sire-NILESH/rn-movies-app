@@ -1,19 +1,15 @@
-import { StatusBar } from "expo-status-bar";
 import React, {
   useEffect,
   useLayoutEffect,
   useState,
   useCallback,
 } from "react";
-import { Text, View, FlatList, Dimensions } from "react-native";
+import { View, FlatList, Dimensions } from "react-native";
 import { useLogging } from "../hooks/useLogging";
 import { IStackScreenProps } from "../library/StackScreenProps";
 import { Trailer } from "../typings";
 import { fetchTrailers } from "../utils/requests";
 import NothingToShow from "../components/NothingToShow";
-import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "./../utils/Colors";
-import CustomButton from "../components/ui/CustomButton";
 import Loader from "./../components/ui/Loader";
 import YouTubePlayer from "./../components/YouTubePlayer";
 import TrailerVideoThumbnail from "../components/TrailerVideoThumbnail";

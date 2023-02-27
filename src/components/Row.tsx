@@ -1,4 +1,4 @@
-import { MovieMedia, Trailer, TvMedia } from "../typings";
+import { MovieMedia, TvMedia } from "../typings";
 import Thumbnail from "./Thumbnail";
 import { Text, View, FlatList } from "react-native";
 import IconButton from "./ui/IconButton";
@@ -8,7 +8,6 @@ import { memo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { isMovieArray } from "../utils/helpers/helper";
 import { isMovie } from "./../utils/helpers/helper";
-import { FlashList } from "@shopify/flash-list";
 
 interface Props {
   title: string;

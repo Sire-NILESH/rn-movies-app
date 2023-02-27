@@ -1,10 +1,7 @@
 import { View, FlatList, ActivityIndicator } from "react-native";
-
 import Thumbnail from "../components/Thumbnail";
-import memo from "./Row";
 
 interface IProps {
-  // export default function TilesRenderedView(props: {
   medias: any;
   loadingNewMedias: boolean;
   blockNewLoads: boolean;
@@ -31,13 +28,10 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
     <View className="flex-1 relative pr-1">
       <FlatList
         bounces
-        // className="relative h-32"
         data={props.medias}
-        initialNumToRender={15}
         ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
         renderItem={(media) => {
           return (
-            // <View className="space-x-2">
             <View className="ml-1">
               <Thumbnail media={media.item} orientation="portrait" />
             </View>
@@ -55,4 +49,3 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
   );
 };
 export default TilesRenderedView;
-// export default memo(TilesRenderedView);

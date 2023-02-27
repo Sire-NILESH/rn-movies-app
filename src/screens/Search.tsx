@@ -47,17 +47,6 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     setSearchQuery(text);
   }
 
-  // function getTitle(media: MovieMedia | TvMedia): string {
-  //   if ("title" in media) return media.title;
-  //   return media.name;
-  // }
-
-  // function getReleaseDate(media: MovieMedia | TvMedia): string | undefined {
-  //   if ("release_date" in media) return media.release_date;
-  //   else if ("first_air_date" in media) return media.first_air_date;
-  //   return undefined;
-  // }
-
   useEffect(() => {
     const abortController: AbortController = new AbortController();
 
@@ -73,14 +62,12 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     try {
       if (searchQuery != null && searchQuery.length >= 2) {
         fetchSearchQuery();
-        // logging.info(searchQuery);
       }
     } catch (err: any) {
       console.log(err.message);
     }
 
     return () => abortController.abort();
-    //  return () => abortController.abort();
   }, [searchQuery]);
 
   // Header settings

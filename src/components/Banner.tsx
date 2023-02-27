@@ -2,7 +2,6 @@ import { MovieMedia, TvMedia } from "../typings";
 import { useState, useEffect } from "react";
 
 import {
-  Image,
   Text,
   View,
   Dimensions,

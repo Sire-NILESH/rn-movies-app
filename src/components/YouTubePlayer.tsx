@@ -5,7 +5,6 @@ import {
   Dimensions,
   StyleSheet,
   ImageBackground,
-  ScrollView,
 } from "react-native";
 import * as ScreenOrientation from "expo-screen-orientation";
 import YoutubeIframe from "react-native-youtube-iframe";

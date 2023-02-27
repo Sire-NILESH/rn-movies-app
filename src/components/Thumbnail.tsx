@@ -3,11 +3,9 @@ import { MovieMedia, Trailer, TvMedia } from "../typings";
 import { View, Image, Pressable, Text, Dimensions } from "react-native";
 import { isMovie } from "../utils/helpers/helper";
 import { LinearGradient } from "expo-linear-gradient";
-import { Colors } from "./../utils/Colors";
 
 interface Props {
   media: MovieMedia | TvMedia;
-  // media: MovieMedia | TvMedia | Trailer;
   orientation: "portrait" | "landscape";
 }
 

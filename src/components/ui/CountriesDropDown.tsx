@@ -33,7 +33,7 @@ const CountriesDropDown: React.FC<IProps> = ({
         buttonStyle={{
           backgroundColor: "rgba(34, 197, 94, 0.1)",
           borderRadius: 10,
-          width: 160,
+          width: 200,
           borderWidth: 0,
           borderBottomColor: "red",
         }}

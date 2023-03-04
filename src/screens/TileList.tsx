@@ -21,12 +21,13 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     title,
     medias: mediaList,
     genreId,
-    noMoreLoads,
+    currentMediaType,
   }: {
     title: string;
     medias: MovieMedia[] | TvMedia[];
     genreId?: number;
     noMoreLoads?: boolean;
+    currentMediaType?: MediaTypes;
   } = route.params;
 
   // const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>(mediaList);
@@ -37,8 +38,13 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [blockNewLoads, setBlockNewLoads] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(1);
 
-  const currentListType: MediaTypes =
-    mediaList && isMovieArray(mediaList) ? "movie" : "tv";
+  const currentListType: MediaTypes = currentMediaType
+    ? currentMediaType
+    : isMovieArray(mediaList)
+    ? "movie"
+    : "tv";
+  // const currentListType: MediaTypes =
+  //   mediaList && isMovieArray(mediaList) ? "movie" : "tv";
 
   // Loading Data
   useEffect(() => {
@@ -67,6 +73,8 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     loadMedias();
   }, [mediaList, pageNumber, userSelectedGenres, getGenreMediasProps, genreId]);
 
+  // console.log(medias);
+
   const onShowGenresModal = () => {
     setShowGenresModal(true);
   };
@@ -91,7 +99,10 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   // Header settings
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: userSelectedGenres.length > 0 ? "Custom Genres" : title,
+      headerTitle:
+        userSelectedGenres.length > 0
+          ? `Custom Genres ${currentMediaType === "tv" ? "TV shows" : "Movies"}`
+          : `${title} ${currentMediaType === "tv" ? "TV shows" : "Movies"}`,
       headerRight: (props) => (
         <View className="flex-row">
           {/* Search button */}

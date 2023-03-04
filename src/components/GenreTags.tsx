@@ -21,6 +21,11 @@ const GenreTags: React.FC<IProps> = (props) => {
 
 export default GenreTags;
 
+/**
+ *
+ *
+ * @interface IGenreProps
+ */
 interface IGenreProps {
   genreId: number;
 }
@@ -28,7 +33,7 @@ interface IGenreProps {
 function GerneTag(props: IGenreProps) {
   return (
     <View className="flex-1 mx-2 bg-black/40 border border-stone-700 px-4 h-8 rounded-xl items-center justify-center">
-      <Text className="text-gray-100">
+      <Text className="text-green-100">
         {/* @ts-ignore */}
         {idToGenresMapped[String(props.genreId)]}
       </Text>

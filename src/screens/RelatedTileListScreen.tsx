@@ -3,10 +3,11 @@ import { useLayoutEffect, useState, useEffect } from "react";
 import { IStackScreenProps } from "../library/StackScreenProps";
 import { MediaTypes, MovieMedia, TvMedia } from "../typings";
 import { isMovieArray } from "../utils/helpers/helper";
-import { getMediasProps, getRelatedMediasProps } from "../utils/requests";
+import { getRelatedMediasProps } from "../utils/requests";
 
 import TilesRenderedView from "../components/TilesRenderedView";
 import useFetcher from "./../hooks/useFetcher";
+import NothingToShow from "./../components/NothingToShow";
 
 const RelatedTileListScreen: React.FunctionComponent<IStackScreenProps> = (
   props
@@ -59,7 +60,7 @@ const RelatedTileListScreen: React.FunctionComponent<IStackScreenProps> = (
       setLoadingNewMedias(false);
     }
     loadMedias();
-  }, [pageNumber, getMediasProps]);
+  }, [pageNumber, getRelatedMediasProps]);
 
   console.log(pageNumber);
 
@@ -72,17 +73,21 @@ const RelatedTileListScreen: React.FunctionComponent<IStackScreenProps> = (
 
   return (
     <View className="flex-1 bg-stone-900 items-center py-2">
-      {/* Tiles */}
-      <View className="flex-1 relative">
-        {medias?.length > 0 ? (
-          <TilesRenderedView
-            medias={medias}
-            loadingNewMedias={loadingNewMedias}
-            setPageNumber={setPageNumber}
-            blockNewLoads={blockNewLoads}
-          />
-        ) : null}
-      </View>
+      {error ? (
+        <NothingToShow />
+      ) : (
+        // Tiles
+        <View className="flex-1 relative">
+          {medias?.length > 0 ? (
+            <TilesRenderedView
+              medias={medias}
+              loadingNewMedias={loadingNewMedias}
+              setPageNumber={setPageNumber}
+              blockNewLoads={blockNewLoads}
+            />
+          ) : null}
+        </View>
+      )}
     </View>
   );
 };

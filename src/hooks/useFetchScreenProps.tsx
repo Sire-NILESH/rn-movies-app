@@ -7,6 +7,10 @@ import {
 } from "../config/screenGenresConfig";
 import { ScreenTypes } from "../typings";
 
+/**
+ * This hook is responsible for generating `loading`, `screen props` and `error` states for the `Home`, `TV` and `Movies` screens.
+ * @param screenType - Takes one of the main screen types `movie` | `tv` | `home`
+ * @return screenObject - Returns { `screenProps`, `loadingProps`, `errorLoadingProps` } */
 const useFetchScreenProps = (screenType?: ScreenTypes) => {
   // Get the genre list to fetch depending on the screen type.
   let genresToFetch;

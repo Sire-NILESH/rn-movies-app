@@ -24,11 +24,11 @@ const useFetcher = (fetcher: any, params: any[]) => {
     async function fetchRequests() {
       try {
         const data = await fetcher(...params);
+        setLoadingProps(false);
         setScreenProps(data);
-        setLoadingProps(false);
       } catch (err) {
-        setErrorLoadingProps(err as Error);
         setLoadingProps(false);
+        setErrorLoadingProps(err as Error);
       }
     }
     fetchRequests();

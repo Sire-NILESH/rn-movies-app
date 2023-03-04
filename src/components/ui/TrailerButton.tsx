@@ -15,6 +15,7 @@ const TrailerButton: React.FC<IProps> = (props) => {
   const navigation = useNavigation();
 
   const onPressHandler = () => {
+    // @ts-ignore
     navigation.navigate("Trailer", {
       mediaType: props.mediaType,
       mediaId: props.mediaId,
@@ -34,7 +35,7 @@ const TrailerButton: React.FC<IProps> = (props) => {
         name="md-logo-youtube"
         color={Colors.stone[500]}
       ></Ionicons>
-      <Text className="text-gray-100 ml-1">Trailer</Text>
+      <Text className="text-green-100 ml-1">Trailer</Text>
     </CustomButton>
   );
 };

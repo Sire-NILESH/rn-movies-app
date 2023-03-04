@@ -18,7 +18,7 @@ import { IGenre, IGenresToShowHomeScreen, MediaTypes } from "../typings";
 // tv details
 // const data = fetch('https://api.themoviedb.org/3/tv/1396?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US').then((data)=>data.json()).then((res)=>console.log(res)).catch((err)=>console.log(err.message))
 
-// tv details
+// movie details
 // const data = fetch('https://api.themoviedb.org/3/movie/76600?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US').then((data)=>data.json()).then((res)=>console.log(res)).catch((err)=>console.log(err.message))
 
 // providers
@@ -34,15 +34,21 @@ import { IGenre, IGenresToShowHomeScreen, MediaTypes } from "../typings";
 // Recommended content TV
 // const data = fetch('https://api.themoviedb.org/3/movie/646389/similar?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US&page=1').then((data)=>data.json()).then((res)=>console.log(res)).catch((err)=>console.log(err.message))
 
+// Recommended content TV
+// https://api.themoviedb.org/3/movie/{movie_id}?api_key=<<api_key>>&language=en-US
+// const data = fetch('https://api.themoviedb.org/3/movie/76600?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US').then((data)=>data.json()).then((res)=>console.log(res)).catch((err)=>console.log(err.message))
+
 // YT thumbnail download
 // https://medium.com/apis-with-valentine/how-to-download-a-youtube-video-thumbnail-fedb511c88a1
 // https://img.youtube.com/vi/juuhb3W8xT4/maxresdefault.jpg
 
+// Watch Providers.
+// https://api.themoviedb.org/3/tv/{tv_id}/watch/providers?api_key=<<api_key>>
+// const data = fetch('https://api.themoviedb.org/3/tv/94997/watch/providers?api_key=e3e1732f8f495a1b191494b49b813669').then((data)=>data.json()).then((res)=>console.log(res)).catch((err)=>console.log(err.message))
+
 // eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlM2UxNzMyZjhmNDk1YTFiMTkxNDk0YjQ5YjgxMzY2OSIsInN1YiI6IjYzZGY4MTFhY2QyMDQ2MDBjMzBiMDA0ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.A7ER6WylpDsZnk2qUkrhDWweWQ1moBHYFkiXwwU51cw
 const API_KEY = "e3e1732f8f495a1b191494b49b813669";
 const BASE_URL = "https://api.themoviedb.org/3";
-
-const movieText = "batman";
 
 // API call to get the search results for the keywords.
 export const searchRequest = async (
@@ -129,6 +135,7 @@ export const getGenreMediasProps = async (
   mediaType: MediaTypes,
   pageNumber: number
 ) => {
+  console.log(mediaType, getTheseGenreMedias, pageNumber);
   const commaSeparatedGenres = getTheseGenreMedias.join(",");
   console.log(pageNumber);
   const data = await fetch(
@@ -160,12 +167,68 @@ export const getRelatedMediasProps = async (
   return data.results;
 };
 
-// const data = fetch(
-//   "https://api.themoviedb.org/3/movie/646389/videos?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US"
-// )
-//   .then((data) => data.json())
-//   .then((res) => console.log(res))
-//   .catch((err) => console.log(err.message));
+// Is used to load more  info on the TV media on the more info screen, specifically to access total number seasons for that show and others too while we are there at it.
+export /**
+ *Is used to load more  info on the TV media on the more info screen, specifically to access total number seasons for that show and others too while we are there at it.
+ *
+ * @param {number} tvMediaId - The ID of the TV show on the `MoreInfo` screen whose details are to be fetched
+ * @return {*}
+ */
+const getTvShowInfo = async (tvMediaId: number) => {
+  const data = await fetch(
+    // https://api.themoviedb.org/3/tv/{tv_id}?api_key=<<api_key>>&language=en-US
+    `${BASE_URL}/tv/${tvMediaId}?api_key=${API_KEY}&language=en-US`
+  )
+    .then((res) => res.json())
+    .catch((err) => {
+      console.log(err.message);
+      throw new err();
+    });
+
+  return data;
+};
+
+/**
+ * This function is used to retrieve information about the media's watch providers for all the regions.
+ *
+ * @param mediaId - The id of the media
+ * @param mediaType - The type of the media `movie` or `tv`
+ * @returns an array of the watch providers for the all the regions.
+ */
+export const getWatchProviders = async (
+  mediaId: number,
+  mediaType: MediaTypes
+) => {
+  const data = await fetch(
+    `${BASE_URL}/${mediaType}/${mediaId}/watch/providers?api_key=${API_KEY}&language=en-US`
+  )
+    .then((res) => res.json())
+    .catch((err) => {
+      console.log(err.message);
+      throw new err();
+    });
+
+  return data.results;
+  // return data.results["IN"];
+};
+
+// To fetch more information about a particular season number of a tv show.
+export const getTvSeasonInfo = async (
+  tvMediaId: number,
+  seasonNumber: number
+) => {
+  const data = await fetch(
+    // https://api.themoviedb.org/3/tv/{tv_id}/season/{season_number}?api_key=<<api_key>>&language=en-US
+    `${BASE_URL}/tv/${tvMediaId}/season/${seasonNumber}?api_key=${API_KEY}&language=en-US`
+  )
+    .then((res) => res.json())
+    .catch((err) => {
+      console.log(err.message);
+      throw new err();
+    });
+
+  return data.results;
+};
 
 // fucntion to fetch for the list of trailers for the given media and its media type.
 export const fetchTrailers = async (mediaId: number, mediaType: MediaTypes) => {

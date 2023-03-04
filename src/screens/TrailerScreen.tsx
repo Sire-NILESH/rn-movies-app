@@ -1,9 +1,4 @@
-import React, {
-  useEffect,
-  useLayoutEffect,
-  useState,
-  useCallback,
-} from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { View, FlatList, Dimensions } from "react-native";
 import { useLogging } from "../hooks/useLogging";
 import { IStackScreenProps } from "../library/StackScreenProps";
@@ -54,11 +49,6 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     loadVideos();
   }, [mediaType, mediaId]);
 
-  // setting the 1st video to be default on first load.
-  // const setFirstVideo = useCallback(() => {
-  //   if (videos.length > 0) setSelectedVideo(videos[0]);
-  // }, [videos]);
-
   console.log("1st video", selectedVideo);
 
   const onPressSetVideoHandler = (video: Trailer) => {
@@ -81,7 +71,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       {(error || videos.length === 0) && !loading ? (
         <NothingToShow />
       ) : (
-        <View className="flex-1 justify-start mb-[340px]">
+        <View className="flex-1 justify-start">
           {/* <View className="flex-1 justify-start mb-[330px]"> */}
           <YouTubePlayer video={selectedVideo} loading={loading} />
           {/* <View className="w-full h-[80px] bg-stone-900 [elevation:5]">
@@ -106,7 +96,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         <FlatList
           data={videos}
           initialNumToRender={3}
-          className="bg-zinc-900/40 py-4 px-2 "
+          className="bg-zinc-900/40 py-4 px-2 mt-[340px]"
           contentContainerStyle={{
             justifyContent: "flex-start",
             // alignItems: "flex-start",

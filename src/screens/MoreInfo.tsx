@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  Image,
   ScrollView,
   Pressable,
   Dimensions,
@@ -9,16 +8,19 @@ import {
 } from "react-native";
 import { useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/StackScreenProps";
-import { MediaTypes, MovieMedia, TvMedia } from "../typings";
-import { isoLangs } from "./../utils/helpers/isoLangs";
-import { isMovie } from "./../utils/helpers/helper";
-import IconButton from "../components/ui/IconButton";
+import { MediaTypes, MovieMedia, TvMedia, TvMediaExtended } from "../typings";
+import { isMovie, isTvExtended } from "./../utils/helpers/helper";
 import { Colors } from "./../utils/Colors";
 import GenreTags from "./../components/GenreTags";
 import CustomButton from "../components/ui/CustomButton";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import TrailerButton from "../components/ui/TrailerButton";
+import useFetcher from "../hooks/useFetcher";
+import { getTvShowInfo } from "../utils/requests";
+import MediaCardInfo from "../components/MediaCardInfo";
+import NetworkList from "../components/NetworkList";
+import WatchProviders from "../components/WatchProviders";
 
 const screenDimensions = Dimensions.get("screen");
 
@@ -26,14 +28,12 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const { navigation, route } = props;
   // @ts-ignore
   let media: MovieMedia | TvMedia = route.params?.media;
+  // let media: MovieMedia | TvMedia | TvMediaExtended = route.params?.media;
 
   const mediaType: MediaTypes = // @ts-ignore
     route.params?.mediaType !== undefined ? route.params?.mediaType : "movie";
 
-  function getTitle(): string {
-    if ("title" in media) return media.title;
-    return media.name;
-  }
+  // let errorLoadingProps;
 
   // Header settings
   useLayoutEffect(() => {
@@ -41,6 +41,37 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       headerTitle: getTitle(),
     });
   }, []);
+
+  let tvExtendedMedia;
+
+  // This hook is responsible for managing the data, loading and error states from the server/API. It takes in an async 'fetcher' function that will request the API call.
+  const {
+    screenProps,
+    // loadingProps,
+    errorLoadingProps,
+  }: {
+    screenProps: TvMediaExtended;
+    // loadingProps: boolean;
+    errorLoadingProps: Error | null;
+  } =
+    mediaType === "tv"
+      ? useFetcher(getTvShowInfo, [media.id])
+      : { screenProps: {}, loadingProps: false, errorLoadingProps: null };
+
+  if (mediaType === "tv" && screenProps !== null) {
+    tvExtendedMedia = Object.assign(media, screenProps);
+    // media = Object.assign(media, screenProps);
+  }
+
+  function getTitle(): string {
+    if ("title" in media) return media.title;
+    return media.name;
+  }
+
+  // in case of error
+  // if (errorLoadingProps) {
+  //   return <NothingToShow />;
+  // }
 
   return (
     <ScrollView className="flex-1 bg-black pb-24">
@@ -71,11 +102,11 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         </LinearGradient>
       </View>
 
-      {/* Content */}
+      {/* Content Title/name and original title/name */}
       <View className="mt-80 flex-1 pt-6">
         {/* Title */}
         <View className="px-4">
-          <Text className="text-3xl font-semibold text-gray-100 object-cover">
+          <Text className="text-3xl font-semibold text-green-100 object-cover">
             {getTitle()}
           </Text>
           {isMovie(media) && media.original_title !== media.title ? (
@@ -92,98 +123,24 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         </View>
 
         {/* Genre Tags Row */}
-        <View className="w-full h-10 justify-center items-center mt-5">
+        <View className="w-full h-10 justify-center items-center mt-10">
           <GenreTags genreIdList={media.genre_ids} />
         </View>
 
         {/* Other metrics */}
-        <View className="mt-5 mx-3 flex-row justify-between h-[180]">
-          <View className="flex-1 rounded-l-2xl">
-            <Image
-              source={
-                media.backdrop_path || media.poster_path
-                  ? // media.poster_path || media.backdrop_path
-                    {
-                      uri: `https://image.tmdb.org/t/p/w500${
-                        media.backdrop_path || media.poster_path
-                      }`,
-                    }
-                  : require("../../assets/images/placeholders/posterPlaceHolder.webp")
-              }
-              className="rounded-l-2xl"
-              style={{ width: "100%", height: "100%", resizeMode: "cover" }}
-            />
-          </View>
-          <View className=" bg-gray-900/80 flex-1 rounded-r-2xl py-6 space-y-4 justify-center">
-            <Text className="text-gray-100 px-4">
-              Rating:{"  "}
-              <Text className="text-gray-400">{media.vote_average}/10</Text>
-            </Text>
-            <Text className="text-gray-100 px-4">
-              Media:{"  "}
-              <Text className="text-gray-400">
-                {isMovie(media) ? "Movie" : "TV"}
-              </Text>
-            </Text>
-            <Text className="text-gray-100 px-4">
-              Release:{"  "}
-              <Text className="text-gray-400">
-                {/* {getReleaseDate()} */}
-                {isMovie(media) ? media.release_date : media.first_air_date}
-                {/* {media.release_date ? media.release_date : media.first_air_date} */}
-              </Text>
-            </Text>
-            {/* <Text className="text-gray-100 px-4">
-            Genre:{"  "}
-            {media.genre_ids.map((id) => (
-              <Text key={id} className="text-gray-400">
-                {idToGenresMapped[String(id)]}
-                {"  •  "}
-              </Text>
-            ))}
-          </Text> */}
-
-            {media.original_language ? (
-              <Text className="text-gray-100 px-4">
-                Language:{"  "}
-                <Text className="text-gray-400">
-                  {/*  @ts-ignore */}
-                  {isoLangs[media.original_language]?.name
-                    ? // @ts-ignore
-                      isoLangs[media.original_language]?.name
-                    : media.original_language}
-                </Text>
-              </Text>
-            ) : null}
-          </View>
-        </View>
+        <MediaCardInfo media={media} />
 
         {/* Description */}
         {media.overview ? (
-          <View className="px-4 mt-5">
-            <Text className="text-lg text-gray-100">Overview</Text>
-            <Text className="text-gray-500">{media.overview}</Text>
+          <View className="px-4 mt-5 space-y-2">
+            <Text className="text-lg text-green-100">Overview</Text>
+            <Text className="text-gray-100/50">{media.overview}</Text>
           </View>
         ) : null}
       </View>
 
       {/* Buttons */}
-      <View className="w-full flex-row space-between gap-3 pl-4 mt-5">
-        {/* <View className="flex-1">
-          <CustomButton
-            color={Colors.stone[900]}
-            height={45}
-            width={"100%"}
-            radius={10}
-          >
-            <Ionicons
-              size={16}
-              name="md-logo-youtube"
-              color={Colors.stone[500]}
-            ></Ionicons>
-            <Text className="text-gray-100 ml-1">Trailer</Text>
-          </CustomButton>
-        </View> */}
+      <View className="w-full flex-row space-between gap-3 pl-4 mt-8">
         <View className="flex-1">
           <TrailerButton mediaType={mediaType} mediaId={media.id} />
         </View>
@@ -196,7 +153,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             radius={10}
           >
             <Ionicons size={18} name="add" color={Colors.stone[500]}></Ionicons>
-            <Text className="text-gray-100 ml-1">Watchlist</Text>
+            <Text className="text-green-100 ml-1">Watchlist</Text>
           </CustomButton>
         </View>
         <View className="flex-1">
@@ -211,31 +168,101 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               name="checkmark"
               color={Colors.stone[500]}
             ></Ionicons>
-            <Text className="text-gray-100 ml-1">Watched</Text>
+            <Text className="text-green-100 ml-1">Watched</Text>
           </CustomButton>
         </View>
       </View>
 
-      <Pressable
-        className="ml-4 my-5 rounded-xl w-full py-1 px-2"
-        onPress={() =>
-          navigation.push("Related", {
-            relatedToMediaId: media.id,
-            mediaType: mediaType,
-            // mediaType: media.media_type,
-          })
-        }
+      <View
+      // className="py-10 px-3 mx-4 my-10 rounded-xl"
+      // style={{ backgroundColor: "rgba(34, 197, 94, 0.1)" }}
       >
-        <View className="flex-row items-center">
-          <Text className="mr-2 text-2xl text-gray-100">Similar</Text>
-          <IconButton
-            name="arrow-forward"
-            color={Colors.gray[100]}
-            size={18}
-          ></IconButton>
-        </View>
-        <Text className="mr-2 text-gray-400">Show more like this...</Text>
-      </Pressable>
+        {/* Networks available on */}
+        {isTvExtended(media) && <NetworkList networks={media.networks} />}
+
+        {/* Networks available on */}
+        <WatchProviders mediaId={media.id} mediaType={mediaType} />
+      </View>
+
+      {/* Last row */}
+      <View className="mt-10 flex-row items-center space-x-5 w-full p-4">
+        {/* Realated/Similar/Show_more_like_this */}
+        <LinearGradient
+          className="h-32 rounded-xl max-w-xl overflow-hidden border border-green-900/40"
+          colors={[
+            "rgba(28, 25, 23, 0.4)",
+            "rgba(41, 37, 36, 0.5)",
+            "rgba(28, 25, 23, 0.8)",
+            "rgba(28, 25, 23, 0.5)",
+            Colors.black,
+          ]}
+          start={{ x: 0.1, y: 0.2 }}
+        >
+          <Pressable
+            className="flex-1 px-4 py-4 justify-between"
+            onPress={() =>
+              navigation.push("Related", {
+                relatedToMediaId: media.id,
+                mediaType: mediaType,
+              })
+            }
+            android_ripple={{ color: "#eee" }}
+          >
+            <View className="flex-row items-center gap-2">
+              <Text className="text-2xl text-green-100">Similar</Text>
+              <Ionicons
+                name="arrow-forward"
+                size={18}
+                color={Colors.green[100]}
+              />
+            </View>
+            <Text className="text-green-100/70 text-sm">
+              Show more like this
+            </Text>
+          </Pressable>
+        </LinearGradient>
+
+        {/* TV seasons and episodes,for TVs only  */}
+        {!isMovie(media) ? (
+          <LinearGradient
+            className="h-32 rounded-xl flex-1 overflow-hidden border border-green-900/40"
+            colors={[
+              "rgba(28, 25, 23, 0.4)",
+              "rgba(41, 37, 36, 0.5)",
+              "rgba(28, 25, 23, 0.8)",
+              "rgba(28, 25, 23, 0.5)",
+              Colors.black,
+            ]}
+            start={{ x: 0.1, y: 0.2 }}
+          >
+            <Pressable
+              className="flex-1 px-4 py-4 justify-between"
+              onPress={() =>
+                navigation.push("Season and Episodes", {
+                  tvMediaId: media.id,
+                })
+              }
+              android_ripple={{ color: "#eee" }}
+            >
+              <View className="flex-row items-center gap-2">
+                <Text className="text-2xl text-green-100" numberOfLines={1}>
+                  Seaons and episodes
+                </Text>
+                <Ionicons
+                  name="arrow-forward"
+                  size={18}
+                  color={Colors.green[100]}
+                />
+              </View>
+              <Text className="text-green-100/70 text-sm">
+                Show all {tvExtendedMedia?.number_of_seasons} seasons and{" "}
+                {tvExtendedMedia?.number_of_episodes} episodes
+              </Text>
+            </Pressable>
+          </LinearGradient>
+        ) : // </View>
+        null}
+      </View>
     </ScrollView>
   );
 };

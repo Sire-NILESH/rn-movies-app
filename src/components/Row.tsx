@@ -111,11 +111,19 @@ function renderFooterItemFunction(
         onPress={() => {
           if (isMovieArray(medias)) {
             // @ts-ignore
-            navigation.navigate("Tiles", { title, genreId });
+            navigation.navigate("Tiles", {
+              title,
+              genreId,
+              currentMediaType: "movie",
+            });
           } else {
             {
               // @ts-ignore
-              navigation.navigate("Tiles", { title, genreId });
+              navigation.navigate("Tiles", {
+                title,
+                genreId,
+                currentMediaType: "tv",
+              });
             }
           }
         }}

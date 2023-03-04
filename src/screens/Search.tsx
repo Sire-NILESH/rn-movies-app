@@ -6,7 +6,7 @@ import { IStackScreenProps } from "../library/StackScreenProps";
 import { Colors } from "./../utils/Colors";
 import { FlatList } from "react-native-gesture-handler";
 import { searchRequest } from "../utils/requests";
-import { MediaTypes, Movie, MovieMedia, TvMedia } from "../typings";
+import { MediaTypes, MovieMedia, TvMedia } from "../typings";
 import HeaderSearchButton from "./../components/ui/HeaderSearchButton";
 import { isMovie, isMovieArray } from "./../utils/helpers/helper";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -17,6 +17,7 @@ interface ISearchResults {
 
 interface ISearchInputProps {
   inputText: string | null;
+  searchCategory: MediaTypes;
   onTextChangeHandler: (text: string) => void;
 }
 
@@ -24,7 +25,9 @@ const SearchInput: React.FC<ISearchInputProps> = (props) => {
   return (
     <View className="flex-1 bg-stone-900 min-w-[280] mt-2">
       <TextInput
-        placeholder="Search something..."
+        placeholder={`Search ${
+          props.searchCategory === "tv" ? "TV shows" : "Movies"
+        }...`}
         className="bg-stone-700 px-6 py-1 rounded-md text-gray-100"
         placeholderTextColor={Colors.stone[400]}
         onChangeText={props.onTextChangeHandler}
@@ -77,6 +80,7 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         return (
           <SearchInput
             inputText={searchQuery}
+            searchCategory={searchCategory}
             onTextChangeHandler={setSearchQueryHandler}
           />
         );

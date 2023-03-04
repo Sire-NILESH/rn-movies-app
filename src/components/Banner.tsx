@@ -121,8 +121,12 @@ function Banner({ mediaList }: Props) {
               shadow={false}
             >
               <View className="flex-row  gap-1 items-center">
-                <Ionicons name="information-circle" size={18} />
-                <Text className="font-bold">More Info</Text>
+                <Ionicons
+                  name="information-circle"
+                  size={18}
+                  color={Colors.gray[400]}
+                />
+                <Text className="font-bold text-gray-50">More Info</Text>
               </View>
             </CustomButton>
           </View>

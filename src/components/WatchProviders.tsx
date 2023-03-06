@@ -8,7 +8,7 @@ import {
 } from "../typings";
 import useFetcher from "../hooks/useFetcher";
 import { getWatchProviders } from "../utils/requests";
-import CountriesDropDown from "./ui/CountriesDropDown";
+import CountriesDropdown from "./ui/CountriesDropdown";
 
 interface IProps {
   mediaId: number;
@@ -44,7 +44,7 @@ const WatchProviders: React.FC<IProps> = ({ mediaId, mediaType }) => {
   return (
     <View className="flex-1 mt-8 space-y-10">
       <View className="w-full">
-        <CountriesDropDown
+        <CountriesDropdown
           currentCountry={currentCountry}
           setCountryHandler={setCountryHandler}
         />
@@ -64,8 +64,8 @@ const WatchProviders: React.FC<IProps> = ({ mediaId, mediaType }) => {
 
       {!watchProviders && (
         <View className="flex-1 justify-center px-4">
-          <Text className="text-stone-500 text-base">
-            Currently no provieders for this content in {currentCountry.name}
+          <Text className="text-stone-500 text-base text-center">
+            Currently no providers for this content in {currentCountry.name}
           </Text>
         </View>
       )}

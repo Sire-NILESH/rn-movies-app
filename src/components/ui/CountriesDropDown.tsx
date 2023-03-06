@@ -4,19 +4,20 @@ import SelectDropdown from "react-native-select-dropdown";
 import { countries } from "../../utils/helpers/helper";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ICountry } from "../../typings";
-import { Colors } from "./../../utils/Colors";
+import { Colors } from "../../utils/Colors";
 
 interface IProps {
   currentCountry: ICountry;
   setCountryHandler: (country: ICountry) => void;
 }
 
-const CountriesDropDown: React.FC<IProps> = ({
+const CountriesDropdown: React.FC<IProps> = ({
   currentCountry,
   setCountryHandler,
 }) => {
   return (
-    <View className="flex-row items-center px-4">
+    <View className="flex-row  items-center justify-between px-4 mt-2 bg-green-800/20 rounded-xl mx-2">
+      <Text className="text-gray-300 mx-4">Watch providers for this in </Text>
       <SelectDropdown
         data={countries}
         //   search={true}
@@ -31,9 +32,10 @@ const CountriesDropDown: React.FC<IProps> = ({
           setCountryHandler(selectedCountry);
         }}
         buttonStyle={{
+          // backgroundColor: "transparent",
           backgroundColor: "rgba(34, 197, 94, 0.1)",
-          borderRadius: 10,
-          width: 200,
+          borderRadius: 100,
+          width: 150,
           borderWidth: 0,
           borderBottomColor: "red",
         }}
@@ -62,10 +64,8 @@ const CountriesDropDown: React.FC<IProps> = ({
           return country.name;
         }}
       />
-
-      {/* <Text className="text-gray-300 mx-4">Region</Text> */}
     </View>
   );
 };
 
-export default CountriesDropDown;
+export default CountriesDropdown;

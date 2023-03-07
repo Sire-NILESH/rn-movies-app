@@ -10,6 +10,7 @@ import YouTubePlayer from "./../components/YouTubePlayer";
 import TrailerVideoThumbnail from "../components/TrailerVideoThumbnail";
 
 const screenDimensions = Dimensions.get("screen");
+const dimensionsForWindow = Dimensions.get("window");
 
 const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [logging] = useLogging("About Screen");
@@ -63,7 +64,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   }, []);
 
   return (
-    <View className="flex-1 bg-stone-900">
+    <View className="flex-1 bg-black">
       {/* Loader */}
       <Loader loading={loading} />
 
@@ -72,22 +73,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         <NothingToShow />
       ) : (
         <View className="flex-1 justify-start">
-          {/* <View className="flex-1 justify-start mb-[330px]"> */}
           <YouTubePlayer video={selectedVideo} loading={loading} />
-          {/* <View className="w-full h-[80px] bg-stone-900 [elevation:5]">
-            <View className="w-[90%] px-4 py-4 space-y-1 justify-center">
-              <Text className="text-gray-50">{selectedVideo?.name}</Text>
-              <View className="flex-row items-center">
-                <Text className="text-gray-400 space-x-4">
-                  {selectedVideo?.type}
-                  {" • "}
-                </Text>
-                <Text className=" text-gray-400 text-xs">
-                  {selectedVideo?.published_at.substring(0, 10)}
-                </Text>
-              </View>
-            </View>
-          </View> */}
         </View>
       )}
 
@@ -97,7 +83,8 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           data={videos}
           initialNumToRender={3}
           // className="bg-zinc-900/40 py-4 px-2"
-          className="pt-4 px-2 mt-[340px] mb-8"
+          className="pt-4 px-2 bg-green-900/20"
+          style={{ marginTop: dimensionsForWindow.height * 0.42 }}
           contentContainerStyle={{
             justifyContent: "flex-start",
             // alignItems: "flex-start",
@@ -106,6 +93,9 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           // ListHeaderComponent={
           //   <YouTubePlayer video={selectedVideo} loading={loading} />
           // }
+          ListFooterComponent={() => {
+            return <View className="h-2 w-full bg-green-900/20"></View>;
+          }}
           renderItem={(vObj) => {
             return (
               <TrailerCardView
@@ -115,16 +105,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             );
           }}
         />
-      ) : // </View>
-
-      // <View>
-      //   <TrailerVideoThumbnail
-      //     video={videos[2]}
-      //     onPressHandler={onPressSetVideoHandler}
-      //     orientation="landscape"
-      //   />
-      // </View>
-      null}
+      ) : null}
     </View>
   );
 };

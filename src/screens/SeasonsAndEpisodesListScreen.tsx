@@ -30,10 +30,12 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   const {
     tvMediaId,
     tvMediaSeasons,
+    tvMediaPosterPath: tvMediaPosterPathOld,
     tvMediaName,
   }: {
     tvMediaId: number;
     tvMediaSeasons: Season[];
+    tvMediaPosterPath: String;
     tvMediaName: string;
   } = route.params;
 
@@ -104,6 +106,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                     ]}
                     className="flex-row px-3 bg-green-800 pt-4 justify-between items-start mb-10"
                   >
+                    {/* if the season doesnt have a poster we use the old poster that was used in the MoreInfoScreeen which was passed here as tvMediaPosterPathOld */}
                     <View className="h-[200] w-[150]">
                       <Image
                         source={
@@ -114,6 +117,10 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                                   tvMediaSeasons[selectedSeason.season_number]
                                     ?.poster_path
                                 }`,
+                              }
+                            : tvMediaPosterPathOld
+                            ? {
+                                uri: `https://image.tmdb.org/t/p/w500${tvMediaPosterPathOld}`,
                               }
                             : require("../../assets/images/placeholders/posterPlaceHolder.webp")
                         }

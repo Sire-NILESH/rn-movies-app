@@ -11,6 +11,7 @@ import YoutubeIframe from "react-native-youtube-iframe";
 import { Trailer } from "../typings";
 
 const dimensionsForScreen = Dimensions.get("screen");
+const dimensionsForWindow = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
@@ -34,12 +35,12 @@ interface IProps {
 }
 
 // console.log(dimensionsForScreen.width);
+import { useHeaderHeight } from "@react-navigation/elements";
 
 const YouTubePlayer: React.FC<IProps> = (props) => {
   const [playing, setPlaying] = useState(false);
-  const [orientation, setOrientation] = useState<"landscape" | "portrait">(
-    "portrait"
-  );
+
+  const headerHeight = useHeaderHeight();
 
   const changeScreenOrientation = useCallback(async () => {
     await ScreenOrientation.lockAsync(
@@ -59,42 +60,32 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
     }
   }, []);
 
+  const height = dimensionsForWindow.height * 0.3;
+  console.log(height);
+
   // height: 250
   return (
     <View
+      className=""
       style={{
-        backgroundColor: "transparent",
-        // backgroundColor: playing ? "black" : "transparent",
-        // height: 250,
-        height: 350,
+        height: height,
         width: "100%",
-        // width: dimensionsForScreen.width,
-        justifyContent: "center",
-        alignItems: "center",
+        zIndex: 0,
       }}
-      //   contentContainerStyle={{
-      //     justifyContent: "center",
-      //     alignItems: "center",
-      //   }}
     >
       {props.loading ? (
         <Text className="text-gray-400 text-xl">Loading...</Text>
       ) : props.video ? (
-        <View style={styles.centerContent}>
+        <View>
           {props.video.key ? (
             <>
               <YoutubeIframe
-                // height={250}
-                height={270}
+                height={height}
                 width={dimensionsForScreen.width}
                 play={playing}
                 videoId={props.video.key}
                 onChangeState={onStateChanged}
-                // allowWebViewZoom={true}
                 onFullScreenChange={(status) => {
-                  // setOrientation((prev) =>
-                  //   prev === "portrait" ? "landscape" : "portrait"
-                  // );
                   if (status === true) changeScreenOrientation();
                 }}
               />
@@ -107,14 +98,14 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
               />
             </View>
           )}
-          <View className="w-full bg-stone-900 px-4 space-y-1 justify-start pb-6">
-            <Text className="text-gray-50">{props.video?.name}</Text>
+          <View className="w-full h-24 bg-stone-900 px-4 space-y-1 justify-center items-start py-2">
+            <Text className="text-green-100 text-lg">{props.video?.name}</Text>
             <View className="flex-row items-center">
-              <Text className="text-gray-400 space-x-4">
+              <Text className="text-stone-400 space-x-4">
                 {props.video?.type}
                 {" • "}
               </Text>
-              <Text className=" text-gray-400 text-xs">
+              <Text className=" text-stone-400 text-xs">
                 {props.video?.published_at.substring(0, 10)}
               </Text>
             </View>

@@ -64,6 +64,8 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     return media.name;
   }
 
+  const mediaPosterPath = media?.poster_path || media?.backdrop_path;
+
   return (
     <ScrollView className="flex-1 bg-black pb-24">
       {/* BackDrop Image */}
@@ -83,7 +85,8 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           <ImageBackground //wrapping the main entry screen with this <ImageBackground> component
             source={{
               uri: `https://image.tmdb.org/t/p/w500${
-                media?.poster_path || media?.backdrop_path
+                // media?.poster_path || media?.backdrop_path
+                mediaPosterPath
               }`,
             }}
             resizeMode="cover" //similar to web, "cover", "contain", etc.
@@ -230,6 +233,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
                 navigation.push("Season and Episodes", {
                   tvMediaId: isTvExtended(media) && media.id,
                   tvMediaSeasons: isTvExtended(media) && media.seasons,
+                  tvMediaPosterPath: mediaPosterPath,
                   tvMediaName:
                     (isTvExtended(media) && media.name) ||
                     (isTvExtended(media) && media.original_name),

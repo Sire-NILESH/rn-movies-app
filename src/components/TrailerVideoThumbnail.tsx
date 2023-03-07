@@ -1,9 +1,7 @@
-import { useNavigation } from "@react-navigation/native";
 import { Trailer } from "../typings";
 import { View, Image, Pressable, Text, Dimensions } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
-import { Colors } from "../utils/Colors";
 
 interface IProps {
   video: Trailer;
@@ -31,8 +29,6 @@ const thumbnailDimensions = {
 
 const TrailerVideoThumbnail: React.FC<IProps> = (props) => {
   const dimensions = thumbnailDimensions[props.orientation];
-
-  const navigation = useNavigation();
 
   return (
     <View

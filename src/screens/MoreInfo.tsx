@@ -104,14 +104,14 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             {getTitle()}
           </Text>
           {isMovie(media) && media.original_title !== media.title ? (
-            <Text className="text-sm text-gray-100 pt-2">
+            <Text className="text-sm text-stone-300 pt-2">
               Original Title:{"  "}
-              <Text className="text-gray-400">{media.original_title}</Text>
+              <Text className="text-stone-100">{media.original_title}</Text>
             </Text>
           ) : !isMovie(media) && media.original_name !== media.name ? (
-            <Text className="text-sm text-gray-100 pt-2">
+            <Text className="text-sm text-stone-300 pt-2">
               Original Title:{"  "}
-              <Text className="text-gray-400">{media.original_name}</Text>
+              <Text className="text-stone-100">{media.original_name}</Text>
             </Text>
           ) : null}
         </View>
@@ -128,7 +128,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         {media.overview ? (
           <View className="px-4 mt-5 space-y-2">
             <Text className="text-lg text-green-100">Overview</Text>
-            <Text className="text-gray-100/50">{media.overview}</Text>
+            <Text className="text-stone-400">{media.overview}</Text>
           </View>
         ) : null}
       </View>
@@ -180,7 +180,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       <View className="mt-10 flex-row items-center space-x-5 w-full p-4">
         {/* Realated/Similar/Show_more_like_this */}
         <LinearGradient
-          className="h-32 rounded-xl max-w-xl overflow-hidden border border-green-900/40"
+          className="h-32 rounded-xl max-w-xl overflow-hidden border border-stone-800"
           colors={[
             "rgba(28, 25, 23, 0.4)",
             "rgba(41, 37, 36, 0.5)",
@@ -208,16 +208,14 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
                 color={Colors.green[100]}
               />
             </View>
-            <Text className="text-green-100/70 text-sm">
-              Show more like this
-            </Text>
+            <Text className="text-stone-400 text-sm">Show more like this</Text>
           </Pressable>
         </LinearGradient>
 
         {/* TV seasons and episodes,for TVs only  */}
         {!isMovie(media) ? (
           <LinearGradient
-            className="h-32 rounded-xl flex-1 overflow-hidden border border-green-900/40"
+            className="h-32 rounded-xl flex-1 overflow-hidden border border-stone-800"
             colors={[
               "rgba(28, 25, 23, 0.4)",
               "rgba(41, 37, 36, 0.5)",
@@ -251,7 +249,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
                   color={Colors.green[100]}
                 />
               </View>
-              <Text className="text-green-100/70 text-sm">
+              <Text className="text-stone-400 text-sm">
                 Show all {tvExtendedMedia?.number_of_seasons} seasons and{" "}
                 {tvExtendedMedia?.number_of_episodes} episodes
               </Text>

@@ -22,7 +22,6 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
               : require("../../assets/images/placeholders/posterPlaceHolder.webp")
           }
           className="rounded-2xl rounded-b-none"
-          // style={{ width: 245, height: 128, resizeMode: "cover" }}
           style={{ width: "100%", height: 180, resizeMode: "cover" }}
         />
       </View>

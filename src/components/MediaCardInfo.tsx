@@ -27,33 +27,33 @@ const MediaCardInfo: React.FC<IProps> = ({ media }) => {
         />
       </View>
       <View className=" bg-stone-800/50 border border-l-0 border-gray-800 flex-1 rounded-r-2xl py-6 space-y-4 justify-center">
-        <Text className="text-green-100/50 px-4">
+        <Text className="text-stone-400 px-4">
           Rating:{"  "}
           <Text className="text-green-100">
             {media.vote_average.toFixed(2)}/10
           </Text>
         </Text>
-        <Text className="text-green-100/50 px-4">
+        <Text className="text-stone-400 px-4">
           Media:{"  "}
           <Text className="text-green-100">
             {isMovie(media) ? "Movie" : "TV"}
           </Text>
         </Text>
-        <Text className="text-green-100/50 px-4">
+        <Text className="text-stone-400 px-4">
           Release:{"  "}
           <Text className="text-green-100">
             {isMovie(media) ? media.release_date : media.first_air_date}
           </Text>
         </Text>
         {isTvExtended(media) && (
-          <Text className="text-green-100/50 px-4">
+          <Text className="text-stone-400 px-4">
             Status:{"  "}
             <Text className="text-green-100">{media.status}</Text>
           </Text>
         )}
 
         {media.original_language ? (
-          <Text className="text-green-100/50 px-4">
+          <Text className="text-stone-400 px-4">
             Language:{"  "}
             <Text className="text-green-100">
               {/*  @ts-ignore */}

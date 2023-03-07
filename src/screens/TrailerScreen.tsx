@@ -82,19 +82,22 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         <FlatList
           data={videos}
           initialNumToRender={3}
-          // className="bg-zinc-900/40 py-4 px-2"
-          className="pt-4 px-2 bg-green-900/20"
-          style={{ marginTop: dimensionsForWindow.height * 0.42 }}
+          className="pt-4 px-2"
+          style={{
+            marginTop: dimensionsForWindow.height * 0.42,
+            backgroundColor: "rgb(4, 16, 9)",
+          }}
           contentContainerStyle={{
             justifyContent: "flex-start",
-            // alignItems: "flex-start",
           }}
           keyExtractor={(itemObj) => itemObj.id}
-          // ListHeaderComponent={
-          //   <YouTubePlayer video={selectedVideo} loading={loading} />
-          // }
           ListFooterComponent={() => {
-            return <View className="h-2 w-full bg-green-900/20"></View>;
+            return (
+              <View
+                className="h-2 w-full"
+                style={{ backgroundColor: "rgb(4, 16, 9)" }}
+              ></View>
+            );
           }}
           renderItem={(vObj) => {
             return (

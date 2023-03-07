@@ -16,7 +16,10 @@ const CountriesDropdown: React.FC<IProps> = ({
   setCountryHandler,
 }) => {
   return (
-    <View className="flex-row  items-center justify-between px-4 mt-2 bg-green-800/20 rounded-xl mx-2">
+    <View
+      className="flex-row  items-center justify-between px-4 mt-2] rounded-xl mx-2"
+      style={{ backgroundColor: "rgb(4, 20, 10)" }}
+    >
       <Text className="text-gray-300 mx-4">Watch providers for this in </Text>
       <SelectDropdown
         data={countries}
@@ -33,7 +36,7 @@ const CountriesDropdown: React.FC<IProps> = ({
         }}
         buttonStyle={{
           // backgroundColor: "transparent",
-          backgroundColor: "rgba(34, 197, 94, 0.1)",
+          backgroundColor: "rgb(7, 38, 19)",
           borderRadius: 100,
           width: 150,
           borderWidth: 0,

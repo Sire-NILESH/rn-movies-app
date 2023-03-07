@@ -87,7 +87,8 @@ function renderFlatlist(
   return (
     <View
       className="space-y-3 py-4 mx-2 rounded-xl border-2"
-      style={{ backgroundColor: "rgba(34, 197, 94, 0.1)" }}
+      style={{ backgroundColor: "rgb(3, 20, 10)" }}
+      // style={{ backgroundColor: "rgba(34, 197, 94, 0.1)" }}
     >
       <Text className="text-green-100 uppercase tracking-[3px] ml-4">
         {availableType}
@@ -118,7 +119,6 @@ function renderFlatlist(
               <Text
                 key={p.provider_id}
                 className="text-stone-400 text-xs w-[60px] text-center"
-                // numberOfLines={1}
               >
                 {p.provider_name}
               </Text>

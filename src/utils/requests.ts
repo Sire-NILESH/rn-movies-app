@@ -50,7 +50,13 @@ import { IGenre, IGenresToShowHomeScreen, MediaTypes } from "../typings";
 const API_KEY = "e3e1732f8f495a1b191494b49b813669";
 const BASE_URL = "https://api.themoviedb.org/3";
 
-// API call to get the search results for the keywords.
+/**
+ * API call to get the search results for the keywords.
+ *
+ * @param searchText - The search text `keyword` to search.
+ * @param mediaType - The media type of the search, `tv` or `movie`.
+ * @param abortController - The abort controller to abort the search request, meant to be passed from the cleanup method of the `useEffect`.
+ */
 export const searchRequest = async (
   searchText: string,
   mediaType: MediaTypes,
@@ -73,9 +79,12 @@ export const searchRequest = async (
   if (data?.results) return { props: data?.results, mediaType: mediaType };
 };
 
-/* Function that calls the API and returns props for the Home screen only. 
-   Only needs a list of genres that is to be requested.
-*/
+/**
+ * Function that calls the API and returns props for the Home screen only.
+ * Only needs a list of genres that is to be requested.
+ *
+ * @param getTheseGenreMedias - An array of genres to be fetched.
+ */
 export const getHomeScreenProps = async (
   getTheseGenreMedias: IGenresToShowHomeScreen[]
 ) => {
@@ -98,9 +107,13 @@ export const getHomeScreenProps = async (
   return results;
 };
 
-/*  Common function that calls the API and returns screen props for Movies and Tv screens.
-Requires a list of genres to be fetched and type media type movie/tv.
-*/
+/**
+ * Common function that calls the API and returns screen props for Movies and Tv screens.
+ * Requires a list of genres to be fetched and type media type movie/tv.
+ *
+ * @param getTheseGenreMedias - An array of genres to be fetched.
+ * @param mediaType - The type of media to be fetched.
+ */
 export const getScreenProps = async (
   getTheseGenreMedias: IGenre[],
   mediaType: MediaTypes
@@ -129,7 +142,13 @@ export const getScreenProps = async (
   }
 };
 
-// Is used to load more Genre related media(Movie/Tv) on scroll list end in the Tiles list screen.
+/**
+ * Is used to load more Genre related media(Movie/Tv) on scroll list end in the Tiles list screen.
+ *
+ * @param getTheseGenreMedias - An array of genres that is to be loaded.
+ * @param mediaType - The type of media to be loaded.
+ * @param pageNumber - The page number
+ */
 export const getGenreMediasProps = async (
   getTheseGenreMedias: number[],
   mediaType: MediaTypes,
@@ -145,7 +164,13 @@ export const getGenreMediasProps = async (
   return data.results;
 };
 
-// Is used to load more  Related/Similar media(Movie/Tv) on scroll list end in the Related tiles list screen.
+/**
+ * Is used to load more  Related/Similar media(Movie/Tv) on scroll list end in the Related tiles list screen.
+ *
+ * @param relatedToMediaId - Id of the media whose related media is to be loaded.
+ * @param mediaType - Type of media to be loaded `tv` or `movie`
+ * @param pageNumber - Page number
+ */
 export const getRelatedMediasProps = async (
   relatedToMediaId: number,
   mediaType: MediaTypes,
@@ -167,7 +192,6 @@ export const getRelatedMediasProps = async (
   return data.results;
 };
 
-// Is used to load more  info on the TV media on the more info screen, specifically to access total number seasons for that show and others too while we are there at it.
 export /**
  *Is used to load more  info on the TV media on the more info screen, specifically to access total number seasons for that show and others too while we are there at it.
  *
@@ -212,7 +236,13 @@ export const getWatchProviders = async (
   // return data.results["IN"];
 };
 
-// To fetch more information about a particular season number of a tv show.
+/**
+ * To fetch more information about a particular season number of a tv show.
+ *
+ * @param tvMediaId - The ID of the tv media
+ * @param seasonNumber - The season number of the tv show whose details are to be fetched.
+ * @returns - An object
+ */
 export const getTvSeasonInfo = async (
   tvMediaId: number,
   seasonNumber: number
@@ -230,7 +260,13 @@ export const getTvSeasonInfo = async (
   return data.results;
 };
 
-// fucntion to fetch for the list of trailers for the given media and its media type.
+/**
+ * Fucntion to fetch for the list of trailers for the given media and its media type.
+ *
+ * @param mediaId - The id of the media
+ * @param mediaType - The media type of the media, This the distinguishing param from `tv` and `movie`
+ * @returns - returns data as an object {`props`}
+ */
 export const fetchTrailers = async (mediaId: number, mediaType: MediaTypes) => {
   const url = `${BASE_URL}/${mediaType}/${mediaId}/videos?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US`;
   const data = await fetch(url)
@@ -246,7 +282,12 @@ export const fetchTrailers = async (mediaId: number, mediaType: MediaTypes) => {
   }
 };
 
-// fucntion to fetch for the list of genres for the given media type
+/**
+ * To fetch for the list of genres for the given media type
+ *
+ * @param media - The media type to fetch
+ * @returns  - returns data as an object {`props`}
+ */
 export const fetchGenres = async (media: MediaTypes) => {
   const url = `https://api.themoviedb.org/3/genre/${media}/list?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US`;
   const data = await fetch(url)
@@ -290,167 +331,4 @@ export const fetchSeasonDetails = async (
     });
     return data;
   }
-
-  // return {
-  //   _id: "5256c89f19c2956ff6046d47",
-  //   air_date: "2011-04-17",
-  //   episodes: [
-  //     {
-  //       air_date: "2011-04-17",
-  //       episode_number: 1,
-  //       id: 63056,
-  //       name: "Winter Is Coming",
-  //       overview:
-  //         "Jon Arryn, the Hand of the King, is dead. King Robert Baratheon plans to ask his oldest friend, Eddard Stark, to take Jon's place. Across the sea, Viserys Targaryen plans to wed his sister to a nomadic warlord in exchange for an army.",
-  //       production_code: "101",
-  //       runtime: 62,
-  //       season_number: 1,
-  //       show_id: 1399,
-  //       still_path: "/9hGF3WUkBf7cSjMg0cdMDHJkByd.jpg",
-  //       vote_average: 7.8,
-  //       vote_count: 284,
-  //     },
-  //     {
-  //       air_date: "2011-04-24",
-  //       episode_number: 2,
-  //       id: 63057,
-  //       name: "The Kingsroad",
-  //       overview:
-  //         "While Bran recovers from his fall, Ned takes only his daughters to Kings Landing. Jon Snow goes with his uncle Benjen to The Wall. Tyrion joins them.",
-  //       production_code: "102",
-  //       runtime: 55,
-  //       season_number: 1,
-  //       show_id: 1399,
-  //       still_path: "/1kdHRLs05ia0E9X3Hi5Ts5Sc1jk.jpg",
-  //       vote_average: 7.7,
-  //       vote_count: 185,
-  //     },
-  //     {
-  //       air_date: "2011-05-01",
-  //       episode_number: 3,
-  //       id: 63058,
-  //       name: "Lord Snow",
-  //       overview:
-  //         "Lord Stark and his daughters arrive at King's Landing to discover the intrigues of the king's realm.",
-  //       production_code: "103",
-  //       runtime: 57,
-  //       season_number: 1,
-  //       show_id: 1399,
-  //       still_path: "/8HjOlb4slc1xusMgOtoNpxuTgSI.jpg",
-  //       vote_average: 8,
-  //       vote_count: 152,
-  //     },
-  //     {
-  //       air_date: "2011-05-08",
-  //       episode_number: 4,
-  //       id: 63059,
-  //       name: "Cripples, Bastards, and Broken Things",
-  //       overview:
-  //         "Eddard investigates Jon Arryn's murder. Jon befriends Samwell Tarly, a coward who has come to join the Night's Watch.",
-  //       production_code: "104",
-  //       runtime: 55,
-  //       season_number: 1,
-  //       show_id: 1399,
-  //       still_path: "/Ai2UPMWv38xGjOgNBuA1o8w8dUI.jpg",
-  //       vote_average: 8.085,
-  //       vote_count: 129,
-  //     },
-  //     {
-  //       air_date: "2011-05-15",
-  //       episode_number: 5,
-  //       id: 63060,
-  //       name: "The Wolf and the Lion",
-  //       overview:
-  //         "Catelyn has captured Tyrion and plans to bring him to her sister, Lysa Arryn, at The Vale, to be tried for his, supposed, crimes against Bran. Robert plans to have Daenerys killed, but Eddard refuses to be a part of it and quits.",
-  //       production_code: "105",
-  //       runtime: 54,
-  //       season_number: 1,
-  //       show_id: 1399,
-  //       still_path: "/eeMxrTGa4Tin8oyZx1fOfSRuMdz.jpg",
-  //       vote_average: 8.47,
-  //       vote_count: 135,
-  //     },
-  //     {
-  //       air_date: "2011-05-22",
-  //       episode_number: 6,
-  //       id: 63061,
-  //       name: "A Golden Crown",
-  //       overview:
-  //         "While recovering from his battle with Jamie, Eddard is forced to run the kingdom while Robert goes hunting. Tyrion demands a trial by combat for his freedom. Viserys is losing his patience with Drogo.",
-  //       production_code: "106",
-  //       runtime: 53,
-  //       season_number: 1,
-  //       show_id: 1399,
-  //       still_path: "/6FcfWGFlDyWZ2JvQi8uvkxbDx1z.jpg",
-  //       vote_average: 8.322,
-  //       vote_count: 132,
-  //     },
-  //     {
-  //       air_date: "2011-05-29",
-  //       episode_number: 7,
-  //       id: 63062,
-  //       name: "You Win or You Die",
-  //       overview:
-  //         "Robert has been injured while hunting and is dying. Jon and the others finally take their vows to the Night's Watch. A man, sent by Robert, is captured for trying to poison Daenerys. Furious, Drogo vows to attack the Seven Kingdoms.",
-  //       production_code: "107",
-  //       runtime: 58,
-  //       season_number: 1,
-  //       show_id: 1399,
-  //       still_path: "/dwrpT3W8sT9VhGf8zhVb3npfMzi.jpg",
-  //       vote_average: 8.462,
-  //       vote_count: 132,
-  //     },
-  //     {
-  //       air_date: "2011-06-05",
-  //       episode_number: 8,
-  //       id: 63063,
-  //       name: "The Pointy End",
-  //       overview:
-  //         "Eddard and his men are betrayed and captured by the Lannisters. When word reaches Robb, he plans to go to war to rescue them. The White Walkers attack The Wall. Tyrion returns to his father with some new friends.",
-  //       production_code: "108",
-  //       runtime: 58,
-  //       season_number: 1,
-  //       show_id: 1399,
-  //       still_path: "/loWNUGR3MtEEcx4NJ4WpEhceKBd.jpg",
-  //       vote_average: 8.137,
-  //       vote_count: 128,
-  //     },
-  //     {
-  //       air_date: "2011-06-12",
-  //       episode_number: 9,
-  //       id: 63064,
-  //       name: "Baelor",
-  //       overview:
-  //         "Robb goes to war against the Lannisters. Jon finds himself struggling on deciding if his place is with Robb or the Night's Watch. Drogo has fallen ill from a fresh battle wound. Daenerys is desperate to save him.",
-  //       production_code: "109",
-  //       runtime: 56,
-  //       season_number: 1,
-  //       show_id: 1399,
-  //       still_path: "/7FCFDPcxLCvhVxyjTa8rYKY0ZSV.jpg",
-  //       vote_average: 8.835,
-  //       vote_count: 139,
-  //     },
-  //     {
-  //       air_date: "2011-06-19",
-  //       episode_number: 10,
-  //       id: 63065,
-  //       name: "Fire and Blood",
-  //       overview:
-  //         "With Ned dead, Robb vows to get revenge on the Lannisters. Jon must officially decide if his place is with Robb or the Night's Watch. Daenerys says her final goodbye to Drogo.",
-  //       production_code: "110",
-  //       runtime: 53,
-  //       season_number: 1,
-  //       show_id: 1399,
-  //       still_path: "/7GhSiFhXOg81AevNQWrX6DOEL1U.jpg",
-  //       vote_average: 8.7,
-  //       vote_count: 132,
-  //     },
-  //   ],
-  //   id: 3624,
-  //   name: "Season 1",
-  //   overview:
-  //     "Trouble is brewing in the Seven Kingdoms of Westeros. For the driven inhabitants of this visionary world, control of Westeros' Iron Throne holds the lure of great power. But in a land where the seasons can last a lifetime, winter is coming...and beyond the Great Wall that protects them, an ancient evil has returned. In Season One, the story centers on three primary areas: the Stark and the Lannister families, whose designs on controlling the throne threaten a tenuous peace; the dragon princess Daenerys, heir to the former dynasty, who waits just over the Narrow Sea with her malevolent brother Viserys; and the Great Wall--a massive barrier of ice where a forgotten danger is stirring.",
-  //   poster_path: "/wgfKiqzuMrFIkU1M68DDDY8kGC1.jpg",
-  //   season_number: 1,
-  // };
 };

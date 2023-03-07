@@ -55,6 +55,7 @@ export interface WatchProviderForCountry {
   flatrate?: WatchProvider[];
   free?: WatchProvider[];
   buy?: WatchProvider[];
+  ads?: WatchProvider[];
 }
 
 export interface Media {

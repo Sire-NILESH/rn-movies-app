@@ -41,6 +41,7 @@ const WatchProviders: React.FC<IProps> = ({ mediaId, mediaType }) => {
     // @ts-ignore
     screenProps && screenProps[currentCountry.code];
 
+  console.log(watchProviders);
   return (
     <View className="flex-1 mt-8 space-y-10">
       <View className="w-full">
@@ -56,6 +57,10 @@ const WatchProviders: React.FC<IProps> = ({ mediaId, mediaType }) => {
 
       {watchProviders?.buy ? (
         <View>{renderFlatlist(watchProviders.buy, "Buy")}</View>
+      ) : null}
+
+      {watchProviders?.ads ? (
+        <View>{renderFlatlist(watchProviders.ads, "With Adverts")}</View>
       ) : null}
 
       {watchProviders?.free ? (
@@ -77,7 +82,7 @@ export default WatchProviders;
 
 function renderFlatlist(
   providerType: WatchProvider[],
-  availableType: "Subscription" | "Free" | "Buy"
+  availableType: "Subscription" | "Free" | "Buy" | "With Adverts"
 ) {
   return (
     <View
@@ -91,19 +96,16 @@ function renderFlatlist(
         horizontal
         data={providerType}
         keyExtractor={(provider) => String(provider.provider_id)}
-        // className="space-x-3"
         contentContainerStyle={{
           alignItems: "flex-start",
           justifyContent: "space-evenly",
           marginLeft: 16,
-          // width: "100%",
         }}
         renderItem={(itemObj) => {
           const p = itemObj.item;
           return (
             <View className="space-y-4 items-start mr-5">
               <View className="rounded-2xl flex-1 justify-center overflow-hidden">
-                {/* <View className="overflow-hidden rounded-full"> */}
                 <Image
                   source={{
                     uri: `https://image.tmdb.org/t/p/w500${p.logo_path}`,

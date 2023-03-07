@@ -3,6 +3,7 @@ import { Trailer } from "../typings";
 import { View, Image, Pressable, Text, Dimensions } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
+import { Colors } from "../utils/Colors";
 
 interface IProps {
   video: Trailer;
@@ -65,9 +66,9 @@ const TrailerVideoThumbnail: React.FC<IProps> = (props) => {
           colors={[
             "rgba(0,0,0,0)",
             "rgba(0,0,0,0)",
-            // "rgba(0,0,0,0)",
+            "rgba(28, 25, 23, 0)",
             "rgba(28, 25, 23, 0.8)",
-            "rgba(0, 0, 0, 0.5)",
+            // Colors.black,
           ]}
           className="absolute flex-row items-end pb-2 px-2 rounded-2xl overflow-hidden bg-black/10"
           style={{ width: dimensions.imageWidth, height: dimensions.height }}

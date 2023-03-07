@@ -21,11 +21,6 @@ const GenreTags: React.FC<IProps> = (props) => {
 
 export default GenreTags;
 
-/**
- *
- *
- * @interface IGenreProps
- */
 interface IGenreProps {
   genreId: number;
 }

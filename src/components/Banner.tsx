@@ -40,7 +40,12 @@ function Banner({ mediaList }: Props) {
 
   function infoButtonPressHandler(): void {
     // @ts-ignore
-    navigation.navigate("More Info", { media: media });
+    navigation.push("More Info", {
+      mediaType: isMovie(media) ? "movie" : "tv",
+      media: media,
+    });
+    // // @ts-ignore
+    // navigation.navigate("More Info", { media: media });
   }
 
   return (

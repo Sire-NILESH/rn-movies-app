@@ -42,7 +42,7 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
         }}
         numColumns={3}
         ListFooterComponent={renderLoader}
-        onEndReachedThreshold={0.7}
+        onEndReachedThreshold={0.6}
         onEndReached={loadMoreItem}
       />
     </View>

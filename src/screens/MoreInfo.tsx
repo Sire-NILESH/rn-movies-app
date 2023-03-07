@@ -27,13 +27,10 @@ const screenDimensions = Dimensions.get("screen");
 const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const { navigation, route } = props;
   // @ts-ignore
-  let media: MovieMedia | TvMedia = route.params?.media;
-  // let media: MovieMedia | TvMedia | TvMediaExtended = route.params?.media;
+  let media: MovieMedia | TvMedia | TvMediaExtended = route.params?.media;
 
   const mediaType: MediaTypes = // @ts-ignore
     route.params?.mediaType !== undefined ? route.params?.mediaType : "movie";
-
-  // let errorLoadingProps;
 
   // Header settings
   useLayoutEffect(() => {
@@ -60,18 +57,12 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
   if (mediaType === "tv" && screenProps !== null) {
     tvExtendedMedia = Object.assign(media, screenProps);
-    // media = Object.assign(media, screenProps);
   }
 
   function getTitle(): string {
     if ("title" in media) return media.title;
     return media.name;
   }
-
-  // in case of error
-  // if (errorLoadingProps) {
-  //   return <NothingToShow />;
-  // }
 
   return (
     <ScrollView className="flex-1 bg-black pb-24">
@@ -173,10 +164,8 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         </View>
       </View>
 
-      <View
-      // className="py-10 px-3 mx-4 my-10 rounded-xl"
-      // style={{ backgroundColor: "rgba(34, 197, 94, 0.1)" }}
-      >
+      {/* Network List and Watch Provider row */}
+      <View>
         {/* Networks available on */}
         {isTvExtended(media) && <NetworkList networks={media.networks} />}
 
@@ -184,7 +173,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         <WatchProviders mediaId={media.id} mediaType={mediaType} />
       </View>
 
-      {/* Last row */}
+      {/* Footer, contains 'Similar' and 'Seasons and episodes' bttons */}
       <View className="mt-10 flex-row items-center space-x-5 w-full p-4">
         {/* Realated/Similar/Show_more_like_this */}
         <LinearGradient
@@ -239,7 +228,11 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               className="flex-1 px-4 py-4 justify-between"
               onPress={() =>
                 navigation.push("Season and Episodes", {
-                  tvMediaId: media.id,
+                  tvMediaId: isTvExtended(media) && media.id,
+                  tvMediaSeasons: isTvExtended(media) && media.seasons,
+                  tvMediaName:
+                    (isTvExtended(media) && media.name) ||
+                    (isTvExtended(media) && media.original_name),
                 })
               }
               android_ripple={{ color: "#eee" }}

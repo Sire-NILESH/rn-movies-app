@@ -34,7 +34,7 @@ import { IGenre, IGenresToShowHomeScreen, MediaTypes } from "../typings";
 // Recommended content TV
 // const data = fetch('https://api.themoviedb.org/3/movie/646389/similar?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US&page=1').then((data)=>data.json()).then((res)=>console.log(res)).catch((err)=>console.log(err.message))
 
-// Recommended content TV
+// Movie Details
 // https://api.themoviedb.org/3/movie/{movie_id}?api_key=<<api_key>>&language=en-US
 // const data = fetch('https://api.themoviedb.org/3/movie/76600?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US').then((data)=>data.json()).then((res)=>console.log(res)).catch((err)=>console.log(err.message))
 
@@ -244,59 +244,6 @@ export const fetchTrailers = async (mediaId: number, mediaType: MediaTypes) => {
     // console.log("from requests", data);
     return { props: data?.results };
   }
-
-  // return {
-  //   props: [
-  //     {
-  //       iso_639_1: "en",
-  //       iso_3166_1: "US",
-  //       name: "Inside Game of Thrones: A Story in Camera Work – BTS (HBO)",
-  //       key: "y2ZJ3lTaREY",
-  //       site: "YouTube",
-  //       size: 1080,
-  //       type: "Behind the Scenes",
-  //       official: true,
-  //       published_at: "2019-03-25T14:00:06.000Z",
-  //       id: "5c999b48c3a36863b73b9d42",
-  //     },
-  //     {
-  //       iso_639_1: "en",
-  //       iso_3166_1: "US",
-  //       name: "Inside Game of Thrones: A Story in Prosthetics – BTS (HBO)",
-  //       key: "f3MUpuRF6Ck",
-  //       site: "YouTube",
-  //       size: 1080,
-  //       type: "Behind the Scenes",
-  //       official: true,
-  //       published_at: "2019-03-11T14:00:03.000Z",
-  //       id: "5c92c2519251412b51773135",
-  //     },
-  //     {
-  //       iso_639_1: "en",
-  //       iso_3166_1: "US",
-  //       name: "GAME OF THRONES - SEASON 1- TRAILER",
-  //       key: "bjqEWgDVPe0",
-  //       published_at: "2017-02-20T15:25:56.000Z",
-  //       site: "YouTube",
-  //       size: 1080,
-  //       type: "Trailer",
-  //       official: true,
-  //       id: "5b5b91c2925141523700502c",
-  //     },
-  //     {
-  //       iso_639_1: "en",
-  //       iso_3166_1: "US",
-  //       name: "Game of Thrones | Season 1 | Official Trailer",
-  //       key: "BpJYNVhGf1s",
-  //       site: "YouTube",
-  //       size: 1080,
-  //       type: "Trailer",
-  //       official: true,
-  //       published_at: "2011-03-04T04:21:14.000Z",
-  //       id: "5c9295200e0a267cd8168bd8",
-  //     },
-  //   ],
-  // };
 };
 
 // fucntion to fetch for the list of genres for the given media type
@@ -313,4 +260,197 @@ export const fetchGenres = async (media: MediaTypes) => {
     // console.log("from requests", data);
     return { props: data?.genres };
   }
+};
+
+// fucntion to fetch for the list of genres for the given media type
+/**
+ * Fetches details of the given season number for a given TV media id
+ *
+ * @param tvMediaId - The id of the TV show
+ * @param seasonNumber - Season number to fetch information of.
+ * @returns `Object` - TV Seasons Details
+ */
+export const fetchSeasonDetails = async (
+  tvMediaId: number,
+  seasonNumber: number
+) => {
+  const url = `${BASE_URL}/tv/${tvMediaId}/season/${seasonNumber}?api_key=${API_KEY}&language=en-US`;
+  const data = await fetch(url)
+    .then((data) => data.json())
+    .catch((err) => {
+      console.log(err.message);
+      throw new Error(err.message);
+    });
+
+  if (data) {
+    // Deleting unnecessary data from each season that we won't use.
+    data.episodes.forEach((e: any) => {
+      delete e["crew"];
+      delete e["guest_stars"];
+    });
+    return data;
+  }
+
+  // return {
+  //   _id: "5256c89f19c2956ff6046d47",
+  //   air_date: "2011-04-17",
+  //   episodes: [
+  //     {
+  //       air_date: "2011-04-17",
+  //       episode_number: 1,
+  //       id: 63056,
+  //       name: "Winter Is Coming",
+  //       overview:
+  //         "Jon Arryn, the Hand of the King, is dead. King Robert Baratheon plans to ask his oldest friend, Eddard Stark, to take Jon's place. Across the sea, Viserys Targaryen plans to wed his sister to a nomadic warlord in exchange for an army.",
+  //       production_code: "101",
+  //       runtime: 62,
+  //       season_number: 1,
+  //       show_id: 1399,
+  //       still_path: "/9hGF3WUkBf7cSjMg0cdMDHJkByd.jpg",
+  //       vote_average: 7.8,
+  //       vote_count: 284,
+  //     },
+  //     {
+  //       air_date: "2011-04-24",
+  //       episode_number: 2,
+  //       id: 63057,
+  //       name: "The Kingsroad",
+  //       overview:
+  //         "While Bran recovers from his fall, Ned takes only his daughters to Kings Landing. Jon Snow goes with his uncle Benjen to The Wall. Tyrion joins them.",
+  //       production_code: "102",
+  //       runtime: 55,
+  //       season_number: 1,
+  //       show_id: 1399,
+  //       still_path: "/1kdHRLs05ia0E9X3Hi5Ts5Sc1jk.jpg",
+  //       vote_average: 7.7,
+  //       vote_count: 185,
+  //     },
+  //     {
+  //       air_date: "2011-05-01",
+  //       episode_number: 3,
+  //       id: 63058,
+  //       name: "Lord Snow",
+  //       overview:
+  //         "Lord Stark and his daughters arrive at King's Landing to discover the intrigues of the king's realm.",
+  //       production_code: "103",
+  //       runtime: 57,
+  //       season_number: 1,
+  //       show_id: 1399,
+  //       still_path: "/8HjOlb4slc1xusMgOtoNpxuTgSI.jpg",
+  //       vote_average: 8,
+  //       vote_count: 152,
+  //     },
+  //     {
+  //       air_date: "2011-05-08",
+  //       episode_number: 4,
+  //       id: 63059,
+  //       name: "Cripples, Bastards, and Broken Things",
+  //       overview:
+  //         "Eddard investigates Jon Arryn's murder. Jon befriends Samwell Tarly, a coward who has come to join the Night's Watch.",
+  //       production_code: "104",
+  //       runtime: 55,
+  //       season_number: 1,
+  //       show_id: 1399,
+  //       still_path: "/Ai2UPMWv38xGjOgNBuA1o8w8dUI.jpg",
+  //       vote_average: 8.085,
+  //       vote_count: 129,
+  //     },
+  //     {
+  //       air_date: "2011-05-15",
+  //       episode_number: 5,
+  //       id: 63060,
+  //       name: "The Wolf and the Lion",
+  //       overview:
+  //         "Catelyn has captured Tyrion and plans to bring him to her sister, Lysa Arryn, at The Vale, to be tried for his, supposed, crimes against Bran. Robert plans to have Daenerys killed, but Eddard refuses to be a part of it and quits.",
+  //       production_code: "105",
+  //       runtime: 54,
+  //       season_number: 1,
+  //       show_id: 1399,
+  //       still_path: "/eeMxrTGa4Tin8oyZx1fOfSRuMdz.jpg",
+  //       vote_average: 8.47,
+  //       vote_count: 135,
+  //     },
+  //     {
+  //       air_date: "2011-05-22",
+  //       episode_number: 6,
+  //       id: 63061,
+  //       name: "A Golden Crown",
+  //       overview:
+  //         "While recovering from his battle with Jamie, Eddard is forced to run the kingdom while Robert goes hunting. Tyrion demands a trial by combat for his freedom. Viserys is losing his patience with Drogo.",
+  //       production_code: "106",
+  //       runtime: 53,
+  //       season_number: 1,
+  //       show_id: 1399,
+  //       still_path: "/6FcfWGFlDyWZ2JvQi8uvkxbDx1z.jpg",
+  //       vote_average: 8.322,
+  //       vote_count: 132,
+  //     },
+  //     {
+  //       air_date: "2011-05-29",
+  //       episode_number: 7,
+  //       id: 63062,
+  //       name: "You Win or You Die",
+  //       overview:
+  //         "Robert has been injured while hunting and is dying. Jon and the others finally take their vows to the Night's Watch. A man, sent by Robert, is captured for trying to poison Daenerys. Furious, Drogo vows to attack the Seven Kingdoms.",
+  //       production_code: "107",
+  //       runtime: 58,
+  //       season_number: 1,
+  //       show_id: 1399,
+  //       still_path: "/dwrpT3W8sT9VhGf8zhVb3npfMzi.jpg",
+  //       vote_average: 8.462,
+  //       vote_count: 132,
+  //     },
+  //     {
+  //       air_date: "2011-06-05",
+  //       episode_number: 8,
+  //       id: 63063,
+  //       name: "The Pointy End",
+  //       overview:
+  //         "Eddard and his men are betrayed and captured by the Lannisters. When word reaches Robb, he plans to go to war to rescue them. The White Walkers attack The Wall. Tyrion returns to his father with some new friends.",
+  //       production_code: "108",
+  //       runtime: 58,
+  //       season_number: 1,
+  //       show_id: 1399,
+  //       still_path: "/loWNUGR3MtEEcx4NJ4WpEhceKBd.jpg",
+  //       vote_average: 8.137,
+  //       vote_count: 128,
+  //     },
+  //     {
+  //       air_date: "2011-06-12",
+  //       episode_number: 9,
+  //       id: 63064,
+  //       name: "Baelor",
+  //       overview:
+  //         "Robb goes to war against the Lannisters. Jon finds himself struggling on deciding if his place is with Robb or the Night's Watch. Drogo has fallen ill from a fresh battle wound. Daenerys is desperate to save him.",
+  //       production_code: "109",
+  //       runtime: 56,
+  //       season_number: 1,
+  //       show_id: 1399,
+  //       still_path: "/7FCFDPcxLCvhVxyjTa8rYKY0ZSV.jpg",
+  //       vote_average: 8.835,
+  //       vote_count: 139,
+  //     },
+  //     {
+  //       air_date: "2011-06-19",
+  //       episode_number: 10,
+  //       id: 63065,
+  //       name: "Fire and Blood",
+  //       overview:
+  //         "With Ned dead, Robb vows to get revenge on the Lannisters. Jon must officially decide if his place is with Robb or the Night's Watch. Daenerys says her final goodbye to Drogo.",
+  //       production_code: "110",
+  //       runtime: 53,
+  //       season_number: 1,
+  //       show_id: 1399,
+  //       still_path: "/7GhSiFhXOg81AevNQWrX6DOEL1U.jpg",
+  //       vote_average: 8.7,
+  //       vote_count: 132,
+  //     },
+  //   ],
+  //   id: 3624,
+  //   name: "Season 1",
+  //   overview:
+  //     "Trouble is brewing in the Seven Kingdoms of Westeros. For the driven inhabitants of this visionary world, control of Westeros' Iron Throne holds the lure of great power. But in a land where the seasons can last a lifetime, winter is coming...and beyond the Great Wall that protects them, an ancient evil has returned. In Season One, the story centers on three primary areas: the Stark and the Lannister families, whose designs on controlling the throne threaten a tenuous peace; the dragon princess Daenerys, heir to the former dynasty, who waits just over the Narrow Sea with her malevolent brother Viserys; and the Great Wall--a massive barrier of ice where a forgotten danger is stirring.",
+  //   poster_path: "/wgfKiqzuMrFIkU1M68DDDY8kGC1.jpg",
+  //   season_number: 1,
+  // };
 };

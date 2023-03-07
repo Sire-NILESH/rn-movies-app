@@ -96,14 +96,15 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         <FlatList
           data={videos}
           initialNumToRender={3}
-          className="bg-zinc-900/40 py-4 px-2 mt-[340px]"
+          // className="bg-zinc-900/40 py-4 px-2"
+          className="pt-4 px-2 mt-[340px] mb-8"
           contentContainerStyle={{
             justifyContent: "flex-start",
             // alignItems: "flex-start",
           }}
           keyExtractor={(itemObj) => itemObj.id}
           // ListHeaderComponent={
-
+          //   <YouTubePlayer video={selectedVideo} loading={loading} />
           // }
           renderItem={(vObj) => {
             return (
@@ -135,7 +136,7 @@ function TrailerCardView(props: {
   onPressHandler: (video: Trailer) => void;
 }) {
   return (
-    <View className="mb-3">
+    <View className="mb-3 mx-1">
       <TrailerVideoThumbnail
         video={props.video}
         onPressHandler={props.onPressHandler}

@@ -5,7 +5,7 @@ interface IProps {
   tvMediaId: number;
 }
 
-const SeasonsAndEpisodes: React.FC<IProps> = (props) => {
+const Seasons: React.FC<IProps> = (props) => {
   return (
     <View className="flex-1 px-4 space-y-4">
       <Text className="text-xl text-gray-50">Seasons</Text>
@@ -54,4 +54,4 @@ const SeasonsAndEpisodes: React.FC<IProps> = (props) => {
   );
 };
 
-export default SeasonsAndEpisodes;
+export default Seasons;

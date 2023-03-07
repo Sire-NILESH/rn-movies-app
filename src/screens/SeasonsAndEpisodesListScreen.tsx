@@ -1,21 +1,169 @@
-import { View, Text } from "react-native";
-import React, { useEffect } from "react";
+import {
+  View,
+  Text,
+  Pressable,
+  Dimensions,
+  Image,
+  FlatList,
+} from "react-native";
+import React, { useLayoutEffect, useState } from "react";
 import { IStackScreenProps } from "../library/StackScreenProps";
 import { useLogging } from "../hooks/useLogging";
+import { Season, SeasonDetails } from "../typings";
+import useFetcher from "../hooks/useFetcher";
+import { fetchSeasonDetails } from "../utils/requests";
+import { Colors } from "../utils/Colors";
+import { Ionicons } from "@expo/vector-icons";
+import SeasonsHeader from "../components/SeasonsHeader";
+import { LinearGradient } from "expo-linear-gradient";
+import EpisodeInfoCard from "../components/EpisodeInfoCard";
+import NothingToShow from "../components/NothingToShow";
+
+const screenDimensions = Dimensions.get("screen");
 
 const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   IStackScreenProps
 > = (props) => {
   const [logging] = useLogging("Contact Screen");
   const { navigation, route } = props;
+  // @ts-ignore
+  const {
+    tvMediaId,
+    tvMediaSeasons,
+    tvMediaName,
+  }: {
+    tvMediaId: number;
+    tvMediaSeasons: Season[];
+    tvMediaName: string;
+  } = route.params;
 
-  useEffect(() => {
-    logging.info({ navigation, route });
-  }, [logging]);
+  const [selectedSeason, setSelectedSeason] = useState<Season>(
+    tvMediaSeasons[0]
+  );
+
+  const {
+    screenProps: seasonDetails,
+    errorLoadingProps,
+    loadingProps,
+  }: {
+    screenProps: SeasonDetails;
+    errorLoadingProps: Error | null;
+    loadingProps: boolean;
+  } = useFetcher(fetchSeasonDetails, [
+    tvMediaId,
+    selectedSeason?.season_number,
+  ]);
+
+  function setSelectedSeasonHandler(newSelectedSeason: Season) {
+    setSelectedSeason(newSelectedSeason);
+  }
+
+  // Header Settings
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      // headerTitle: tvMediaName,
+      header: (props) => (
+        <SeasonsHeader
+          tvMediaId={tvMediaId}
+          tvMediaSeasons={tvMediaSeasons}
+          selectedSeason={selectedSeason}
+          setNewSelectedSeason={setSelectedSeasonHandler}
+        />
+      ),
+      headerStyle: {
+        backgroundColor: Colors.red[600],
+      },
+      headerLeft: (props) => {
+        return (
+          <View className="ml-4 mr-2">
+            <Pressable onPress={() => navigation.goBack()}>
+              <Ionicons name="arrow-back" size={24} color={Colors.gray[50]} />
+            </Pressable>
+          </View>
+        );
+      },
+    });
+  }, [selectedSeason, tvMediaSeasons]);
 
   return (
-    <View>
-      <Text>SeasonsAndEpisodesListScreen</Text>
+    <View className="flex-1 bg-black pb-4">
+      {seasonDetails ? (
+        <View className="flex-1">
+          {seasonDetails && (
+            <FlatList
+              ListHeaderComponent={
+                <>
+                  <LinearGradient
+                    colors={[
+                      "rgba(28, 25, 23, 0.4)",
+                      "rgba(22, 101, 52, 0.3)",
+                      "rgba(28, 25, 23, 0.6)",
+                      "rgba(28, 25, 23, 0.9)",
+                      Colors.black,
+                    ]}
+                    className="flex-row px-3 bg-green-800 pt-4 justify-between items-start mb-10"
+                  >
+                    <View className="h-[200] w-[150]">
+                      <Image
+                        source={
+                          tvMediaSeasons[selectedSeason.season_number]
+                            ?.poster_path
+                            ? {
+                                uri: `https://image.tmdb.org/t/p/w500${
+                                  tvMediaSeasons[selectedSeason.season_number]
+                                    ?.poster_path
+                                }`,
+                              }
+                            : require("../../assets/images/placeholders/posterPlaceHolder.webp")
+                        }
+                        className="rounded-md"
+                        resizeMode="stretch" //similar to web, "cover", "contain", etc.
+                        style={{ width: "100%", height: "100%" }}
+                      ></Image>
+                    </View>
+                    <View className="w-[55%] space-y-2">
+                      {/* Title */}
+                      <Text className="text-green-100 text-2xl font-bold">
+                        {tvMediaName}
+                      </Text>
+                      <View className="flex-row items-center space-x-1">
+                        <Text className="text-stone-200 text-lg font-semibold">
+                          Season{" "}
+                          {seasonDetails.season_number === 0
+                            ? "Extras"
+                            : seasonDetails.season_number}
+                          ,{" "}
+                        </Text>
+                        <Text className="text-stone-300 text-lg">
+                          {seasonDetails.episodes.length} episodes
+                        </Text>
+                      </View>
+                    </View>
+                  </LinearGradient>
+
+                  {/* Overview */}
+                  {seasonDetails.overview ? (
+                    <View className="mb-10 px-4 space-y-2">
+                      <Text className="text-gray-200">Overview: </Text>
+                      <Text className="text-gray-200 text-xs">
+                        {seasonDetails.overview}
+                      </Text>
+                    </View>
+                  ) : null}
+                </>
+              }
+              data={seasonDetails.episodes}
+              keyExtractor={(episode) => String(episode.id)}
+              renderItem={(episodeObj) => (
+                <EpisodeInfoCard episode={episodeObj.item} />
+              )}
+            />
+          )}
+        </View>
+      ) : (
+        <NothingToShow />
+      )}
     </View>
   );
 };

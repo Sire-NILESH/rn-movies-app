@@ -130,15 +130,7 @@ export interface TvMediaExtended extends TvMedia {
     iso_3166_1: string;
     name: string;
   }[];
-  seasons: {
-    air_date: string | null;
-    episode_count: number;
-    id: number;
-    name: string;
-    overview: string | null;
-    poster_path: string | null;
-    season_number: number;
-  }[];
+  seasons: Season[];
   spoken_languages: {
     english_name: string;
     iso_639_1: string;
@@ -146,6 +138,41 @@ export interface TvMediaExtended extends TvMedia {
   }[];
   status: string;
   tagline: string;
+}
+
+export interface Season {
+  air_date: string | null;
+  episode_count: number;
+  id: number;
+  name: string;
+  overview: string | null;
+  poster_path: string | null;
+  season_number: number;
+}
+
+export interface Episode {
+  air_date: string;
+  episode_number: number;
+  id: number;
+  name: string;
+  overview: string;
+  production_code: string;
+  runtime: number;
+  season_number: number;
+  show_id: number;
+  still_path: string;
+  vote_average: number;
+  vote_count: number;
+}
+
+export interface SeasonDetails {
+  air_date: string;
+  episodes: Episode[];
+  name: string;
+  overview: string;
+  id: number;
+  poster_path: string;
+  season_number: number;
 }
 
 // export interface Movie {

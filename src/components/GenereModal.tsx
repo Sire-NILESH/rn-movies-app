@@ -1,4 +1,11 @@
-import { View, Text, Modal, Pressable, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  Modal,
+  Pressable,
+  FlatList,
+  ScrollView,
+} from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -63,8 +70,8 @@ const GenereModal: React.FC<IProps> = ({
         </View>
         <View className="flex-1">
           {movieGenres ? (
-            <View className="flex-1">
-              <FlatList
+            <ScrollView className="flex-1">
+              {/* <FlatList
                 data={mediaGenreList}
                 keyExtractor={(item) => String(item.id)}
                 initialNumToRender={20}
@@ -93,8 +100,35 @@ const GenereModal: React.FC<IProps> = ({
                     </Text>
                   </View>
                 )}
-              />
-            </View>
+              /> */}
+
+              {mediaGenreList.map((mediaGenre, index) => (
+                <View
+                  key={mediaGenre.id}
+                  className="flex-row px-4"
+                  style={
+                    index % 2 === 0
+                      ? { backgroundColor: Colors.stone[800] }
+                      : { backgroundColor: Colors.stone[900] }
+                  }
+                >
+                  <BouncyCheckbox
+                    size={20}
+                    fillColor={Colors.stone[500]}
+                    unfillColor={Colors.stone[800]}
+                    innerIconStyle={{ borderWidth: 1 }}
+                    onPress={(isChecked: boolean) => {
+                      isChecked === true
+                        ? selectedGenresHandlers(mediaGenre.id)
+                        : selectedGenresHandlers(mediaGenre.id, true);
+                    }}
+                  />
+                  <Text className="px-2 py-2 text-left text-gray-300">
+                    {mediaGenre.name}
+                  </Text>
+                </View>
+              ))}
+            </ScrollView>
           ) : null}
         </View>
       </View>

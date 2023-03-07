@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-
+import "react-native-gesture-handler";
 import routes from "./src/config/routes";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "./src/utils/Colors";

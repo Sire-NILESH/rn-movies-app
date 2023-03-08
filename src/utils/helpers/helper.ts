@@ -23,6 +23,12 @@ export function isTvExtended(
 //   return media !== null && (media as MovieMedia).title !== undefined;
 // }
 
+// Getting the history/last screen
+// const routes = navigation.getState()?.routes;
+// const prevRoute = routes[routes.length - 2]; // -2 because -1 is the current route
+// // {"key": "Search Screen-rxFVew3zQkNrXL4z0O_1J", "name": "Search Screen", "params": {"searchCategory": "tv"}, "path": undefined}
+// console.log("path", prevRoute?.name);
+
 export function isMovieArray(
   medias: MovieMedia[] | TvMedia[]
 ): medias is MovieMedia[] {

@@ -8,6 +8,7 @@ import TileListScreen from "../screens/TileList";
 import RelatedTileListScreen from "../screens/RelatedTileListScreen";
 import TrailerScreen from "../screens/TrailerScreen";
 import SeasonsAndEpisodesListScreen from "../screens/SeasonsAndEpisodesListScreen";
+import SearchTileListScreen from "../screens/SearchTileListScreen";
 
 const routes: IRouteProps[] = [
   {
@@ -23,7 +24,7 @@ const routes: IRouteProps[] = [
     component: TvShowsScreen,
   },
   {
-    name: "Search Screen",
+    name: "Search",
     component: SearchScreen,
   },
   {
@@ -37,6 +38,10 @@ const routes: IRouteProps[] = [
   {
     name: "Related",
     component: RelatedTileListScreen,
+  },
+  {
+    name: "Search Tiles",
+    component: SearchTileListScreen,
   },
   {
     name: "Trailer",

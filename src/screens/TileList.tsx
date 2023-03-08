@@ -94,21 +94,18 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     }
   };
 
-  // console.log("path", route.path);
-
   // Header settings
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle:
-        userSelectedGenres.length > 0
-          ? `Custom Genres ${currentMediaType === "tv" ? "TV shows" : "Movies"}`
-          : `${title} ${currentMediaType === "tv" ? "TV shows" : "Movies"}`,
+      headerTitle: userSelectedGenres.length > 0 ? "Custom Genres" : title,
+      // ? `Custom Genres ${currentMediaType === "tv" ? "TV shows" : "Movies"}`
+      // : `${title} ${currentMediaType === "tv" ? "TV shows" : "Movies"}`,
       headerRight: (props) => (
         <View className="flex-row">
           {/* Search button */}
           <HeaderSearchButton />
           {/* Genre select button */}
-          {route.path !== "Search Screen" && (
+          {route.path !== "Search" && (
             <Pressable onPress={onShowGenresModal}>
               <MaterialCommunityIcons
                 name="drama-masks"

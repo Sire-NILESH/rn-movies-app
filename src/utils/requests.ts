@@ -56,15 +56,18 @@ const BASE_URL = "https://api.themoviedb.org/3";
  * @param searchText - The search text `keyword` to search.
  * @param mediaType - The media type of the search, `tv` or `movie`.
  * @param abortController - The abort controller to abort the search request, meant to be passed from the cleanup method of the `useEffect`.
+ * @param pageNumber - Optional, default is `1` if not provided.
  */
 export const searchRequest = async (
   searchText: string,
   mediaType: MediaTypes,
-  abortController: AbortController
+  pageNumber: number,
+  abortController?: AbortController
 ) => {
-  const url = `${BASE_URL}/search/${mediaType}?api_key=${API_KEY}&query=${searchText}&language=en-US&page=1&include_adult=false`;
+  const page = pageNumber ? pageNumber : 1;
+  const url = `${BASE_URL}/search/${mediaType}?api_key=${API_KEY}&query=${searchText}&language=en-US&page=1&include_adult=false&page=${page}`;
   // const abortController = new AbortController();
-  const data = await fetch(url, { signal: abortController.signal })
+  const data = await fetch(url, { signal: abortController?.signal })
     .then((res) => res.json())
     .catch((err) => {
       if (err.message === "Aborted") {
@@ -75,8 +78,8 @@ export const searchRequest = async (
     });
 
   console.log("fetching", searchText);
-
-  if (data?.results) return { props: data?.results, mediaType: mediaType };
+  // console.log("------", data.results);
+  if (data?.results) return { results: data?.results, mediaType: mediaType };
 };
 
 /**

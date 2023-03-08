@@ -3,13 +3,13 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import IconButton from "./IconButton";
 import { Colors } from "./../../utils/Colors";
-import { MovieMedia, TvMedia } from "../../typings";
+import { MediaTypes, MovieMedia, TvMedia } from "../../typings";
 
 interface IProps {
   gotoList?: boolean;
   medias?: MovieMedia[] | TvMedia[];
   title?: string | null;
-  searchCategory?: string | null;
+  searchCategory?: MediaTypes;
   disabled?: boolean;
 }
 
@@ -25,10 +25,12 @@ export default function HeaderSearchButton({
   function onPressHandler() {
     if (gotoList === true) {
       // @ts-ignore
-      navigation.push("Tiles", { title, medias });
+      // navigation.push("Tiles", { title, medias });
+      // @ts-ignore
+      navigation.push("Search Tiles", { title, medias, searchCategory });
     } else {
       // @ts-ignore
-      navigation.navigate("Search Screen", { searchCategory: searchCategory });
+      navigation.navigate("Search", { searchCategory: searchCategory });
     }
   }
 

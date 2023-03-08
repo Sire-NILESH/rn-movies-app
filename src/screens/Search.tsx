@@ -8,11 +8,11 @@ import { FlatList } from "react-native-gesture-handler";
 import { searchRequest } from "../utils/requests";
 import { MediaTypes, MovieMedia, TvMedia } from "../typings";
 import HeaderSearchButton from "./../components/ui/HeaderSearchButton";
-import { isMovie, isMovieArray } from "./../utils/helpers/helper";
+import { isMovie, isMovieArray, isTvArray } from "./../utils/helpers/helper";
 import { StackNavigationProp } from "@react-navigation/stack";
 
 interface ISearchResults {
-  props: MovieMedia[] | TvMedia[];
+  results: MovieMedia[] | TvMedia[];
 }
 
 interface ISearchInputProps {
@@ -38,7 +38,7 @@ const SearchInput: React.FC<ISearchInputProps> = (props) => {
 };
 
 const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
-  const [logging] = useLogging("Search Screen");
+  const [logging] = useLogging("Search");
   const { navigation, route } = props;
   // @ts-ignore
   const searchCategory = route.params?.searchCategory as MediaTypes;
@@ -57,6 +57,7 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       const data = await searchRequest(
         searchQuery ? searchQuery : "",
         searchCategory ? searchCategory : "multi",
+        1,
         abortController
       );
       data && setSearchQueryResult(data);
@@ -88,11 +89,12 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       headerRight: (props) => (
         <HeaderSearchButton
           gotoList={true}
-          medias={searchQueryResult?.props}
+          medias={searchQueryResult?.results}
           title={searchQuery}
+          searchCategory={searchCategory}
           disabled={
-            searchQueryResult?.props.length &&
-            searchQueryResult?.props.length > 0
+            searchQueryResult?.results.length &&
+            searchQueryResult?.results.length > 0
               ? false
               : true
           }
@@ -110,16 +112,16 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           {searchQuery !== null &&
           searchQuery.length >= 2 &&
           searchQueryResult &&
-          searchQueryResult?.props.length > 0
-            ? isMovieArray(searchQueryResult?.props)
+          searchQueryResult?.results.length > 0
+            ? isMovieArray(searchQueryResult?.results)
               ? renderFlatList(
-                  searchQueryResult?.props,
+                  searchQueryResult?.results,
                   searchCategory,
                   navigation
                 )
-              : !isMovieArray(searchQueryResult?.props)
+              : !isTvArray(searchQueryResult?.results)
               ? renderFlatList(
-                  searchQueryResult?.props,
+                  searchQueryResult?.results,
                   searchCategory,
                   navigation
                 )
@@ -184,11 +186,13 @@ function renderFlatList(
                   ? mediaObj.item.title
                   : mediaObj.item.name}{" "}
                 <Text className="text-xs">
-                  (
                   {isMovie(mediaObj.item)
                     ? mediaObj.item.release_date
-                    : mediaObj.item.first_air_date}
-                  )
+                      ? "(" + mediaObj.item.release_date + ")"
+                      : null
+                    : mediaObj.item.first_air_date
+                    ? "(" + mediaObj.item.first_air_date + ")"
+                    : null}
                 </Text>
               </Text>
             </Pressable>

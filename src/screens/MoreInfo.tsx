@@ -117,8 +117,11 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         </View>
 
         {/* Genre Tags Row */}
-        <View className="w-full h-10 justify-center items-center mt-10">
-          <GenreTags genreIdList={media.genre_ids} />
+        <View className="w-full h-10 justify-center items-center mt-5">
+          <GenreTags
+            genreIdList={media.genre_ids}
+            backgroundType="transparent"
+          />
         </View>
 
         {/* Other metrics */}

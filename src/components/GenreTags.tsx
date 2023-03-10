@@ -1,14 +1,24 @@
 import { View, Text, FlatList } from "react-native";
 import React from "react";
 import { idToGenresMapped } from "../utils/helpers/helper";
+import { Colors } from "./../utils/Colors";
 
 interface IProps {
   genreIdList: number[];
+  backgroundType: "transparent" | "colored";
 }
 
 const GenreTags: React.FC<IProps> = (props) => {
   return (
-    <View className="w-full justify-center px-2 bg-stone-900 pb-2">
+    <View
+      className="w-full justify-center px-2 bg-stone-900 pb-2"
+      style={{
+        backgroundColor:
+          props.backgroundType === "transparent"
+            ? "transparent"
+            : Colors.stone[900],
+      }}
+    >
       <FlatList
         horizontal
         data={props.genreIdList}

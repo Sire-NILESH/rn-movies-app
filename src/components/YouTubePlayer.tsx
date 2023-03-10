@@ -98,8 +98,10 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
               />
             </View>
           )}
-          <View className="w-full h-24 bg-stone-900 px-4 space-y-1 justify-center items-start py-2">
-            <Text className="text-green-100 text-lg">{props.video?.name}</Text>
+          <View className="w-full h-24 bg-stone-900 px-4 space-y-1 justify-center items-start py-2 [elevation:5]">
+            <Text className="text-stone-100 font-bold" numberOfLines={3}>
+              {props.video?.name}
+            </Text>
             <View className="flex-row items-center">
               <Text className="text-stone-400 space-x-4">
                 {props.video?.type}

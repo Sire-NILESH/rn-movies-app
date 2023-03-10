@@ -2,6 +2,7 @@ import { Trailer } from "../typings";
 import { View, Image, Pressable, Text, Dimensions } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
+import { useState } from "react";
 
 interface IProps {
   video: Trailer;
@@ -28,8 +29,11 @@ const thumbnailDimensions = {
 };
 
 const TrailerVideoThumbnail: React.FC<IProps> = (props) => {
+  const [imageUri, setImageUri] = useState<string>(
+    `https://img.youtube.com/vi/${props.video.key}/maxresdefault.jpg`
+  );
   const dimensions = thumbnailDimensions[props.orientation];
-
+  console.log(imageUri);
   return (
     <View
       style={{
@@ -41,19 +45,29 @@ const TrailerVideoThumbnail: React.FC<IProps> = (props) => {
         className="flex-1"
         onPress={() => props.onPressHandler(props.video)}
       >
+        {/* Xe--hgPX5xw */}
         <Image
           source={
             props.video.key
               ? {
-                  uri: `https://img.youtube.com/vi/${props.video.key}/mqdefault.jpg`,
+                  // uri: `https://img.youtube.com/vi/${props.video.key}/maxresdefault.jpg`,
+                  // uri: `https://img.youtube.com/vi/${props.video.key}/mqdefault.jpg`,
+                  uri: imageUri,
                 }
-              : require("../../assets/images/placeholders/posterPlaceHolder.webp")
+              : require("../../assets/images/placeholders/posterPlaceHolder.png")
           }
+          onError={(err) => {
+            // on error getting HD res thumbnail, try to get MQ res thumbnail.
+            console.log("Error", err);
+            setImageUri(
+              `https://img.youtube.com/vi/${props.video.key}/mqdefault.jpg`
+            );
+          }}
           className="relative rounded-2xl bg-black"
           style={{
             width: dimensions.imageWidth,
             height: dimensions.height,
-            resizeMode: "cover",
+            resizeMode: "contain",
           }}
         />
 

@@ -72,7 +72,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       {(error || videos.length === 0) && !loading ? (
         <NothingToShow />
       ) : (
-        <View className="flex-1 justify-start">
+        <View className="justify-start">
           <YouTubePlayer video={selectedVideo} loading={loading} />
         </View>
       )}
@@ -84,7 +84,8 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           initialNumToRender={3}
           className="pt-4 px-2"
           style={{
-            marginTop: dimensionsForWindow.height * 0.42,
+            marginTop: 96,
+            // marginTop: dimensionsForWindow.height * 0.42,
             backgroundColor: "rgb(4, 16, 9)",
           }}
           contentContainerStyle={{

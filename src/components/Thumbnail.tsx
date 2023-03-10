@@ -92,7 +92,7 @@ function Thumbnail({ media, orientation }: Props) {
 
         <ExpoFastImage
           uri={imageURL}
-          cacheKey={media.id}
+          cacheKey={media.id + "poster"}
           resizeMode={"contain"}
           style={{
             width: dimensions.imageWidth,

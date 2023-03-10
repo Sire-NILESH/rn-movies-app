@@ -1,6 +1,8 @@
 import { View, Text, FlatList, Image } from "react-native";
 import React from "react";
 import { Network } from "../typings";
+// @ts-ignore
+import ExpoFastImage from "expo-fast-image";
 
 interface IProps {
   networks: Network[];
@@ -20,13 +22,24 @@ const NetworkList: React.FC<IProps> = (props) => {
           return (
             <View className="space-y-2 items-center mr-3">
               <View className="bg-stone-50 rounded-full flex-1 p-1 justify-center">
-                <Image
+                {/* <Image
                   source={{
                     uri: `https://image.tmdb.org/t/p/w500${n.logo_path}`,
                   }}
                   className="border-stone-500"
                   resizeMode="contain"
                   style={{ width: 56, height: 56 }}
+                /> */}
+
+                <ExpoFastImage
+                  uri={`https://image.tmdb.org/t/p/w500${n.logo_path}`}
+                  cacheKey={n.id + "network"}
+                  resizeMode={"contain"}
+                  className="border-stone-500"
+                  style={{
+                    width: 56,
+                    height: 56,
+                  }}
                 />
               </View>
               <Text key={n.id} className="text-stone-400 text-xs">

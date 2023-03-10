@@ -9,6 +9,7 @@ import {
 import useFetcher from "../hooks/useFetcher";
 import { getWatchProviders } from "../utils/requests";
 import CountriesDropdown from "./ui/CountriesDropdown";
+// @ts-ignore
 import ExpoFastImage from "expo-fast-image";
 
 interface IProps {
@@ -119,7 +120,7 @@ function renderFlatlist(
 
                 <ExpoFastImage
                   uri={`https://image.tmdb.org/t/p/w500${p.logo_path}`}
-                  cacheKey={p.provider_id}
+                  cacheKey={p.provider_id + "watchProvider"}
                   resizeMode={"center"}
                   style={{
                     width: 65,

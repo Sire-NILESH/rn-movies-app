@@ -36,6 +36,7 @@ const TrailerVideoThumbnail: React.FC<IProps> = (props) => {
   console.log(imageUri);
   return (
     <View
+      className="border border-stone-800 rounded-2xl overflow-hidden"
       style={{
         width: dimensions.width,
         height: dimensions.height,
@@ -63,7 +64,7 @@ const TrailerVideoThumbnail: React.FC<IProps> = (props) => {
               `https://img.youtube.com/vi/${props.video.key}/mqdefault.jpg`
             );
           }}
-          className="relative rounded-2xl bg-black"
+          className="relative rounded-2xl bg-black "
           style={{
             width: dimensions.imageWidth,
             height: dimensions.height,

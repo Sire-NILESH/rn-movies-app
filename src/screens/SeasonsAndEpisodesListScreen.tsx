@@ -105,7 +105,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                   className="flex-row px-4 pt-4 justify-between items-start mb-10"
                 >
                   {/* if the season doesnt have a poster we use the old poster that was used in the MoreInfoScreeen which was passed here as tvMediaPosterPathOld */}
-                  <View className="h-[200] w-[133] border border-stone-500 rounded-md">
+                  <View className="h-[200] w-[133] border border-stone-800 rounded-md">
                     <Image
                       source={
                         tvMediaSeasons[selectedSeason.season_number]

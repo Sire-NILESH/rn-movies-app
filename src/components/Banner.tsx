@@ -82,7 +82,7 @@ function Banner({ mediaList }: Props) {
 
       {/* Text Contents and Buttons */}
       <View className="px-4 mt-10">
-        <Text className="text-2xl font-bold text-gray-100 ">
+        <Text className="text-2xl font-bold text-gray-100 mb-4">
           {/* {movie?.title || movie?.name || movie?.original_name} */}
           {/* {getTitle()} */}
           {isMovie(media) ? media.title : media?.original_name}

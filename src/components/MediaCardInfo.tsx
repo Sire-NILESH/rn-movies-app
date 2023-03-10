@@ -3,16 +3,27 @@ import React from "react";
 import { MovieMedia, TvMedia, TvMediaExtended } from "../typings";
 import { isMovie, isTvExtended } from "../utils/helpers/helper";
 import { isoLangs } from "../utils/helpers/isoLangs";
+// @ts-ignore
+import ExpoFastImage from "expo-fast-image";
 
 interface IProps {
   media: MovieMedia | TvMedia | TvMediaExtended;
 }
 
 const MediaCardInfo: React.FC<IProps> = ({ media }) => {
+  const imageUrl = media.backdrop_path
+    ? `https://image.tmdb.org/t/p/w500${media.backdrop_path}`
+    : `https://image.tmdb.org/t/p/w500${media.poster_path}`;
+  // const imageUrl =
+  //   (media.poster_path || media.backdrop_path) &&
+  //   `https://image.tmdb.org/t/p/w500${
+  //     media.backdrop_path || media.poster_path
+  //   }`;
+
   return (
     <View className="mt-5 mx-3 flex-row justify-between max-h-[200]">
       <View className="flex-1 rounded-l-2xl">
-        <Image
+        {/* <Image
           source={
             media.backdrop_path || media.poster_path
               ? {
@@ -24,7 +35,27 @@ const MediaCardInfo: React.FC<IProps> = ({ media }) => {
           }
           className="rounded-l-2xl"
           style={{ width: "100%", height: "100%", resizeMode: "cover" }}
-        />
+        /> */}
+
+        {imageUrl ? (
+          <ExpoFastImage
+            // uri={require("../../assets/images/placeholders/posterPlaceHolder.webp")}
+            uri={imageUrl}
+            className="rounded-l-2xl"
+            cacheKey={media.id + "backdrop"}
+            resizeMode={"cover"}
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+          />
+        ) : (
+          <Image
+            source={require("../../assets/images/placeholders/posterPlaceHolder.webp")}
+            className="rounded-l-2xl"
+            style={{ width: "100%", height: "100%", resizeMode: "cover" }}
+          />
+        )}
       </View>
       <View className=" bg-stone-800/50 border border-l-0 border-gray-800 flex-1 rounded-r-2xl py-6 space-y-4 justify-center">
         <Text className="text-stone-400 px-4">

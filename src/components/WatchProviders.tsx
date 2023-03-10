@@ -9,6 +9,7 @@ import {
 import useFetcher from "../hooks/useFetcher";
 import { getWatchProviders } from "../utils/requests";
 import CountriesDropdown from "./ui/CountriesDropdown";
+import ExpoFastImage from "expo-fast-image";
 
 interface IProps {
   mediaId: number;
@@ -107,13 +108,24 @@ function renderFlatlist(
           return (
             <View className="space-y-4 items-start mr-5">
               <View className="rounded-2xl flex-1 justify-center overflow-hidden">
-                <Image
+                {/* <Image
                   source={{
                     uri: `https://image.tmdb.org/t/p/w500${p.logo_path}`,
                   }}
                   className="border-stone-500"
                   resizeMode="contain"
                   style={{ width: 65, height: 65 }}
+                /> */}
+
+                <ExpoFastImage
+                  uri={`https://image.tmdb.org/t/p/w500${p.logo_path}`}
+                  cacheKey={p.provider_id}
+                  resizeMode={"center"}
+                  style={{
+                    width: 65,
+                    height: 65,
+                    borderRadius: 6,
+                  }}
                 />
               </View>
               <Text

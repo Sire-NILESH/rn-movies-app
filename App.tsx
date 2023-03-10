@@ -5,10 +5,18 @@ import "react-native-gesture-handler";
 import routes from "./src/config/routes";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "./src/utils/Colors";
+// Before rendering any navigation stack
+import { enableScreens } from "react-native-screens";
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  // It is very important to enable this for better performance when your application has too many screens stacked. This will enable the nstive OS to figure out how to efficiently manage stack screens that are under the current stack. Without this it uses a default R.N Views to render screens which is really not very perfomant in this situation.
+  // https://github.com/software-mansion/react-native-screens
+  // https://docs.expo.dev/versions/latest/sdk/screens/#api
+  // https://reactnavigation.org/docs/3.x/react-native-screens
+  // is a React navigation feature.
+  enableScreens(true);
   return (
     <>
       <StatusBar style="light" />

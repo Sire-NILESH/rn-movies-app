@@ -30,6 +30,9 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
         bounces
         data={props.medias}
         ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
+        contentContainerStyle={{
+          paddingVertical: 8,
+        }}
         renderItem={(media) => {
           return (
             <View className="ml-1">

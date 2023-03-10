@@ -97,16 +97,15 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
               <>
                 <LinearGradient
                   colors={[
-                    "rgba(28, 25, 23, 0.4)",
+                    "rgba(22, 101, 52, 0.5)",
                     "rgba(22, 101, 52, 0.3)",
-                    "rgba(28, 25, 23, 0.6)",
                     "rgba(28, 25, 23, 0.9)",
                     Colors.black,
                   ]}
-                  className="flex-row px-3 bg-green-800 pt-4 justify-between items-start mb-10"
+                  className="flex-row px-4 pt-4 justify-between items-start mb-10"
                 >
                   {/* if the season doesnt have a poster we use the old poster that was used in the MoreInfoScreeen which was passed here as tvMediaPosterPathOld */}
-                  <View className="h-[200] w-[150]">
+                  <View className="h-[200] w-[133] border border-stone-500 rounded-md">
                     <Image
                       source={
                         tvMediaSeasons[selectedSeason.season_number]
@@ -124,7 +123,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                           : require("../../assets/images/placeholders/posterPlaceHolder.webp")
                       }
                       className="rounded-md"
-                      resizeMode="stretch" //similar to web, "cover", "contain", etc.
+                      resizeMode="contain" //similar to web, "cover", "contain", etc.
                       style={{ width: "100%", height: "100%" }}
                     ></Image>
                   </View>
@@ -133,16 +132,15 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                     <Text className="text-green-100 text-2xl font-bold">
                       {tvMediaName}
                     </Text>
-                    <View className="flex-row items-center space-x-1">
+                    <View className="flex">
                       <Text className="text-stone-200 text-lg font-semibold">
                         Season{" "}
                         {seasonDetails.season_number === 0
                           ? "Extras"
                           : seasonDetails.season_number}
-                        ,{" "}
                       </Text>
-                      <Text className="text-stone-300 text-lg">
-                        {seasonDetails.episodes.length} episodes
+                      <Text className="text-stone-300 text">
+                        Total {seasonDetails.episodes.length} episodes
                       </Text>
                     </View>
                   </View>

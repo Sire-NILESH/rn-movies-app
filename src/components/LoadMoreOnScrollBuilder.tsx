@@ -84,7 +84,7 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
   console.log("pageNumber", pageNumber);
 
   return (
-    <View className="flex-1 bg-stone-900 items-center py-2">
+    <View className="flex-1 bg-black items-center">
       {error ? (
         <NothingToShow />
       ) : (

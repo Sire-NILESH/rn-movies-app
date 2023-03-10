@@ -20,7 +20,7 @@ const CountriesDropdown: React.FC<IProps> = ({
       className="flex-row  items-center justify-between px-4 mt-2] rounded-xl mx-2"
       style={{ backgroundColor: "rgb(4, 20, 10)" }}
     >
-      <Text className="text-gray-300 mx-4">Watch providers for this in </Text>
+      <Text className="text-stone-300 mx-4">Watch providers for this in </Text>
       <SelectDropdown
         data={countries}
         //   search={true}

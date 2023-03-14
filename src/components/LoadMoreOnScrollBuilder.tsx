@@ -82,9 +82,10 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
   }, [pageNumber, getRelatedMediasProps, searchRequest]);
 
   console.log("pageNumber", pageNumber);
+  // console.log("media length", medias.length);
 
   return (
-    <View className="flex-1 bg-black items-center">
+    <View className="flex-1 bg-stone-900 items-center">
       {error ? (
         <NothingToShow />
       ) : (

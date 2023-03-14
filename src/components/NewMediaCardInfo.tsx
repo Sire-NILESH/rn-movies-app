@@ -5,12 +5,15 @@ import { isMovie, isTvExtended } from "../utils/helpers/helper";
 import { isoLangs } from "../utils/helpers/isoLangs";
 // @ts-ignore
 import ExpoFastImage from "expo-fast-image";
+import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
+import { Colors } from "./../utils/Colors";
 
 interface IProps {
   media: MovieMedia | TvMedia | TvMediaExtended;
 }
 
-const MediaCardInfo: React.FC<IProps> = ({ media }) => {
+const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
   const imageUrl = media.backdrop_path
     ? `https://image.tmdb.org/t/p/w500${media.backdrop_path}`
     : `https://image.tmdb.org/t/p/w500${media.poster_path}`;
@@ -21,22 +24,8 @@ const MediaCardInfo: React.FC<IProps> = ({ media }) => {
   //   }`;
 
   return (
-    <View className="mt-5 mx-3 flex-row justify-between max-h-[200]">
-      <View className="flex-1 rounded-l-2xl">
-        {/* <Image
-          source={
-            media.backdrop_path || media.poster_path
-              ? {
-                  uri: `https://image.tmdb.org/t/p/w500${
-                    media.backdrop_path || media.poster_path
-                  }`,
-                }
-              : require("../../assets/images/placeholders/posterPlaceHolder.webp")
-          }
-          className="rounded-l-2xl"
-          style={{ width: "100%", height: "100%", resizeMode: "cover" }}
-        /> */}
-
+    <View className="mt-5 mx-3 justify-between border border-stone-800/30 rounded-2xl">
+      <View className="relative flex-1 rounded-2xl h-[200px] overflow-hidden">
         <ExpoFastImage
           // uri={require("../../assets/images/placeholders/posterPlaceHolder.webp")}
           source={
@@ -45,7 +34,7 @@ const MediaCardInfo: React.FC<IProps> = ({ media }) => {
               : require("../../assets/images/placeholders/posterPlaceHolder.webp")
           }
           // uri={imageUrl}
-          className="rounded-l-2xl"
+          className=""
           cacheKey={media.id + "backdrop"}
           resizeMode={"cover"}
           style={{
@@ -60,35 +49,55 @@ const MediaCardInfo: React.FC<IProps> = ({ media }) => {
              style={{ width: "100%", height: "100%", resizeMode: "cover" }}
            /> */}
       </View>
-      <View className=" bg-stone-800/50 border border-l-0 border-gray-800 flex-1 rounded-r-2xl py-6 space-y-4 justify-center">
-        <Text className="text-stone-400 px-4">
-          Rating:{"  "}
+
+      <LinearGradient
+        colors={[
+          "rgba(28, 25, 23, 0.9)",
+          "rgba(28, 25, 23, 0.8)",
+          "rgba(28, 25, 23, 0.6)",
+          "rgba(28, 25, 23, 0.5)",
+          "rgba(28, 25, 23, 0.2)",
+          "rgba(0,0,0,0)",
+        ]}
+        start={{ x: 0.0, y: 1 }}
+        className="absolute h-[200px] w-[100%] rounded-l-2xl py-6 space-y-4 justify-center"
+      >
+        <View className="flex-row items-center space-x-2 px-4">
+          <Ionicons name="star" size={18} color={Colors.yellow[300]} />
           <Text className="text-green-100">
             {media.vote_average.toFixed(2)}/10
           </Text>
-        </Text>
-        <Text className="text-stone-400 px-4">
-          Media:{"  "}
+        </View>
+
+        <View className="flex-row items-center space-x-2 px-4">
+          <Ionicons
+            name={isMovie(media) ? "film-outline" : "tv-outline"}
+            size={18}
+            color={Colors.yellow[100]}
+          />
           <Text className="text-green-100">
             {isMovie(media) ? "Movie" : "TV"}
           </Text>
-        </Text>
-        <Text className="text-stone-400 px-4">
-          Release:{"  "}
+        </View>
+
+        <View className="flex-row items-center space-x-2 px-4">
+          <Ionicons
+            name="calendar-outline"
+            size={18}
+            color={Colors.yellow[100]}
+          />
           <Text className="text-green-100">
             {isMovie(media) ? media.release_date : media.first_air_date}
           </Text>
-        </Text>
-        {isTvExtended(media) && (
-          <Text className="text-stone-400 px-4">
-            Status:{"  "}
-            <Text className="text-green-100">{media.status}</Text>
-          </Text>
-        )}
+        </View>
 
         {media.original_language ? (
-          <Text className="text-stone-400 px-4">
-            Language:{"  "}
+          <View className="flex-row items-center space-x-2 px-4">
+            <Ionicons
+              name="language-outline"
+              size={18}
+              color={Colors.yellow[100]}
+            />
             <Text className="text-green-100">
               {/*  @ts-ignore */}
               {isoLangs[media.original_language]?.name
@@ -96,11 +105,24 @@ const MediaCardInfo: React.FC<IProps> = ({ media }) => {
                   isoLangs[media.original_language]?.name
                 : media.original_language}
             </Text>
-          </Text>
+          </View>
         ) : null}
-      </View>
+
+        {isTvExtended(media) && (
+          <View className="flex-row items-center space-x-2 px-4">
+            <Ionicons name="bookmark" size={18} color={Colors.yellow[100]} />
+            <Text className="text-green-100">
+              <Text className="text-green-100">{media.status}</Text>
+            </Text>
+          </View>
+          //  <Text className="text-stone-400 px-4">
+          //    Status:{"  "}
+          //    <Text className="text-green-100">{media.status}</Text>
+          //  </Text>
+        )}
+      </LinearGradient>
     </View>
   );
 };
 
-export default MediaCardInfo;
+export default NewMediaCardInfo;

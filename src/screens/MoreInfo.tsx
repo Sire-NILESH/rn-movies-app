@@ -21,6 +21,8 @@ import { getTvShowInfo } from "../utils/requests";
 import MediaCardInfo from "../components/MediaCardInfo";
 import NetworkList from "../components/NetworkList";
 import WatchProviders from "../components/WatchProviders";
+import Thumbnail from "../components/Thumbnail";
+import NewMediaCardInfo from "./../components/NewMediaCardInfo";
 
 const screenDimensions = Dimensions.get("screen");
 
@@ -71,7 +73,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       {/* BackDrop Image */}
       <View
         className="absolute top-0 left-0 w-[100%] flex-1 h-full"
-        style={[{ height: screenDimensions.height }]}
+        style={[{ height: screenDimensions.height * 0.8 }]}
       >
         <LinearGradient
           colors={[
@@ -96,8 +98,8 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         </LinearGradient>
       </View>
 
-      {/* Content Title/name and original title/name */}
-      <View className="mt-80 flex-1 pt-6">
+      {/* Content Title/name and original title/name mt-80 */}
+      <View className="mt-64 flex-1 pt-6">
         {/* Title */}
         <View className="px-4">
           <Text className="text-3xl font-semibold text-green-100 object-cover">
@@ -125,7 +127,11 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         </View>
 
         {/* Other metrics */}
-        <MediaCardInfo media={media} />
+        {/* <View>
+          <Thumbnail media={media} orientation="landscape" />
+        </View> */}
+        {/* <MediaCardInfo media={media} /> */}
+        <NewMediaCardInfo media={media} />
 
         {/* Description */}
         {media.overview ? (

@@ -74,6 +74,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   }, [mediaList, pageNumber, userSelectedGenres, getGenreMediasProps, genreId]);
 
   // console.log(medias);
+  // console.log("media length", medias.length);
 
   const onShowGenresModal = () => {
     setShowGenresModal(true);
@@ -121,7 +122,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   }, [userSelectedGenres]);
 
   return (
-    <View className="flex-1 bg-black pb-4">
+    <View className="flex-1 bg-stone-900">
       {/* Genre Tags Scrollable Row on top, if user selected some genres */}
       {userSelectedGenres?.length > 0 ? (
         <View className="w-full">

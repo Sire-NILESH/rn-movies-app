@@ -6,7 +6,7 @@ import { LinearGradient } from "expo-linear-gradient";
 // @ts-ignore
 import ExpoFastImage from "expo-fast-image";
 
-interface Props {
+export interface IThumbnailProps {
   media: MovieMedia | TvMedia;
   orientation: "portrait" | "landscape";
 }
@@ -29,7 +29,7 @@ interface Props {
 //   },
 // };
 
-function Thumbnail({ media, orientation }: Props) {
+function Thumbnail({ media, orientation }: IThumbnailProps) {
   const windowWidth = Dimensions.get("window").width;
 
   const thumbnailDimensions = {
@@ -53,10 +53,17 @@ function Thumbnail({ media, orientation }: Props) {
   const navigation = useNavigation();
 
   const imageURL =
-    (media.poster_path || media.backdrop_path) &&
+    (media.backdrop_path || media.poster_path) &&
     `https://image.tmdb.org/t/p/w500${
       orientation === "landscape" ? media.backdrop_path : media.poster_path
     }`;
+  // const imageURL =
+  //   (media.poster_path || media.backdrop_path) &&
+  //   `https://image.tmdb.org/t/p/w500${
+  //     orientation === "landscape" ? media.backdrop_path : media.poster_path
+  //   }`;
+
+  // console.log("thumbnail rendered");
 
   return (
     <View
@@ -92,7 +99,17 @@ function Thumbnail({ media, orientation }: Props) {
 
         <ExpoFastImage
           uri={imageURL}
-          cacheKey={media.id + "poster"}
+          // source={
+          //   imageURL
+          //     ? { uri: imageURL }
+          //     : require("../../assets/images/placeholders/posterPlaceHolder.webp")
+          // }
+          // cacheKey={media.id + "poster"}
+          cacheKey={
+            orientation === "portrait"
+              ? media.id + "poster"
+              : media.id + "backdrop"
+          }
           resizeMode={"contain"}
           style={{
             width: dimensions.imageWidth,
@@ -143,3 +160,4 @@ function Thumbnail({ media, orientation }: Props) {
 }
 
 export default Thumbnail;
+// export const MemoisedThumbnail = memo(Thumbnail);

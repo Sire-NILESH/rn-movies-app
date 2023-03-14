@@ -68,7 +68,7 @@ const TrailerVideoThumbnail: React.FC<IProps> = (props) => {
           style={{
             width: dimensions.imageWidth,
             height: dimensions.height,
-            resizeMode: "contain",
+            resizeMode: "stretch",
           }}
         />
 

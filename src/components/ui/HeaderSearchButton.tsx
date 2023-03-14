@@ -37,7 +37,8 @@ export default function HeaderSearchButton({
   return (
     <Pressable
       onPress={disabled && disabled === true ? null : onPressHandler}
-      className="mr-4"
+      android_ripple={{ color: "#eee" }}
+      className="mr-4 rounded-full"
     >
       <IconButton name="search-outline" size={24} color={Colors.gray[100]} />
     </Pressable>

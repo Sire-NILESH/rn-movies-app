@@ -2,11 +2,12 @@ import { StatusBar } from "expo-status-bar";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import "react-native-gesture-handler";
-import routes from "./src/config/routes";
+import { stackRoutes } from "./src/config/routes";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "./src/utils/Colors";
 // Before rendering any navigation stack
 import { enableScreens } from "react-native-screens";
+import DrawerNavigator from "./src/navigators/DrawerNavigator";
 
 const Stack = createStackNavigator();
 
@@ -23,7 +24,8 @@ export default function App() {
       <SafeAreaView className="flex-1 bg-stone-900">
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Home"
+            // initialRouteName="Home"
+            initialRouteName="DrawerNav"
             // Common Stack screen's header settings below here
             screenOptions={{
               presentation: "modal",
@@ -36,13 +38,16 @@ export default function App() {
             }}
           >
             {/* List of all the routs for the Stack Screen is maintained in the 'routes' separately */}
-            {routes.map((r, i) => (
+            {/* {routes.map((r, i) => ( */}
+            {stackRoutes.map((r, i) => (
               <Stack.Screen key={i} name={r.name}>
                 {(props) => {
                   return <r.component name={r.name} {...props} />;
                 }}
+                {/* <DrawerNavigator /> */}
               </Stack.Screen>
             ))}
+            <Stack.Screen name={"DrawerNav"} component={DrawerNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

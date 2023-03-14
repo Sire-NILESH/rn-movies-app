@@ -1,5 +1,6 @@
 import { View, FlatList, ActivityIndicator } from "react-native";
-import Thumbnail from "../components/Thumbnail";
+import { memo } from "react";
+import ThumbnailMemoised from "./ThumbnailMemoised";
 
 interface IProps {
   medias: any;
@@ -36,7 +37,9 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
         renderItem={(media) => {
           return (
             <View className="ml-1">
-              <Thumbnail media={media.item} orientation="portrait" />
+              {/* <Thumbnail media={media.item} orientation="portrait" /> */}
+              <ThumbnailMemoised media={media.item} orientation="portrait" />
+              {/* <MemoisedThumbnail media={media.item} orientation="portrait" /> */}
             </View>
           );
         }}
@@ -51,4 +54,4 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
     </View>
   );
 };
-export default TilesRenderedView;
+export default memo(TilesRenderedView);

@@ -119,12 +119,15 @@ export const tvGenres = [
 ];
 
 export const countries: ICountry[] = [
-  { name: "Argentina", code: "AR" },
+  { name: "United States", code: "US" },
+  { name: "United Kingdom", code: "GB" },
   { name: "Australia", code: "AU" },
+  { name: "Canada", code: "CA" },
+  { name: "India", code: "IN" },
+  { name: "Argentina", code: "AR" },
   { name: "Austria", code: "AT" },
   { name: "Belgium", code: "BE" },
   { name: "Brazil", code: "BR" },
-  { name: "Canada", code: "CA" },
   { name: "Colombia", code: "CO" },
   { name: "Czech Republic", code: "CZ" },
   { name: "Denmark", code: "DK" },
@@ -132,7 +135,6 @@ export const countries: ICountry[] = [
   { name: "Finland", code: "FI" },
   { name: "France", code: "FR" },
   { name: "Germany", code: "DE" },
-  { name: "India", code: "IN" },
   { name: "Italy", code: "IT" },
   { name: "Japan", code: "JP" },
   { name: "Korea, Republic of", code: "KR" },
@@ -154,8 +156,6 @@ export const countries: ICountry[] = [
   { name: "Turkey", code: "TR" },
   { name: "Ukraine", code: "UA" },
   { name: "United Arab Emirates", code: "AE" },
-  { name: "United Kingdom", code: "GB" },
-  { name: "United States", code: "US" },
 ];
 
 export const Allcountries: ICountry[] = [

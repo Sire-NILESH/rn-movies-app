@@ -4,9 +4,8 @@ import { Text, View, FlatList } from "react-native";
 import IconButton from "./ui/IconButton";
 import { Colors } from "./../utils/Colors";
 import { Pressable } from "react-native";
-import { memo } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { isMovieArray } from "../utils/helpers/helper";
+import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
 import { isMovie } from "./../utils/helpers/helper";
 
 interface Props {
@@ -16,8 +15,6 @@ interface Props {
 }
 
 function Row({ title, medias, genreIdOfList }: Props) {
-  const navigation = useNavigation();
-
   return (
     <View className="space-y-1 mb-5">
       <View className="flex-row space-x-4 mb-1">
@@ -33,21 +30,37 @@ function Row({ title, medias, genreIdOfList }: Props) {
   );
 }
 
-export default memo(Row);
+export default Row;
 
 function renderFlatList(
   medias: MovieMedia[] | TvMedia[],
   title: string,
   genreId: number
 ) {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
+
+  // Navigation handler for child components like thumbnail and jumpTo button.
+  // So every one of them wont have to calculate them separately.
+  const navigateTo = (screen: string, paramOption: Object) => {
+    // @ts-ignore
+    navigation.push(screen, paramOption);
+  };
+
+  // Calculate and pass the dimensioins from the parent(here) to the thumbnails.
+  // So every thumbnail wont have to calculate them separately.
+  const windowWidth = getDeviceDimensions("window").width;
 
   return (
     <>
       {medias && isMovieArray(medias) ? (
         <FlatList
           initialNumToRender={20}
-          ListFooterComponent={renderFooterItemFunction(medias, title, genreId)}
+          ListFooterComponent={renderFooterItemFunction(
+            medias,
+            title,
+            genreId,
+            navigateTo
+          )}
           bounces
           className="pl-2 py-1"
           // className="ml-2 h-32"
@@ -57,6 +70,8 @@ function renderFlatList(
               <Thumbnail
                 media={isMovie(media.item) ? media.item : media.item}
                 orientation="portrait"
+                navigateTo={navigateTo}
+                windowWidth={windowWidth}
                 // orientation="landscape"
               />
             </View>
@@ -69,7 +84,12 @@ function renderFlatList(
       ) : (
         <FlatList
           initialNumToRender={20}
-          ListFooterComponent={renderFooterItemFunction(medias, title, genreId)}
+          ListFooterComponent={renderFooterItemFunction(
+            medias,
+            title,
+            genreId,
+            navigateTo
+          )}
           bounces
           className="px-2 py-1"
           // className="ml-2 h-32"
@@ -79,6 +99,8 @@ function renderFlatList(
               <Thumbnail
                 media={isMovie(media.item) ? media.item : media.item}
                 orientation="portrait"
+                navigateTo={navigateTo}
+                windowWidth={windowWidth}
                 // orientation="landscape"
               />
             </View>
@@ -96,10 +118,9 @@ function renderFlatList(
 function renderFooterItemFunction(
   medias: MovieMedia[] | TvMedia[],
   title: string,
-  genreId: number
+  genreId: number,
+  navigateTo: (screen: string, paramOption: Object) => void
 ) {
-  const navigation = useNavigation();
-
   return (
     <View
       className="w-14 h-14 my-auto rounded-full [elevation: 2] overflow-hidden mx-5"
@@ -110,16 +131,14 @@ function renderFooterItemFunction(
         android_ripple={{ color: Colors.stone[600] }}
         onPress={() => {
           if (isMovieArray(medias)) {
-            // @ts-ignore
-            navigation.navigate("Tiles", {
+            navigateTo("Tiles", {
               title,
               genreId,
               currentMediaType: "movie",
             });
           } else {
             {
-              // @ts-ignore
-              navigation.navigate("Tiles", {
+              navigateTo("Tiles", {
                 title,
                 genreId,
                 currentMediaType: "tv",

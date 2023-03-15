@@ -45,7 +45,7 @@ const WatchProviders: React.FC<IProps> = ({ mediaId, mediaType }) => {
 
   console.log(watchProviders);
   return (
-    <View className="flex-1 mt-8 space-y-10">
+    <View className="flex-1 mt-16 space-y-5">
       <View className="w-full">
         <CountriesDropdown
           currentCountry={currentCountry}

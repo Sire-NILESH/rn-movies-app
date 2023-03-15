@@ -164,6 +164,7 @@ export const getGenreMediasProps = async (
     `${BASE_URL}/discover/${mediaType}?api_key=${API_KEY}&language=en-US&with_genres=${commaSeparatedGenres}&page=${pageNumber}`
   ).then((res) => res.json());
 
+  // &sort_by="popularity.dsc"
   return data.results;
 };
 

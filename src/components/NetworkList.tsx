@@ -10,7 +10,7 @@ interface IProps {
 
 const NetworkList: React.FC<IProps> = (props) => {
   return (
-    <View className="flex-1 space-y-4 mt-10 px-4">
+    <View className="flex-1 space-y-4 mt-16 px-4">
       <Text className="text-green-100">Networks</Text>
       <FlatList
         horizontal
@@ -22,15 +22,6 @@ const NetworkList: React.FC<IProps> = (props) => {
           return (
             <View className="space-y-2 items-center mr-3">
               <View className="bg-stone-50 rounded-full flex-1 p-1 justify-center">
-                {/* <Image
-                  source={{
-                    uri: `https://image.tmdb.org/t/p/w500${n.logo_path}`,
-                  }}
-                  className="border-stone-500"
-                  resizeMode="contain"
-                  style={{ width: 56, height: 56 }}
-                /> */}
-
                 <ExpoFastImage
                   uri={`https://image.tmdb.org/t/p/w500${n.logo_path}`}
                   cacheKey={n.id + "network"}

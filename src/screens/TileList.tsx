@@ -1,4 +1,4 @@
-import { View, Pressable } from "react-native";
+import { View, Pressable, ActivityIndicator } from "react-native";
 import { useLayoutEffect, useState, useEffect } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { IStackScreenProps } from "../library/StackScreenProps";
@@ -121,6 +121,15 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     });
   }, [userSelectedGenres]);
 
+  // Footer loader component
+  // const RenderLoader = () => {
+  //   return loadingNewMedias ? (
+  //     <View className="w-full justify-center my-2">
+  //       <ActivityIndicator size="small" color="#aaa" />
+  //     </View>
+  //   ) : null;
+  // };
+
   return (
     <View className="flex-1 bg-stone-900">
       {/* Genre Tags Scrollable Row on top, if user selected some genres */}
@@ -146,12 +155,15 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       {/* Tiles */}
       <View className="flex-1 items-center relative">
         {medias?.length > 0 ? (
-          <TilesRenderedView
-            medias={medias}
-            loadingNewMedias={loadingNewMedias}
-            setPageNumber={setPageNumber}
-            blockNewLoads={blockNewLoads}
-          />
+          <>
+            <TilesRenderedView
+              medias={medias}
+              loadingNewMedias={loadingNewMedias}
+              setPageNumber={setPageNumber}
+              blockNewLoads={blockNewLoads}
+            />
+            {/* <RenderLoader /> */}
+          </>
         ) : null}
       </View>
     </View>

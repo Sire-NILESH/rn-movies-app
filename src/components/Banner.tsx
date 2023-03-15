@@ -1,6 +1,5 @@
 import { MovieMedia, TvMedia } from "../typings";
 import { useState, useEffect } from "react";
-
 import {
   Text,
   View,
@@ -12,8 +11,10 @@ import CustomButton from "./ui/CustomButton";
 import { Colors } from "./../utils/Colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { isMovie } from "./../utils/helpers/helper";
+import { isMovie, isTvExtended } from "./../utils/helpers/helper";
 import { Ionicons } from "@expo/vector-icons";
+import { isoLangs } from "../utils/helpers/isoLangs";
+import { ScrollView } from "react-native-gesture-handler";
 
 interface Props {
   mediaList: MovieMedia[] | TvMedia[];
@@ -44,13 +45,10 @@ function Banner({ mediaList }: Props) {
       mediaType: isMovie(media) ? "movie" : "tv",
       media: media,
     });
-    // // @ts-ignore
-    // navigation.navigate("More Info", { media: media });
   }
 
   return (
     <View className="flex-1 py-10 w-[100%]">
-      {/* {route.name === "Home" ? <Header /> : null} */}
       {route.name === "Home" ? (
         <View className="h-[80px] w-full">{/* <Text> T</Text> */}</View>
       ) : null}
@@ -81,62 +79,127 @@ function Banner({ mediaList }: Props) {
       </View>
 
       {/* Text Contents and Buttons */}
-      <View className="px-4 mt-10">
-        <Text className="text-2xl font-bold text-gray-100 mb-4">
-          {/* {movie?.title || movie?.name || movie?.original_name} */}
-          {/* {getTitle()} */}
-          {isMovie(media) ? media.title : media?.original_name}
-        </Text>
-        <Text className="max-w-xs text-xs text-gray-100">
-          {media?.overview}
-        </Text>
+      {media ? (
+        <View className="px-4 mt-10 space-y-3">
+          {/* Title/Name */}
+          <Text className="text-2xl font-bold text-gray-100 ">
+            {isMovie(media) ? media.title : media?.original_name}
+          </Text>
 
-        <View className="flex-row space-x-3">
-          {/* <View className="bannerButton bg-white text-black">
-          <FaPlay className="h-4 w-4 text-black" /> 
-          <Text>Play</Text>
-          Play
-           </View> */}
+          {/* Ratings and other stats */}
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            className="space-x-4"
+            contentContainerStyle={{
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <View className="flex-row items-center space-x-2">
+              <Ionicons name="star" size={18} color={Colors.yellow[300]} />
+              <Text className="font-bold text-stone-200">
+                <Text
+                  className="font-bold"
+                  style={{
+                    color:
+                      media.vote_average > 4.0
+                        ? Colors.green[500]
+                        : Colors.red[400],
+                  }}
+                >
+                  {media.vote_average.toFixed(2)}
+                </Text>
+                /10
+              </Text>
+            </View>
 
-          <View className="mt-10">
-            <CustomButton
-              width={100}
-              height={40}
-              radius={5}
-              color="white"
-              border={0}
-              method={playButtonPressHandler}
-              shadow={false}
-            >
-              <View className="flex-row  gap-1 items-center">
-                <Ionicons name="star-outline" size={12} />
-                <Text className="font-bold">Favorite</Text>
-              </View>
-            </CustomButton>
-          </View>
+            <View className="flex-row items-center space-x-2">
+              <Ionicons
+                name={isMovie(media) ? "film-outline" : "tv-outline"}
+                size={18}
+                color={Colors.stone[100]}
+              />
+              <Text className="text-green-100">
+                {isMovie(media) ? "Movie" : "TV"}
+              </Text>
+            </View>
 
-          <View className="mt-10">
-            <CustomButton
-              width={140}
-              height={40}
-              radius={5}
-              color={Colors.gray["600"]}
-              border={0}
-              method={infoButtonPressHandler}
-              shadow={false}
-            >
-              <View className="flex-row  gap-1 items-center">
+            <View className="flex-row items-center space-x-2">
+              <Ionicons
+                name="calendar-outline"
+                size={18}
+                color={Colors.stone[100]}
+              />
+              <Text className="text-green-100">
+                {isMovie(media) ? media.release_date : media.first_air_date}
+              </Text>
+            </View>
+
+            {media.original_language ? (
+              <View className="flex-row items-center space-x-2">
                 <Ionicons
-                  name="information-circle"
+                  name="language-outline"
                   size={18}
-                  color={Colors.gray[400]}
+                  color={Colors.stone[100]}
                 />
-                <Text className="font-bold text-gray-50">More Info</Text>
+                <Text className="text-green-100">
+                  {/*  @ts-ignore */}
+                  {isoLangs[media.original_language]?.name
+                    ? // @ts-ignore
+                      isoLangs[media.original_language]?.name
+                    : media.original_language}
+                </Text>
               </View>
-            </CustomButton>
+            ) : null}
+          </ScrollView>
+
+          {/* OverView */}
+          <Text className="max-w-xs text-xs text-gray-100">
+            {media?.overview}
+          </Text>
+
+          <View className="flex-row space-x-3">
+            <View className="mt-10">
+              <CustomButton
+                width={100}
+                height={40}
+                radius={5}
+                color="white"
+                border={0}
+                method={playButtonPressHandler}
+                shadow={false}
+              >
+                <View className="flex-row  gap-1 items-center">
+                  <Ionicons name="star-outline" size={12} />
+                  <Text className="font-bold">Favorite</Text>
+                </View>
+              </CustomButton>
+            </View>
+
+            <View className="mt-10">
+              <CustomButton
+                width={140}
+                height={40}
+                radius={5}
+                color={Colors.gray["600"]}
+                border={0}
+                method={infoButtonPressHandler}
+                shadow={false}
+              >
+                <View className="flex-row  gap-1 items-center">
+                  <Ionicons
+                    name="information-circle"
+                    size={18}
+                    color={Colors.gray[400]}
+                  />
+                  <Text className="font-bold text-gray-50">More Info</Text>
+                </View>
+              </CustomButton>
+            </View>
           </View>
         </View>
-      </View>
+      ) : null}
     </View>
   );
 }

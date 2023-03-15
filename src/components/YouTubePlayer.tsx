@@ -60,7 +60,7 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
     }
   }, []);
 
-  const height = dimensionsForWindow.height * 0.3;
+  const height = dimensionsForWindow.height * 0.29;
   console.log(height);
 
   // height: 250
@@ -68,17 +68,17 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
     <View
       className=""
       style={{
-        height: height,
+        // height: height,
         width: "100%",
         zIndex: 0,
       }}
     >
       {props.loading ? (
-        <Text className="text-gray-400 text-xl">Loading...</Text>
+        <Text className="text-gray-400 text-xl text-center">Loading...</Text>
       ) : props.video ? (
-        <View>
+        <View className="">
           {props.video.key ? (
-            <>
+            <View className="justify-center">
               <YoutubeIframe
                 height={height}
                 width={dimensionsForScreen.width}
@@ -89,7 +89,7 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
                   if (status === true) changeScreenOrientation();
                 }}
               />
-            </>
+            </View>
           ) : (
             <View>
               <ImageBackground
@@ -98,7 +98,7 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
               />
             </View>
           )}
-          <View className="w-full h-24 bg-stone-900 px-4 space-y-1 justify-center items-start py-2 [elevation:5]">
+          {/* <View className="absolute bottom-0 w-full bg-stone-900 px-4 space-y-1 justify-center items-start py-2 [elevation:5]">
             <Text className="text-stone-100 font-bold" numberOfLines={3}>
               {props.video?.name}
             </Text>
@@ -111,7 +111,7 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
                 {props.video?.published_at.substring(0, 10)}
               </Text>
             </View>
-          </View>
+          </View> */}
         </View>
       ) : (
         <Text className="text-gray-300">Whoops no data Available</Text>

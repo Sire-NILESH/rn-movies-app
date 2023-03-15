@@ -6,6 +6,7 @@ import NothingToShow from "./NothingToShow";
 import { showErrorAlert } from "../utils/helpers/helper";
 import useFetchScreenProps from "../hooks/useFetchScreenProps";
 import Loader from "./ui/Loader";
+import { memo } from "react";
 
 interface IProps {
   screenType: ScreenTypes;
@@ -63,4 +64,4 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType }) => {
   );
 };
 
-export default ScreenBuilder;
+export default memo(ScreenBuilder);

@@ -1,5 +1,5 @@
 import { ICountry, MovieMedia, TvMedia, TvMediaExtended } from "../../typings";
-import { Alert } from "react-native";
+import { Alert, Dimensions } from "react-native";
 
 export function isMovie(
   media: MovieMedia | TvMedia | null
@@ -28,6 +28,11 @@ export function isTvExtended(
 // const prevRoute = routes[routes.length - 2]; // -2 because -1 is the current route
 // // {"key": "Search Screen-rxFVew3zQkNrXL4z0O_1J", "name": "Search Screen", "params": {"searchCategory": "tv"}, "path": undefined}
 // console.log("path", prevRoute?.name);
+
+export const getDeviceDimensions = (dimensionOf: "screen" | "window") => {
+  const dimensions = Dimensions.get(dimensionOf);
+  return dimensions;
+};
 
 export function isMovieArray(
   medias: MovieMedia[] | TvMedia[]

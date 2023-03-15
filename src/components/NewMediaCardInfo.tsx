@@ -3,7 +3,7 @@ import React from "react";
 import { MovieMedia, TvMedia, TvMediaExtended } from "../typings";
 import { isMovie, isTvExtended } from "../utils/helpers/helper";
 import { isoLangs } from "../utils/helpers/isoLangs";
-// @ts-ignore
+// @ts-ignore, there is no types module available for this package online.
 import ExpoFastImage from "expo-fast-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
@@ -26,28 +26,31 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
   return (
     <View className="mt-5 mx-3 justify-between border border-stone-800/30 rounded-2xl">
       <View className="relative flex-1 rounded-2xl h-[200px] overflow-hidden">
-        <ExpoFastImage
-          // uri={require("../../assets/images/placeholders/posterPlaceHolder.webp")}
-          source={
-            imageUrl
-              ? { uri: imageUrl }
-              : require("../../assets/images/placeholders/posterPlaceHolder.webp")
-          }
-          // uri={imageUrl}
-          className=""
-          cacheKey={media.id + "backdrop"}
-          resizeMode={"cover"}
-          style={{
-            width: "100%",
-            height: "100%",
-          }}
-        />
-
-        {/* // <Image
-             source={require("../../assets/images/placeholders/posterPlaceHolder.webp")}
-             className="rounded-l-2xl"
-             style={{ width: "100%", height: "100%", resizeMode: "cover" }}
-           /> */}
+        {imageUrl ? (
+          <ExpoFastImage
+            // source={
+            //   imageUrl
+            //     ? { uri: imageUrl }
+            //     : require("../../assets/images/placeholders/posterPlaceHolder.webp")
+            // }
+            uri={imageUrl}
+            cacheKey={media.id + "backdrop"}
+            resizeMode={"cover"}
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+          />
+        ) : (
+          <Image
+            source={require("../../assets/images/placeholders/posterPlaceHolder.webp")}
+            resizeMode={"cover"}
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+          />
+        )}
       </View>
 
       <LinearGradient
@@ -64,8 +67,19 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
       >
         <View className="flex-row items-center space-x-2 px-4">
           <Ionicons name="star" size={18} color={Colors.yellow[300]} />
-          <Text className="text-green-100">
-            {media.vote_average.toFixed(2)}/10
+          <Text className="font-bold text-stone-200">
+            <Text
+              className="font-bold"
+              style={{
+                color:
+                  media.vote_average > 4.0
+                    ? Colors.green[500]
+                    : Colors.red[400],
+              }}
+            >
+              {media.vote_average.toFixed(2)}
+            </Text>
+            /10
           </Text>
         </View>
 
@@ -73,7 +87,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
           <Ionicons
             name={isMovie(media) ? "film-outline" : "tv-outline"}
             size={18}
-            color={Colors.yellow[100]}
+            color={Colors.stone[100]}
           />
           <Text className="text-green-100">
             {isMovie(media) ? "Movie" : "TV"}
@@ -84,7 +98,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
           <Ionicons
             name="calendar-outline"
             size={18}
-            color={Colors.yellow[100]}
+            color={Colors.stone[100]}
           />
           <Text className="text-green-100">
             {isMovie(media) ? media.release_date : media.first_air_date}
@@ -96,7 +110,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
             <Ionicons
               name="language-outline"
               size={18}
-              color={Colors.yellow[100]}
+              color={Colors.stone[100]}
             />
             <Text className="text-green-100">
               {/*  @ts-ignore */}
@@ -110,15 +124,11 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
 
         {isTvExtended(media) && (
           <View className="flex-row items-center space-x-2 px-4">
-            <Ionicons name="bookmark" size={18} color={Colors.yellow[100]} />
+            <Ionicons name="bookmark" size={18} color={Colors.stone[100]} />
             <Text className="text-green-100">
               <Text className="text-green-100">{media.status}</Text>
             </Text>
           </View>
-          //  <Text className="text-stone-400 px-4">
-          //    Status:{"  "}
-          //    <Text className="text-green-100">{media.status}</Text>
-          //  </Text>
         )}
       </LinearGradient>
     </View>

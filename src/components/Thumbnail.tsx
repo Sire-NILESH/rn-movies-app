@@ -1,6 +1,5 @@
-import { useNavigation } from "@react-navigation/native";
-import { MovieMedia, Trailer, TvMedia } from "../typings";
-import { View, Image, Pressable, Text, Dimensions } from "react-native";
+import { MovieMedia, TvMedia } from "../typings";
+import { View, Pressable, Text, Image } from "react-native";
 import { isMovie } from "../utils/helpers/helper";
 import { LinearGradient } from "expo-linear-gradient";
 // @ts-ignore
@@ -9,6 +8,8 @@ import ExpoFastImage from "expo-fast-image";
 export interface IThumbnailProps {
   media: MovieMedia | TvMedia;
   orientation: "portrait" | "landscape";
+  windowWidth: number;
+  navigateTo: (screen: string, paramOption: Object) => void;
 }
 
 // const windowWidth = Dimensions.get("window").width;
@@ -29,8 +30,15 @@ export interface IThumbnailProps {
 //   },
 // };
 
-function Thumbnail({ media, orientation }: IThumbnailProps) {
-  const windowWidth = Dimensions.get("window").width;
+function Thumbnail({
+  media,
+  orientation,
+  windowWidth,
+  navigateTo,
+}: IThumbnailProps) {
+  // const windowWidth = Dimensions.get("window").width;
+
+  // console.log("thumbnail");
 
   const thumbnailDimensions = {
     landscape: {
@@ -49,8 +57,6 @@ function Thumbnail({ media, orientation }: IThumbnailProps) {
   };
 
   const dimensions = thumbnailDimensions[orientation];
-
-  const navigation = useNavigation();
 
   const imageURL =
     (media.backdrop_path || media.poster_path) &&
@@ -79,10 +85,15 @@ function Thumbnail({ media, orientation }: IThumbnailProps) {
         onPress={() => {
           console.log(media);
           // @ts-ignore
-          navigation.push("More Info", {
+          navigateTo("More Info", {
             mediaType: isMovie(media) ? "movie" : "tv",
             media: media,
           });
+          // // @ts-ignore
+          // navigation.push("More Info", {
+          //   mediaType: isMovie(media) ? "movie" : "tv",
+          //   media: media,
+          // });
         }}
       >
         {/* <Image
@@ -97,28 +108,35 @@ function Thumbnail({ media, orientation }: IThumbnailProps) {
 
         {/* https://github.com/dcodeteam/react-native-fast-image-expo */}
 
-        <ExpoFastImage
-          uri={imageURL}
-          // source={
-          //   imageURL
-          //     ? { uri: imageURL }
-          //     : require("../../assets/images/placeholders/posterPlaceHolder.webp")
-          // }
-          // cacheKey={media.id + "poster"}
-          cacheKey={
-            orientation === "portrait"
-              ? media.id + "poster"
-              : media.id + "backdrop"
-          }
-          resizeMode={"contain"}
-          style={{
-            width: dimensions.imageWidth,
-            height: dimensions.height,
-            position: "relative",
-            borderRadius: 6,
-          }}
-        />
-
+        {imageURL ? (
+          <ExpoFastImage
+            uri={imageURL}
+            // source={
+            //   imageURL
+            //     ? { uri: imageURL }
+            //     : require("../../assets/images/placeholders/posterPlaceHolder.webp")
+            // }
+            // cacheKey={media.id + "poster"}
+            cacheKey={
+              orientation === "portrait"
+                ? media.id + "poster"
+                : media.id + "backdrop"
+            }
+            resizeMode={"contain"}
+            style={{
+              width: dimensions.imageWidth,
+              height: dimensions.height,
+              position: "relative",
+              borderRadius: 6,
+            }}
+          />
+        ) : (
+          <Image
+            source={require("../../assets/images/placeholders/posterPlaceHolder.webp")}
+            className="relative rounded-md object-center"
+            style={{ width: dimensions.imageWidth, height: dimensions.height }}
+          />
+        )}
         {/* Movie Title and date box */}
         <LinearGradient
           colors={[
@@ -160,4 +178,3 @@ function Thumbnail({ media, orientation }: IThumbnailProps) {
 }
 
 export default Thumbnail;
-// export const MemoisedThumbnail = memo(Thumbnail);

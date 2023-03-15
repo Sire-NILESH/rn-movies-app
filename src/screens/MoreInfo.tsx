@@ -73,7 +73,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       {/* BackDrop Image */}
       <View
         className="absolute top-0 left-0 w-[100%] flex-1 h-full"
-        style={[{ height: screenDimensions.height * 0.8 }]}
+        style={[{ height: screenDimensions.height * 0.7 }]}
       >
         <LinearGradient
           colors={[
@@ -143,7 +143,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       </View>
 
       {/* Buttons */}
-      <View className="w-full flex-row space-between gap-3 pl-4 mt-8">
+      <View className="w-full flex-row space-between gap-3 pl-4 mt-12">
         <View className="flex-1">
           <TrailerButton mediaType={mediaType} mediaId={media.id} />
         </View>
@@ -177,7 +177,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       </View>
 
       {/* Network List and Watch Provider row */}
-      <View>
+      <View className="">
         {/* Networks available on */}
         {isTvExtended(media) && <NetworkList networks={media.networks} />}
 
@@ -186,7 +186,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       </View>
 
       {/* Footer, contains 'Similar' and 'Seasons and episodes' bttons */}
-      <View className="mt-10 flex-row items-center space-x-5 w-full p-4">
+      <View className="mt-12 flex-row items-center space-x-5 w-full p-4">
         {/* Realated/Similar/Show_more_like_this */}
         <LinearGradient
           className="h-32 rounded-xl max-w-xl overflow-hidden border border-stone-800"

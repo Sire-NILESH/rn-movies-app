@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { View, FlatList, Dimensions } from "react-native";
+import { View, FlatList, Dimensions, Text } from "react-native";
 import { useLogging } from "../hooks/useLogging";
 import { IStackScreenProps } from "../library/StackScreenProps";
 import { Trailer } from "../typings";
@@ -77,6 +77,21 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         </View>
       )}
 
+      <View className="w-full bg-stone-900 px-4 space-y-1 justify-center items-start py-4 [elevation:5]">
+        <Text className="text-stone-100 font-bold" numberOfLines={3}>
+          {selectedVideo?.name}
+        </Text>
+        <View className="flex-row items-center">
+          <Text className="text-stone-400 space-x-4">
+            {selectedVideo?.type}
+            {" • "}
+          </Text>
+          <Text className=" text-stone-400 text-xs">
+            {selectedVideo?.published_at.substring(0, 10)}
+          </Text>
+        </View>
+      </View>
+
       {videos.length > 0 && !error ? (
         // <View className="flex-1 px-4">
         <FlatList
@@ -84,7 +99,8 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           initialNumToRender={3}
           className="pt-4 px-2"
           style={{
-            marginTop: 96,
+            // marginTop: ,
+            // marginTop: 96,
             // marginTop: dimensionsForWindow.height * 0.42,
             backgroundColor: "rgb(4, 16, 9)",
           }}

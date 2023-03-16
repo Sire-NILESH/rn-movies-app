@@ -11,7 +11,7 @@ import CustomButton from "./ui/CustomButton";
 import { Colors } from "./../utils/Colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { isMovie, isTvExtended } from "./../utils/helpers/helper";
+import { isMovie } from "./../utils/helpers/helper";
 import { Ionicons } from "@expo/vector-icons";
 import { isoLangs } from "../utils/helpers/isoLangs";
 import { ScrollView } from "react-native-gesture-handler";
@@ -54,7 +54,6 @@ function Banner({ mediaList }: Props) {
       ) : null}
       <View
         className="absolute top-0 left-0 w-[100%] flex-1 h-full"
-        // style={[{ height: screenDimensions.height }]}
         style={{
           width: screenDimensions.width,
           height: undefined,
@@ -103,7 +102,7 @@ function Banner({ mediaList }: Props) {
           >
             <View className="flex-row items-center space-x-2">
               <Ionicons name="star" size={18} color={Colors.yellow[300]} />
-              <Text className="font-bold text-stone-200">
+              <Text className="font-bold text-stone-200 tracking-widest">
                 <Text
                   className="font-bold"
                   style={{

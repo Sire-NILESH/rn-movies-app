@@ -70,9 +70,6 @@ const TrailerVideoThumbnail: React.FC<IProps> = (props) => {
             <Text
               className="font-semibold text-gray-100 text-xs w-full"
               numberOfLines={1}
-              style={[
-                props.orientation === "landscape" ? { lineHeight: 18 } : null,
-              ]}
             >
               {props.video.name}
             </Text>

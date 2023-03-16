@@ -11,7 +11,6 @@ import YoutubeIframe from "react-native-youtube-iframe";
 import { Trailer } from "../typings";
 
 const dimensionsForScreen = Dimensions.get("screen");
-const dimensionsForWindow = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
@@ -34,7 +33,6 @@ interface IProps {
   loading: boolean;
 }
 
-// console.log(dimensionsForScreen.width);
 import { useHeaderHeight } from "@react-navigation/elements";
 
 const YouTubePlayer: React.FC<IProps> = (props) => {
@@ -59,9 +57,6 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
       setPlaying(false);
     }
   }, []);
-
-  const height = dimensionsForWindow.height * 0.29;
-  console.log(height);
 
   // height: 250
   return (

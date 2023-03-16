@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  Pressable,
-  Dimensions,
-  Image,
-  FlatList,
-} from "react-native";
+import { View, Text, Pressable, Image, FlatList } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { IStackScreenProps } from "../library/StackScreenProps";
 import { useLogging } from "../hooks/useLogging";
@@ -17,12 +10,6 @@ import { Ionicons } from "@expo/vector-icons";
 import SeasonsHeader from "../components/SeasonsHeader";
 import { LinearGradient } from "expo-linear-gradient";
 import EpisodeInfoCard from "../components/EpisodeInfoCard";
-import NothingToShow from "../components/NothingToShow";
-import ImageCached from "../components/ui/ImageCached";
-import ImagePlaceholder from "../components/ui/ImagePlaceholder";
-import ImageCustom from "../components/ui/ImageCustom";
-
-const screenDimensions = Dimensions.get("screen");
 
 const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   IStackScreenProps

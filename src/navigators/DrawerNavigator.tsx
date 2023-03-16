@@ -1,28 +1,14 @@
 import React, { useLayoutEffect } from "react";
-import {
-  DrawerScreenProps,
-  createDrawerNavigator,
-} from "@react-navigation/drawer";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
-// import CustomDrawer from "../components/CustomDrawer";
 import { Colors } from "../utils/Colors";
-import { Ionicons } from "@expo/vector-icons";
 import { drawerRoutes } from "../config/routes";
-import { IStackScreenProps } from "./../library/StackScreenProps";
 import "react-native-gesture-handler";
-import { IDrawerScreenProps } from "../library/DrawerScreenProps";
-import { ParamListBase } from "@react-navigation/native";
-import About from "../screens/Favorite";
-import { enableScreens } from "react-native-screens";
-import CustomButton from "../components/ui/CustomButton";
-import IconButton from "../components/ui/IconButton";
-import { Text, View } from "react-native";
 import CustomDrawer from "../components/CustomDrawer";
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
-  enableScreens(true);
   const navigation = useNavigation();
 
   useLayoutEffect(() => {

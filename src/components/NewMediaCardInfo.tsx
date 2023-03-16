@@ -47,7 +47,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
       >
         <View className="flex-row items-center space-x-2 px-4">
           <Ionicons name="star" size={18} color={Colors.yellow[300]} />
-          <Text className="font-bold text-stone-200">
+          <Text className="font-bold text-stone-200 tracking-widest">
             <Text
               className="font-bold"
               style={{

@@ -1,4 +1,4 @@
-import { Pressable } from "react-native";
+import { Pressable, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import IconButton from "./IconButton";
@@ -25,8 +25,6 @@ export default function HeaderSearchButton({
   function onPressHandler() {
     if (gotoList === true) {
       // @ts-ignore
-      // navigation.push("Tiles", { title, medias });
-      // @ts-ignore
       navigation.push("Search Tiles", { title, medias, searchCategory });
     } else {
       // @ts-ignore
@@ -35,12 +33,14 @@ export default function HeaderSearchButton({
   }
 
   return (
-    <Pressable
-      onPress={disabled && disabled === true ? null : onPressHandler}
-      android_ripple={{ color: "#eee" }}
-      className="mr-4 rounded-full"
-    >
-      <IconButton name="search-outline" size={24} color={Colors.gray[100]} />
-    </Pressable>
+    <View className="mr-4 rounded-full overflow-hidden">
+      <Pressable
+        onPress={disabled && disabled === true ? null : onPressHandler}
+        android_ripple={{ color: "#eee" }}
+        className="flex-1"
+      >
+        <IconButton name="search-outline" size={24} color={Colors.gray[100]} />
+      </Pressable>
+    </View>
   );
 }

@@ -4,7 +4,6 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "./../utils/Colors";
 import { DrawerNavigationOptions } from "@react-navigation/drawer";
-import Logo from "./ui/Logo";
 import { LinearGradient } from "expo-linear-gradient";
 
 function Header() {
@@ -47,17 +46,9 @@ function Header() {
       <View>
         {/* @ts-ignore */}
         <Pressable onPress={() => navigation.toggleDrawer()}>
-          <Ionicons name="ios-menu" size={28} color={Colors.stone[100]} />
+          <Ionicons name="md-menu" size={28} color={Colors.stone[100]} />
         </Pressable>
       </View>
-
-      {/* <View className="ml-2 flex-3 flex-row items-center space-x-2">
-        <Logo />
-        <Text className="font-semibold text-3xl text-green-400">Reeled</Text>
-        <Text className="font-semibold text-3xl text-yellow-50">
-          🍿 Popcorn
-        </Text>
-      </View> */}
 
       <View className="flex-1 flex-row ml-2 justify-end gap-x-4">
         {headerLinksItems.map((link) =>

@@ -73,9 +73,6 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     loadMedias();
   }, [mediaList, pageNumber, userSelectedGenres, getGenreMediasProps, genreId]);
 
-  // console.log(medias);
-  // console.log("media length", medias.length);
-
   const onShowGenresModal = () => {
     setShowGenresModal(true);
   };
@@ -99,8 +96,6 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: userSelectedGenres.length > 0 ? "Custom Genres" : title,
-      // ? `Custom Genres ${currentMediaType === "tv" ? "TV shows" : "Movies"}`
-      // : `${title} ${currentMediaType === "tv" ? "TV shows" : "Movies"}`,
       headerRight: (props) => (
         <View className="flex-row">
           {/* Search button */}

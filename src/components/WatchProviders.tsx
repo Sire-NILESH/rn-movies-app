@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Image } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import React, { useState } from "react";
 import {
   ICountry,
@@ -9,14 +9,12 @@ import {
 import useFetcher from "../hooks/useFetcher";
 import { getWatchProviders } from "../utils/requests";
 import CountriesDropdown from "./ui/CountriesDropdown";
-// @ts-ignore
-import ExpoFastImage from "expo-fast-image";
+import ImageCached from "./ui/ImageCached";
 
 interface IProps {
   mediaId: number;
   mediaType: MediaTypes;
 }
-// const countries = ["Egypt", "Canada", "Australia", "Ireland"];
 
 const WatchProviders: React.FC<IProps> = ({ mediaId, mediaType }) => {
   const {
@@ -90,7 +88,6 @@ function renderFlatlist(
     <View
       className="space-y-3 py-4 mx-2 rounded-xl border-2"
       style={{ backgroundColor: "rgb(3, 20, 10)" }}
-      // style={{ backgroundColor: "rgba(34, 197, 94, 0.1)" }}
     >
       <Text className="text-green-100 uppercase tracking-[3px] ml-4">
         {availableType}
@@ -108,25 +105,16 @@ function renderFlatlist(
           const p = itemObj.item;
           return (
             <View className="space-y-4 items-start mr-5">
-              <View className="rounded-2xl flex-1 justify-center overflow-hidden">
-                {/* <Image
-                  source={{
-                    uri: `https://image.tmdb.org/t/p/w500${p.logo_path}`,
-                  }}
-                  className="border-stone-500"
-                  resizeMode="contain"
-                  style={{ width: 65, height: 65 }}
-                /> */}
-
-                <ExpoFastImage
-                  uri={`https://image.tmdb.org/t/p/w500${p.logo_path}`}
+              <View
+                className="rounded-2xl justify-center overflow-hidden"
+                style={{
+                  width: 65,
+                  aspectRatio: 1 / 1,
+                }}
+              >
+                <ImageCached
+                  imageURL={`https://image.tmdb.org/t/p/w500${p.logo_path}`}
                   cacheKey={p.provider_id + "watchProvider"}
-                  resizeMode={"center"}
-                  style={{
-                    width: 65,
-                    height: 65,
-                    borderRadius: 6,
-                  }}
                 />
               </View>
               <Text

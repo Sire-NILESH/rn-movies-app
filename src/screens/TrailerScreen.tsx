@@ -77,7 +77,8 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         </View>
       )}
 
-      <View className="w-full bg-stone-900 px-4 space-y-1 justify-center items-start py-4 [elevation:5]">
+      {/* Title and date Dock */}
+      <View className="w-full bg-stone-900 px-4 space-y-1 justify-center items-start py-5 [elevation:5]">
         <Text className="text-stone-100 font-bold" numberOfLines={3}>
           {selectedVideo?.name}
         </Text>
@@ -93,15 +94,11 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       </View>
 
       {videos.length > 0 && !error ? (
-        // <View className="flex-1 px-4">
         <FlatList
           data={videos}
           initialNumToRender={3}
           className="pt-4 px-2"
           style={{
-            // marginTop: ,
-            // marginTop: 96,
-            // marginTop: dimensionsForWindow.height * 0.42,
             backgroundColor: "rgb(4, 16, 9)",
           }}
           contentContainerStyle={{
@@ -141,8 +138,6 @@ function TrailerCardView(props: {
       <TrailerVideoThumbnail
         video={props.video}
         onPressHandler={props.onPressHandler}
-        // orientation="portrait"
-        orientation="landscape"
       />
     </View>
   );

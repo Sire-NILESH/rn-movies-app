@@ -18,10 +18,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import TrailerButton from "../components/ui/TrailerButton";
 import useFetcher from "../hooks/useFetcher";
 import { getTvShowInfo } from "../utils/requests";
-import MediaCardInfo from "../components/MediaCardInfo";
 import NetworkList from "../components/NetworkList";
 import WatchProviders from "../components/WatchProviders";
-import Thumbnail from "../components/Thumbnail";
 import NewMediaCardInfo from "./../components/NewMediaCardInfo";
 
 const screenDimensions = Dimensions.get("screen");
@@ -73,7 +71,11 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       {/* BackDrop Image */}
       <View
         className="absolute top-0 left-0 w-[100%] flex-1 h-full"
-        style={[{ height: screenDimensions.height * 0.7 }]}
+        style={{
+          width: screenDimensions.width,
+          height: undefined,
+          aspectRatio: 2 / 3,
+        }}
       >
         <LinearGradient
           colors={[
@@ -86,10 +88,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         >
           <ImageBackground //wrapping the main entry screen with this <ImageBackground> component
             source={{
-              uri: `https://image.tmdb.org/t/p/w500${
-                // media?.poster_path || media?.backdrop_path
-                mediaPosterPath
-              }`,
+              uri: `https://image.tmdb.org/t/p/w500${mediaPosterPath}`,
             }}
             resizeMode="cover" //similar to web, "cover", "contain", etc.
             style={{ flex: 1 }} //for View dimensions internally
@@ -98,7 +97,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         </LinearGradient>
       </View>
 
-      {/* Content Title/name and original title/name mt-80 */}
+      {/* Content Title/name and original title/name  */}
       <View className="mt-64 flex-1 pt-6">
         {/* Title */}
         <View className="px-4">
@@ -126,11 +125,6 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           />
         </View>
 
-        {/* Other metrics */}
-        {/* <View>
-          <Thumbnail media={media} orientation="landscape" />
-        </View> */}
-        {/* <MediaCardInfo media={media} /> */}
         <NewMediaCardInfo media={media} />
 
         {/* Description */}

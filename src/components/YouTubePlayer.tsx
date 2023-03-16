@@ -68,8 +68,8 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
     <View
       className=""
       style={{
-        // height: height,
         width: "100%",
+        aspectRatio: 16 / 9,
         zIndex: 0,
       }}
     >
@@ -80,7 +80,7 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
           {props.video.key ? (
             <View className="justify-center">
               <YoutubeIframe
-                height={height}
+                height={(dimensionsForScreen.width * 9) / 16}
                 width={dimensionsForScreen.width}
                 play={playing}
                 videoId={props.video.key}
@@ -98,20 +98,6 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
               />
             </View>
           )}
-          {/* <View className="absolute bottom-0 w-full bg-stone-900 px-4 space-y-1 justify-center items-start py-2 [elevation:5]">
-            <Text className="text-stone-100 font-bold" numberOfLines={3}>
-              {props.video?.name}
-            </Text>
-            <View className="flex-row items-center">
-              <Text className="text-stone-400 space-x-4">
-                {props.video?.type}
-                {" • "}
-              </Text>
-              <Text className=" text-stone-400 text-xs">
-                {props.video?.published_at.substring(0, 10)}
-              </Text>
-            </View>
-          </View> */}
         </View>
       ) : (
         <Text className="text-gray-300">Whoops no data Available</Text>

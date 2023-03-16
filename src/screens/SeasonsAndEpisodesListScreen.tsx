@@ -18,6 +18,9 @@ import SeasonsHeader from "../components/SeasonsHeader";
 import { LinearGradient } from "expo-linear-gradient";
 import EpisodeInfoCard from "../components/EpisodeInfoCard";
 import NothingToShow from "../components/NothingToShow";
+import ImageCached from "../components/ui/ImageCached";
+import ImagePlaceholder from "../components/ui/ImagePlaceholder";
+import ImageCustom from "../components/ui/ImageCustom";
 
 const screenDimensions = Dimensions.get("screen");
 
@@ -88,10 +91,12 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
     });
   }, [selectedSeason, tvMediaSeasons]);
 
+  /* if the season doesnt have a poster we use the old poster that was used in the MoreInfoScreeen which was passed here as tvMediaPosterPathOld */
+
   return (
     <View className="flex-1 bg-black pb-4">
       <View className="flex-1">
-        {seasonDetails && (
+        {seasonDetails && tvMediaSeasons[selectedSeason.season_number] && (
           <FlatList
             ListHeaderComponent={
               <>
@@ -104,8 +109,11 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                   ]}
                   className="flex-row px-4 pt-4 justify-between items-start mb-10"
                 >
-                  {/* if the season doesnt have a poster we use the old poster that was used in the MoreInfoScreeen which was passed here as tvMediaPosterPathOld */}
-                  <View className="h-[200] w-[133] border border-stone-800 rounded-md">
+                  {/* Season Poster  h-[200] w-[133] */}
+                  <View
+                    className="border border-stone-800 rounded-md overflow-hidden"
+                    style={{ width: 133, aspectRatio: 2 / 3 }}
+                  >
                     <Image
                       source={
                         tvMediaSeasons[selectedSeason.season_number]
@@ -122,8 +130,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                             }
                           : require("../../assets/images/placeholders/posterPlaceHolder.webp")
                       }
-                      className="rounded-md"
-                      resizeMode="contain" //similar to web, "cover", "contain", etc.
+                      resizeMode="cover" //similar to web, "cover", "contain", etc.
                       style={{ width: "100%", height: "100%" }}
                     ></Image>
                   </View>

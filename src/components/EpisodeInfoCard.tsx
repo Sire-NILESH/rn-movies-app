@@ -12,7 +12,10 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
   return (
     <View className="mt-5 mx-3 justify-between">
       {/* <View className="mt-5 mx-3 flex-1 bg-red-500 max-h-[300]"> */}
-      <View className="flex-1 rounded-t-2xl border border-b-0 rounded-b-none border-gray-800">
+      <View
+        className="flex-1 rounded-2xl border border-b-0 rounded-b-none border-gray-800 overflow-hidden"
+        style={{ width: "100%", aspectRatio: 16 / 9 }}
+      >
         <Image
           source={
             episode.still_path
@@ -21,8 +24,9 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
                 }
               : require("../../assets/images/placeholders/posterPlaceHolder.webp")
           }
-          className="rounded-2xl rounded-b-none"
-          style={{ width: "100%", height: 180, resizeMode: "cover" }}
+          // className="rounded-2xl rounded-b-none"
+          // style={{ width: "100%", height: 180, resizeMode: "cover" }}
+          style={{ width: "100%", height: "100%", resizeMode: "cover" }}
         />
       </View>
       {/* bg-stone-800/50 */}

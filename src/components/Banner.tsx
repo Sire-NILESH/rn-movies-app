@@ -54,7 +54,12 @@ function Banner({ mediaList }: Props) {
       ) : null}
       <View
         className="absolute top-0 left-0 w-[100%] flex-1 h-full"
-        style={[{ height: screenDimensions.height }]}
+        // style={[{ height: screenDimensions.height }]}
+        style={{
+          width: screenDimensions.width,
+          height: undefined,
+          aspectRatio: 2 / 3,
+        }}
       >
         <LinearGradient
           colors={[

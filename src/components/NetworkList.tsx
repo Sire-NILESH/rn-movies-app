@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Image } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import React from "react";
 import { Network } from "../typings";
 // @ts-ignore

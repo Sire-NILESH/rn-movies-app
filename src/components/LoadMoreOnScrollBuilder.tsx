@@ -4,7 +4,6 @@ import { MediaTypes, MovieMedia, TvMedia } from "../typings";
 import { getRelatedMediasProps, searchRequest } from "../utils/requests";
 import TilesRenderedView from "../components/TilesRenderedView";
 import NothingToShow from "./../components/NothingToShow";
-import { useNavigation, useRoute } from "@react-navigation/native";
 
 interface IProps {
   screenType: "Search" | "Related";
@@ -20,9 +19,6 @@ interface IProps {
 }
 
 const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
-  const navigation = useNavigation();
-  const route = useRoute();
-
   const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>([]);
   const [loadingNewMedias, setLoadingNewMedias] = useState<boolean>(false);
   const [blockNewLoads, setBlockNewLoads] = useState<boolean>(false);
@@ -82,7 +78,6 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
   }, [pageNumber, getRelatedMediasProps, searchRequest]);
 
   console.log("pageNumber", pageNumber);
-  // console.log("media length", medias.length);
 
   return (
     <View className="flex-1 bg-stone-900 items-center">

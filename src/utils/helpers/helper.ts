@@ -52,76 +52,116 @@ export function showErrorAlert(title?: string, message?: string) {
   ]);
 }
 
-export const idToGenresMapped = {
-  "28": "Action",
-  "12": "Adventure",
-  "16": "Animation",
-  "35": "Comedy",
-  "80": "Crime",
-  "99": "Documentary",
-  "18": "Drama",
-  "10751": "Family",
-  "14": "Fantasy",
-  "36": "History",
-  "27": "Horror",
-  "10402": "Music",
-  "9648": "Mystery",
-  "10749": "Romance",
-  "878": "Science Fiction",
-  "10770": "TV Movie",
-  "53": "Thriller",
-  "10752": "War",
-  "10768": "War & Politics",
-  "37": "Western",
-  "10767": "Talk",
-  "10766": "Soap",
-  "10765": "Sci-Fi & Fantasy",
-  "10764": "Reality",
-  "10763": "News",
-  "10762": "Kids",
-  "10759": "Action & Adventure",
-};
-
 export const movieGenres = [
-  { id: 28, name: "Action" },
-  { id: 12, name: "Adventure" },
-  { id: 16, name: "Animation" },
-  { id: 35, name: "Comedy" },
-  { id: 80, name: "Crime" },
-  { id: 99, name: "Documentary" },
-  { id: 18, name: "Drama" },
-  { id: 10751, name: "Family" },
-  { id: 14, name: "Fantasy" },
-  { id: 36, name: "History" },
-  { id: 27, name: "Horror" },
-  { id: 10402, name: "Music" },
-  { id: 9648, name: "Mystery" },
-  { id: 10749, name: "Romance" },
-  { id: 878, name: "Science Fiction" },
-  { id: 10770, name: "TV Movie" },
-  { id: 53, name: "Thriller" },
-  { id: 10752, name: "War" },
-  { id: 37, name: "Western" },
+  // Custom Genres
+  [
+    // { id: 0.345783442, name: "Netflix Movies" },
+    { id: 0.65436456, name: "Lucasfilm" },
+    { id: 0.9876854, name: "HBO Movies" },
+    { id: 0.2344565, name: "Warner Bros. Entertainment" },
+    { id: 0.214545, name: "Paramount" },
+    { id: 0.89733, name: "Columbia Pictures" },
+    { id: 0.213775, name: "Miramax" },
+    { id: 0.745635, name: "Pixar Movies" },
+    { id: 0.3425567, name: "Metro-Goldwyn-Mayer" },
+    { id: 0.9874323, name: "20th Century Fox" },
+    { id: 0.768343, name: "Universal Pictures" },
+    { id: 0.9805434, name: "Lions Gate Films" },
+    { id: 0.786576, name: "Sony Pictures" },
+    { id: 0.788734, name: "Trending" },
+    { id: 0.2345646, name: "Popular" },
+    { id: 0.985633, name: "Top Rated" },
+    { id: 0.132323, name: "Now Playing" },
+    { id: 0.6754435, name: "New HD Releases" },
+  ],
+  // Actual Genres below
+  [
+    { id: 28, name: "Action" },
+    { id: 12, name: "Adventure" },
+    { id: 16, name: "Animation" },
+    { id: 35, name: "Comedy" },
+    { id: 80, name: "Crime" },
+    { id: 99, name: "Documentary" },
+    { id: 18, name: "Drama" },
+    { id: 10751, name: "Family" },
+    { id: 14, name: "Fantasy" },
+    { id: 36, name: "History" },
+    { id: 27, name: "Horror" },
+    { id: 10402, name: "Music" },
+    { id: 9648, name: "Mystery" },
+    { id: 10749, name: "Romance" },
+    { id: 878, name: "Science Fiction" },
+    { id: 10770, name: "TV Movie" },
+    { id: 53, name: "Thriller" },
+    { id: 10752, name: "War" },
+    { id: 37, name: "Western" },
+  ],
 ];
 
 export const tvGenres = [
-  { id: 10759, name: "Action & Adventure" },
-  { id: 16, name: "Animation" },
-  { id: 35, name: "Comedy" },
-  { id: 80, name: "Crime" },
-  { id: 99, name: "Documentary" },
-  { id: 18, name: "Drama" },
-  { id: 10751, name: "Family" },
-  { id: 10762, name: "Kids" },
-  { id: 9648, name: "Mystery" },
-  { id: 10763, name: "News" },
-  { id: 10764, name: "Reality" },
-  { id: 10765, name: "Sci-Fi & Fantasy" },
-  { id: 10766, name: "Soap" },
-  { id: 10767, name: "Talk" },
-  { id: 10768, name: "War & Politics" },
-  { id: 37, name: "Western" },
+  // Custom Genres below
+  [
+    { id: 0.345457, name: "Netflix Shows" },
+    { id: 0.567456, name: "HBO Shows" },
+    { id: 0.23454545, name: "HULU Shows" },
+    { id: 0.324778, name: "Amazon Prime Shows" },
+    { id: 0.87908, name: "Disney+ Shows" },
+    { id: 0.9765434, name: "Adult Swim Shows" },
+    { id: 0.235456, name: "AMC" },
+    { id: 0.54633, name: "Cartoon Network Shows" },
+    // { id: 0.45678886, name: "Discover" },
+    { id: 0.97756, name: "Trending" },
+    { id: 0.63465, name: "Popular" },
+    { id: 0.54364, name: "Top Rated" },
+    { id: 0.63546, name: "Airing Today" },
+  ],
+  // Actual Genres below
+  [
+    { id: 10759, name: "Action & Adventure" },
+    { id: 16, name: "Animation" },
+    { id: 35, name: "Comedy" },
+    { id: 80, name: "Crime" },
+    { id: 99, name: "Documentary" },
+    { id: 18, name: "Drama" },
+    { id: 10751, name: "Family" },
+    { id: 10762, name: "Kids" },
+    { id: 9648, name: "Mystery" },
+    { id: 10763, name: "News" },
+    { id: 10764, name: "Reality" },
+    { id: 10765, name: "Sci-Fi & Fantasy" },
+    { id: 10766, name: "Soap" },
+    { id: 10767, name: "Talk" },
+    { id: 10768, name: "War & Politics" },
+    { id: 37, name: "Western" },
+  ],
 ];
+
+export let idToGenresMapped = {};
+
+// Custom TV genres
+for (let i = 0; i < tvGenres[0].length; i++) {
+  const genreObj = tvGenres[0][i];
+  // @ts-ignore
+  idToGenresMapped[String(genreObj.id)] = genreObj.name;
+}
+// Default TV genres
+for (let i = 0; i < tvGenres[1].length; i++) {
+  const genreObj = tvGenres[1][i];
+  // @ts-ignore
+  idToGenresMapped[String(genreObj.id)] = genreObj.name;
+}
+// Custom Movie genres
+for (let i = 0; i < movieGenres[0].length; i++) {
+  const genreObj = movieGenres[0][i];
+  // @ts-ignore
+  idToGenresMapped[String(genreObj.id)] = genreObj.name;
+}
+// Default Movie genres
+for (let i = 0; i < movieGenres[1].length; i++) {
+  const genreObj = movieGenres[1][i];
+  // @ts-ignore
+  idToGenresMapped[String(genreObj.id)] = genreObj.name;
+}
 
 export const countries: ICountry[] = [
   { name: "United States", code: "US" },

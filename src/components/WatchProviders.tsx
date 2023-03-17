@@ -41,7 +41,6 @@ const WatchProviders: React.FC<IProps> = ({ mediaId, mediaType }) => {
     // @ts-ignore
     screenProps && screenProps[currentCountry.code];
 
-  console.log(watchProviders);
   return (
     <View className="flex-1 mt-16 space-y-5">
       <View className="w-full">

@@ -1,4 +1,4 @@
-import { View, Pressable, ActivityIndicator } from "react-native";
+import { View, Pressable } from "react-native";
 import { useLayoutEffect, useState, useEffect } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { IStackScreenProps } from "../library/StackScreenProps";
@@ -9,7 +9,6 @@ import { isMovieArray } from "../utils/helpers/helper";
 import GenereModal from "../components/GenereModal";
 import { getGenreMediasProps } from "../utils/requests";
 import GenreTags from "../components/GenreTags";
-
 import TilesRenderedView from "../components/TilesRenderedView";
 
 const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
@@ -43,8 +42,6 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     : isMovieArray(mediaList)
     ? "movie"
     : "tv";
-  // const currentListType: MediaTypes =
-  //   mediaList && isMovieArray(mediaList) ? "movie" : "tv";
 
   // Loading Data
   useEffect(() => {
@@ -99,7 +96,9 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       headerRight: (props) => (
         <View className="flex-row">
           {/* Search button */}
-          <HeaderSearchButton />
+          <HeaderSearchButton
+            searchCategory={currentMediaType ? currentMediaType : "multi"}
+          />
           {/* Genre select button */}
           {route.path !== "Search" && (
             <Pressable onPress={onShowGenresModal}>

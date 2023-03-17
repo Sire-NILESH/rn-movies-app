@@ -4,7 +4,7 @@ import { IStackScreenProps } from "../library/StackScreenProps";
 import { useLogging } from "../hooks/useLogging";
 import { Season, SeasonDetails } from "../typings";
 import useFetcher from "../hooks/useFetcher";
-import { fetchSeasonDetails } from "../utils/requests";
+import REQUESTS, { fetchSeasonDetails } from "../utils/requests";
 import { Colors } from "../utils/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import SeasonsHeader from "../components/SeasonsHeader";

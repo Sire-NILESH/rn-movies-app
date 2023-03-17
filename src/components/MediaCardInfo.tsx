@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
 import { MovieMedia, TvMedia, TvMediaExtended } from "../typings";
 import { isMovie, isTvExtended } from "../utils/helpers/helper";

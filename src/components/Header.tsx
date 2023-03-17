@@ -9,23 +9,41 @@ import { LinearGradient } from "expo-linear-gradient";
 function Header() {
   const navigation = useNavigation<DrawerNavigationOptions>();
 
-  const headerLinksItems = [
-    { title: "Movies", screenName: "Movies" },
-    { title: "TV Shows", screenName: "TV Shows" },
-    // { title: "Favorites", screenName: "TV Shows" },
+  const headerLinksScreenParams = [
+    {
+      name: "Movies",
+      title: "Trending Movies",
+      genreId: 0.788734,
+      currentMediaType: "movie",
+    },
+    {
+      name: "TV Shows",
+      title: "Trending TV Shows",
+      genreId: 0.97756,
+      currentMediaType: "tv",
+    },
   ];
 
-  function renderHeaderLink(title: string, screenName: string) {
+  function renderHeaderLink(props: {
+    name: string;
+    title: string;
+    genreId: number;
+    currentMediaType: string;
+  }) {
     return (
-      <View key={title + String(Math.random() * 10)} className="py-2">
+      <View key={props.name + String(Math.random() * 10)} className="py-2">
         <Pressable
           onPress={() => {
             // @ts-ignore
-            navigation.navigate(screenName);
+            navigation.push("Tiles", {
+              title: props.title,
+              currentMediaType: props.currentMediaType,
+              genreId: props.genreId,
+            });
           }}
         >
           <Text className="text-stone-100 text text-center font-semibold px-1">
-            {title}
+            {props.name}
           </Text>
         </Pressable>
       </View>
@@ -51,9 +69,7 @@ function Header() {
       </View>
 
       <View className="flex-1 flex-row ml-2 justify-end gap-x-4">
-        {headerLinksItems.map((link) =>
-          renderHeaderLink(link.title, link.screenName)
-        )}
+        {headerLinksScreenParams.map((link) => renderHeaderLink(link))}
       </View>
     </LinearGradient>
   );

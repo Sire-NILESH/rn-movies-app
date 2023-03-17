@@ -35,12 +35,16 @@ const GenereModal: React.FC<IProps> = ({
     closeWithConfirm(selectedGenres);
   }
 
+  function onConfirmCustomGenres(genreId: number) {
+    closeWithConfirm([genreId]);
+  }
+
   const mediaGenreList = mediaListType === "movie" ? movieGenres : tvGenres;
 
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible}>
       <View className="absolute my-[20%] mx-[10%] h-[80%] w-[80%] bg-stone-800 rounded-xl pb-2  [elevation:10]">
-        <View className="flex-row items-center justify-between h-[42] bg-stone-900 rounded-t-xl px-[20]">
+        <View className="flex-row items-center justify-between h-[42] bg-black rounded-t-xl px-[20]">
           {/* Header Title */}
           <View>
             <Text className="text-gray-50 text-base">Choose Genres</Text>
@@ -81,7 +85,40 @@ const GenereModal: React.FC<IProps> = ({
         <View className="flex-1">
           {movieGenres ? (
             <ScrollView className="flex-1">
-              {mediaGenreList.map((mediaGenre, index) => (
+              {/* Custom/Unsupported Genres */}
+              {mediaGenreList[0].map((mediaGenre, index) => (
+                <Pressable
+                  onPress={() => {
+                    // Directly add single genre to the list of selections and confirm modal too
+                    onConfirmCustomGenres(mediaGenre.id);
+                  }}
+                  android_ripple={{ color: "#eee" }}
+                  key={mediaGenre.id}
+                  className="flex-row px-4"
+                  style={
+                    index % 2 === 0
+                      ? { backgroundColor: Colors.stone[800] }
+                      : { backgroundColor: Colors.stone[900] }
+                  }
+                >
+                  <Text className="px-2 py-2 text-left text-gray-300">
+                    {mediaGenre.name}
+                  </Text>
+                </Pressable>
+              ))}
+
+              {/* Actual/Default_supported Genres */}
+              <View className="flex-row items-center justify-between h-[42] bg-black px-[20]">
+                {/* Header Title */}
+                <View>
+                  <Text className="text-gray-50 text-base">
+                    {" "}
+                    Choose multiple Genres
+                  </Text>
+                </View>
+              </View>
+
+              {mediaGenreList[1].map((mediaGenre, index) => (
                 <View
                   key={mediaGenre.id}
                   className="flex-row px-4"

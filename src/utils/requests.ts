@@ -145,6 +145,99 @@ export const getScreenProps = async (
   }
 };
 
+const networkIds = {
+  Netflix: 213,
+  HBO: 49,
+  HULU: 453,
+  "Amazon Prime": 1024,
+  "Disney+": 2739,
+  "Cartoon Network": 56,
+  "Adult Swim": 80,
+  AMC: 174,
+};
+
+const productionComapnyIds = {
+  // Netflix: "145174,178464,171251,185004,186222,192478",
+  Lucasfilm: 1,
+  HBO: 3268,
+  "Adult Swim": 6759,
+  Miramax: 14,
+  Paramount: 4,
+  "Columbia Pictures": 5,
+  "Cartoon Network": 7899,
+  Pixar: 3,
+  "Warner Bros": 17,
+  "20th Century Fox": 25,
+  "Metro-Goldwyn-Mayer": 21,
+  "Universal Pictures": 33,
+  "Lions Gate Films": 35,
+  "Sony Pictures": 34,
+};
+
+const customGenreIdToFetcher = {
+  customTvGenresToFetcherURL: {
+    // Netflix 213
+    0.345457: `${BASE_URL}/discover/tv?with_networks=${networkIds.Netflix}&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US`,
+    // HBO 49
+    0.567456: `${BASE_URL}/discover/tv?with_networks=${networkIds.HBO}&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US`,
+    // HULU 453
+    0.23454545: `${BASE_URL}/discover/tv?with_networks=${networkIds.HULU}&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US`,
+    // Amazon Prime 1024
+    0.324778: `${BASE_URL}/discover/tv?with_networks=${networkIds["Amazon Prime"]}&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US`,
+    // Disney+ 2739
+    0.87908: `${BASE_URL}/discover/tv?with_networks=${networkIds["Disney+"]}&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US`,
+    // Cartoon Network 56
+    0.54633: `${BASE_URL}/discover/tv?with_networks=${networkIds["Cartoon Network"]}&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US`,
+    // Adult Swim 80
+    0.9765434: `${BASE_URL}/discover/tv?with_networks=${networkIds["Adult Swim"]}&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US`,
+    // AMC 174
+    0.235456: `${BASE_URL}/discover/tv?with_networks=${networkIds["AMC"]}&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US`,
+
+    // 0.45678886: "Discover",
+    0.97756: `${BASE_URL}/trending/tv/day?api_key=${API_KEY}&language=en-US`,
+    0.63465: `${BASE_URL}/tv/popular?api_key=${API_KEY}&language=en-US`,
+    0.54364: `${BASE_URL}/tv/top_rated?api_key=${API_KEY}&language=en-US`,
+    0.63546: `${BASE_URL}/tv/airing_today?api_key=${API_KEY}&language=en-US`,
+  },
+  customMovieGenresToFetcherURL: {
+    // Netflix
+    // 0.345783442: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds.Netflix}&api_key=${API_KEY}&language=en-US`,
+    // HBO
+    0.9876854: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds.HBO}&api_key=${API_KEY}&language=en-US`,
+    // Lucasfilm
+    0.65436456: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds.Lucasfilm}&api_key=${API_KEY}&language=en-US`,
+    // Columbia Pictures
+    0.89733: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Columbia Pictures"]}&api_key=${API_KEY}&language=en-US`,
+    // Paramount
+    0.214545: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Paramount"]}&api_key=${API_KEY}&language=en-US`,
+    // Warner Bros. Entertainment
+    0.2344565: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Warner Bros"]}&api_key=${API_KEY}&language=en-US`,
+    // 20th Century Fox
+    0.9874323: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["20th Century Fox"]}&api_key=${API_KEY}&language=en-US`,
+    // Metro-Goldwyn-Mayer
+    0.3425567: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Metro-Goldwyn-Mayer"]}&api_key=${API_KEY}&language=en-US`,
+    // Pixar
+    0.745635: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Pixar"]}&api_key=${API_KEY}&language=en-US`,
+    // Miramax
+    0.213775: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Miramax"]}&api_key=${API_KEY}&language=en-US`,
+    // Sony Pictures
+    0.786576: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Sony Pictures"]}&api_key=${API_KEY}&language=en-US`,
+    // Lions Gate Films
+    0.9805434: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Lions Gate Films"]}&api_key=${API_KEY}&language=en-US`,
+    // Universal Pictures
+    0.768343: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Universal Pictures"]}&api_key=${API_KEY}&language=en-US`,
+
+    0.6754435: `${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=en-US`,
+    // "0.768343": "New HD Releases",
+    // "0.9805434": `${BASE_URL}/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false`,
+    0.788734: `${BASE_URL}/trending/movie/day?api_key=${API_KEY}&language=en-US`,
+    0.2345646: `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US`,
+    0.985633: `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=en-US`,
+    0.132323: `${BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=en-US`,
+    // "0.786576": "Wrestling",
+  },
+};
+
 /**
  * Is used to load more Genre related media(Movie/Tv) on scroll list end in the Tiles list screen.
  *
@@ -158,14 +251,47 @@ export const getGenreMediasProps = async (
   pageNumber: number
 ) => {
   console.log(mediaType, getTheseGenreMedias, pageNumber);
-  const commaSeparatedGenres = getTheseGenreMedias.join(",");
-  console.log(pageNumber);
-  const data = await fetch(
-    `${BASE_URL}/discover/${mediaType}?api_key=${API_KEY}&language=en-US&with_genres=${commaSeparatedGenres}&page=${pageNumber}`
-  ).then((res) => res.json());
 
-  // &sort_by="popularity.dsc"
-  return data.results;
+  // if the id of the genre is less than 1, it is a custom genre.
+  console.log(getTheseGenreMedias[0]);
+
+  if (getTheseGenreMedias[0] > 1) {
+    const commaSeparatedGenres = getTheseGenreMedias.join(",");
+    const data = await fetch(
+      `${BASE_URL}/discover/${mediaType}?api_key=${API_KEY}&language=en-US&with_genres=${commaSeparatedGenres}&page=${pageNumber}`
+    ).then((res) => res.json());
+
+    return data.results;
+  }
+
+  // If reached here, we are dealing with a custom genre.
+  let URL;
+  switch (mediaType) {
+    case "movie" as MediaTypes:
+      URL =
+        // @ts-ignore
+        customGenreIdToFetcher.customMovieGenresToFetcherURL[
+          String(getTheseGenreMedias[0])
+        ] +
+        "&page=" +
+        pageNumber;
+      break;
+
+    case "tv" as MediaTypes:
+      URL =
+        // @ts-ignore
+        customGenreIdToFetcher.customTvGenresToFetcherURL[
+          String(getTheseGenreMedias[0])
+        ] +
+        "&page=" +
+        pageNumber;
+      break;
+  }
+
+  if (URL) {
+    const data = await fetch(URL).then((res) => res.json());
+    return data.results;
+  }
 };
 
 /**
@@ -196,13 +322,13 @@ export const getRelatedMediasProps = async (
   return data.results;
 };
 
-export /**
+/**
  *Is used to load more  info on the TV media on the more info screen, specifically to access total number seasons for that show and others too while we are there at it.
  *
  * @param {number} tvMediaId - The ID of the TV show on the `MoreInfo` screen whose details are to be fetched
  * @return {*}
  */
-const getTvShowInfo = async (tvMediaId: number) => {
+export const getTvShowInfo = async (tvMediaId: number) => {
   const data = await fetch(
     // https://api.themoviedb.org/3/tv/{tv_id}?api_key=<<api_key>>&language=en-US
     `${BASE_URL}/tv/${tvMediaId}?api_key=${API_KEY}&language=en-US`
@@ -336,3 +462,19 @@ export const fetchSeasonDetails = async (
     return data;
   }
 };
+
+const REQUESTS = {
+  fetchSeasonDetails,
+  fetchGenres,
+  fetchTrailers,
+  getTvSeasonInfo,
+  getWatchProviders,
+  getTvShowInfo,
+  getRelatedMediasProps,
+  getGenreMediasProps,
+  getScreenProps,
+  getHomeScreenProps,
+  searchRequest,
+};
+
+export default REQUESTS;

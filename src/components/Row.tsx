@@ -18,7 +18,7 @@ function Row({ title, medias, genreIdOfList }: Props) {
   return (
     <View className="space-y-1 mb-5">
       <View className="flex-row space-x-4 mb-1">
-        <Text className="pl-5 text-sm font-semibold text-[#e5e5e5]">
+        <Text className="pl-5 text-sm font-semibold text-text_primary">
           {title}
         </Text>
       </View>
@@ -128,7 +128,7 @@ function renderFooterItemFunction(
     >
       <Pressable
         className="w-14 h-14 rounded-full bg-stone-700 items-center justify-center"
-        android_ripple={{ color: Colors.stone[600] }}
+        android_ripple={{ color: Colors.tertiary }}
         onPress={() => {
           if (isMovieArray(medias)) {
             navigateTo("Tiles", {
@@ -149,7 +149,7 @@ function renderFooterItemFunction(
       >
         <IconButton
           name="arrow-forward"
-          color={Colors.gray[100]}
+          color={Colors.text_primary}
           size={18}
         ></IconButton>
       </Pressable>

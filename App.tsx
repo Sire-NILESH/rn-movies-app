@@ -8,6 +8,10 @@ import { Colors } from "./src/utils/Colors";
 // Before rendering any navigation stack
 import { enableScreens } from "react-native-screens";
 import DrawerNavigator from "./src/navigators/DrawerNavigator";
+// import * as SplashScreen from "expo-splash-screen";
+
+// Keep the splash screen visible while we fetch resources
+// SplashScreen.preventAutoHideAsync();
 
 const Stack = createStackNavigator();
 
@@ -21,7 +25,8 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <SafeAreaView className="flex-1 bg-stone-900">
+      <SafeAreaView className="flex-1 bg-tertiary">
+        {/* <SafeAreaView className="flex-1 bg-stone-900"> */}
         <NavigationContainer>
           <Stack.Navigator
             // initialRouteName="Home"
@@ -29,11 +34,11 @@ export default function App() {
             // Common Stack screen's header settings below here
             screenOptions={{
               presentation: "modal",
-              headerTintColor: Colors.gray[100],
+              headerTintColor: Colors.text_primary,
               headerTitleAlign: "center",
               headerShadowVisible: false,
               headerStyle: {
-                backgroundColor: Colors.stone[900],
+                backgroundColor: Colors.tertiary,
               },
             }}
           >

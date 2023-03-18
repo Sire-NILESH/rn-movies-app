@@ -24,7 +24,7 @@ const SeasonsHeader: React.FC<IProps> = (props) => {
   };
 
   return (
-    <View className="flex-row justify-center bg-black py-4">
+    <View className="flex-row justify-center bg-secondary py-4">
       {/* <View className="ml-4 mr-2 bg-stone-800 items-center justify-center px-2 rounded-md"> */}
       <View className="ml-4 mr-2 items-center justify-center  rounded-md">
         <Pressable onPress={() => navigation.goBack()}>
@@ -65,12 +65,11 @@ interface ISeasonTagProps {
 
 function SeasonTag(props: ISeasonTagProps) {
   return (
-    // <View className="flex-1 mx-2 bg-black/40 border-r-2 border-stone-700 px-4 h-8 rounded-xl items-center justify-center">
     <Pressable
       onPress={() => props.onPressHandler(props.seasonNumber)}
-      className="flex-1 mx-2 bg-black/40 px-4 h-8 items-center justify-center"
+      className="flex-1 mx-2 px-4 h-8 items-center justify-center"
     >
-      <Text className="text-green-100 uppercase tracking-[2px] font-semibold px-1">
+      <Text className="text-text_highLight uppercase tracking-[2px] font-semibold px-1">
         {props.seasonNumber === 0 ? "Extras" : `Season ${props.seasonNumber}`}
       </Text>
       {/* Underline of selected tag */}

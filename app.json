@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "my-movie",
-    "slug": "my-movie",
+    "name": "Maven",
+    "slug": "Maven",
     "version": "1.0.0",
     "orientation": "adaptive",
-    "icon": "./assets/icon.jpg",
-    "userInterfaceStyle": "light",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "image": "./assets/splash.jpg",
+      "resizeMode": "cover",
       "backgroundColor": "#1c1917"
     },
     "updates": {
@@ -20,7 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.jpg",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#1c1917"
       }
     },

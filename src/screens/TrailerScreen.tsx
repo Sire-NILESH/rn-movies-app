@@ -8,6 +8,7 @@ import NothingToShow from "../components/NothingToShow";
 import Loader from "./../components/ui/Loader";
 import YouTubePlayer from "./../components/YouTubePlayer";
 import TrailerVideoThumbnail from "../components/TrailerVideoThumbnail";
+import { Colors } from "../utils/Colors";
 
 const screenDimensions = Dimensions.get("screen");
 const dimensionsForWindow = Dimensions.get("window");
@@ -64,7 +65,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   }, []);
 
   return (
-    <View className="flex-1 bg-black">
+    <View className="flex-1 bg-secondary">
       {/* Loader */}
       <Loader loading={loading} />
 
@@ -78,20 +79,22 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       )}
 
       {/* Title and date Dock */}
-      <View className="w-full bg-stone-900 px-4 space-y-1 justify-center items-start py-5 [elevation:5]">
-        <Text className="text-stone-100 font-bold" numberOfLines={3}>
-          {selectedVideo?.name}
-        </Text>
-        <View className="flex-row items-center">
-          <Text className="text-stone-400 space-x-4">
-            {selectedVideo?.type}
-            {" • "}
+      {!loading && (
+        <View className="w-full bg-tertiary px-4 space-y-1 justify-center items-start py-5 [elevation:5]">
+          <Text className="text-text_primary font-bold" numberOfLines={3}>
+            {selectedVideo?.name}
           </Text>
-          <Text className=" text-stone-400 text-xs">
-            {selectedVideo?.published_at.substring(0, 10)}
-          </Text>
+          <View className="flex-row items-center">
+            <Text className="text-text_dark space-x-4">
+              {selectedVideo?.type}
+              {" • "}
+            </Text>
+            <Text className=" text-text_dark text-xs">
+              {selectedVideo?.published_at.substring(0, 10)}
+            </Text>
+          </View>
         </View>
-      </View>
+      )}
 
       {videos.length > 0 && !error ? (
         <FlatList
@@ -99,7 +102,8 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           initialNumToRender={3}
           className="pt-4 px-2"
           style={{
-            backgroundColor: "rgb(4, 16, 9)",
+            backgroundColor: Colors.primary,
+            // backgroundColor: "rgb(4, 16, 9)",
           }}
           contentContainerStyle={{
             justifyContent: "flex-start",
@@ -109,7 +113,8 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             return (
               <View
                 className="h-2 w-full"
-                style={{ backgroundColor: "rgb(4, 16, 9)" }}
+                style={{ backgroundColor: Colors.primary }}
+                // style={{ backgroundColor: "rgb(4, 16, 9)" }}
               ></View>
             );
           }}

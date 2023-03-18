@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Image, ImageBackground } from "react-native";
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
@@ -7,6 +7,8 @@ import {
 } from "@react-navigation/drawer";
 
 import Logo from "./ui/Logo";
+import { LinearGradient } from "expo-linear-gradient";
+import { Colors } from "../utils/Colors";
 
 const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
   return (
@@ -15,12 +17,47 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
         {...props}
         //   contentContainerStyle={{ backgroundColor: "#8200d6" }}
       >
-        <View className="mt-6 ml-3 flex-row items-center space-x-2">
-          <Logo />
-          <Text className="font-semibold text-3xl text-yellow-50">Reeled</Text>
+        <View className="mt-0" style={{ width: "100%", aspectRatio: 16 / 9 }}>
+          <LinearGradient
+            colors={[
+              "rgba(0,0,0,0)",
+              "rgba(0,0,0,0)",
+              "rgba(0,0,0,0)",
+              "rgba(28, 25, 23, 0.2)",
+              "rgba(28, 25, 25, 0.4)",
+              "rgba(28, 25, 25, 1)",
+            ]}
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <ImageBackground //wrapping the main entry screen with this <ImageBackground> component
+              source={require("../../assets/images/icons/maven_main.png")}
+              resizeMode="cover" //similar to web, "cover", "contain", etc.
+              style={{
+                width: "100%",
+                height: "100%",
+              }} //for View dimensions internally
+              imageStyle={{
+                width: "100%",
+                height: "100%",
+                zIndex: -100,
+              }} //for Image styles internally.
+            ></ImageBackground>
+          </LinearGradient>
+
+          {/* <Image
+            source={require("../../assets/images/icons/maven_main.png")}
+            resizeMode={"cover"}
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+          /> */}
         </View>
 
-        <View className="flex-1 pt-2 my-6">
+        <View className="flex-1 pt-2 my-0 px-2">
           <DrawerItemList {...props} />
         </View>
       </DrawerContentScrollView>

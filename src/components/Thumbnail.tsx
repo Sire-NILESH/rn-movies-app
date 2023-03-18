@@ -100,11 +100,10 @@ function Thumbnail({
           colors={[
             "rgba(0,0,0,0)",
             "rgba(0,0,0,0)",
-            "rgba(0,0,0,0)",
+            "rgba(28, 25, 23, 0.2)",
             "rgba(28, 25, 23, 0.8)",
           ]}
-          className="absolute flex-1 flex-row items-end pb-2 px-2 rounded-md overflow-hidden bg-black/10"
-          // style={containerStyles.containerView}
+          className="absolute flex-1 flex-row items-end pb-2 px-2 rounded-md overflow-hidden"
           style={{
             width: dimensions.imageWidth,
             aspectRatio: 2 / 3,
@@ -119,14 +118,14 @@ function Thumbnail({
             ]}
           >
             <Text
-              className="font-semibold text-gray-100 text-xs w-full"
+              className="font-semibold text-text_primary text-xs w-full"
               numberOfLines={1}
               style={[orientation === "landscape" ? { lineHeight: 18 } : null]}
             >
               {media && isMovie(media) ? media.title : media.name}
             </Text>
 
-            <Text className=" text-gray-300 text-[11px]">
+            <Text className=" text-text_secondary text-[11px]">
               {media && isMovie(media)
                 ? media.release_date?.split("-")[0]
                 : media.first_air_date?.split("-")[0]}

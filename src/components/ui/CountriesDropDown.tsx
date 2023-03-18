@@ -17,10 +17,13 @@ const CountriesDropdown: React.FC<IProps> = ({
 }) => {
   return (
     <View
-      className="flex-row  items-center justify-between px-4 mt-2] rounded-xl mx-2"
+      className="flex-row  items-center justify-between px-4 mt-2 bg-accent rounded-xl mx-2"
+      // style={{ backgroundColor: "rgb(4, 20, 10)" }}
       style={{ backgroundColor: "rgb(4, 20, 10)" }}
     >
-      <Text className="text-stone-300 mx-4">Watch providers for this in </Text>
+      <Text className="text-text_tertiary mx-4">
+        Watch providers for this in{" "}
+      </Text>
       <SelectDropdown
         data={countries}
         //   search={true}
@@ -28,7 +31,7 @@ const CountriesDropdown: React.FC<IProps> = ({
           <MaterialIcons
             name="arrow-drop-down"
             size={24}
-            color={Colors.gray[200]}
+            color={Colors.text_secondary}
           />
         )}
         onSelect={(selectedCountry: ICountry, index) => {
@@ -36,25 +39,21 @@ const CountriesDropdown: React.FC<IProps> = ({
         }}
         buttonStyle={{
           // backgroundColor: "transparent",
-          backgroundColor: "rgb(7, 38, 19)",
+          backgroundColor: Colors.accentLighter,
+          // backgroundColor: "rgb(7, 38, 19)",
           borderRadius: 100,
           width: 150,
           borderWidth: 0,
           borderBottomColor: "red",
         }}
-        buttonTextStyle={{ color: Colors.green[100], fontSize: 14 }}
-        rowStyle={{ borderBottomColor: Colors.stone[800] }}
-        rowTextStyle={{ color: Colors.green[100], fontSize: 14 }}
+        buttonTextStyle={{ color: Colors.text_primary, fontSize: 14 }}
+        rowStyle={{ borderBottomColor: Colors.accentLighter }}
+        rowTextStyle={{ color: Colors.text_primary, fontSize: 14 }}
         dropdownOverlayColor={"transparent"}
         dropdownStyle={{
           backgroundColor: Colors.stone[900],
           borderRadius: 10,
         }}
-        searchInputStyle={{
-          backgroundColor: Colors.stone[800],
-          paddingHorizontal: 20,
-        }}
-        searchInputTxtColor={Colors.green[100]}
         defaultButtonText={currentCountry.name}
         buttonTextAfterSelection={(selectedCountry: ICountry, index) => {
           // text represented after item is selected

@@ -47,7 +47,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
       >
         <View className="flex-row items-center space-x-2 px-4">
           <Ionicons name="star" size={18} color={Colors.yellow[300]} />
-          <Text className="font-bold text-stone-200 tracking-widest">
+          <Text className="font-bold text-text_highLight tracking-widest">
             <Text
               className="font-bold"
               style={{
@@ -67,9 +67,9 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
           <Ionicons
             name={isMovie(media) ? "film-outline" : "tv-outline"}
             size={18}
-            color={Colors.stone[100]}
+            color={Colors.text_primary}
           />
-          <Text className="text-green-100">
+          <Text className="text-text_highLight">
             {isMovie(media) ? "Movie" : "TV"}
           </Text>
         </View>
@@ -78,9 +78,9 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
           <Ionicons
             name="calendar-outline"
             size={18}
-            color={Colors.stone[100]}
+            color={Colors.text_primary}
           />
-          <Text className="text-green-100">
+          <Text className="text-text_highLight">
             {isMovie(media) ? media.release_date : media.first_air_date}
           </Text>
         </View>
@@ -90,9 +90,9 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
             <Ionicons
               name="language-outline"
               size={18}
-              color={Colors.stone[100]}
+              color={Colors.text_primary}
             />
-            <Text className="text-green-100">
+            <Text className="text-text_highLight">
               {/*  @ts-ignore */}
               {isoLangs[media.original_language]?.name
                 ? // @ts-ignore
@@ -104,9 +104,9 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
 
         {isTvExtended(media) && (
           <View className="flex-row items-center space-x-2 px-4">
-            <Ionicons name="bookmark" size={18} color={Colors.stone[100]} />
-            <Text className="text-green-100">
-              <Text className="text-green-100">{media.status}</Text>
+            <Ionicons name="bookmark" size={18} color={Colors.text_primary} />
+            <Text className="text-text_highLight">
+              <Text className="text-text_highLight">{media.status}</Text>
             </Text>
           </View>
         )}

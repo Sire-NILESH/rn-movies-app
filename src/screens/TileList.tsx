@@ -125,7 +125,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   // };
 
   return (
-    <View className="flex-1 bg-stone-900">
+    <View className="flex-1 bg-tertiary">
       {/* Genre Tags Scrollable Row on top, if user selected some genres */}
       {userSelectedGenres?.length > 0 ? (
         <View className="w-full">

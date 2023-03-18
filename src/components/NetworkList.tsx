@@ -11,7 +11,7 @@ interface IProps {
 const NetworkList: React.FC<IProps> = (props) => {
   return (
     <View className="flex-1 space-y-4 mt-16 px-4">
-      <Text className="text-green-100">Networks</Text>
+      <Text className="text-text_highLight">Networks</Text>
       <FlatList
         horizontal
         data={props.networks}
@@ -33,7 +33,7 @@ const NetworkList: React.FC<IProps> = (props) => {
                   }}
                 />
               </View>
-              <Text key={n.id} className="text-stone-400 text-xs">
+              <Text key={n.id} className="text-text_dark text-xs">
                 {n.name}
               </Text>
             </View>

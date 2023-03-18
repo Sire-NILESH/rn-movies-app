@@ -67,7 +67,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const mediaPosterPath = media?.poster_path || media?.backdrop_path;
 
   return (
-    <ScrollView className="flex-1 bg-black pb-24">
+    <ScrollView className="flex-1 bg-secondary pb-24">
       {/* BackDrop Image */}
       <View
         className="absolute top-0 left-0 w-[100%] flex-1 h-full"
@@ -101,18 +101,18 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       <View className="mt-64 flex-1 pt-6">
         {/* Title */}
         <View className="px-4">
-          <Text className="text-3xl font-semibold text-green-100 object-cover">
+          <Text className="text-3xl font-semibold text-text_highLight object-cover">
             {getTitle()}
           </Text>
           {isMovie(media) && media.original_title !== media.title ? (
-            <Text className="text-sm text-stone-300 pt-2">
+            <Text className="text-sm text-text_tertiary pt-2">
               Original Title:{"  "}
-              <Text className="text-stone-100">{media.original_title}</Text>
+              <Text className="text-text_primary">{media.original_title}</Text>
             </Text>
           ) : !isMovie(media) && media.original_name !== media.name ? (
-            <Text className="text-sm text-stone-300 pt-2">
+            <Text className="text-sm text-text_tertiary pt-2">
               Original Title:{"  "}
-              <Text className="text-stone-100">{media.original_name}</Text>
+              <Text className="text-text_primary">{media.original_name}</Text>
             </Text>
           ) : null}
         </View>
@@ -130,8 +130,8 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         {/* Description */}
         {media.overview ? (
           <View className="px-4 mt-5 space-y-2">
-            <Text className="text-lg text-green-100">Overview</Text>
-            <Text className="text-stone-400">{media.overview}</Text>
+            <Text className="text-lg text-text_highLight">Overview</Text>
+            <Text className="text-text_dark">{media.overview}</Text>
           </View>
         ) : null}
       </View>
@@ -144,7 +144,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
         <View className="flex-1">
           <CustomButton
-            color={Colors.stone[900]}
+            color={Colors.tertiary}
             height={45}
             width={"100%"}
             radius={10}
@@ -155,7 +155,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         </View>
         <View className="flex-1">
           <CustomButton
-            color={Colors.stone[900]}
+            color={Colors.tertiary}
             height={45}
             width={"100%"}
             radius={10}
@@ -204,14 +204,16 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             android_ripple={{ color: "#eee" }}
           >
             <View className="flex-row items-center gap-2">
-              <Text className="text-2xl text-green-100">Similar</Text>
+              <Text className="text-2xl text-text_highLight">Similar</Text>
               <Ionicons
                 name="arrow-forward"
                 size={18}
                 color={Colors.green[100]}
               />
             </View>
-            <Text className="text-stone-400 text-sm">Show more like this</Text>
+            <Text className="text-text_tertiary text-sm">
+              Show more like this
+            </Text>
           </Pressable>
         </LinearGradient>
 
@@ -243,16 +245,19 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               android_ripple={{ color: "#eee" }}
             >
               <View className="flex-row items-center gap-2">
-                <Text className="text-2xl text-green-100" numberOfLines={1}>
+                <Text
+                  className="text-2xl text-text_highLight"
+                  numberOfLines={1}
+                >
                   Seaons and episodes
                 </Text>
                 <Ionicons
                   name="arrow-forward"
                   size={18}
-                  color={Colors.green[100]}
+                  color={Colors.text_highLight}
                 />
               </View>
-              <Text className="text-stone-400 text-sm">
+              <Text className="text-text_tertiary text-sm">
                 Show all {tvExtendedMedia?.number_of_seasons} seasons and{" "}
                 {tvExtendedMedia?.number_of_episodes} episodes
               </Text>

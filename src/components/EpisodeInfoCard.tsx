@@ -32,30 +32,25 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
       {/* bg-stone-800/50 */}
       <View
         className="border border-t-0 border-gray-800 flex-1 rounded-2xl rounded-t-none py-4 space-y-3 justify-center px-4"
-        style={{ backgroundColor: "rgb(21, 19, 18)" }}
+        style={{ backgroundColor: Colors.tertiary }}
+        // style={{ backgroundColor: "rgb(21, 19, 18)" }}
       >
         <View className="flex-row items-center space-x-2">
           <View className="bg-white rounded-full h-8 w-8 items-center justify-center">
             {/* <View className="bg-white rounded-full h-5 w-5 h-8 w-8 items-center justify-center"> */}
-            <Text className="text-stone-800 font-bold">
+            <Text className="text-text_darkest font-bold">
               {episode.episode_number}
             </Text>
           </View>
-          <Text className="text-green-100 w-[90%]">
-            <Text className="text-green-100 text-lg">{episode.name}</Text>
+          <Text className="text-text_highLight w-[90%]">
+            <Text className="text-lg">{episode.name}</Text>
           </Text>
         </View>
 
-        <Text className="text-green-100">
-          <Text className="text-stone-400 text-xs">{episode.overview}</Text>
+        <Text className="text-text_highLight">
+          <Text className="text-text_dark text-xs">{episode.overview}</Text>
         </Text>
         <View className="flex-row items-center space-x-5">
-          {/* <View className="flex-row space-x-2 items-center">
-            <Ionicons name="star" color={Colors.stone[400]} size={16} />
-            <Text className="text-green-100 text-xs">
-              {episode.vote_average.toFixed(2)}/10
-            </Text>
-          </View> */}
           <View>
             <DataElement
               text={`${episode.vote_average.toFixed(2)}/10`}
@@ -88,7 +83,7 @@ function DataElement({
   return (
     <View className="flex-row space-x-2 items-center">
       <Ionicons name={iconName} color={Colors.stone[400]} size={16} />
-      <Text className="text-green-100 text-xs">{text}</Text>
+      <Text className="text-text_highLight text-xs">{text}</Text>
     </View>
   );
 }

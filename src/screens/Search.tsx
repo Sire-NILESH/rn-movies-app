@@ -23,7 +23,7 @@ interface ISearchInputProps {
 
 const SearchInput: React.FC<ISearchInputProps> = (props) => {
   return (
-    <View className="flex-1 bg-stone-900 min-w-[280] mt-2">
+    <View className="flex-1 bg-tertiary min-w-[280] mt-2">
       <TextInput
         placeholder={`Search ${
           props.searchCategory === "tv" ? "TV shows" : "Movies"

@@ -62,10 +62,15 @@ function Banner({ mediaList }: Props) {
       >
         <LinearGradient
           colors={[
-            "rgba(0,0,0,0.5)",
-            "rgba(28, 25, 23, 0.6)",
-            "rgba(28, 25, 23, 0.9)",
-            Colors.black,
+            "rgba(0,0,0,0.1)",
+            "rgba(15, 15, 15, 0.3)",
+            "rgba(15, 15, 15, 0.7)",
+            "rgba(15, 15, 15, 0.8)",
+            Colors.secondary,
+            // "rgba(0,0,0,0.5)",
+            // "rgba(28, 25, 23, 0.6)",
+            // "rgba(28, 25, 23, 0.9)",
+            // Colors.black,
           ]}
           style={styles.rootScreen}
         >
@@ -86,7 +91,7 @@ function Banner({ mediaList }: Props) {
       {media ? (
         <View className="px-4 mt-10 space-y-3">
           {/* Title/Name */}
-          <Text className="text-2xl font-bold text-gray-100 ">
+          <Text className="text-2xl font-bold text-text_highLight">
             {isMovie(media) ? media.title : media?.original_name}
           </Text>
 
@@ -102,7 +107,7 @@ function Banner({ mediaList }: Props) {
           >
             <View className="flex-row items-center space-x-2">
               <Ionicons name="star" size={18} color={Colors.yellow[300]} />
-              <Text className="font-bold text-stone-200 tracking-widest">
+              <Text className="font-bold text-text_secondary tracking-widest">
                 <Text
                   className="font-bold"
                   style={{
@@ -122,9 +127,9 @@ function Banner({ mediaList }: Props) {
               <Ionicons
                 name={isMovie(media) ? "film-outline" : "tv-outline"}
                 size={18}
-                color={Colors.stone[100]}
+                color={Colors.text_secondary}
               />
-              <Text className="text-green-100">
+              <Text className="text-text_highLight">
                 {isMovie(media) ? "Movie" : "TV"}
               </Text>
             </View>
@@ -133,9 +138,9 @@ function Banner({ mediaList }: Props) {
               <Ionicons
                 name="calendar-outline"
                 size={18}
-                color={Colors.stone[100]}
+                color={Colors.text_secondary}
               />
-              <Text className="text-green-100">
+              <Text className="text-text_highLight">
                 {isMovie(media) ? media.release_date : media.first_air_date}
               </Text>
             </View>
@@ -145,9 +150,9 @@ function Banner({ mediaList }: Props) {
                 <Ionicons
                   name="language-outline"
                   size={18}
-                  color={Colors.stone[100]}
+                  color={Colors.text_secondary}
                 />
-                <Text className="text-green-100">
+                <Text className="text-text_highLight">
                   {/*  @ts-ignore */}
                   {isoLangs[media.original_language]?.name
                     ? // @ts-ignore
@@ -159,7 +164,7 @@ function Banner({ mediaList }: Props) {
           </ScrollView>
 
           {/* OverView */}
-          <Text className="max-w-xs text-xs text-gray-100">
+          <Text className="max-w-xs text-xs text-text_primary">
             {media?.overview}
           </Text>
 
@@ -169,10 +174,11 @@ function Banner({ mediaList }: Props) {
                 width={100}
                 height={40}
                 radius={5}
-                color="white"
-                border={0}
+                color={Colors.stone[200]}
+                border={1}
                 method={playButtonPressHandler}
                 shadow={false}
+                styledClassName="border-stone-200"
               >
                 <View className="flex-row  gap-1 items-center">
                   <Ionicons name="star-outline" size={12} />
@@ -186,8 +192,9 @@ function Banner({ mediaList }: Props) {
                 width={140}
                 height={40}
                 radius={5}
-                color={Colors.gray["600"]}
-                border={0}
+                color={Colors.stone["900"]}
+                border={1}
+                styledClassName="border-stone-800"
                 method={infoButtonPressHandler}
                 shadow={false}
               >
@@ -195,7 +202,7 @@ function Banner({ mediaList }: Props) {
                   <Ionicons
                     name="information-circle"
                     size={18}
-                    color={Colors.gray[400]}
+                    color={Colors.stone[400]}
                   />
                   <Text className="font-bold text-gray-50">More Info</Text>
                 </View>

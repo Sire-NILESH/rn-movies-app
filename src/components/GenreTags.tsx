@@ -11,7 +11,7 @@ interface IProps {
 const GenreTags: React.FC<IProps> = (props) => {
   return (
     <View
-      className="w-full justify-center px-2 bg-stone-900 pb-2"
+      className="w-full justify-center px-2 bg-tertiary pb-2"
       style={{
         backgroundColor:
           props.backgroundType === "transparent"
@@ -38,7 +38,7 @@ interface IGenreProps {
 function GerneTag(props: IGenreProps) {
   return (
     <View className="flex-1 mx-2 bg-black/40 border border-stone-700 px-4 h-8 rounded-xl items-center justify-center">
-      <Text className="text-green-100">
+      <Text className="text-text_highLight">
         {/* @ts-ignore */}
         {idToGenresMapped[String(props.genreId)]}
       </Text>

@@ -42,7 +42,7 @@ function Header() {
             });
           }}
         >
-          <Text className="text-stone-100 text text-center font-semibold px-1">
+          <Text className="text-text_primary text text-center font-semibold px-1">
             {props.name}
           </Text>
         </Pressable>
@@ -53,18 +53,21 @@ function Header() {
   return (
     <LinearGradient
       colors={[
-        // Colors.black,
-        "rgba(28, 25, 23, 1)",
-        "rgba(28, 25, 23, 0.7)",
-        "rgba(28, 25, 23, 0.3)",
+        "rgba(15, 15, 15, 1)",
+        "rgba(15, 15, 15, 0.5)",
         "rgba(0,0,0,0)",
+
+        // "rgba(28, 25, 23, 1)",
+        // "rgba(28, 25, 23, 0.7)",
+        // "rgba(28, 25, 23, 0.3)",
+        // "rgba(0,0,0,0)",
       ]}
       className="flex-row justify-between items-center w-[100%] h-[80] px-4"
     >
       <View>
         {/* @ts-ignore */}
         <Pressable onPress={() => navigation.toggleDrawer()}>
-          <Ionicons name="md-menu" size={28} color={Colors.stone[100]} />
+          <Ionicons name="md-menu" size={28} color={Colors.text_primary} />
         </Pressable>
       </View>
 

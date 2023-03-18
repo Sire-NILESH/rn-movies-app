@@ -22,11 +22,11 @@ const DrawerNavigator = () => {
       drawerContent={(props) => <CustomDrawer {...props} />}
       // Common Stack screen's header settings below here
       screenOptions={{
-        headerTintColor: Colors.gray[100],
+        headerTintColor: Colors.text_primary,
         headerTitleAlign: "center",
         headerShadowVisible: false,
         headerStyle: {
-          backgroundColor: Colors.stone[900],
+          backgroundColor: Colors.tertiary,
         },
         // drawerStatusBarAnimation: "slide",
         // drawerType: "slide",
@@ -41,7 +41,8 @@ const DrawerNavigator = () => {
         drawerInactiveTintColor: Colors.stone[400],
         drawerAllowFontScaling: true,
         drawerStyle: {
-          backgroundColor: Colors.stone[900],
+          // backgroundColor: "rgba(20, 15, 15, 1)",
+          backgroundColor: Colors.tertiary,
           // backgroundColor: Colors.black,
         },
         // drawerLabelStyle: {

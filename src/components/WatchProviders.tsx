@@ -68,7 +68,7 @@ const WatchProviders: React.FC<IProps> = ({ mediaId, mediaType }) => {
 
       {!watchProviders && (
         <View className="flex-1 justify-center px-4">
-          <Text className="text-stone-500 text-base text-center">
+          <Text className="text-text_dark text-base text-center">
             Currently no providers for this content in {currentCountry.name}
           </Text>
         </View>
@@ -84,11 +84,8 @@ function renderFlatlist(
   availableType: "Subscription" | "Free" | "Buy" | "With Adverts"
 ) {
   return (
-    <View
-      className="space-y-3 py-4 mx-2 rounded-xl border-2"
-      style={{ backgroundColor: "rgb(3, 20, 10)" }}
-    >
-      <Text className="text-green-100 uppercase tracking-[3px] ml-4">
+    <View className="space-y-3 py-4 mx-2 rounded-xl border-2 bg-accent">
+      <Text className="text-text_highLight uppercase tracking-[3px] ml-4">
         {availableType}
       </Text>
       <FlatList
@@ -118,7 +115,7 @@ function renderFlatlist(
               </View>
               <Text
                 key={p.provider_id}
-                className="text-stone-400 text-xs w-[60px] text-center"
+                className="text-text_dark text-xs w-[60px] text-center"
               >
                 {p.provider_name}
               </Text>

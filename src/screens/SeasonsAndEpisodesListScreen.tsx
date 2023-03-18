@@ -63,14 +63,15 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
           setNewSelectedSeason={setSelectedSeasonHandler}
         />
       ),
-      headerStyle: {
-        backgroundColor: Colors.red[600],
-      },
       headerLeft: (props) => {
         return (
           <View className="ml-4 mr-2">
             <Pressable onPress={() => navigation.goBack()}>
-              <Ionicons name="arrow-back" size={24} color={Colors.gray[50]} />
+              <Ionicons
+                name="arrow-back"
+                size={24}
+                color={Colors.text_primary}
+              />
             </Pressable>
           </View>
         );
@@ -81,7 +82,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   /* if the season doesnt have a poster we use the old poster that was used in the MoreInfoScreeen which was passed here as tvMediaPosterPathOld */
 
   return (
-    <View className="flex-1 bg-black pb-4">
+    <View className="flex-1 bg-secondary pb-4">
       <View className="flex-1">
         {seasonDetails && tvMediaSeasons[selectedSeason.season_number] && (
           <FlatList
@@ -123,17 +124,17 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                   </View>
                   <View className="w-[55%] space-y-2">
                     {/* Title */}
-                    <Text className="text-green-100 text-2xl font-bold">
+                    <Text className="text-text_highLight text-2xl font-bold">
                       {tvMediaName}
                     </Text>
                     <View className="flex">
-                      <Text className="text-stone-200 text-lg font-semibold">
+                      <Text className="text-text_secondary text-lg font-semibold">
                         Season{" "}
                         {seasonDetails.season_number === 0
                           ? "Extras"
                           : seasonDetails.season_number}
                       </Text>
-                      <Text className="text-stone-300 text">
+                      <Text className="text-text_tertiary text">
                         Total {seasonDetails.episodes.length} episodes
                       </Text>
                     </View>
@@ -143,8 +144,10 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                 {/* Overview */}
                 {seasonDetails.overview ? (
                   <View className="mb-10 px-4 space-y-2">
-                    <Text className="text-gray-200">Overview: </Text>
-                    <Text className="text-gray-200 text-xs">
+                    <Text className="text-text_primary font-bold">
+                      Overview:{" "}
+                    </Text>
+                    <Text className="text-text_tertiary text-xs">
                       {seasonDetails.overview}
                     </Text>
                   </View>

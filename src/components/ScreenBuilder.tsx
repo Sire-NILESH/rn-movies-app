@@ -7,6 +7,11 @@ import { showErrorAlert } from "../utils/helpers/helper";
 import useFetchScreenProps from "../hooks/useFetchScreenProps";
 import Loader from "./ui/Loader";
 import { memo } from "react";
+// import * as SplashScreen from "expo-splash-screen";
+// import { useRoute } from "@react-navigation/native";
+
+// Keep the splash screen visible while we fetch resources
+// SplashScreen.preventAutoHideAsync();
 
 interface IProps {
   screenType: ScreenTypes;
@@ -27,8 +32,25 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType }) => {
     showErrorAlert();
   }
 
+  // const route = useRoute();
+  // console.log(route);
+
+  // const onLayoutRootView = useCallback(async () => {
+  //   if (screenProps && route.name === "Home") {
+  //     // This tells the splash screen to hide immediately! If we call this after
+  //     // `setAppIsReady`, then we may see a blank screen while the app is
+  //     // loading its initial state and rendering its first pixels. So instead,
+  //     // we hide the splash screen once we know the root view has already
+  //     // performed layout.
+  //     console.log("--------------------------------");
+  //     await SplashScreen.hideAsync();
+  //   }
+
+  // onLayout={onLayoutRootView}
+  // }, [screenProps, route.name]);
+
   return (
-    <View className="flex-1 bg-black">
+    <View className="flex-1 bg-secondary">
       {/* Loader */}
       <Loader loading={loadingProps} />
 

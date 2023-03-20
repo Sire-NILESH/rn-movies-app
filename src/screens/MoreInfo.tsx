@@ -9,7 +9,7 @@ import {
 import { useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/StackScreenProps";
 import { MediaTypes, MovieMedia, TvMedia, TvMediaExtended } from "../typings";
-import { isMovie, isTvExtended } from "./../utils/helpers/helper";
+import { isMovie, isTv, isTvExtended } from "./../utils/helpers/helper";
 import { Colors } from "./../utils/Colors";
 import GenreTags from "./../components/GenreTags";
 import CustomButton from "../components/ui/CustomButton";
@@ -218,7 +218,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         </LinearGradient>
 
         {/* TV seasons and episodes,for TVs only  */}
-        {!isMovie(media) ? (
+        {isTv(media) ? (
           <LinearGradient
             className="h-32 rounded-xl flex-1 overflow-hidden border border-stone-800"
             colors={[
@@ -245,20 +245,15 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               android_ripple={{ color: "#eee" }}
             >
               <View className="flex-row items-center gap-2">
-                <Text
-                  className="text-2xl text-text_highLight"
-                  numberOfLines={1}
-                >
-                  Seaons and episodes
-                </Text>
+                <Text className="text-2xl text-text_highLight">Seasons</Text>
                 <Ionicons
                   name="arrow-forward"
                   size={18}
-                  color={Colors.text_highLight}
+                  color={Colors.text_primary}
                 />
               </View>
               <Text className="text-text_tertiary text-sm">
-                Show all {tvExtendedMedia?.number_of_seasons} seasons and{" "}
+                Show {tvExtendedMedia?.number_of_seasons} seasons and{" "}
                 {tvExtendedMedia?.number_of_episodes} episodes
               </Text>
             </Pressable>

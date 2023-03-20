@@ -20,7 +20,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
 
   // h-[200px]
   return (
-    <View className="mt-5 mx-3 justify-between border border-stone-800/30 rounded-2xl">
+    <View className="mt-5 mx-3 justify-between border border-stone-800 rounded-2xl overflow-hidden">
       <View
         className="relative flex-1 rounded-2xl overflow-hidden"
         style={{ width: "100%", aspectRatio: 16 / 9 }}
@@ -34,11 +34,11 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
 
       <LinearGradient
         colors={[
-          "rgba(28, 25, 23, 0.9)",
-          "rgba(28, 25, 23, 0.8)",
-          "rgba(28, 25, 23, 0.6)",
-          "rgba(28, 25, 23, 0.5)",
-          "rgba(28, 25, 23, 0.2)",
+          "rgba(15, 15, 15, 0.9)",
+          "rgba(15, 15, 15, 0.8)",
+          "rgba(15, 15, 15, 0.6)",
+          "rgba(15, 15, 15, 0.5)",
+          "rgba(15, 15, 15, 0.2)",
           "rgba(0,0,0,0)",
         ]}
         start={{ x: 0.0, y: 1 }}

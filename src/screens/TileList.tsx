@@ -5,11 +5,12 @@ import { IStackScreenProps } from "../library/StackScreenProps";
 import { Colors } from "../utils/Colors";
 import HeaderSearchButton from "../components/ui/HeaderSearchButton";
 import { MediaTypes, MovieMedia, TvMedia } from "../typings";
-import { isMovieArray } from "../utils/helpers/helper";
+import { isMovieArray, showErrorAlert } from "../utils/helpers/helper";
 import GenereModal from "../components/GenereModal";
 import { getGenreMediasProps } from "../utils/requests";
 import GenreTags from "../components/GenreTags";
 import TilesRenderedView from "../components/TilesRenderedView";
+import NothingToShow from "../components/NothingToShow";
 
 const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [showGenresModal, setShowGenresModal] = useState<boolean>(false);
@@ -29,13 +30,13 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     currentMediaType?: MediaTypes;
   } = route.params;
 
-  // const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>(mediaList);
   const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>(
     mediaList ? mediaList : []
   );
   const [loadingNewMedias, setLoadingNewMedias] = useState<boolean>(false);
   const [blockNewLoads, setBlockNewLoads] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(1);
+  const [error, setError] = useState<Error | null>(null);
 
   const currentListType: MediaTypes = currentMediaType
     ? currentMediaType
@@ -49,21 +50,26 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       if (!genreId) return;
 
       setLoadingNewMedias(true);
-      const genreMediasToFetch =
-        userSelectedGenres.length > 0 ? userSelectedGenres : [genreId];
+      try {
+        const genreMediasToFetch =
+          userSelectedGenres.length > 0 ? userSelectedGenres : [genreId];
 
-      const moreMedias = await getGenreMediasProps(
-        genreMediasToFetch,
-        currentListType,
-        pageNumber
-      );
-      // if we received some data, then page exists.
-      if (moreMedias.length > 0) {
-        setMedias((prev) => [...prev, ...moreMedias]);
-      }
-      // else, no more pages to fetch. Block any further new loads.
-      else {
+        const moreMedias = await getGenreMediasProps(
+          genreMediasToFetch,
+          currentListType,
+          pageNumber
+        );
+        // if we received some data, then page exists.
+        if (moreMedias.length > 0) {
+          setMedias((prev) => [...prev, ...moreMedias]);
+        }
+        // else, no more pages to fetch. Block any further new loads.
+        else {
+          setBlockNewLoads(true);
+        }
+      } catch (err) {
         setBlockNewLoads(true);
+        setError(err as Error);
       }
       setLoadingNewMedias(false);
     }
@@ -88,6 +94,13 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       setBlockNewLoads(false);
     }
   };
+
+  useEffect(() => {
+    // Show alert on error
+    if (error && !loadingNewMedias) {
+      showErrorAlert("Something went wrong while loading content.");
+    }
+  }, [showErrorAlert, error, loadingNewMedias]);
 
   // Header settings
   useLayoutEffect(() => {
@@ -148,7 +161,9 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
       {/* Tiles */}
       <View className="flex-1 items-center relative">
-        {medias?.length > 0 ? (
+        {error && medias.length === 0 ? (
+          <NothingToShow title={"Something went wrong while loading content"} />
+        ) : medias?.length > 0 ? (
           <>
             <TilesRenderedView
               medias={medias}
@@ -158,7 +173,9 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             />
             {/* <RenderLoader /> */}
           </>
-        ) : null}
+        ) : (
+          !loadingNewMedias && <NothingToShow />
+        )}
       </View>
     </View>
   );

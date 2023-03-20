@@ -47,9 +47,11 @@ export function isTvArray(
 }
 
 export function showErrorAlert(title?: string, message?: string) {
-  Alert.alert("Error!", "Something went wrong, please try again later", [
-    { text: "Okay", style: "destructive" },
-  ]);
+  Alert.alert(
+    "Error!",
+    title ? title : "Something went wrong, please try again later",
+    [{ text: "Okay", style: "destructive" }]
+  );
 }
 
 export const movieGenres = [

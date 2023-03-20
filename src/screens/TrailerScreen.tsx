@@ -37,7 +37,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         // if we received some data,
         if (videosData?.props.length > 0) {
           videosData?.props.filter(
-            (v: Trailer, i: number) => v.site === "YouTube" && i < 5
+            (v: Trailer, i: number) => v.site === "YouTube"
           );
           setVideos([...videosData?.props]);
           setSelectedVideo(videosData?.props[0]);
@@ -50,8 +50,6 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
     loadVideos();
   }, [mediaType, mediaId]);
-
-  console.log("1st video", selectedVideo);
 
   const onPressSetVideoHandler = (video: Trailer) => {
     setSelectedVideo(video);
@@ -70,16 +68,24 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       <Loader loading={loading} />
 
       {/* if error show nothing*/}
-      {(error || videos.length === 0) && !loading ? (
-        <NothingToShow />
-      ) : (
+      {error && !loading && (
+        <NothingToShow title={"Something went wrong while loading videos"} />
+      )}
+
+      {/* When no videos available for that media */}
+      {videos.length == 0 && !error && !loading && (
+        <NothingToShow title="No Videos available" />
+      )}
+
+      {/* When some video is available, show the YT player */}
+      {videos.length > 0 && (
         <View className="justify-start">
           <YouTubePlayer video={selectedVideo} loading={loading} />
         </View>
       )}
 
       {/* Title and date Dock */}
-      {!loading && (
+      {!loading && !error && videos.length > 0 && (
         <View className="w-full bg-tertiary px-4 space-y-1 justify-center items-start py-5 [elevation:5]">
           <Text className="text-text_primary font-bold" numberOfLines={3}>
             {selectedVideo?.name}
@@ -96,6 +102,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         </View>
       )}
 
+      {/* All videos list */}
       {videos.length > 0 && !error ? (
         <FlatList
           data={videos}

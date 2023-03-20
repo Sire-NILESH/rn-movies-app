@@ -66,7 +66,15 @@ const WatchProviders: React.FC<IProps> = ({ mediaId, mediaType }) => {
         <View>{renderFlatlist(watchProviders.free, "Free")}</View>
       ) : null}
 
-      {!watchProviders && (
+      {errorLoadingProps && (
+        <View className="flex-1 justify-center px-4">
+          <Text className="text-text_dark text-base text-center">
+            Something went wrong while finding providers for this content in{" "}
+            {currentCountry.name}
+          </Text>
+        </View>
+      )}
+      {!watchProviders && !errorLoadingProps && (
         <View className="flex-1 justify-center px-4">
           <Text className="text-text_dark text-base text-center">
             Currently no providers for this content in {currentCountry.name}

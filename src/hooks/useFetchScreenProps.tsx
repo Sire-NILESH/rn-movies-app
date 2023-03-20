@@ -26,7 +26,8 @@ const useFetchScreenProps = (screenType?: ScreenTypes) => {
   }
 
   // Get the fetcher function for the screen type.
-  const fetcher = screenType === "home" ? getHomeScreenProps : getScreenProps;
+  // const fetcher = screenType === "home" ? getHomeScreenProps : getScreenProps;
+  const fetcher = getHomeScreenProps;
 
   // Get the mediaType. The fetcher func. for Movie and TV screens need a mediaType but the Home screen's fetcher doesn't. Check out the request module for the fetcher function.
   let mediaType;

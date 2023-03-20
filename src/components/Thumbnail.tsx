@@ -68,7 +68,10 @@ function Thumbnail({
     }`;
 
   return (
-    <View className="relative" style={containerStyles.containerView}>
+    <View
+      className="relative overflow-hidden"
+      style={containerStyles.containerView}
+    >
       <Pressable
         className="flex-1"
         onPress={() => {
@@ -97,14 +100,21 @@ function Thumbnail({
 
         {/* Movie Title and date box */}
         <LinearGradient
+          // colors={[
+          //   "rgba(0,0,0,0)",
+          //   "rgba(0,0,0,0)",
+          //   "rgba(15, 15, 15, 0.2)",
+          //   "rgba(15, 15, 15, 0.8)",
+          // ]}
           colors={[
             "rgba(0,0,0,0)",
             "rgba(0,0,0,0)",
             "rgba(28, 25, 23, 0.2)",
             "rgba(28, 25, 23, 0.8)",
           ]}
-          className="absolute flex-1 flex-row items-end pb-2 px-2 rounded-md overflow-hidden"
+          className="absolute flex-1 flex-row items-end pb-2 px-2"
           style={{
+            borderRadius: 6,
             width: dimensions.imageWidth,
             aspectRatio: 2 / 3,
           }}

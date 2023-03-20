@@ -57,7 +57,7 @@ const TrailerVideoThumbnail: React.FC<IProps> = (props) => {
             "rgba(28, 25, 23, 0)",
             "rgba(28, 25, 23, 0.8)",
           ]}
-          className="absolute flex-row items-end pb-2 px-2 rounded-2xl overflow-hidden bg-black/10"
+          className="absolute flex-row items-end pb-2 px-2 rounded-2xl overflow-hidden"
           style={{
             width: "100%",
             aspectRatio: 16 / 9,

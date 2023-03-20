@@ -164,7 +164,10 @@ function Banner({ mediaList }: Props) {
           </ScrollView>
 
           {/* OverView */}
-          <Text className="max-w-xs text-xs text-text_primary">
+          <Text
+            className="max-w-xs text-sm text-text_primary"
+            numberOfLines={4}
+          >
             {media?.overview}
           </Text>
 

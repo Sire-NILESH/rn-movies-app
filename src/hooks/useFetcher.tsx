@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { MediaTypes, MovieMedia, TvMedia } from "../typings";
+import { showErrorAlert } from "../utils/helpers/helper";
 
 interface IProps {
   mediaType: MediaTypes;
@@ -34,6 +35,10 @@ const useFetcher = (fetcher: any, params: any[]) => {
     fetchRequests();
     // it was okay to directly add the fetcher func here in the dependecy array becauses it comes from a non JSX component, a simple tsx file and will never change. Else you can never add any fucntion directly into the dependencies that come from a component.
   }, [fetcher, ...params]);
+
+  // if (errorLoadingProps && !loadingProps) {
+  //   showErrorAlert();
+  // }
 
   return { screenProps, loadingProps, errorLoadingProps };
 };

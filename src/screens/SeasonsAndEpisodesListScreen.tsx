@@ -10,6 +10,8 @@ import { Ionicons } from "@expo/vector-icons";
 import SeasonsHeader from "../components/SeasonsHeader";
 import { LinearGradient } from "expo-linear-gradient";
 import EpisodeInfoCard from "../components/EpisodeInfoCard";
+import NothingToShow from "../components/NothingToShow";
+import { showErrorAlert } from "../utils/helpers/helper";
 
 const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   IStackScreenProps
@@ -79,89 +81,104 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
     });
   }, [selectedSeason, tvMediaSeasons]);
 
+  // Show alert on error
+  if (errorLoadingProps && !loadingProps) {
+    showErrorAlert(`Something went wrong while loading content.`);
+  }
+
   /* if the season doesnt have a poster we use the old poster that was used in the MoreInfoScreeen which was passed here as tvMediaPosterPathOld */
 
   return (
     <View className="flex-1 bg-secondary pb-4">
-      <View className="flex-1">
-        {seasonDetails && tvMediaSeasons[selectedSeason.season_number] && (
-          <FlatList
-            ListHeaderComponent={
-              <>
-                <LinearGradient
-                  colors={[
-                    "rgba(22, 101, 52, 0.5)",
-                    "rgba(22, 101, 52, 0.3)",
-                    "rgba(28, 25, 23, 0.9)",
-                    Colors.black,
-                  ]}
-                  className="flex-row px-4 pt-4 justify-between items-start mb-10"
-                >
-                  {/* Season Poster  h-[200] w-[133] */}
-                  <View
-                    className="border border-stone-800 rounded-md overflow-hidden"
-                    style={{ width: 133, aspectRatio: 2 / 3 }}
+      {errorLoadingProps ? (
+        <View className="flex-1">
+          <NothingToShow title="Something went wrong while loading content" />
+        </View>
+      ) : (
+        /* {seasonDetails && tvMediaSeasons[selectedSeason.season_number] && ( */
+        seasonDetails && (
+          <View className="flex-1">
+            <FlatList
+              ListHeaderComponent={
+                <>
+                  <LinearGradient
+                    colors={[
+                      "rgba(22, 101, 52, 0.5)",
+                      "rgba(22, 101, 52, 0.3)",
+                      "rgba(28, 25, 23, 0.9)",
+                      Colors.black,
+                    ]}
+                    className="flex-row px-4 pt-4 justify-between items-start mb-10"
                   >
-                    <Image
-                      source={
-                        tvMediaSeasons[selectedSeason.season_number]
-                          ?.poster_path
-                          ? {
-                              uri: `https://image.tmdb.org/t/p/w500${
-                                tvMediaSeasons[selectedSeason.season_number]
-                                  ?.poster_path
-                              }`,
-                            }
-                          : tvMediaPosterPathOld
-                          ? {
-                              uri: `https://image.tmdb.org/t/p/w500${tvMediaPosterPathOld}`,
-                            }
-                          : require("../../assets/images/placeholders/posterPlaceHolder.webp")
-                      }
-                      resizeMode="cover" //similar to web, "cover", "contain", etc.
-                      style={{ width: "100%", height: "100%" }}
-                    ></Image>
-                  </View>
-                  <View className="w-[55%] space-y-2">
-                    {/* Title */}
-                    <Text className="text-text_highLight text-2xl font-bold">
-                      {tvMediaName}
-                    </Text>
-                    <View className="flex">
-                      <Text className="text-text_secondary text-lg font-semibold">
-                        Season{" "}
-                        {seasonDetails.season_number === 0
-                          ? "Extras"
-                          : seasonDetails.season_number}
+                    {/* Season Poster  h-[200] w-[133] */}
+                    <View
+                      className="border border-stone-800 rounded-md overflow-hidden"
+                      style={{ width: 133, aspectRatio: 2 / 3 }}
+                    >
+                      <Image
+                        source={
+                          tvMediaSeasons[selectedSeason.season_number]
+                            ?.poster_path
+                            ? {
+                                uri: `https://image.tmdb.org/t/p/w500${
+                                  tvMediaSeasons[selectedSeason.season_number]
+                                    ?.poster_path
+                                }`,
+                              }
+                            : tvMediaPosterPathOld
+                            ? {
+                                uri: `https://image.tmdb.org/t/p/w500${tvMediaPosterPathOld}`,
+                              }
+                            : require("../../assets/images/placeholders/posterPlaceHolder.webp")
+                        }
+                        resizeMode="cover" //similar to web, "cover", "contain", etc.
+                        style={{ width: "100%", height: "100%" }}
+                      ></Image>
+                    </View>
+                    <View className="w-[55%] space-y-2">
+                      {/* Title */}
+                      <Text className="text-text_highLight text-2xl font-bold">
+                        {tvMediaName}
                       </Text>
-                      <Text className="text-text_tertiary text">
-                        Total {seasonDetails.episodes.length} episodes
+                      <View className="flex">
+                        <Text className="text-text_secondary text-lg font-semibold">
+                          Season{" "}
+                          {seasonDetails.season_number === 0
+                            ? "Extras"
+                            : seasonDetails.season_number}
+                        </Text>
+                        <Text className="text-text_tertiary text">
+                          Total {seasonDetails.episodes.length} episodes
+                        </Text>
+                        {/* <Text className="text-text_tertiary text-xs mt-1">
+                          {seasonDetails.air_date}
+                        </Text> */}
+                      </View>
+                    </View>
+                  </LinearGradient>
+
+                  {/* Overview */}
+                  {seasonDetails.overview ? (
+                    <View className="mb-10 px-4 space-y-2">
+                      <Text className="text-text_primary font-bold">
+                        Overview:{" "}
+                      </Text>
+                      <Text className="text-text_tertiary text-xs">
+                        {seasonDetails.overview}
                       </Text>
                     </View>
-                  </View>
-                </LinearGradient>
-
-                {/* Overview */}
-                {seasonDetails.overview ? (
-                  <View className="mb-10 px-4 space-y-2">
-                    <Text className="text-text_primary font-bold">
-                      Overview:{" "}
-                    </Text>
-                    <Text className="text-text_tertiary text-xs">
-                      {seasonDetails.overview}
-                    </Text>
-                  </View>
-                ) : null}
-              </>
-            }
-            data={seasonDetails.episodes}
-            keyExtractor={(episode) => String(episode.id)}
-            renderItem={(episodeObj) => (
-              <EpisodeInfoCard episode={episodeObj.item} />
-            )}
-          />
-        )}
-      </View>
+                  ) : null}
+                </>
+              }
+              data={seasonDetails.episodes}
+              keyExtractor={(episode) => String(episode.id)}
+              renderItem={(episodeObj) => (
+                <EpisodeInfoCard episode={episodeObj.item} />
+              )}
+            />
+          </View>
+        )
+      )}
     </View>
   );
 };

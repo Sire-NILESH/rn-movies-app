@@ -1,8 +1,6 @@
 import { View, Text, FlatList, Pressable } from "react-native";
 import React from "react";
 import { Season } from "../typings";
-import IconButton from "./ui/IconButton";
-import CustomButton from "./ui/CustomButton";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
 import { useNavigation } from "@react-navigation/native";
@@ -45,7 +43,9 @@ const SeasonsHeader: React.FC<IProps> = (props) => {
                 onPressHandler={onPresshandler}
               />
               {/* Divider */}
-              <View className="border border-stone-700 h-6 w-[1px] rounded-full" />
+              {itemObj.index != props.tvMediaSeasons.length - 1 ? (
+                <View className="border border-stone-700 h-6 w-[1px] rounded-full" />
+              ) : null}
             </View>
           );
         }}

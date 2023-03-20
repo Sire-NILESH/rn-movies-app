@@ -20,20 +20,29 @@ const NetworkList: React.FC<IProps> = (props) => {
         renderItem={(itemObj) => {
           const n = itemObj.item;
           return (
-            <View className="space-y-2 items-center mr-3">
-              <View className="bg-stone-50 rounded-full flex-1 p-1 justify-center">
+            <View className="space-y-3 justify-start mr-5">
+              <View
+                className="bg-stone-50 rounded-full p-1 justify-center"
+                style={{
+                  width: 65,
+                  aspectRatio: 1 / 1,
+                }}
+              >
                 <ExpoFastImage
                   uri={`https://image.tmdb.org/t/p/w500${n.logo_path}`}
                   cacheKey={n.id + "network"}
                   resizeMode={"contain"}
                   className="border-stone-500"
                   style={{
-                    width: 56,
-                    height: 56,
+                    width: "100%",
+                    height: "100%",
                   }}
                 />
               </View>
-              <Text key={n.id} className="text-text_dark text-xs">
+              <Text
+                key={n.id}
+                className="text-text_dark text-xs  text-center w-[60px]"
+              >
                 {n.name}
               </Text>
             </View>

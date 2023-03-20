@@ -4,6 +4,7 @@ import { MediaTypes, MovieMedia, TvMedia } from "../typings";
 import { getRelatedMediasProps, searchRequest } from "../utils/requests";
 import TilesRenderedView from "../components/TilesRenderedView";
 import NothingToShow from "./../components/NothingToShow";
+import { showErrorAlert } from "../utils/helpers/helper";
 
 interface IProps {
   screenType: "Search" | "Related";
@@ -69,6 +70,7 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
           setBlockNewLoads(true);
         }
       } catch (err) {
+        setBlockNewLoads(true);
         setError(err as Error);
       }
 
@@ -79,10 +81,16 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
 
   console.log("pageNumber", pageNumber);
 
+  // Show alert on error
+  if (error && !loadingNewMedias) {
+    const alertString = medias?.length > 0 ? "more " : "";
+    showErrorAlert(`Something went wrong while loading ${alertString}content.`);
+  }
+
   return (
     <View className="flex-1 bg-tertiary items-center">
-      {error ? (
-        <NothingToShow />
+      {error && medias.length === 0 ? (
+        <NothingToShow title={"Something went wrong while loading content"} />
       ) : (
         // Tiles
         <View className="flex-1 relative">
@@ -93,7 +101,9 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
               setPageNumber={setPageNumber}
               blockNewLoads={blockNewLoads}
             />
-          ) : null}
+          ) : (
+            !loadingNewMedias && <NothingToShow />
+          )}
         </View>
       )}
     </View>

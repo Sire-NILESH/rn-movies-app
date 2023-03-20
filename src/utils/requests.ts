@@ -50,101 +50,6 @@ import { IGenre, IGenresToShowHomeScreen, MediaTypes } from "../typings";
 const API_KEY = "e3e1732f8f495a1b191494b49b813669";
 const BASE_URL = "https://api.themoviedb.org/3";
 
-/**
- * API call to get the search results for the keywords.
- *
- * @param searchText - The search text `keyword` to search.
- * @param mediaType - The media type of the search, `tv` or `movie`.
- * @param abortController - The abort controller to abort the search request, meant to be passed from the cleanup method of the `useEffect`.
- * @param pageNumber - Optional, default is `1` if not provided.
- */
-export const searchRequest = async (
-  searchText: string,
-  mediaType: MediaTypes,
-  pageNumber: number,
-  abortController?: AbortController
-) => {
-  const page = pageNumber ? pageNumber : 1;
-  const url = `${BASE_URL}/search/${mediaType}?api_key=${API_KEY}&query=${searchText}&language=en-US&page=1&include_adult=false&page=${page}`;
-  // const abortController = new AbortController();
-  const data = await fetch(url, { signal: abortController?.signal })
-    .then((res) => res.json())
-    .catch((err) => {
-      if (err.message === "Aborted") {
-        console.log(err.message);
-        return;
-      }
-      throw err;
-    });
-
-  console.log("fetching", searchText);
-  // console.log("------", data.results);
-  if (data?.results) return { results: data?.results, mediaType: mediaType };
-};
-
-/**
- * Function that calls the API and returns props for the Home screen only.
- * Only needs a list of genres that is to be requested.
- *
- * @param getTheseGenreMedias - An array of genres to be fetched.
- */
-export const getHomeScreenProps = async (
-  getTheseGenreMedias: IGenresToShowHomeScreen[]
-) => {
-  const data = await Promise.all([
-    ...getTheseGenreMedias.map((genre) =>
-      fetch(
-        `${BASE_URL}/discover/${genre.mediaType}?api_key=${API_KEY}&language=en-US&with_genres=${genre.id}`
-      ).then((res) => res.json())
-    ),
-  ]);
-
-  const results = getTheseGenreMedias.map((genre, i) => {
-    return {
-      genreId: genre.id,
-      genreName: genre.name,
-      genreMedias: data[i].results,
-    };
-  });
-
-  return results;
-};
-
-/**
- * Common function that calls the API and returns screen props for Movies and Tv screens.
- * Requires a list of genres to be fetched and type media type movie/tv.
- *
- * @param getTheseGenreMedias - An array of genres to be fetched.
- * @param mediaType - The type of media to be fetched.
- */
-export const getScreenProps = async (
-  getTheseGenreMedias: IGenre[],
-  mediaType: MediaTypes
-) => {
-  let data: any;
-  try {
-    data = await Promise.all([
-      ...getTheseGenreMedias.map((genre) =>
-        fetch(
-          `${BASE_URL}/discover/${mediaType}?api_key=${API_KEY}&language=en-US&with_genres=${genre.id}`
-        ).then((res) => res.json())
-      ),
-    ]);
-
-    const results = getTheseGenreMedias.map((genre, i) => {
-      return {
-        genreId: genre.id,
-        genreName: genre.name,
-        genreMedias: data[i].results,
-      };
-    });
-
-    return results;
-  } catch (err) {
-    throw err;
-  }
-};
-
 const networkIds = {
   Netflix: 213,
   HBO: 49,
@@ -239,6 +144,137 @@ const customGenreIdToFetcher = {
 };
 
 /**
+ * API call to get the search results for the keywords.
+ *
+ * @param searchText - The search text `keyword` to search.
+ * @param mediaType - The media type of the search, `tv` or `movie`.
+ * @param abortController - The abort controller to abort the search request, meant to be passed from the cleanup method of the `useEffect`.
+ * @param pageNumber - Optional, default is `1` if not provided.
+ */
+export const searchRequest = async (
+  searchText: string,
+  mediaType: MediaTypes,
+  pageNumber: number,
+  abortController?: AbortController
+) => {
+  const page = pageNumber ? pageNumber : 1;
+  const url = `${BASE_URL}/search/${mediaType}?api_key=${API_KEY}&query=${searchText}&language=en-US&page=1&include_adult=false&page=${page}`;
+  // const abortController = new AbortController();
+  const data = await fetch(url, { signal: abortController?.signal })
+    .then((res) => res.json())
+    .catch((err) => {
+      if (err.message === "Aborted") {
+        console.log(err.message);
+        return;
+      }
+      throw err;
+    });
+
+  console.log("fetching", searchText);
+  // console.log("------", data.results);
+  if (data?.results) return { results: data?.results, mediaType: mediaType };
+};
+
+/**
+ * Function that calls the API and returns props for the Home screens of `Home`, `TV shows` and `Movies` options of the drawer.
+ * Only needs a list of genres that is to be requested.
+ *
+ * @param getTheseGenreMedias - An array of genre object contaning `id` , `name` and `mediaType` to be fetched.
+ * `id` is the id of the genre.
+ */
+export const getHomeScreenProps = async (
+  getTheseGenreMedias: IGenresToShowHomeScreen[]
+) => {
+  const data = await Promise.all([
+    ...getTheseGenreMedias.map((genre, i) => {
+      // Real genre ids are > 1
+      if (genre.id >= 1) {
+        return fetch(
+          `${BASE_URL}/discover/${genre.mediaType}?api_key=${API_KEY}&language=en-US&with_genres=${genre.id}`
+        ).then((res) => res.json());
+      }
+
+      // If reached here, we are dealing with a custom genre i.e. < 0
+      if (genre.id < 1) {
+        let URL;
+        if (genre.mediaType === "movie") {
+          console.log(
+            "reached here",
+            (URL =
+              // @ts-ignore
+              customGenreIdToFetcher.customMovieGenresToFetcherURL[
+                String(genre.id)
+              ])
+          );
+          URL =
+            // @ts-ignore
+            customGenreIdToFetcher.customMovieGenresToFetcherURL[
+              String(genre.id)
+            ];
+        }
+
+        if (genre.mediaType === "tv") {
+          URL =
+            // @ts-ignore
+            customGenreIdToFetcher.customTvGenresToFetcherURL[String(genre.id)];
+        }
+
+        if (URL) {
+          return fetch(URL).then((res) => res.json());
+        }
+      }
+    }),
+  ]);
+
+  const results = getTheseGenreMedias.map((genre, i) => {
+    return {
+      genreId: genre.id,
+      genreName: genre.name,
+      genreMedias: data[i].results,
+    };
+  });
+
+  return results;
+};
+
+/**
+ * Common function that calls the API and returns screen props for Movies and Tv screens.
+ * Requires a list of genres to be fetched and type media type movie/tv.
+ *
+ * Currently unused.
+ *
+ * @param getTheseGenreMedias - An array of genres to be fetched.
+ * @param mediaType - The type of media to be fetched.
+ */
+export const getScreenProps = async (
+  getTheseGenreMedias: IGenre[],
+  mediaType: MediaTypes
+) => {
+  let data: any;
+  try {
+    data = await Promise.all([
+      ...getTheseGenreMedias.map((genre) =>
+        fetch(
+          `${BASE_URL}/discover/${mediaType}?api_key=${API_KEY}&language=en-US&with_genres=${genre.id}`
+        ).then((res) => res.json())
+      ),
+    ]);
+
+    const results = getTheseGenreMedias.map((genre, i) => {
+      return {
+        genreId: genre.id,
+        genreName: genre.name,
+        genreMedias: data[i].results,
+      };
+    });
+
+    return results;
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
  * Is used to load more Genre related media(Movie/Tv) on scroll list end in the Tiles list screen.
  *
  * @param getTheseGenreMedias - An array of genres that is to be loaded.
@@ -255,7 +291,7 @@ export const getGenreMediasProps = async (
   // if the id of the genre is less than 1, it is a custom genre.
   console.log(getTheseGenreMedias[0]);
 
-  if (getTheseGenreMedias[0] > 1) {
+  if (getTheseGenreMedias[0] >= 1) {
     const commaSeparatedGenres = getTheseGenreMedias.join(",");
     const data = await fetch(
       `${BASE_URL}/discover/${mediaType}?api_key=${API_KEY}&language=en-US&with_genres=${commaSeparatedGenres}&page=${pageNumber}`

@@ -123,7 +123,7 @@ function renderFlatlist(
               </View>
               <Text
                 key={p.provider_id}
-                className="text-text_dark text-xs w-[60px] text-center"
+                className="text-text_dark text-xs w-[65px] text-center"
               >
                 {p.provider_name}
               </Text>

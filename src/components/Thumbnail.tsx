@@ -112,6 +112,7 @@ function Thumbnail({
             "rgba(28, 25, 23, 0.2)",
             "rgba(28, 25, 23, 0.8)",
           ]}
+          // border-2 border-stone-50, when selected.
           className="absolute flex-1 flex-row items-end pb-2 px-2"
           style={{
             borderRadius: 6,

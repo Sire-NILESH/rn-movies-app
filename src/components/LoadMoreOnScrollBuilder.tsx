@@ -88,12 +88,12 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
   }
 
   return (
-    <View className="flex-1 bg-tertiary items-center">
+    <View className="flex-1 bg-tertiary min-w-full items-center px-2">
       {error && medias.length === 0 ? (
         <NothingToShow title={"Something went wrong while loading content"} />
       ) : (
         // Tiles
-        <View className="flex-1 relative">
+        <View className="flex-1 relative w-full">
           {medias?.length > 0 ? (
             <TilesRenderedView
               medias={medias}

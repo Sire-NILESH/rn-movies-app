@@ -23,11 +23,11 @@ export interface IGenresToShowHomeScreen {
   mediaType: MediaTypes;
 }
 
-export interface IGenresToShowMainScreens {
-  id: number;
-  name: string;
-  mediaType: MediaTypes;
-}
+// export interface IGenresToShowMainScreens {
+//   id: number;
+//   name: string;
+//   mediaType: MediaTypes;
+// }
 
 export interface Trailer {
   id: string;

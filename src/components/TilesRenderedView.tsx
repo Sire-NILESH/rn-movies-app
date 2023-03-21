@@ -49,18 +49,20 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
   // }
 
   return (
-    <View className="flex-1 relative pr-1">
+    <View className="flex-1 relative">
       <FlatList
         bounces
         data={props.medias}
         ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
         contentContainerStyle={{
+          // backgroundColor: "white",
+          width: "100%",
           paddingVertical: 8,
         }}
         renderItem={(media) => {
           // console.log("rendered tiles renderer");
           return (
-            <View className="ml-1">
+            <View className="mx-[2]">
               {/* <Thumbnail media={media.item} orientation="portrait" /> */}
               <ThumbnailMemoised
                 media={media.item}

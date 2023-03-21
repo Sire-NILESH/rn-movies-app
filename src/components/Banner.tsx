@@ -165,7 +165,7 @@ function Banner({ mediaList }: Props) {
 
           {/* OverView */}
           <Text
-            className="max-w-xs text-sm text-text_primary"
+            className="max-w-xs text-xs text-text_primary"
             numberOfLines={4}
           >
             {media?.overview}

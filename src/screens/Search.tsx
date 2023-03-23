@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Text, View, TextInput, SafeAreaView, Pressable } from "react-native";
 import { useLogging } from "../hooks/useLogging";
-import { IStackScreenProps } from "../library/StackScreenProps";
+import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { Colors } from "./../utils/Colors";
 import { FlatList } from "react-native-gesture-handler";
 import { searchRequest } from "../utils/requests";

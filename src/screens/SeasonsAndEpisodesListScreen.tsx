@@ -1,6 +1,6 @@
 import { View, Text, Pressable, Image, FlatList } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
-import { IStackScreenProps } from "../library/StackScreenProps";
+import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { useLogging } from "../hooks/useLogging";
 import { Season, SeasonDetails } from "../typings";
 import useFetcher from "../hooks/useFetcher";

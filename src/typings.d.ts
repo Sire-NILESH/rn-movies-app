@@ -1,3 +1,5 @@
+import { RootState } from "./store/store";
+
 export interface ICountry {
   name: string;
   code: string;
@@ -182,45 +184,71 @@ export interface SeasonDetails {
   season_number: number;
 }
 
-// export interface Movie {
-//   title: string;
-//   backdrop_path: string;
-//   adult: boolean;
-//   media_type?: string | string[];
-//   release_date?: string;
-//   first_air_date: string;
-//   genre_ids: number[];
-//   id: number;
-//   name: string;
-//   origin_country: string[];
-//   original_language: string;
-//   original_name: string;
-//   original_title: string;
-//   title: string;
-//   overview: string;
-//   popularity: number;
-//   poster_path: string;
-//   vote_average: number;
-//   vote_count: number;
-//   type: string | string[] | undefined;
+export interface IProductionCompany {
+  id: number;
+  logo_path: null | string;
+  name: string;
+  origin_country: string;
+}
+
+export interface IProductionCountry {
+  iso_3166_1: string;
+  name: string;
+}
+
+export interface MovieMediaExtended extends MovieMedia {
+  belongs_to_collection: {
+    id: number;
+    name: string;
+    poster_path: string;
+    backdrop_path: string;
+  };
+  budget: number;
+  genres: {
+    id: number;
+    name: string;
+  }[];
+  homepage: string;
+  imdb_id: string;
+  production_companies: IProductionCompany[];
+  production_countries: IProductionCountry[];
+  revenue: number;
+  runtime: number;
+  spoken_languages: {
+    english_name: string;
+    iso_639_1: string;
+    name: string;
+  }[];
+  status: string;
+  tagline: string;
+  video: boolean;
+}
+
+// Define a type for the watchlist slice state
+// interface IWatchListMedia {
+//   mediaId: number;
+//   mediaType: MediaTypes;
+//   mediaTitle?: string;
+//   mediaDate?: string;
+//   poster_path?: string;
+//   backdrop_path?: string;
 // }
 
-// type TContent = {
-//   adult: boolean;
-//   backdrop_path: string;
-//   genre_ids: ArrayConstructor[];
-//   id: number;
-//   original_language: string;
-//   original_title: string;
-//   overview: string;
-//   popularity: number;
-//   poster_path: string;
-//   release_date: string;
-//   title: string;
-//   video: boolean;
-//   vote_average: number;
-//   vote_count: number;
-// };
+// Define a type for the watchlist slice state
+interface IReduxListMedia {
+  mediaId: number;
+  mediaType: MediaTypes;
+  mediaTitle?: string;
+  mediaDate?: string;
+  poster_path?: string;
+  backdrop_path?: string;
+}
+
+export type TCollectionType = "watchlist" | "favourites" | "watched";
+
+export type TCollectionTypeToReduxCollection = {
+  [key in TCollectionType]: keyof RootState;
+};
 
 export interface Element {
   type:
@@ -230,15 +258,4 @@ export interface Element {
     | "Clip"
     | "Trailer"
     | "Teaser";
-}
-
-export interface HomeCollectionProps {
-  netflixOriginals: Movie[];
-  trendingNow: Movie[];
-  topRated: Movie[];
-  actionMovies: Movie[];
-  comedyMovies: Movie[];
-  horrorMovies: Movie[];
-  romanceMovies: Movie[];
-  documentaries: Movie[];
 }

@@ -4,7 +4,7 @@ interface IProps {
   /**
    * Method to be executed on press of the button.
    */
-  method?: () => void;
+  method?: (param: any) => void;
   /**
    *
    *

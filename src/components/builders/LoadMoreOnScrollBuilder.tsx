@@ -1,10 +1,10 @@
 import { View } from "react-native";
 import { useState, useEffect } from "react";
-import { MediaTypes, MovieMedia, TvMedia } from "../typings";
-import { getRelatedMediasProps, searchRequest } from "../utils/requests";
-import TilesRenderedView from "../components/TilesRenderedView";
-import NothingToShow from "./../components/NothingToShow";
-import { showErrorAlert } from "../utils/helpers/helper";
+import { MediaTypes, MovieMedia, TvMedia } from "../../typings";
+import { getRelatedMediasProps, searchRequest } from "../../utils/requests";
+import TilesRenderedView from "../TilesRenderedView";
+import NothingToShow from "../NothingToShow";
+import { showErrorAlert } from "../../utils/helpers/helper";
 
 interface IProps {
   screenType: "Search" | "Related";

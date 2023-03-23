@@ -379,6 +379,27 @@ export const getTvShowInfo = async (tvMediaId: number) => {
 };
 
 /**
+ *Is used to load more  info on the TV media on the more info screen, specifically to access total number seasons for that show and others too while we are there at it.
+ *
+ * @param {number} mediaId - The ID of the TV show on the `MoreInfo` screen whose details are to be fetched
+ * @param {MediaTypes} mediaType - The media type of the show on the `MoreInfo` screen whose details are to be fetched
+ * @return {*}
+ */
+export const getMediaInfo = async (mediaId: number, mediaType: MediaTypes) => {
+  const data = await fetch(
+    // https://api.themoviedb.org/3/tv/{tv_id}?api_key=<<api_key>>&language=en-US
+    `${BASE_URL}/${mediaType}/${mediaId}?api_key=${API_KEY}&language=en-US`
+  )
+    .then((res) => res.json())
+    .catch((err) => {
+      console.log(err.message);
+      throw new err();
+    });
+
+  return data;
+};
+
+/**
  * This function is used to retrieve information about the media's watch providers for all the regions.
  *
  * @param mediaId - The id of the media
@@ -511,6 +532,7 @@ const REQUESTS = {
   getScreenProps,
   getHomeScreenProps,
   searchRequest,
+  getMediaInfo,
 };
 
 export default REQUESTS;

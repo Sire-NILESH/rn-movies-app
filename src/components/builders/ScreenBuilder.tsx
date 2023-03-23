@@ -1,11 +1,11 @@
 import { View, ScrollView } from "react-native";
-import { MovieMedia, ScreenTypes, TvMedia } from "../typings";
-import Banner from "./Banner";
-import Row from "./Row";
-import NothingToShow from "./NothingToShow";
-import { showErrorAlert } from "../utils/helpers/helper";
-import useFetchScreenProps from "../hooks/useFetchScreenProps";
-import Loader from "./ui/Loader";
+import { MovieMedia, ScreenTypes, TvMedia } from "../../typings";
+import Banner from "../Banner";
+import Row from "../Row";
+import NothingToShow from "../NothingToShow";
+import { showErrorAlert } from "../../utils/helpers/helper";
+import useFetchScreenProps from "../../hooks/useFetchScreenProps";
+import Loader from "../ui/Loader";
 import { memo } from "react";
 // import * as SplashScreen from "expo-splash-screen";
 // import { useRoute } from "@react-navigation/native";

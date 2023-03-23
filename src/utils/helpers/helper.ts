@@ -1,4 +1,13 @@
-import { ICountry, MovieMedia, TvMedia, TvMediaExtended } from "../../typings";
+import { RootState } from "../../store/store";
+import {
+  ICountry,
+  MovieMedia,
+  MovieMediaExtended,
+  TCollectionType,
+  TCollectionTypeToReduxCollection,
+  TvMedia,
+  TvMediaExtended,
+} from "../../typings";
 import { Alert, Dimensions } from "react-native";
 
 export function isMovie(
@@ -12,9 +21,30 @@ export function isTv(media: MovieMedia | TvMedia | null): media is TvMedia {
 }
 
 export function isTvExtended(
-  media: MovieMedia | TvMedia | TvMediaExtended
+  media: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended
 ): media is TvMediaExtended {
   return media !== null && (media as TvMediaExtended).seasons !== undefined;
+}
+
+/**
+ * Is an `Object` that maps a TopTab screen's collection type to corresponding Redux collection.
+ */
+export const collectionTypeToReduxCollection: TCollectionTypeToReduxCollection =
+  {
+    watchlist: "watchlistMedias",
+    favourites: "favouriteMedias",
+    watched: "watchedMedias",
+  };
+
+// Movie MediaExtended will always have a 'title' alongside 'production_companies'
+export function isMovieExtended(
+  media: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended
+): media is MovieMediaExtended {
+  return (
+    media !== null &&
+    (media as MovieMediaExtended).title !== undefined &&
+    (media as MovieMediaExtended).production_companies !== undefined
+  );
 }
 
 // export function isTrailer(

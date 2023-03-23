@@ -1,8 +1,8 @@
 import { View } from "react-native";
 import { useLayoutEffect } from "react";
-import { IStackScreenProps } from "../library/StackScreenProps";
+import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { MediaTypes } from "../typings";
-import LoadMoreOnScrollBuilder from "../components/LoadMoreOnScrollBuilder";
+import LoadMoreOnScrollBuilder from "../components/builders/LoadMoreOnScrollBuilder";
 
 const RelatedTileListScreen: React.FunctionComponent<IStackScreenProps> = (
   props

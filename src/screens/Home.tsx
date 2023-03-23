@@ -1,8 +1,8 @@
 import React, { useLayoutEffect } from "react";
 import { useLogging } from "../hooks/useLogging";
 import Header from "./../components/Header";
-import ScreenBuilder from "../components/ScreenBuilder";
-import { IDrawerScreenProps } from "../library/DrawerScreenProps";
+import ScreenBuilder from "../components/builders/ScreenBuilder";
+import { IDrawerScreenProps } from "../library/NavigatorScreenProps/DrawerScreenProps";
 
 // const HomeScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 const HomeScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {

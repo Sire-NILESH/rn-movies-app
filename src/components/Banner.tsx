@@ -62,15 +62,10 @@ function Banner({ mediaList }: Props) {
       >
         <LinearGradient
           colors={[
-            "rgba(0,0,0,0.1)",
-            "rgba(15, 15, 15, 0.3)",
-            "rgba(15, 15, 15, 0.7)",
-            "rgba(15, 15, 15, 0.8)",
+            "rgba(0,0,0,0.2)",
+            "rgba(15, 15, 15, 0.2)",
+            "rgba(15, 15, 15, 0.4)",
             Colors.secondary,
-            // "rgba(0,0,0,0.5)",
-            // "rgba(28, 25, 23, 0.6)",
-            // "rgba(28, 25, 23, 0.9)",
-            // Colors.black,
           ]}
           style={styles.rootScreen}
         >
@@ -89,7 +84,16 @@ function Banner({ mediaList }: Props) {
 
       {/* Text Contents and Buttons */}
       {media ? (
-        <View className="px-4 mt-10 space-y-3">
+        <LinearGradient
+          className="px-4 mt-10 space-y-3"
+          colors={[
+            "rgba(0,0,0,0)",
+            "rgba(15, 15, 15, 0.2)",
+            "rgba(15, 15, 15, 0.2)",
+            "rgba(15, 15, 15, 0)",
+            "rgba(15, 15, 15, 0)",
+          ]}
+        >
           {/* Title/Name */}
           <Text className="text-2xl font-bold text-text_highLight">
             {isMovie(media) ? media.title : media?.original_name}
@@ -113,7 +117,7 @@ function Banner({ mediaList }: Props) {
                   style={{
                     color:
                       media.vote_average > 4.0
-                        ? Colors.green[500]
+                        ? Colors.lime[400]
                         : Colors.red[400],
                   }}
                 >
@@ -129,7 +133,7 @@ function Banner({ mediaList }: Props) {
                 size={18}
                 color={Colors.text_secondary}
               />
-              <Text className="text-text_highLight">
+              <Text className="text-text_primary font-semibold">
                 {isMovie(media) ? "Movie" : "TV"}
               </Text>
             </View>
@@ -140,7 +144,7 @@ function Banner({ mediaList }: Props) {
                 size={18}
                 color={Colors.text_secondary}
               />
-              <Text className="text-text_highLight">
+              <Text className="text-text_primary font-semibold">
                 {isMovie(media) ? media.release_date : media.first_air_date}
               </Text>
             </View>
@@ -152,7 +156,7 @@ function Banner({ mediaList }: Props) {
                   size={18}
                   color={Colors.text_secondary}
                 />
-                <Text className="text-text_highLight">
+                <Text className="text-text_primary font-semibold">
                   {/*  @ts-ignore */}
                   {isoLangs[media.original_language]?.name
                     ? // @ts-ignore
@@ -165,7 +169,7 @@ function Banner({ mediaList }: Props) {
 
           {/* OverView */}
           <Text
-            className="max-w-xs text-xs text-text_primary"
+            className="max-w-xs text-xs font-semibold text-text_primary"
             numberOfLines={4}
           >
             {media?.overview}
@@ -212,7 +216,7 @@ function Banner({ mediaList }: Props) {
               </CustomButton>
             </View>
           </View>
-        </View>
+        </LinearGradient>
       ) : null}
     </View>
   );

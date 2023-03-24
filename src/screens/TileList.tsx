@@ -107,21 +107,26 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     navigation.setOptions({
       headerTitle: userSelectedGenres.length > 0 ? "Custom Genres" : title,
       headerRight: (props) => (
-        <View className="flex-row">
+        <View className="flex-row items-center space-x-1 mr-3">
           {/* Search button */}
           <HeaderSearchButton
             searchCategory={currentMediaType ? currentMediaType : "multi"}
           />
           {/* Genre select button */}
           {route.path !== "Search" && (
-            <Pressable onPress={onShowGenresModal}>
-              <MaterialCommunityIcons
-                name="drama-masks"
-                size={24}
-                color={Colors.gray[50]}
-                style={{ marginRight: 16 }}
-              />
-            </Pressable>
+            <View className="overflow-hidden rounded-full ">
+              <Pressable
+                className="p-2 items-center justify-center"
+                android_ripple={{ color: "#eee" }}
+                onPress={onShowGenresModal}
+              >
+                <MaterialCommunityIcons
+                  name="drama-masks"
+                  size={24}
+                  color={Colors.gray[50]}
+                />
+              </Pressable>
+            </View>
           )}
         </View>
       ),

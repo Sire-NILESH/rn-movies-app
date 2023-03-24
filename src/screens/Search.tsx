@@ -23,7 +23,7 @@ interface ISearchInputProps {
 
 const SearchInput: React.FC<ISearchInputProps> = (props) => {
   return (
-    <View className="flex-1 bg-tertiary min-w-[280] mt-2">
+    <View className="flex-1 bg-tertiary min-w-[250] mt-[10]">
       <TextInput
         placeholder={`Search ${
           props.searchCategory === "tv" ? "TV shows" : "Movies"
@@ -87,18 +87,20 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         );
       },
       headerRight: (props) => (
-        <HeaderSearchButton
-          gotoList={true}
-          medias={searchQueryResult?.results}
-          title={searchQuery}
-          searchCategory={searchCategory}
-          disabled={
-            searchQueryResult?.results.length &&
-            searchQueryResult?.results.length > 0
-              ? false
-              : true
-          }
-        />
+        <View className="mr-2">
+          <HeaderSearchButton
+            gotoList={true}
+            medias={searchQueryResult?.results}
+            title={searchQuery}
+            searchCategory={searchCategory}
+            disabled={
+              searchQueryResult?.results.length &&
+              searchQueryResult?.results.length > 0
+                ? false
+                : true
+            }
+          />
+        </View>
       ),
     });
   }, [searchQueryResult]);

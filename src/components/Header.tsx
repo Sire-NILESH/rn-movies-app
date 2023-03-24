@@ -31,8 +31,13 @@ function Header() {
     currentMediaType: string;
   }) {
     return (
-      <View key={props.name + String(Math.random() * 10)} className="py-2">
+      <View
+        key={props.name + String(Math.random() * 10)}
+        className="rounded-full overflow-hidden"
+      >
         <Pressable
+          android_ripple={{ color: "#eee" }}
+          className="py-2 px-1"
           onPress={() => {
             // @ts-ignore
             navigation.push("Tiles", {

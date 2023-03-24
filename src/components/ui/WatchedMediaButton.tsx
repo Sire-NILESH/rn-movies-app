@@ -42,12 +42,7 @@ const WatchedMediaButton: React.FC<IProps> = ({ media, mediaType }) => {
           }
         }}
       >
-        <Ionicons
-          size={18}
-          name={"eye"}
-          // name={isMediaWatched(media.id) ? "checkmark" : "add"}
-          color={Colors.stone[500]}
-        ></Ionicons>
+        <Ionicons size={18} name={"eye"} color={Colors.stone[500]}></Ionicons>
         <Text
           className="ml-1"
           style={{

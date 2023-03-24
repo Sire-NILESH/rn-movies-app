@@ -65,7 +65,7 @@ export const getDeviceDimensions = (dimensionOf: "screen" | "window") => {
 };
 
 /**
- * A helper function to build meida object for suitable for reducers of collection redux slices.
+ * A helper function to build meida object suitable for reducers of collection redux slices.
  *
  * @param media a media object of the form `MovieMedia` | `TvMedia`
  * @param mediaType media type of the media object

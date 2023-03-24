@@ -54,6 +54,7 @@ const GenereModal: React.FC<IProps> = ({
             <View className="rounded-full overflow-hidden">
               <Pressable
                 disabled={selectedGenres.length > 0 ? false : true}
+                className="p-2"
                 onPress={onConfirmHandler}
                 android_ripple={{ color: "#eee" }}
                 // className="flex-1"
@@ -70,7 +71,7 @@ const GenereModal: React.FC<IProps> = ({
             <View className="rounded-full overflow-hidden">
               <Pressable
                 onPress={onClose}
-                // className="flex-1"
+                className="p-2"
                 android_ripple={{ color: "#eee" }}
               >
                 <MaterialIcons

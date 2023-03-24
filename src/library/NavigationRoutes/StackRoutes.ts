@@ -1,3 +1,4 @@
+import CollectionMediaMoreInfo from "../../screens/CollectionMediaMoreInfo";
 import MoreInfoScreen from "../../screens/MoreInfo";
 import RelatedTileListScreen from "../../screens/RelatedTileListScreen";
 import SearchScreen from "../../screens/Search";
@@ -15,6 +16,10 @@ export const stackRoutes: IStackRouteProps[] = [
   {
     name: "More Info",
     component: MoreInfoScreen,
+  },
+  {
+    name: "CollectionMoreInfo",
+    component: CollectionMediaMoreInfo,
   },
   {
     name: "Tiles",

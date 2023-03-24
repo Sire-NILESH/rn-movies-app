@@ -6,7 +6,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 
 import { topTabRoutes } from "../library/NavigationRoutes/TopTabsRoutes";
 import { Colors } from "../utils/Colors";
-import { TCollectionType } from "../typings";
+import { MediaTypes, TCollectionType } from "../typings";
 
 interface IProps {
   collectionType: TCollectionType;
@@ -45,6 +45,7 @@ const TopTabsNavigator: React.FC<IProps> = (props) => {
               <r.component
                 name={r.name}
                 collectionType={screenCollectionType}
+                screenMediaType={r.screenMediaType}
                 {...props}
               />
             );
@@ -56,4 +57,3 @@ const TopTabsNavigator: React.FC<IProps> = (props) => {
 };
 
 export default TopTabsNavigator;
-// collectionType={r.screenCollectionType}

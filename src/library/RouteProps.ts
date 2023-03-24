@@ -3,7 +3,7 @@ import { MaterialTopTabNavigationOptions } from "@react-navigation/material-top-
 import { IDrawerScreenProps } from "./NavigatorScreenProps/DrawerScreenProps";
 import { IStackScreenProps } from "./NavigatorScreenProps/StackScreenProps";
 import { ITopTabScreenProps } from "./NavigatorScreenProps/TopTabScreenProps";
-import { TCollectionType } from "../typings";
+import { MediaTypes, TCollectionType } from "../typings";
 // import { ITopTabScreenProps } from "./TopTabScreenProps";
 
 // export default interface IRouteProps {
@@ -32,5 +32,5 @@ export interface IDrawerRouteProps {
 export interface ITopTabsProps {
   component: React.FunctionComponent<ITopTabScreenProps>;
   name: string;
-  // collectionType: TCollectionType;
+  screenMediaType: MediaTypes;
 }

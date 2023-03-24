@@ -238,6 +238,7 @@ export interface MovieMediaExtended extends MovieMedia {
 interface IReduxListMedia {
   mediaId: number;
   mediaType: MediaTypes;
+  dateAdded: number;
   mediaTitle?: string;
   mediaDate?: string;
   poster_path?: string;
@@ -246,7 +247,7 @@ interface IReduxListMedia {
 
 export type TCollectionType = "watchlist" | "favourites" | "watched";
 
-export type TCollectionTypeToReduxCollection = {
+export type TCollectionToTReduxCollection = {
   [key in TCollectionType]: keyof RootState;
 };
 

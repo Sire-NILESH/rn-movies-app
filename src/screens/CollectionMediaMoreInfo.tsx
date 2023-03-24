@@ -8,10 +8,9 @@ import {
 import { useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import {
+  IReduxListMedia,
   MediaTypes,
-  MovieMedia,
   MovieMediaExtended,
-  TvMedia,
   TvMediaExtended,
 } from "../typings";
 import { isMovie, isTv, isTvExtended } from "./../utils/helpers/helper";
@@ -24,52 +23,60 @@ import { getMediaInfo } from "../utils/requests";
 import NetworkList from "../components/NetworkList";
 import WatchProviders from "../components/WatchProviders";
 import NewMediaCardInfo from "./../components/NewMediaCardInfo";
-import WatchlistButton from "../components/ui/WatchlistButton";
-import WatchedMediaButton from "../components/ui/WatchedMediaButton";
+
+import Loader from "../components/ui/Loader";
 import MoreInfoFooterButton from "../components/ui/MoreInfoFooterButton";
+import WatchlistButton from "../components/ui/WatchlistButton";
 import FavouriteMediaButton from "../components/ui/FavouriteMediaButton";
+import WatchedMediaButton from "../components/ui/WatchedMediaButton";
 
 const screenDimensions = Dimensions.get("screen");
 
-const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
+const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
+  props
+) => {
   const { navigation, route } = props;
-  let media: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended =
+
+  const collectionMedia: IReduxListMedia =
     // @ts-ignore
-    route.params?.media;
+    route.params?.collectionMedia;
 
   const mediaType: MediaTypes = // @ts-ignore
     route.params?.mediaType !== undefined ? route.params?.mediaType : "movie";
 
   let extendedMedia;
 
+  const parametersForFetcher = [collectionMedia.mediaId, mediaType];
+
   const {
-    screenProps,
-    // loadingProps,
+    screenProps: media,
+    loadingProps,
     errorLoadingProps,
   }: {
     screenProps: TvMediaExtended | MovieMediaExtended;
-    // loadingProps: boolean;
+    loadingProps: boolean;
     errorLoadingProps: Error | null;
-  } = useFetcher(getMediaInfo, [media.id, mediaType]);
+  } = useFetcher(getMediaInfo, parametersForFetcher);
 
-  extendedMedia = Object.assign(media, screenProps);
+  extendedMedia = media;
 
   function getTitle(): string {
-    if ("title" in media) return media.title;
-    return media.name;
+    if (media && "title" in media) return media.title;
+    return media && media.name;
   }
 
-  const mediaPosterPath = media?.poster_path || media?.backdrop_path;
+  const mediaPosterPath =
+    collectionMedia?.poster_path || collectionMedia?.backdrop_path;
 
   // Header settings
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: getTitle(),
+      headerTitle: collectionMedia.mediaTitle,
       headerRight: (props) => {
         return (
           <FavouriteMediaButton
             media={media}
-            mediaId={media.id}
+            mediaId={collectionMedia.mediaId}
             mediaType={mediaType}
           />
         );
@@ -77,8 +84,13 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     });
   }, [FavouriteMediaButton]);
 
+  console.log("Media from collection more info", media);
+
   return (
     <View className="flex-1 bg-secondary">
+      {/* Loader */}
+      <Loader loading={loadingProps} />
+
       {media && (
         <ScrollView className="flex-1 pb-24">
           {/* BackDrop Image */}
@@ -138,7 +150,8 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             {/* Genre Tags Row */}
             <View className="w-full h-10 justify-center items-center mt-5">
               <GenreTags
-                genreIdList={media.genre_ids}
+                genreIdList={media.genres.map((genre) => genre.id)}
+                // genreIdList={media.genre_ids}
                 backgroundType="transparent"
               />
             </View>
@@ -229,4 +242,4 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   );
 };
 
-export default MoreInfoScreen;
+export default CollectionMediaMoreInfo;

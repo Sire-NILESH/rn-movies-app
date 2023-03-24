@@ -1,10 +1,11 @@
-import { RootState } from "../../store/store";
 import {
   ICountry,
+  IReduxListMedia,
+  Media,
+  MediaTypes,
   MovieMedia,
   MovieMediaExtended,
-  TCollectionType,
-  TCollectionTypeToReduxCollection,
+  TCollectionToTReduxCollection,
   TvMedia,
   TvMediaExtended,
 } from "../../typings";
@@ -29,12 +30,11 @@ export function isTvExtended(
 /**
  * Is an `Object` that maps a TopTab screen's collection type to corresponding Redux collection.
  */
-export const collectionTypeToReduxCollection: TCollectionTypeToReduxCollection =
-  {
-    watchlist: "watchlistMedias",
-    favourites: "favouriteMedias",
-    watched: "watchedMedias",
-  };
+export const collectionTypeToReduxCollection: TCollectionToTReduxCollection = {
+  watchlist: "watchlistMedias",
+  favourites: "favouriteMedias",
+  watched: "watchedMedias",
+};
 
 // Movie MediaExtended will always have a 'title' alongside 'production_companies'
 export function isMovieExtended(
@@ -64,6 +64,50 @@ export const getDeviceDimensions = (dimensionOf: "screen" | "window") => {
   return dimensions;
 };
 
+/**
+ * A helper function to build meida object for suitable for reducers of collection redux slices.
+ *
+ * @param media a media object of the form `MovieMedia` | `TvMedia`
+ * @param mediaType media type of the media object
+ * @returns {IReduxListMedia} reduxListMedia object
+ */
+export const reduxListMediaObjBuilder = (
+  media: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended,
+  mediaType: MediaTypes
+): IReduxListMedia => {
+  return {
+    mediaId: media.id,
+    dateAdded: Date.now(),
+    poster_path: media.poster_path,
+    backdrop_path: media.backdrop_path,
+    mediaType: mediaType,
+    mediaDate: isMovie(media) ? media.release_date : media.first_air_date,
+    mediaTitle: isMovie(media) ? media.title : media.name,
+  };
+};
+
+// /**
+//  * A helper function to converts reduxList meida object to regular media object suitable for `MoreInfo` screen.
+//  *
+//  * @param media a media object of the form `IReduxListMedia`
+//  * @param mediaType media type of the media object
+//  * @returns {IReduxListMedia} reduxListMedia object
+//  */
+// export const reduxListMediaObjToRegularMediaObj = (
+//   media: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended,
+//   mediaType: MediaTypes
+// ): IReduxListMedia => {
+//   return {
+//     mediaId: media.id,
+//     dateAdded: Date.now(),
+//     poster_path: media.poster_path,
+//     backdrop_path: media.backdrop_path,
+//     mediaType: mediaType,
+//     mediaDate: isMovie(media) ? media.release_date : media.first_air_date,
+//     mediaTitle: isMovie(media) ? media.title : media.name,
+//   };
+// };
+
 export function isMovieArray(
   medias: MovieMedia[] | TvMedia[]
 ): medias is MovieMedia[] {
@@ -74,6 +118,20 @@ export function isTvArray(
   medias: MovieMedia[] | TvMedia[]
 ): medias is MovieMedia[] {
   return medias !== null && (medias as MovieMedia[])[0].title !== undefined;
+}
+
+export function isReduxCollectionMediaList(
+  medias: MovieMedia[] | TvMedia[] | IReduxListMedia[]
+): medias is IReduxListMedia[] {
+  return (
+    medias !== null && (medias as IReduxListMedia[])[0].dateAdded !== undefined
+  );
+}
+
+export function isReduxCollectionMedia(
+  medias: MovieMedia | TvMedia | IReduxListMedia
+): medias is IReduxListMedia {
+  return medias !== null && (medias as IReduxListMedia).dateAdded !== undefined;
 }
 
 export function showErrorAlert(title?: string, message?: string) {

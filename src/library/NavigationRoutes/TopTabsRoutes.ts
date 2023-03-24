@@ -1,14 +1,15 @@
 import { ITopTabsProps } from "../RouteProps";
-import TVShowsTopTabScreen from "../../screens/TVShowsTopTabScreen";
-import MoviesTopTabScreen from "../../screens/MoviesTopTabScreen";
+import CollectionTopTabScreen from "../../screens/CollectionTopTabScreen";
 
 export const topTabRoutes: ITopTabsProps[] = [
   {
     name: "Movies",
-    component: MoviesTopTabScreen,
+    component: CollectionTopTabScreen,
+    screenMediaType: "movie",
   },
   {
     name: "Tv Shows",
-    component: TVShowsTopTabScreen,
+    component: CollectionTopTabScreen,
+    screenMediaType: "tv",
   },
 ];

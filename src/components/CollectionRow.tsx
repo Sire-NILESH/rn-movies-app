@@ -1,12 +1,8 @@
-import { IReduxListMedia, MovieMedia, TvMedia } from "../typings";
-import Thumbnail from "./Thumbnail";
+import { IReduxListMedia } from "../typings";
 import { Text, View, FlatList } from "react-native";
-import IconButton from "./ui/IconButton";
-import { Colors } from "./../utils/Colors";
-import { Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
-import { isMovie } from "./../utils/helpers/helper";
+import { getDeviceDimensions } from "../utils/helpers/helper";
+
 import CollectionThumbnail from "./CollectionThumbnail";
 
 interface Props {
@@ -16,7 +12,7 @@ interface Props {
 
 function CollectionRow({ title, medias }: Props) {
   return (
-    <View className="space-y-1 mb-5">
+    <View className="space-y-1 mt-8">
       <View className="flex-row space-x-4 mb-1">
         <Text className="pl-5 text-sm font-semibold text-text_primary">
           {title}
@@ -40,7 +36,7 @@ function renderFlatList(medias: IReduxListMedia[], title: string) {
     navigation.push(screen, paramOption);
   };
 
-  // Calculate and pass the dimensioins from the parent(here) to the thumbnails.
+  // Calculate and pass the dimensions from the parent(here) to the thumbnails.
   // So every thumbnail wont have to calculate them separately.
   const windowWidth = getDeviceDimensions("window").width;
 
@@ -53,9 +49,7 @@ function renderFlatList(medias: IReduxListMedia[], title: string) {
           className="pl-2 py-1"
           ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
           contentContainerStyle={{
-            // backgroundColor: "white",
             width: "100%",
-            paddingVertical: 8,
           }}
           // className="ml-2 h-32"
           data={medias}

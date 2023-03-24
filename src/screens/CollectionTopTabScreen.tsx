@@ -1,6 +1,5 @@
-import { StatusBar } from "expo-status-bar";
 import React, { memo } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { View } from "react-native";
 import { useAppSelector } from "../hooks/reduxHooks";
 
 import { ITopTabScreenProps } from "../library/NavigatorScreenProps/TopTabScreenProps";
@@ -38,10 +37,10 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
 
   return (
     <View className="flex-1 bg-secondary">
-      <View className="flex-1 mt-5">
+      <View className="flex-1">
         {dateCollection ? (
           <FlatList
-            className="space-y-10"
+            className=""
             data={Object.keys(dateCollection)}
             keyExtractor={(dateKey) => dateKey}
             renderItem={(dateKeyObj) => {

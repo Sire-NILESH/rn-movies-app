@@ -47,7 +47,9 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     useState<ISearchResults | null>(null);
 
   function setSearchQueryHandler(text: string): void {
-    setSearchQuery(text);
+    if (text.trim().length > 0) {
+      setSearchQuery(text);
+    }
   }
 
   useEffect(() => {

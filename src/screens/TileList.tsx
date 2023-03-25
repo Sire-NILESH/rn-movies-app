@@ -107,7 +107,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     navigation.setOptions({
       headerTitle: userSelectedGenres.length > 0 ? "Custom Genres" : title,
       headerRight: (props) => (
-        <View className="flex-row items-center space-x-1 mr-3">
+        <View className="flex-row items-center space-x-1 mr-2">
           {/* Search button */}
           <HeaderSearchButton
             searchCategory={currentMediaType ? currentMediaType : "multi"}

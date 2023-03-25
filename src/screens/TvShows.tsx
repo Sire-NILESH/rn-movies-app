@@ -3,6 +3,7 @@ import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenPr
 import HeaderSearchButton from "../components/ui/HeaderSearchButton";
 import ScreenBuilder from "../components/builders/ScreenBuilder";
 import { IDrawerScreenProps } from "../library/NavigatorScreenProps/DrawerScreenProps";
+import { View } from "react-native";
 
 // const TvShowsScreen: React.FC<IStackScreenProps> = (props) => {
 const TvShowsScreen: React.FC<IDrawerScreenProps> = (props) => {
@@ -11,7 +12,11 @@ const TvShowsScreen: React.FC<IDrawerScreenProps> = (props) => {
   // Header Settings
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: (props) => <HeaderSearchButton searchCategory="tv" />,
+      headerRight: (props) => (
+        <View className="mr-2">
+          <HeaderSearchButton searchCategory="tv" />
+        </View>
+      ),
     });
   }, []);
 

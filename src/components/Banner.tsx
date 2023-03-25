@@ -63,8 +63,10 @@ function Banner({ mediaList }: Props) {
         <LinearGradient
           colors={[
             "rgba(0,0,0,0.2)",
-            "rgba(15, 15, 15, 0.2)",
-            "rgba(15, 15, 15, 0.4)",
+            "rgba(28, 25, 23, 0.5)",
+            "rgba(28, 25, 23, 0.5)",
+            "rgba(28, 25, 23, 0.6)",
+            Colors.tertiary,
             Colors.secondary,
           ]}
           style={styles.rootScreen}
@@ -86,13 +88,7 @@ function Banner({ mediaList }: Props) {
       {media ? (
         <LinearGradient
           className="px-4 mt-10 space-y-3"
-          colors={[
-            "rgba(0,0,0,0)",
-            "rgba(15, 15, 15, 0.2)",
-            "rgba(15, 15, 15, 0.2)",
-            "rgba(15, 15, 15, 0)",
-            "rgba(15, 15, 15, 0)",
-          ]}
+          colors={["rgba(0,0,0,0)", "rgba(0,0,0,0)"]}
         >
           {/* Title/Name */}
           <Text className="text-2xl font-bold text-text_highLight">
@@ -117,7 +113,7 @@ function Banner({ mediaList }: Props) {
                   style={{
                     color:
                       media.vote_average > 4.0
-                        ? Colors.lime[400]
+                        ? Colors.green[400]
                         : Colors.red[400],
                   }}
                 >

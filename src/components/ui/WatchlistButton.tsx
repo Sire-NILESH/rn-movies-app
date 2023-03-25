@@ -26,27 +26,27 @@ const WatchlistButton: React.FC<IProps> = ({ media, mediaType }) => {
   } = useWatchlistHooks();
 
   return (
-    <View className="flex-1">
-      <CustomButton
-        color={
-          isMediaWatchlisted(media.id) ? Colors.stone[50] : Colors.tertiary
+    <CustomButton
+      color={isMediaWatchlisted(media.id) ? Colors.stone[50] : Colors.tertiary}
+      height={45}
+      width={"100%"}
+      radius={10}
+      method={() => {
+        if (isMediaWatchlisted(media.id)) {
+          removeMediaFromWatchlistHandler(media.id);
+        } else {
+          addMediaToWatchlistHandler(
+            reduxListMediaObjBuilder(media, mediaType)
+          );
         }
-        height={45}
-        width={"100%"}
-        radius={10}
-        method={() => {
-          if (isMediaWatchlisted(media.id)) {
-            removeMediaFromWatchlistHandler(media.id);
-          } else {
-            addMediaToWatchlistHandler(
-              reduxListMediaObjBuilder(media, mediaType)
-            );
-          }
-        }}
-      >
+      }}
+    >
+      <View className="flex-row items-center justify-between">
         <Ionicons
           size={18}
-          name={isMediaWatchlisted(media.id) ? "checkmark" : "add"}
+          // name="list"
+          name={isMediaWatchlisted(media.id) ? "list" : "add"}
+          // name={isMediaWatchlisted(media.id) ? "checkmark" : "add"}
           color={Colors.stone[500]}
         ></Ionicons>
         <Text
@@ -58,10 +58,11 @@ const WatchlistButton: React.FC<IProps> = ({ media, mediaType }) => {
           }}
         >
           {" "}
-          {isMediaWatchlisted(media.id) ? "Watchlisted" : "Watchlist"}
+          {/* {isMediaWatchlisted(media.id) ? "Watchlisted" : "Watchlist"} */}
+          {"Watchlist"}
         </Text>
-      </CustomButton>
-    </View>
+      </View>
+    </CustomButton>
   );
 };
 

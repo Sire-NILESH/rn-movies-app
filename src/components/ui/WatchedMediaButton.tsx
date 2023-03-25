@@ -26,36 +26,32 @@ const WatchedMediaButton: React.FC<IProps> = ({ media, mediaType }) => {
   } = useWatchedMediaListHooks();
 
   return (
-    <View className="flex-1">
-      <CustomButton
-        color={isMediaWatched(media.id) ? Colors.stone[50] : Colors.tertiary}
-        height={45}
-        width={"100%"}
-        radius={10}
-        method={() => {
-          if (isMediaWatched(media.id)) {
-            removeMediaFromWatchedHandler(media.id);
-          } else {
-            addMediaToWatchedHandler(
-              reduxListMediaObjBuilder(media, mediaType)
-            );
-          }
+    <CustomButton
+      color={isMediaWatched(media.id) ? Colors.stone[50] : Colors.tertiary}
+      height={45}
+      width={"100%"}
+      radius={10}
+      method={() => {
+        if (isMediaWatched(media.id)) {
+          removeMediaFromWatchedHandler(media.id);
+        } else {
+          addMediaToWatchedHandler(reduxListMediaObjBuilder(media, mediaType));
+        }
+      }}
+    >
+      <Ionicons size={18} name={"eye"} color={Colors.stone[500]}></Ionicons>
+      <Text
+        className="ml-1"
+        style={{
+          color: isMediaWatched(media.id)
+            ? Colors.stone[800]
+            : Colors.text_primary,
         }}
       >
-        <Ionicons size={18} name={"eye"} color={Colors.stone[500]}></Ionicons>
-        <Text
-          className="ml-1"
-          style={{
-            color: isMediaWatched(media.id)
-              ? Colors.stone[800]
-              : Colors.text_primary,
-          }}
-        >
-          {" "}
-          Watched
-        </Text>
-      </CustomButton>
-    </View>
+        {" "}
+        Watched
+      </Text>
+    </CustomButton>
   );
 };
 

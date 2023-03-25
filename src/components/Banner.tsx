@@ -15,6 +15,7 @@ import { isMovie } from "./../utils/helpers/helper";
 import { Ionicons } from "@expo/vector-icons";
 import { isoLangs } from "../utils/helpers/isoLangs";
 import { ScrollView } from "react-native-gesture-handler";
+import WatchlistButton from "./ui/WatchlistButton";
 
 interface Props {
   mediaList: MovieMedia[] | TvMedia[];
@@ -172,8 +173,12 @@ function Banner({ mediaList }: Props) {
           </Text>
 
           <View className="flex-row space-x-3">
-            <View className="mt-10">
-              <CustomButton
+            <View className="mt-10 w-[140]">
+              <WatchlistButton
+                media={media}
+                mediaType={isMovie(media) ? "movie" : "tv"}
+              />
+              {/* <CustomButton
                 width={100}
                 height={40}
                 radius={5}
@@ -187,16 +192,16 @@ function Banner({ mediaList }: Props) {
                   <Ionicons name="star-outline" size={12} />
                   <Text className="font-bold">Favorite</Text>
                 </View>
-              </CustomButton>
+              </CustomButton> */}
             </View>
 
-            <View className="mt-10">
+            <View className="mt-10 w-[140]">
               <CustomButton
                 width={140}
-                height={40}
-                radius={5}
-                color={Colors.stone["900"]}
-                border={1}
+                height={45}
+                radius={10}
+                color={Colors.stone["700"]}
+                // border={1}
                 styledClassName="border-stone-800"
                 method={infoButtonPressHandler}
                 shadow={false}

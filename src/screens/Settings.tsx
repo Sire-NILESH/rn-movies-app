@@ -12,8 +12,8 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   const { setDefaultRegionHandler, defaultRegion } = useDefaultRegionHooks();
 
   return (
-    <View className="bg-secondary flex-1 items-center justify-start px-2 space-y-10">
-      <View className="w-full mt-5">
+    <View className="bg-secondary flex-1 items-center justify-start px-3 space-y-10">
+      <View className="w-full mt-6">
         <View className="flex-row space-x-2 items-center mb-2">
           <Ionicons
             name="location-outline"

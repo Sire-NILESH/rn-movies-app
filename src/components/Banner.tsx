@@ -173,7 +173,7 @@ function Banner({ mediaList }: Props) {
           </Text>
 
           <View className="flex-row space-x-3">
-            <View className="mt-10 w-[140]">
+            <View className="mt-5 w-[140]">
               <WatchlistButton
                 media={media}
                 mediaType={isMovie(media) ? "movie" : "tv"}
@@ -195,7 +195,7 @@ function Banner({ mediaList }: Props) {
               </CustomButton> */}
             </View>
 
-            <View className="mt-10 w-[140]">
+            <View className="mt-5 w-[140]">
               <CustomButton
                 width={140}
                 height={45}

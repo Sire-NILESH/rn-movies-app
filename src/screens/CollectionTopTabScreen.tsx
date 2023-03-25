@@ -63,29 +63,3 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
 };
 
 export default memo(CollectionTopTabScreen);
-
-// {/* <View className="flex-1 items-center justify-center bg-stone-800">
-//       <Text className="text-2xl font-bold text-text_primary">
-//         {screenMediaType.toUpperCase()}
-//       </Text>
-//       {screenTypeMedias.map((media) => (
-//         <Text key={media.mediaId} className="font-semibold text-yellow-300">
-//           {media.mediaTitle} {"was added on "}{" "}
-//           {new Date(media.dateAdded).toDateString()}
-//           {/* {new Date(media.dateAdded).toLocaleString()} */}
-//         </Text>
-//       ))}
-//       <StatusBar style="auto" />
-//     </View> */}
-
-// {Object.keys(dateCollection).map((dateKey) => {
-//   if (dateCollection[dateKey].length > 0) {
-//     return (
-//       <CollectionRow
-//         key={dateKey}
-//         title={dateKey}
-//         medias={dateCollection[dateKey]}
-//       />
-//     );
-//   } else null;
-// })}

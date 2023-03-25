@@ -1,5 +1,4 @@
 import IconButton from "../../components/ui/IconButton";
-import TopTabsNavigator from "../../navigators/TopTabsNavigator";
 import FavoritesScreen from "../../screens/Favorite";
 import HomeScreen from "../../screens/Home";
 import MoviesScreen from "../../screens/Movies";
@@ -87,7 +86,7 @@ export const drawerRoutes: IDrawerRouteProps[] = [
       drawerIcon: (props) => {
         return (
           <IconButton
-            name="star-outline"
+            name="heart-outline"
             color={props.color}
             // size={props.size}
             size={20}
@@ -104,7 +103,7 @@ export const drawerRoutes: IDrawerRouteProps[] = [
       drawerIcon: (props) => {
         return (
           <IconButton
-            name="eye"
+            name="eye-outline"
             color={props.color}
             // size={props.size}
             size={20}

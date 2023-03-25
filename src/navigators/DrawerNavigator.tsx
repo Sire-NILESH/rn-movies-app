@@ -35,9 +35,9 @@ const DrawerNavigator = () => {
         },
 
         // Drawer styles
-        // drawerActiveBackgroundColor: "#aa18ea",
-        // drawerInactiveBackgroundColor: "#aa18ea",
-        drawerActiveTintColor: Colors.green[100],
+        // drawerActiveBackgroundColor: Colors.stone[700],
+        // drawerInactiveBackgroundColor: Colors.stone[700],
+        drawerActiveTintColor: Colors.green[300],
         drawerInactiveTintColor: Colors.stone[400],
         drawerAllowFontScaling: true,
         drawerStyle: {

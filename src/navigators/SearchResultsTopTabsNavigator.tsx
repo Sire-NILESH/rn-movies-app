@@ -1,23 +1,20 @@
 import React, { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import "react-native-gesture-handler";
-
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-
-import { topTabRoutes } from "../library/NavigationRoutes/TopTabsRoutes";
 import { Colors } from "../utils/Colors";
-import { TCollectionType } from "../typings";
+import { searchResultsTopTabRoutes } from "../library/NavigationRoutes/SearchResultsTopTabRoutes";
 
 interface IProps {
-  collectionType: TCollectionType;
+  searchQuery: string;
 }
 
 const TopTabs = createMaterialTopTabNavigator();
 
-const TopTabsNavigator: React.FC<IProps> = (props) => {
+const SearchResultsTopTabsNavigator: React.FC<IProps> = (props) => {
   const navigation = useNavigation();
 
-  const screenCollectionType = props.collectionType;
+  const searchQuery = props.searchQuery;
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -39,13 +36,13 @@ const TopTabsNavigator: React.FC<IProps> = (props) => {
       }}
     >
       {/* Laying out all the TopTabs screens from routes */}
-      {topTabRoutes.map((r, i) => (
+      {searchResultsTopTabRoutes.map((r, i) => (
         <TopTabs.Screen key={i} name={r.name}>
           {(props) => {
             return (
               <r.component
                 name={r.name}
-                collectionType={screenCollectionType}
+                searchQuery={searchQuery}
                 screenMediaType={r.screenMediaType}
                 {...props}
               />
@@ -57,4 +54,4 @@ const TopTabsNavigator: React.FC<IProps> = (props) => {
   );
 };
 
-export default TopTabsNavigator;
+export default SearchResultsTopTabsNavigator;

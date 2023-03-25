@@ -96,10 +96,11 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             title={searchQuery}
             searchCategory={searchCategory}
             disabled={
-              searchQueryResult?.results.length &&
-              searchQueryResult?.results.length > 0
-                ? false
-                : true
+              searchQuery && searchQuery.length > 0 ? false : true
+              // searchQueryResult?.results.length &&
+              // searchQueryResult?.results.length > 0
+              //   ? false
+              //   : true
             }
           />
         </View>

@@ -1,12 +1,10 @@
 import React, { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import "react-native-gesture-handler";
-
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-
-import { topTabRoutes } from "../library/NavigationRoutes/TopTabsRoutes";
 import { Colors } from "../utils/Colors";
 import { TCollectionType } from "../typings";
+import { topTabRoutesTileList } from "../library/NavigationRoutes/TopTabRoutesTileList";
 
 interface IProps {
   collectionType: TCollectionType;
@@ -14,7 +12,7 @@ interface IProps {
 
 const TopTabs = createMaterialTopTabNavigator();
 
-const TopTabsNavigator: React.FC<IProps> = (props) => {
+const TopTabsTileListNavigator: React.FC<IProps> = (props) => {
   const navigation = useNavigation();
 
   const screenCollectionType = props.collectionType;
@@ -39,7 +37,7 @@ const TopTabsNavigator: React.FC<IProps> = (props) => {
       }}
     >
       {/* Laying out all the TopTabs screens from routes */}
-      {topTabRoutes.map((r, i) => (
+      {topTabRoutesTileList.map((r, i) => (
         <TopTabs.Screen key={i} name={r.name}>
           {(props) => {
             return (
@@ -57,4 +55,4 @@ const TopTabsNavigator: React.FC<IProps> = (props) => {
   );
 };
 
-export default TopTabsNavigator;
+export default TopTabsTileListNavigator;

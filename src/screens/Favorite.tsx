@@ -1,10 +1,9 @@
 import React from "react";
 import { IDrawerScreenProps } from "../library/NavigatorScreenProps/DrawerScreenProps";
-
-import TopTabsNavigator from "../navigators/TopTabsNavigator";
+import TopTabsTileListNavigator from "../navigators/TopTabsTileListNavigator";
 
 const FavoritesScreen: React.FC<IDrawerScreenProps> = (props) => {
-  return <TopTabsNavigator collectionType="favourites" />;
+  return <TopTabsTileListNavigator collectionType="favourites" />;
 };
 
 export default FavoritesScreen;

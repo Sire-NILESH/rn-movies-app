@@ -6,20 +6,17 @@ import {
   Dimensions,
   ImageBackground,
 } from "react-native";
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect } from "react";
 import { IStackScreenProps } from "../../library/NavigatorScreenProps/StackScreenProps";
 import {
   IReduxListMedia,
   MediaTypes,
-  MovieMedia,
   MovieMediaExtended,
   TvMedia,
   TvMediaExtended,
 } from "../../typings";
 import {
   isMovie,
-  isMovieExtended,
-  isReduxCollectionMedia,
   isTv,
   isTvExtended,
   reduxListMediaObjBuilder,
@@ -31,7 +28,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import TrailerButton from "../ui/TrailerButton";
 import useFetcher from "../../hooks/useFetcher";
-import { getMediaInfo, getTvShowInfo } from "../../utils/requests";
+import { getMediaInfo } from "../../utils/requests";
 import NetworkList from "../NetworkList";
 import WatchProviders from "../WatchProviders";
 import NewMediaCardInfo from "../NewMediaCardInfo";
@@ -40,7 +37,6 @@ import {
   useWatchedMediaListHooks,
   useWatchlistHooks,
 } from "../../hooks/reduxHooks";
-// import ProductionCompaines from "../components/ProductionCompaines";
 
 const screenDimensions = Dimensions.get("screen");
 

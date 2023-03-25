@@ -27,14 +27,3 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 });
-// <ExpoFastImage
-//   uri={imageURL}
-//   cacheKey={
-//     orientation === "portrait"
-//       ? media.id + "poster"
-//       : media.id + "backdrop"
-//   }
-//   resizeMode={"cover"}
-//   style={containerStyles.containerImage}
-//   // style={{ flex: 1 }}
-// />

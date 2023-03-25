@@ -2,7 +2,7 @@ import { View } from "react-native";
 import { useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { MediaTypes, MovieMedia, TvMedia } from "../typings";
-import LoadMoreOnScrollBuilder from "../components/builders/LoadMoreOnScrollBuilder";
+import SearchResultsTopTabsNavigator from "../navigators/SearchResultsTopTabsNavigator";
 
 const SearchTileListScreen: React.FunctionComponent<IStackScreenProps> = (
   props
@@ -32,17 +32,7 @@ const SearchTileListScreen: React.FunctionComponent<IStackScreenProps> = (
   //    abortController: AbortController;
   //  };
 
-  return (
-    <View className="flex-1">
-      <LoadMoreOnScrollBuilder
-        screenType="Search"
-        searchScreenOptions={{
-          searchQuery: title,
-          searchCategory: searchCategory,
-        }}
-      />
-    </View>
-  );
+  return <SearchResultsTopTabsNavigator searchQuery={title} />;
 };
 
 export default SearchTileListScreen;

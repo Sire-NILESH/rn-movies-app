@@ -25,9 +25,10 @@ const SearchInput: React.FC<ISearchInputProps> = (props) => {
   return (
     <View className="flex-1 bg-tertiary min-w-[250] mt-[10]">
       <TextInput
-        placeholder={`Search ${
-          props.searchCategory === "tv" ? "TV shows" : "Movies"
-        }...`}
+        placeholder="Search something..."
+        // placeholder={`Search ${
+        //   props.searchCategory === "tv" ? "TV shows" : "Movies"
+        // }...`}
         className="bg-stone-700 px-6 py-1 rounded-md text-gray-100"
         placeholderTextColor={Colors.stone[400]}
         onChangeText={props.onTextChangeHandler}
@@ -38,7 +39,6 @@ const SearchInput: React.FC<ISearchInputProps> = (props) => {
 };
 
 const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
-  const [logging] = useLogging("Search");
   const { navigation, route } = props;
   // @ts-ignore
   const searchCategory = route.params?.searchCategory as MediaTypes;
@@ -58,7 +58,8 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     async function fetchSearchQuery() {
       const data = await searchRequest(
         searchQuery ? searchQuery : "",
-        searchCategory ? searchCategory : "multi",
+        "multi",
+        // searchCategory ? searchCategory : "multi",
         1,
         abortController
       );
@@ -183,7 +184,12 @@ function renderFlatList(
             <Pressable
               className="flex-1 px-4 py-3"
               onPress={() => {
-                navigateTo(mediaObj.item, "More Info", searchCategory);
+                navigateTo(
+                  mediaObj.item,
+                  "More Info",
+                  isMovie(mediaObj.item) ? "movie" : "tv"
+                );
+                // navigateTo(mediaObj.item, "More Info", searchCategory);
               }}
             >
               <Text className="text-gray-100">

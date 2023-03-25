@@ -10,6 +10,7 @@ import useFetcher from "../hooks/useFetcher";
 import { getWatchProviders } from "../utils/requests";
 import CountriesDropdown from "./ui/CountriesDropdown";
 import ImageCached from "./ui/ImageCached";
+import { useDefaultRegionHooks } from "../hooks/reduxHooks";
 
 interface IProps {
   mediaId: number;
@@ -28,10 +29,9 @@ const WatchProviders: React.FC<IProps> = ({ mediaId, mediaType }) => {
     errorLoadingProps: Error | null;
   } = useFetcher(getWatchProviders, [mediaId, mediaType]);
 
-  const [currentCountry, setCurrentCountry] = useState<ICountry>({
-    name: "United States",
-    code: "US",
-  });
+  const { setDefaultRegionHandler, defaultRegion } = useDefaultRegionHooks();
+
+  const [currentCountry, setCurrentCountry] = useState<ICountry>(defaultRegion);
 
   const setCountryHandler = (country: ICountry) => {
     setCurrentCountry(country);
@@ -43,7 +43,15 @@ const WatchProviders: React.FC<IProps> = ({ mediaId, mediaType }) => {
 
   return (
     <View className="flex-1 mt-16 space-y-5">
-      <View className="w-full">
+      <View
+        className="flex-row  items-center justify-between px-4 mt-2 mx-2 bg-accent rounded-xl"
+        // style={{ backgroundColor: "rgb(4, 20, 10)" }}
+        style={{ backgroundColor: "rgb(4, 20, 10)" }}
+      >
+        <Text className="text-text_tertiary mx-4">
+          Watch providers for this in{" "}
+        </Text>
+
         <CountriesDropdown
           currentCountry={currentCountry}
           setCountryHandler={setCountryHandler}

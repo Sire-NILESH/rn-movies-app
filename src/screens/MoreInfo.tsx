@@ -1,3 +1,4 @@
+import React, { memo } from "react";
 import {
   View,
   Text,
@@ -65,7 +66,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: getTitle(),
-      headerRight: (props) => {
+      headerRight: () => {
         return (
           <FavouriteMediaButton
             media={media}
@@ -229,4 +230,4 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   );
 };
 
-export default MoreInfoScreen;
+export default memo(MoreInfoScreen);

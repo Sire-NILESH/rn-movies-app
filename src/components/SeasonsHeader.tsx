@@ -32,20 +32,29 @@ const SeasonsHeader: React.FC<IProps> = (props) => {
       {/* <View className="flex-1"> */}
       <FlatList
         horizontal
+        showsHorizontalScrollIndicator={false}
         data={props.tvMediaSeasons}
         keyExtractor={(item) => String(item.id)}
         renderItem={(itemObj) => {
           return (
-            <View className="flex-1 flex-row items-center">
-              <SeasonTag
-                seasonNumber={itemObj.item.season_number}
-                selectedSeasonNumber={props.selectedSeason.season_number}
-                onPressHandler={onPresshandler}
-              />
+            <View className="flex-1 flex-row items-center divide-x-2 divide-stone-700">
+              <View
+                className="border-stone-700"
+                style={{
+                  borderRightWidth:
+                    itemObj.index != props.tvMediaSeasons.length - 1 ? 2 : 0,
+                }}
+              >
+                <SeasonTag
+                  seasonNumber={itemObj.item.season_number}
+                  selectedSeasonNumber={props.selectedSeason.season_number}
+                  onPressHandler={onPresshandler}
+                />
+              </View>
               {/* Divider */}
-              {itemObj.index != props.tvMediaSeasons.length - 1 ? (
+              {/* {itemObj.index != props.tvMediaSeasons.length - 1 ? (
                 <View className="border border-stone-700 h-6 w-[1px] rounded-full" />
-              ) : null}
+              ) : null} */}
             </View>
           );
         }}
@@ -67,6 +76,7 @@ function SeasonTag(props: ISeasonTagProps) {
   return (
     <Pressable
       onPress={() => props.onPressHandler(props.seasonNumber)}
+      android_ripple={{ color: "#e9e9e9" }}
       className="flex-1 mx-2 px-4 h-8 items-center justify-center"
     >
       <Text className="text-text_highLight uppercase tracking-[2px] font-semibold px-1">

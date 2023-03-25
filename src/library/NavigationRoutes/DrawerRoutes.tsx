@@ -2,6 +2,7 @@ import IconButton from "../../components/ui/IconButton";
 import FavoritesScreen from "../../screens/Favorite";
 import HomeScreen from "../../screens/Home";
 import MoviesScreen from "../../screens/Movies";
+import SettingsScreen from "../../screens/Settings";
 import TvShowsScreen from "../../screens/TvShows";
 import WatchedScreen from "../../screens/Watched";
 import WatchlistScreen from "../../screens/Watchlist";
@@ -108,6 +109,18 @@ export const drawerRoutes: IDrawerRouteProps[] = [
             // size={props.size}
             size={20}
           />
+        );
+      },
+    },
+  },
+  {
+    name: "Settings",
+    component: SettingsScreen,
+    options: {
+      title: "Settings",
+      drawerIcon: (props) => {
+        return (
+          <IconButton name="settings-outline" color={props.color} size={20} />
         );
       },
     },

@@ -11,7 +11,10 @@ import DrawerNavigator from "./src/navigators/DrawerNavigator";
 import { store } from "./src/store/store";
 import { Provider } from "react-redux";
 import { stackRoutes } from "./src/library/NavigationRoutes/StackRoutes";
+import { useEffect, useState } from "react";
+import { initDB } from "./src/database/database";
 // import * as SplashScreen from "expo-splash-screen";
+import Loader from "./src/components/ui/Loader";
 
 // Keep the splash screen visible while we fetch resources
 // SplashScreen.preventAutoHideAsync();
@@ -20,6 +23,22 @@ import { stackRoutes } from "./src/library/NavigationRoutes/StackRoutes";
 const Stack = createStackNavigator();
 
 export default function App() {
+  const [dbInitialized, setDbInitialized] = useState(false);
+
+  useEffect(() => {
+    initDB()
+      .then(() => {
+        setDbInitialized(true);
+      })
+      .catch((err) => {
+        console.log(err); //can handle the err better by showing something usefull
+      });
+  }, []);
+
+  if (!dbInitialized) {
+    return <Loader loading={dbInitialized} />; //this compo increases the splash loading screen
+  }
+
   // It is very important to enable this for better performance when your application has too many screens stacked. This will enable the nstive OS to figure out how to efficiently manage stack screens that are under the current stack. Without this it uses a default R.N Views to render screens which is really not very perfomant in this situation.
   // https://github.com/software-mansion/react-native-screens
   // https://docs.expo.dev/versions/latest/sdk/screens/#api

@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { getDeviceDimensions } from "../utils/helpers/helper";
 
 import CollectionThumbnail from "./CollectionThumbnail";
+import React from "react";
 
 interface Props {
   title: string;
@@ -24,7 +25,7 @@ function CollectionRow({ title, medias }: Props) {
   );
 }
 
-export default CollectionRow;
+export default React.memo(CollectionRow);
 
 function renderFlatList(medias: IReduxListMedia[], title: string) {
   const navigation = useNavigation();

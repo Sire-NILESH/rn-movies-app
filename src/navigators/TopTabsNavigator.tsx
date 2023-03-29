@@ -7,6 +7,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { topTabRoutes } from "../library/NavigationRoutes/TopTabsRoutes";
 import { Colors } from "../utils/Colors";
 import { TCollectionType } from "../typings";
+import { getMediaFromCollection } from "./../database/database";
 
 interface IProps {
   collectionType: TCollectionType;

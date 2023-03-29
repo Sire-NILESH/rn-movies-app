@@ -11,8 +11,9 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import ImageCached from "./ui/ImageCached";
 import ImagePlaceholder from "./ui/ImagePlaceholder";
+import React from "react";
 
-export interface IThumbnailProps {
+export interface ICollectionThumbnailProps {
   media: IReduxListMedia;
   orientation: "portrait" | "landscape";
   windowWidth: number;
@@ -24,7 +25,7 @@ function CollectionThumbnail({
   orientation,
   windowWidth,
   navigateTo,
-}: IThumbnailProps) {
+}: ICollectionThumbnailProps) {
   const thumbnailDimensions = {
     landscape: {
       width: 245,
@@ -151,4 +152,4 @@ function CollectionThumbnail({
   );
 }
 
-export default CollectionThumbnail;
+export default React.memo(CollectionThumbnail);

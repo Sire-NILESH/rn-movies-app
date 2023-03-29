@@ -251,6 +251,10 @@ export type TCollectionToTReduxCollection = {
   [key in TCollectionType]: keyof RootState;
 };
 
+// export type TCollectionToTableCollection = {
+//   [key in TCollectionType]: keyof RootState;
+// };
+
 export interface Element {
   type:
     | "Bloopers"

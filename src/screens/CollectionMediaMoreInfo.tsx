@@ -76,13 +76,13 @@ const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
         return (
           <FavouriteMediaButton
             media={media}
-            mediaId={collectionMedia.mediaId}
+            mediaId={collectionMedia.mediaId || media.id}
             mediaType={mediaType}
           />
         );
       },
     });
-  }, [FavouriteMediaButton]);
+  }, [media]);
 
   console.log("Media from collection more info", media);
 

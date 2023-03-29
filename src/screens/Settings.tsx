@@ -1,10 +1,12 @@
 import React, { memo } from "react";
-import { Text, View } from "react-native";
+import { Text, View, Button } from "react-native";
 import { IDrawerScreenProps } from "../library/NavigatorScreenProps/DrawerScreenProps";
 import CountriesDropdown from "../components/ui/CountriesDropdown";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
 import { useDefaultRegionHooks } from "../hooks/reduxHooks";
+import { deleteCollection, getAllFromCollection } from "../database/database";
+import { initDB } from "./../database/database";
 
 const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   const { navigation, route } = props;
@@ -21,10 +23,10 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
             size={24}
           ></Ionicons>
           <View>
-            <Text className="text-text_highLight font-semibold text-lg">
+            <Text className="text-text_highLight font-semibold mb-1">
               Default region
             </Text>
-            <Text className="text-text_dark">
+            <Text className="text-text_dark text-sm">
               A default region for the watch providers.
             </Text>
           </View>
@@ -43,6 +45,52 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
         </View>
       </View>
       {/* <Text className="text-stone-700 font-bold text-3xl">Settings Screen</Text> */}
+      <View className="mt-20 items-center justify-center flex-row">
+        <Button
+          title="AAAAAAll table Data"
+          color={"black"}
+          onPress={() => {
+            try {
+              getAllFromCollection().then((data) => {
+                console.log(
+                  "All data from DB, settings screen",
+                  data["rows"]["_array"]
+                );
+              });
+            } catch (err) {
+              console.log(err);
+            }
+          }}
+        />
+        <Button
+          title="Create table"
+          color={"black"}
+          onPress={() => {
+            try {
+              async function createDB() {
+                await initDB();
+              }
+              createDB();
+            } catch (err) {
+              console.log(err);
+            }
+          }}
+        />
+        <Button
+          title="Delete table"
+          color={"black"}
+          onPress={() => {
+            try {
+              async function deleteTable() {
+                await deleteCollection();
+              }
+              deleteTable();
+            } catch (err) {
+              console.log(err);
+            }
+          }}
+        />
+      </View>
     </View>
   );
 };

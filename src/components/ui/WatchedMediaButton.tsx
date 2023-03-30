@@ -12,6 +12,10 @@ import {
   TvMediaExtended,
 } from "../../typings";
 import { reduxListMediaObjBuilder } from "../../utils/helpers/helper";
+import {
+  deleteMediaFromCollection,
+  insertMediaToCollection,
+} from "../../database/database";
 
 interface IProps {
   media: MovieMediaExtended | TvMediaExtended | MovieMedia | TvMedia;
@@ -25,6 +29,25 @@ const WatchedMediaButton: React.FC<IProps> = ({ media, mediaType }) => {
     isMediaWatched,
   } = useWatchedMediaListHooks();
 
+  const addToDBHandler = async () => {
+    try {
+      await insertMediaToCollection(
+        reduxListMediaObjBuilder(media, mediaType),
+        "watched"
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const removeFromDBHandler = async () => {
+    try {
+      await deleteMediaFromCollection(media.id, mediaType, "watched");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <CustomButton
       color={isMediaWatched(media.id) ? Colors.stone[50] : Colors.tertiary}
@@ -33,9 +56,11 @@ const WatchedMediaButton: React.FC<IProps> = ({ media, mediaType }) => {
       radius={10}
       method={() => {
         if (isMediaWatched(media.id)) {
-          removeMediaFromWatchedHandler(media.id);
+          removeFromDBHandler();
+          // removeMediaFromWatchedHandler(media.id);
         } else {
-          addMediaToWatchedHandler(reduxListMediaObjBuilder(media, mediaType));
+          addToDBHandler();
+          // addMediaToWatchedHandler(reduxListMediaObjBuilder(media, mediaType));
         }
       }}
     >

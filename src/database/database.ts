@@ -1,10 +1,15 @@
 import * as SQlite from "expo-sqlite";
-import { IReduxListMedia, MediaTypes, TCollectionType } from "../typings";
+import {
+  IReduxListMedia,
+  MediaTypes,
+  TCollectionType,
+  TDbCollectionType,
+} from "../typings";
 
 const database = SQlite.openDatabase("mediaCollection.db");
 
 // "watchlist" | "favourites" | "watched";
-const mapper: { [key in TCollectionType]: string } = {
+const mapper: { [key in TCollectionType]: TDbCollectionType } = {
   watchlist: "isWatchlist",
   favourites: "isFavourite",
   watched: "isWatched",
@@ -16,7 +21,7 @@ export function initDB() {
     database.transaction((tx) => {
       tx.executeSql(
         `CREATE TABLE IF NOT EXISTS mediaCollection (
-          mediaId REAL PRIMARY KEY,
+          mediaId REAL,
           mediaType TEXT,
           dateAdded REAL,
           dateAddedString TEXT,
@@ -26,7 +31,8 @@ export function initDB() {
           backdrop_path TEXT NULL,
           isFavourite BOOLEAN,
           isWatchlist BOOLEAN,
-          isWatched BOOLEAN
+          isWatched BOOLEAN,
+          PRIMARY KEY (mediaId, mediaType)
          ) `,
         [],
         () => {
@@ -113,16 +119,17 @@ export function getMediaFromCollection(
 
   console.log("pppaaarraaams", mediaType, collectionColumn);
 
+  // ? for parameters are only applicable when it is a value and not a table/column name. we added the column name dynamically but in an unconventional way of doing it by string interpolation. But it is strictly typed.
   const promise = new Promise<SQlite.SQLResultSet>((resolve, reject) => {
     database.transaction((tx) => {
       tx.executeSql(
         `SELECT *
          FROM mediaCollection
-         WHERE mediaType = "tv"
-         AND isWatchlist = "TRUE"
+         WHERE mediaType = ? 
+         AND ${collectionColumn} = "TRUE"
          ORDER BY dateAdded DESC
         `,
-        [],
+        [mediaType],
         // [mediaType, collectionColumn],
         (_, results) => {
           console.log("Got data from table");
@@ -246,10 +253,10 @@ export async function deleteMediaFromCollection(
       tx.executeSql(
         `
       UPDATE mediaCollection
-      SET ? = "FALSE"
+      SET ${collectionColumn} = "FALSE"
       WHERE mediaId = ? AND mediaType = ?
       `,
-        [collectionColumn, mediaId, mediaType],
+        [mediaId, mediaType],
         () => {
           console.log("REMOVED data from COLLECTION");
           resolve();
@@ -274,7 +281,7 @@ export async function deleteMediaFromCollection(
       DELETE FROM mediaCollection 
       WHERE mediaId = ? 
             AND mediaType = ? 
-            AND isFavorite = "FALSE"
+            AND isFavourite = "FALSE"
             AND isWatchlist = "FALSE"
             AND isWatched = "FALSE"
       `,

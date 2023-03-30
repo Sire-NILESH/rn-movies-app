@@ -47,13 +47,13 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
       {/* <Text className="text-stone-700 font-bold text-3xl">Settings Screen</Text> */}
       <View className="mt-20 items-center justify-center flex-row">
         <Button
-          title="AAAAAAll table Data"
+          title="All table Data"
           color={"black"}
           onPress={() => {
             try {
               getAllFromCollection().then((data) => {
                 console.log(
-                  "All data from DB, settings screen",
+                  "AAAAAAll data from DB, settings screen",
                   data["rows"]["_array"]
                 );
               });

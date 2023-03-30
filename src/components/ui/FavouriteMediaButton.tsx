@@ -11,6 +11,10 @@ import CustomButton from "./CustomButton";
 import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../../utils/Colors";
+import {
+  deleteMediaFromCollection,
+  insertMediaToCollection,
+} from "../../database/database";
 
 interface IProps {
   mediaId: number;
@@ -29,6 +33,25 @@ const FavouriteMediaButton: React.FC<IProps> = ({
     isMediaFavourite,
   } = useFavouriteMediaListHooks();
 
+  const addToDBHandler = async () => {
+    try {
+      await insertMediaToCollection(
+        reduxListMediaObjBuilder(media, mediaType),
+        "favourites"
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const removeFromDBHandler = async () => {
+    try {
+      await deleteMediaFromCollection(media.id, mediaType, "favourites");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <View className="pr-1">
       <CustomButton
@@ -38,11 +61,13 @@ const FavouriteMediaButton: React.FC<IProps> = ({
         radius={1000}
         method={() => {
           if (isMediaFavourite(mediaId)) {
-            removeMediaFromFavouriteHandler(mediaId);
+            removeFromDBHandler();
+            // removeMediaFromFavouriteHandler(mediaId);
           } else {
-            addMediaToFavouriteHandler(
-              reduxListMediaObjBuilder(media, mediaType)
-            );
+            addToDBHandler();
+            // addMediaToFavouriteHandler(
+            //   reduxListMediaObjBuilder(media, mediaType)
+            // );
           }
         }}
       >

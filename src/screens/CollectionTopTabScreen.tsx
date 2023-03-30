@@ -48,7 +48,6 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
     // if (navigation.isFocused()) {
     if (refresh) {
       console.log("i ran");
-      console.log(navigation);
       setMedias(reduxMedias);
     }
     // setMedias(data);
@@ -82,6 +81,17 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
 
   // It is also important to memoize the render item function for better performance.
   // CollectionRow was memoized, so now when newer media is added, only the part concerning that will be re exe and not everything else.
+
+  useEffect(() => {
+    getMediaFromCollection(screenMediaType, collectionType).then((data) => {
+      // console.log("AAYYYOOO data from DB", data);
+      console.log(
+        "AAYYYOOO " + collectionType + " data from DB",
+        data["rows"]["_array"]
+      );
+      console.log("Length :", data.rows.length);
+    });
+  }, [refresh]);
 
   return (
     <View className="flex-1 bg-secondary">

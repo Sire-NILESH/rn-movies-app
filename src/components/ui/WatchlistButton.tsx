@@ -14,7 +14,10 @@ import {
   TvMediaExtended,
 } from "../../typings";
 import { reduxListMediaObjBuilder } from "../../utils/helpers/helper";
-import { insertMediaToCollection } from "../../database/database";
+import {
+  deleteMediaFromCollection,
+  insertMediaToCollection,
+} from "../../database/database";
 
 interface IProps {
   media: MovieMediaExtended | TvMediaExtended | MovieMedia | TvMedia;
@@ -48,13 +51,23 @@ const WatchlistButton: React.FC<IProps> = ({ media, mediaType }) => {
   //   // }
   // }, [isWatchListed]);
 
-  const addToDBHandler = async (
-    media: MovieMediaExtended | MovieMedia | TvMediaExtended | TvMedia
-  ) => {
-    await insertMediaToCollection(
-      reduxListMediaObjBuilder(media, mediaType),
-      "watchlist"
-    );
+  const addToDBHandler = async () => {
+    try {
+      await insertMediaToCollection(
+        reduxListMediaObjBuilder(media, mediaType),
+        "watchlist"
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const removeFromDBHandler = async () => {
+    try {
+      await deleteMediaFromCollection(media.id, mediaType, "watchlist");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -67,14 +80,15 @@ const WatchlistButton: React.FC<IProps> = ({ media, mediaType }) => {
         if (isWatchListed) {
           setIsWatchlistedHandler();
 
+          removeFromDBHandler();
           removeMediaFromWatchlistHandler(media.id);
         } else {
           setIsWatchlistedHandler();
-          // addToDBHandler(media);
+          addToDBHandler();
 
-          addMediaToWatchlistHandler(
-            reduxListMediaObjBuilder(media, mediaType)
-          );
+          // addMediaToWatchlistHandler(
+          //   reduxListMediaObjBuilder(media, mediaType)
+          // );
         }
       }}
 

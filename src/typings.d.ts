@@ -247,6 +247,8 @@ interface IReduxListMedia {
 
 export type TCollectionType = "watchlist" | "favourites" | "watched";
 
+export type TDbCollectionType = "isWatchlist" | "isFavourite" | "isWatched";
+
 export type TCollectionToTReduxCollection = {
   [key in TCollectionType]: keyof RootState;
 };

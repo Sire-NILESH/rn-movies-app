@@ -1,22 +1,21 @@
 import { View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import CustomButton from "./CustomButton";
-import { useWatchlistHooks } from "../../hooks/reduxHooks";
+// import { useWatchlistHooks } from "../../hooks/reduxHooks";
 import { Colors } from "../../utils/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import {
-  IReduxListMedia,
   MediaTypes,
   MovieMedia,
   MovieMediaExtended,
-  TCollectionType,
   TvMedia,
   TvMediaExtended,
 } from "../../typings";
 import { reduxListMediaObjBuilder } from "../../utils/helpers/helper";
 import {
-  deleteMediaFromCollection,
   insertMediaToCollection,
+  mediaExistsInCollection,
+  removeMediaFromCollection,
 } from "../../database/database";
 
 interface IProps {
@@ -25,19 +24,35 @@ interface IProps {
 }
 
 const WatchlistButton: React.FC<IProps> = ({ media, mediaType }) => {
-  const {
-    addMediaToWatchlistHandler,
-    removeMediaFromWatchlistHandler,
-    isMediaWatchlisted,
-  } = useWatchlistHooks();
+  // const {
+  //   addMediaToWatchlistHandler,
+  //   removeMediaFromWatchlistHandler,
+  //   isMediaWatchlisted,
+  // } = useWatchlistHooks();
 
-  const [isWatchListed, setIsWatchlisted] = useState<Boolean>(
-    isMediaWatchlisted(media.id)
-  );
+  const [isWatchListed, setIsWatchlisted] = useState<Boolean>(false);
 
   const setIsWatchlistedHandler = () => {
     setIsWatchlisted((prev) => !prev);
   };
+
+  useEffect(() => {
+    const isWatchlistedInDB = async () => {
+      try {
+        const booleanResult = await mediaExistsInCollection(
+          media.id,
+          mediaType,
+          "watchlist"
+        );
+        console.log(booleanResult);
+        setIsWatchlisted(booleanResult);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    isWatchlistedInDB();
+  }, [media]);
 
   // useEffect(() => {
   //   if (isWatchListed) {
@@ -64,7 +79,7 @@ const WatchlistButton: React.FC<IProps> = ({ media, mediaType }) => {
 
   const removeFromDBHandler = async () => {
     try {
-      await deleteMediaFromCollection(media.id, mediaType, "watchlist");
+      await removeMediaFromCollection(media.id, mediaType, "watchlist");
     } catch (err) {
       console.log(err);
     }
@@ -79,9 +94,8 @@ const WatchlistButton: React.FC<IProps> = ({ media, mediaType }) => {
       method={() => {
         if (isWatchListed) {
           setIsWatchlistedHandler();
-
           removeFromDBHandler();
-          removeMediaFromWatchlistHandler(media.id);
+          // removeMediaFromWatchlistHandler(media.id);
         } else {
           setIsWatchlistedHandler();
           addToDBHandler();
@@ -115,7 +129,7 @@ const WatchlistButton: React.FC<IProps> = ({ media, mediaType }) => {
         <Ionicons
           size={18}
           // name="list"
-          name={isWatchListed ? "list" : "add"}
+          name={isWatchListed ? "checkmark" : "add"}
           // name={isMediaWatchlisted(media.id) ? "checkmark" : "add"}
           color={Colors.stone[500]}
         ></Ionicons>

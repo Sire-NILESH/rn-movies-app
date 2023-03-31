@@ -1,25 +1,17 @@
 import React, { useEffect, useState, memo } from "react";
-import { View, Text } from "react-native";
-import { useAppSelector } from "../hooks/reduxHooks";
+import { View } from "react-native";
 
 import { ITopTabScreenProps } from "../library/NavigatorScreenProps/TopTabScreenProps";
-import {
-  collectionTypeToReduxCollection,
-  getDeviceDimensions,
-} from "../utils/helpers/helper";
+import { getDeviceDimensions } from "../utils/helpers/helper";
 import { FlatList } from "react-native-gesture-handler";
 import CollectionThumbnail from "../components/CollectionThumbnail";
-import { IReduxListMedia } from "../typings";
+import { IDBCollectionMedia } from "../typings";
+import { getMediasFromCollection } from "../database/database";
 
 const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
   const { navigation, route, collectionType, screenMediaType } = props;
 
-  const reduxCollection = collectionTypeToReduxCollection[collectionType];
-
-  // REDUX TOOLKIT HOOKS
-  let reduxMedias = useAppSelector((state) => state[reduxCollection]);
-  // use this medias instead of the redux's useSelector data because it will always cause the screen to re exe on every addition of media to the collection even if the screen is not visible to the user. We will only add data to the existing medias array only if the screen is visible to the user which is known by the refresh state.
-  const [medias, setMedias] = useState<IReduxListMedia[]>([]);
+  const [medias, setMedias] = useState<IDBCollectionMedia[]>([]);
   const [refresh, setRefresh] = useState(false);
 
   // Navigation handler for child components like thumbnail and jumpTo button. So every one of them wont have to calculate them separately.
@@ -49,24 +41,21 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
 
   // Prepare all the heavylifting/building data for the render only when screen was focused/in-front-of-the-user which is kown by the refresh state.
   useEffect(() => {
-    // if (navigation.isFocused()) {
     if (refresh) {
-      console.log("i ran");
-
-      const data = Object.values(reduxMedias)
-        .filter((medias) => medias.mediaType === screenMediaType)
-        .sort((a, b) => b.dateAdded - a.dateAdded);
-      setMedias(data);
+      getMediasFromCollection(screenMediaType, collectionType).then((data) => {
+        console.log(
+          `AAYYYOOO ${data.rows.length} ${collectionType} data from DB`,
+          data["rows"]["_array"]
+        );
+        setMedias(data.rows._array);
+      });
     }
-    // setMedias(data);
   }, [refresh]);
-
-  // it is also very important to memoize the render item
 
   return (
     <View className="flex-1 bg-secondary">
       <View className="flex-1 items-center">
-        {medias?.length > 0 && refresh ? (
+        {medias?.length > 0 ? (
           <FlatList
             bounces
             data={medias}

@@ -63,7 +63,7 @@ const TrailerVideoThumbnail: React.FC<IProps> = (props) => {
             aspectRatio: 16 / 9,
           }}
         >
-          <View className="flex-col items-start justify-between w-full">
+          <View className="flex-col items-start justify-between w-full ml-2 mb-1">
             <Text className="bg-lime-300 px-2 py-1 rounded-full text-gray-900 text-[11px] mb-2">
               {props.video.type}
             </Text>

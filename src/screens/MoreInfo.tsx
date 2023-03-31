@@ -15,7 +15,12 @@ import {
   TvMedia,
   TvMediaExtended,
 } from "../typings";
-import { isMovie, isTv, isTvExtended } from "./../utils/helpers/helper";
+import {
+  isMovie,
+  isMovieExtended,
+  isTv,
+  isTvExtended,
+} from "./../utils/helpers/helper";
 import { Colors } from "./../utils/Colors";
 import GenreTags from "./../components/GenreTags";
 import { LinearGradient } from "expo-linear-gradient";
@@ -29,12 +34,14 @@ import WatchlistButton from "../components/ui/WatchlistButton";
 import WatchedMediaButton from "../components/ui/WatchedMediaButton";
 import MoreInfoFooterButton from "../components/ui/MoreInfoFooterButton";
 import FavouriteMediaButton from "../components/ui/FavouriteMediaButton";
+import Loader from "./../components/ui/Loader";
+import NothingToShow from "../components/NothingToShow";
 
 const screenDimensions = Dimensions.get("screen");
 
 const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const { navigation, route } = props;
-  let media: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended =
+  let prevMedia: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended =
     // @ts-ignore
     route.params?.media;
 
@@ -44,23 +51,23 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   let extendedMedia;
 
   const {
-    screenProps,
-    // loadingProps,
+    screenProps: media,
+    loadingProps,
     errorLoadingProps,
   }: {
     screenProps: TvMediaExtended | MovieMediaExtended;
-    // loadingProps: boolean;
+    loadingProps: boolean;
     errorLoadingProps: Error | null;
-  } = useFetcher(getMediaInfo, [media.id, mediaType]);
+  } = useFetcher(getMediaInfo, [prevMedia.id, mediaType]);
 
-  extendedMedia = Object.assign(media, screenProps);
+  extendedMedia = media;
 
   function getTitle(): string {
-    if ("title" in media) return media.title;
-    return media.name;
+    if ("title" in prevMedia) return prevMedia.title;
+    return prevMedia.name;
   }
 
-  const mediaPosterPath = media?.poster_path || media?.backdrop_path;
+  const mediaPosterPath = prevMedia?.poster_path || prevMedia?.backdrop_path;
 
   // Header settings
   useLayoutEffect(() => {
@@ -69,8 +76,8 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       headerRight: () => {
         return (
           <FavouriteMediaButton
-            media={media}
-            mediaId={media.id}
+            media={prevMedia || media}
+            mediaId={prevMedia.id || media.id}
             mediaType={mediaType}
           />
         );
@@ -80,6 +87,14 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
   return (
     <View className="flex-1 bg-secondary">
+      {/* Loader */}
+      <Loader loading={loadingProps} />
+
+      {/* {Error } */}
+      {errorLoadingProps ? (
+        <NothingToShow title={"Something went wrong"} />
+      ) : null}
+
       {media && (
         <ScrollView className="flex-1 pb-24">
           {/* BackDrop Image */}
@@ -126,23 +141,34 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
                     {media.original_title}
                   </Text>
                 </Text>
-              ) : !isMovie(media) && media.original_name !== media.name ? (
-                <Text className="text-sm text-text_tertiary pt-2">
+              ) : isTv(media) && media.original_name !== media.name ? (
+                <Text className="text-sm text-text_tertiary pt-2 h-7">
                   Original Title:{"  "}
                   <Text className="text-text_primary">
                     {media.original_name}
+                  </Text>
+                </Text>
+              ) : (isTv(media) || isMovie(media)) && media.tagline ? (
+                <Text className="text-sm text-text_tertiary pt-2 h-7">
+                  <Text className="text-text_tertiary">
+                    {(isTvExtended(media) || isMovieExtended(media)) &&
+                      media.tagline}
                   </Text>
                 </Text>
               ) : null}
             </View>
 
             {/* Genre Tags Row */}
-            <View className="w-full h-10 justify-center items-center mt-5">
-              <GenreTags
-                genreIdList={media.genre_ids}
-                backgroundType="transparent"
-              />
-            </View>
+
+            {media.genres.length > 0 ? (
+              <View className="w-full h-10 justify-center items-center mt-5">
+                <GenreTags
+                  genreIdList={media.genres.map((genre) => genre.id)}
+                  // genreIdList={media.genre_ids}
+                  backgroundType="transparent"
+                />
+              </View>
+            ) : null}
 
             {/* MEDIA IMAGE WITH STATS */}
             <NewMediaCardInfo media={media} />

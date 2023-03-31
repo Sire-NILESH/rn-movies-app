@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CustomButton from "./CustomButton";
-import { useWatchedMediaListHooks } from "../../hooks/reduxHooks";
+// import { useWatchedMediaListHooks } from "../../hooks/reduxHooks";
 import { Colors } from "../../utils/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import {
@@ -13,8 +13,9 @@ import {
 } from "../../typings";
 import { reduxListMediaObjBuilder } from "../../utils/helpers/helper";
 import {
-  deleteMediaFromCollection,
   insertMediaToCollection,
+  mediaExistsInCollection,
+  removeMediaFromCollection,
 } from "../../database/database";
 
 interface IProps {
@@ -23,11 +24,35 @@ interface IProps {
 }
 
 const WatchedMediaButton: React.FC<IProps> = ({ media, mediaType }) => {
-  const {
-    addMediaToWatchedHandler,
-    removeMediaFromWatchedHandler,
-    isMediaWatched,
-  } = useWatchedMediaListHooks();
+  // const {
+  //   addMediaToWatchedHandler,
+  //   removeMediaFromWatchedHandler,
+  //   isMediaWatched,
+  // } = useWatchedMediaListHooks();
+
+  const [isWatched, setIsWatched] = useState<Boolean>(false);
+
+  const setIsWatchedHandler = () => {
+    setIsWatched((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const isWatchlistedInDB = async () => {
+      try {
+        const booleanResult = await mediaExistsInCollection(
+          media.id,
+          mediaType,
+          "watched"
+        );
+        console.log(booleanResult);
+        setIsWatched(booleanResult);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    isWatchlistedInDB();
+  }, [media]);
 
   const addToDBHandler = async () => {
     try {
@@ -42,7 +67,7 @@ const WatchedMediaButton: React.FC<IProps> = ({ media, mediaType }) => {
 
   const removeFromDBHandler = async () => {
     try {
-      await deleteMediaFromCollection(media.id, mediaType, "watched");
+      await removeMediaFromCollection(media.id, mediaType, "watched");
     } catch (err) {
       console.log(err);
     }
@@ -50,16 +75,18 @@ const WatchedMediaButton: React.FC<IProps> = ({ media, mediaType }) => {
 
   return (
     <CustomButton
-      color={isMediaWatched(media.id) ? Colors.stone[50] : Colors.tertiary}
+      color={isWatched ? Colors.stone[50] : Colors.tertiary}
       height={45}
       width={"100%"}
       radius={10}
       method={() => {
-        if (isMediaWatched(media.id)) {
+        if (isWatched) {
+          setIsWatchedHandler();
           removeFromDBHandler();
           // removeMediaFromWatchedHandler(media.id);
         } else {
           addToDBHandler();
+          setIsWatchedHandler();
           // addMediaToWatchedHandler(reduxListMediaObjBuilder(media, mediaType));
         }
       }}
@@ -68,9 +95,7 @@ const WatchedMediaButton: React.FC<IProps> = ({ media, mediaType }) => {
       <Text
         className="ml-1"
         style={{
-          color: isMediaWatched(media.id)
-            ? Colors.stone[800]
-            : Colors.text_primary,
+          color: isWatched ? Colors.stone[800] : Colors.text_primary,
         }}
       >
         {" "}

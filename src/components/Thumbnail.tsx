@@ -90,8 +90,8 @@ function Thumbnail({
             imageURL={imageURL}
             cacheKey={
               orientation === "portrait"
-                ? media.id + "poster"
-                : media.id + "backdrop"
+                ? `${media.id}-${isMovie(media) ? "movie" : "tv"}-poster`
+                : `${media.id}-${isMovie(media) ? "movie" : "tv"}-backdrop`
             }
           />
         ) : (

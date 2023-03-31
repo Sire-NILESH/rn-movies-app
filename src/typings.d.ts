@@ -245,9 +245,13 @@ interface IReduxListMedia {
   backdrop_path?: string;
 }
 
+export interface IDBCollectionMedia extends IReduxListMedia {
+  dateAddedString: string;
+}
+
 export type TCollectionType = "watchlist" | "favourites" | "watched";
 
-export type TDbCollectionType = "isWatchlist" | "isFavourite" | "isWatched";
+export type TDbCollectionType = "watchlist" | "favourites" | "watched";
 
 export type TCollectionToTReduxCollection = {
   [key in TCollectionType]: keyof RootState;

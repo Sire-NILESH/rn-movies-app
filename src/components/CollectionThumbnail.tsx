@@ -12,6 +12,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import ImageCached from "./ui/ImageCached";
 import ImagePlaceholder from "./ui/ImagePlaceholder";
 import React from "react";
+import { isMovie } from "../utils/helpers/helper";
 
 export interface ICollectionThumbnailProps {
   media: IReduxListMedia;
@@ -96,8 +97,8 @@ function CollectionThumbnail({
             imageURL={imageURL}
             cacheKey={
               orientation === "portrait"
-                ? media.mediaId + "poster"
-                : media.mediaId + "backdrop"
+                ? `${media.mediaId}-${media.mediaType}-poster`
+                : `${media.mediaId}-${media.mediaType}-backdrop`
             }
           />
         ) : (

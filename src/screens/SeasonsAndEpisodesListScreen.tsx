@@ -12,6 +12,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import EpisodeInfoCard from "../components/EpisodeInfoCard";
 import NothingToShow from "../components/NothingToShow";
 import { showErrorAlert } from "../utils/helpers/helper";
+import Loader from "../components/ui/Loader";
 
 const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   IStackScreenProps
@@ -90,6 +91,13 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
 
   return (
     <View className="flex-1 bg-secondary pb-4">
+      {/* Loader */}
+      {loadingProps && (
+        <View className="h-full z-40">
+          <Loader loading={loadingProps} />
+        </View>
+      )}
+
       {errorLoadingProps ? (
         <View className="flex-1">
           <NothingToShow title="Something went wrong while loading content" />
@@ -135,24 +143,37 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                         style={{ width: "100%", height: "100%" }}
                       ></Image>
                     </View>
-                    <View className="w-[55%] space-y-2">
+                    <View className="w-[55%] justify-between">
                       {/* Title */}
                       <Text className="text-text_highLight text-2xl font-bold">
                         {tvMediaName}
                       </Text>
-                      <View className="flex">
+                      <View className="mt-2">
                         <Text className="text-text_secondary text-lg font-semibold">
                           Season{" "}
                           {seasonDetails.season_number === 0
                             ? "Extras"
                             : seasonDetails.season_number}
                         </Text>
-                        <Text className="text-text_tertiary text">
-                          Total {seasonDetails.episodes.length} episodes
-                        </Text>
+                        {/* <Text className="text-text_tertiary text">
+                          Has {seasonDetails.episodes.length} episodes
+                        </Text> */}
+
                         {/* <Text className="text-text_tertiary text-xs mt-1">
                           {seasonDetails.air_date}
                         </Text> */}
+                      </View>
+                      <View className="flex-row space-x-2 items-center mt-auto">
+                        <Text className="text-text_tertiary text">
+                          {seasonDetails.episodes.length} Episodes,
+                        </Text>
+                        <Text className="text-text_tertiary text">
+                          {new Date(seasonDetails.air_date)
+                            .toDateString()
+                            .split(" ")
+                            .splice(1)
+                            .join(" ")}
+                        </Text>
                       </View>
                     </View>
                   </LinearGradient>

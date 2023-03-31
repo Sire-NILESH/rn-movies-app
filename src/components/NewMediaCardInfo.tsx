@@ -33,7 +33,10 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
         style={{ width: "100%", aspectRatio: 16 / 9 }}
       >
         {imageUrl ? (
-          <ImageCached imageURL={imageUrl} cacheKey={media.id + "backdrop"} />
+          <ImageCached
+            imageURL={imageUrl}
+            cacheKey={`${media.id}-${isMovie(media) ? "movie" : "tv"}-backdrop`}
+          />
         ) : (
           <ImagePlaceholder />
         )}

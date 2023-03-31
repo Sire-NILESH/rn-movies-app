@@ -1,4 +1,5 @@
-import { useFavouriteMediaListHooks } from "../../hooks/reduxHooks";
+import React, { useEffect, useState } from "react";
+// import { useFavouriteMediaListHooks } from "../../hooks/reduxHooks";
 import {
   MediaTypes,
   MovieMedia,
@@ -12,8 +13,9 @@ import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../../utils/Colors";
 import {
-  deleteMediaFromCollection,
   insertMediaToCollection,
+  mediaExistsInCollection,
+  removeMediaFromCollection,
 } from "../../database/database";
 
 interface IProps {
@@ -27,11 +29,35 @@ const FavouriteMediaButton: React.FC<IProps> = ({
   media,
   mediaType,
 }) => {
-  const {
-    addMediaToFavouriteHandler,
-    removeMediaFromFavouriteHandler,
-    isMediaFavourite,
-  } = useFavouriteMediaListHooks();
+  // const {
+  //   addMediaToFavouriteHandler,
+  //   removeMediaFromFavouriteHandler,
+  //   isMediaFavourite,
+  // } = useFavouriteMediaListHooks();
+
+  const [isFavourite, setIsFavourite] = useState<Boolean>(false);
+
+  const setIsFavouritedHandler = () => {
+    setIsFavourite((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const isWatchlistedInDB = async () => {
+      try {
+        const booleanResult = await mediaExistsInCollection(
+          media.id,
+          mediaType,
+          "favourites"
+        );
+        console.log(booleanResult);
+        setIsFavourite(booleanResult);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    isWatchlistedInDB();
+  }, [media]);
 
   const addToDBHandler = async () => {
     try {
@@ -46,7 +72,7 @@ const FavouriteMediaButton: React.FC<IProps> = ({
 
   const removeFromDBHandler = async () => {
     try {
-      await deleteMediaFromCollection(media.id, mediaType, "favourites");
+      await removeMediaFromCollection(media.id, mediaType, "favourites");
     } catch (err) {
       console.log(err);
     }
@@ -60,10 +86,12 @@ const FavouriteMediaButton: React.FC<IProps> = ({
         width={56}
         radius={1000}
         method={() => {
-          if (isMediaFavourite(mediaId)) {
+          if (isFavourite) {
+            setIsFavouritedHandler();
             removeFromDBHandler();
             // removeMediaFromFavouriteHandler(mediaId);
           } else {
+            setIsFavouritedHandler();
             addToDBHandler();
             // addMediaToFavouriteHandler(
             //   reduxListMediaObjBuilder(media, mediaType)
@@ -73,10 +101,8 @@ const FavouriteMediaButton: React.FC<IProps> = ({
       >
         <Ionicons
           size={24}
-          name={isMediaFavourite(mediaId) ? "heart" : "heart-outline"}
-          color={
-            isMediaFavourite(mediaId) ? Colors.stone[50] : Colors.stone[100]
-          }
+          name={isFavourite ? "heart" : "heart-outline"}
+          color={isFavourite ? Colors.stone[50] : Colors.stone[100]}
         ></Ionicons>
       </CustomButton>
     </View>

@@ -5,7 +5,11 @@ import CountriesDropdown from "../components/ui/CountriesDropdown";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
 import { useDefaultRegionHooks } from "../hooks/reduxHooks";
-import { deleteCollection, getAllFromCollection } from "../database/database";
+import {
+  deleteCollection,
+  getAllFromCollection,
+  showAllTablesInDb,
+} from "../database/database";
 import { initDB } from "./../database/database";
 
 const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
@@ -45,21 +49,21 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
         </View>
       </View>
       {/* <Text className="text-stone-700 font-bold text-3xl">Settings Screen</Text> */}
-      <View className="mt-20 items-center justify-center flex-row">
+      <View className="mt-20 items-center justify-center flex-row flex-wrap">
         <Button
           title="All table Data"
           color={"black"}
           onPress={() => {
-            try {
-              getAllFromCollection().then((data) => {
+            getAllFromCollection()
+              .then((data) => {
                 console.log(
                   "AAAAAAll data from DB, settings screen",
                   data["rows"]["_array"]
                 );
+              })
+              .catch((err) => {
+                console.log(err);
               });
-            } catch (err) {
-              console.log(err);
-            }
           }}
         />
         <Button
@@ -77,7 +81,21 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
           }}
         />
         <Button
-          title="Delete table"
+          title="Show tables"
+          color={"black"}
+          onPress={() => {
+            try {
+              async function showTablesDB() {
+                await showAllTablesInDb();
+              }
+              showTablesDB();
+            } catch (err) {
+              console.log(err);
+            }
+          }}
+        />
+        <Button
+          title="Delete tables"
           color={"black"}
           onPress={() => {
             try {

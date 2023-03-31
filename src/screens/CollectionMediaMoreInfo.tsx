@@ -13,7 +13,12 @@ import {
   MovieMediaExtended,
   TvMediaExtended,
 } from "../typings";
-import { isMovie, isTv, isTvExtended } from "./../utils/helpers/helper";
+import {
+  isMovie,
+  isMovieExtended,
+  isTv,
+  isTvExtended,
+} from "./../utils/helpers/helper";
 import { Colors } from "./../utils/Colors";
 import GenreTags from "./../components/GenreTags";
 import { LinearGradient } from "expo-linear-gradient";
@@ -29,6 +34,7 @@ import MoreInfoFooterButton from "../components/ui/MoreInfoFooterButton";
 import WatchlistButton from "../components/ui/WatchlistButton";
 import FavouriteMediaButton from "../components/ui/FavouriteMediaButton";
 import WatchedMediaButton from "../components/ui/WatchedMediaButton";
+import NothingToShow from "../components/NothingToShow";
 
 const screenDimensions = Dimensions.get("screen");
 
@@ -91,6 +97,11 @@ const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
       {/* Loader */}
       <Loader loading={loadingProps} />
 
+      {/* {Error } */}
+      {errorLoadingProps ? (
+        <NothingToShow title={"Something went wrong"} />
+      ) : null}
+
       {media && (
         <ScrollView className="flex-1 pb-24">
           {/* BackDrop Image */}
@@ -137,11 +148,18 @@ const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
                     {media.original_title}
                   </Text>
                 </Text>
-              ) : !isMovie(media) && media.original_name !== media.name ? (
-                <Text className="text-sm text-text_tertiary pt-2">
+              ) : isTv(media) && media.original_name !== media.name ? (
+                <Text className="text-sm text-text_tertiary pt-2 h-7">
                   Original Title:{"  "}
                   <Text className="text-text_primary">
                     {media.original_name}
+                  </Text>
+                </Text>
+              ) : isTv(media) || (isMovie(media) && media.tagline) ? (
+                <Text className="text-sm text-text_tertiary pt-2 h-7">
+                  <Text className="text-text_tertiary">
+                    {(isTvExtended(media) || isMovieExtended(media)) &&
+                      media.tagline}
                   </Text>
                 </Text>
               ) : null}

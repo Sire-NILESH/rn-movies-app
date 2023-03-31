@@ -8,6 +8,7 @@ import {
 import { useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import {
+  IDbListMedia,
   IReduxListMedia,
   MediaTypes,
   MovieMediaExtended,
@@ -43,7 +44,7 @@ const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
 ) => {
   const { navigation, route } = props;
 
-  const collectionMedia: IReduxListMedia =
+  const collectionMedia: IDbListMedia =
     // @ts-ignore
     route.params?.collectionMedia;
 

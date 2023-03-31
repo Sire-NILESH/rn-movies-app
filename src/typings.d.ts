@@ -245,6 +245,8 @@ interface IReduxListMedia {
   backdrop_path?: string;
 }
 
+interface IDbListMedia extends IReduxListMedia {}
+
 export interface IDBCollectionMedia extends IReduxListMedia {
   dateAddedString: string;
 }

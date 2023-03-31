@@ -11,25 +11,37 @@ function Header() {
 
   const headerLinksScreenParams = [
     {
+      name: "Search",
+      navigateTo: () => {
+        // @ts-ignore
+        navigation.navigate("Search", { searchCategory: "multi" });
+      },
+    },
+    {
       name: "Movies",
-      title: "Trending Movies",
-      genreId: 0.788734,
-      currentMediaType: "movie",
+      navigateTo: () => {
+        // @ts-ignore
+        navigation.push("Tiles", {
+          title: "Trending Movies",
+          currentMediaType: "movie",
+          genreId: 0.788734,
+        });
+      },
     },
     {
       name: "TV Shows",
-      title: "Trending TV Shows",
-      genreId: 0.97756,
-      currentMediaType: "tv",
+      navigateTo: () => {
+        // @ts-ignore
+        navigation.push("Tiles", {
+          title: "Trending TV Shows",
+          currentMediaType: "tv",
+          genreId: 0.97756,
+        });
+      },
     },
   ];
 
-  function renderHeaderLink(props: {
-    name: string;
-    title: string;
-    genreId: number;
-    currentMediaType: string;
-  }) {
+  function renderHeaderLink(props: { name: string; navigateTo: () => void }) {
     return (
       <View
         key={props.name + String(Math.random() * 10)}
@@ -38,14 +50,7 @@ function Header() {
         <Pressable
           android_ripple={{ color: "#eee" }}
           className="py-2 px-1"
-          onPress={() => {
-            // @ts-ignore
-            navigation.push("Tiles", {
-              title: props.title,
-              currentMediaType: props.currentMediaType,
-              genreId: props.genreId,
-            });
-          }}
+          onPress={props.navigateTo}
         >
           <Text className="text-text_primary text text-center font-semibold px-1">
             {props.name}

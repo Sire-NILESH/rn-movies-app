@@ -142,14 +142,14 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
                   </Text>
                 </Text>
               ) : isTv(media) && media.original_name !== media.name ? (
-                <Text className="text-sm text-text_tertiary pt-2 h-7">
+                <Text className="text-sm text-text_tertiary pt-2">
                   Original Title:{"  "}
                   <Text className="text-text_primary">
                     {media.original_name}
                   </Text>
                 </Text>
               ) : (isTv(media) || isMovie(media)) && media.tagline ? (
-                <Text className="text-sm text-text_tertiary pt-2 h-7">
+                <Text className="text-sm text-text_tertiary pt-2">
                   <Text className="text-text_tertiary">
                     {(isTvExtended(media) || isMovieExtended(media)) &&
                       media.tagline}

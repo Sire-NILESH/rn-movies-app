@@ -45,10 +45,9 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
       <LinearGradient
         colors={[
           "rgba(15, 15, 15, 0.9)",
-          "rgba(15, 15, 15, 0.8)",
+          "rgba(15, 15, 15, 0.7)",
           "rgba(15, 15, 15, 0.6)",
-          "rgba(15, 15, 15, 0.5)",
-          "rgba(15, 15, 15, 0.2)",
+          "rgba(15, 15, 15, 0.4)",
           "rgba(0,0,0,0)",
         ]}
         start={{ x: 0.0, y: 1 }}

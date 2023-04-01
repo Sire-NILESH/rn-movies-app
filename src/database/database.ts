@@ -351,7 +351,72 @@ export function getAllFromCollection() {
   return promise;
 }
 
-export async function deleteCollection() {
+export async function deleteCollection(collectionType: TDbCollectionType) {
+  // find and change the collection column of the media to FALSE which means it was removed form the collection.
+  const promise = new Promise<void>((resolve, reject) => {
+    database.transaction((tx) => {
+      tx.executeSql(
+        `
+      DELETE FROM collection
+      WHERE collection = ?
+      `,
+        [collectionType],
+        // SUCCESS CASE LEVEL 1
+        (_tx, results) => {
+          if (results.rowsAffected > 0) {
+            console.log(
+              `DELETED all medias from ${collectionType} collection 💥`
+            );
+          }
+
+          // When reached here, we removed the media from the collection, now also remove it from the medias table.
+          database.transaction((tx) => {
+            tx.executeSql(
+              `DELETE 
+               FROM medias 
+               WHERE (mediaId, mediaType) 
+               NOT IN (
+                SELECT DISTINCT mediaId, mediaType 
+                FROM collection 
+               )
+                `,
+              [],
+              // SUCCESS CASE LEVEL 2
+              (_tx, results) => {
+                if (results.rowsAffected > 0) {
+                  console.log(
+                    `DELETEed all medias from the medias table that was of the type ${collectionType} collection`
+                  );
+                }
+                resolve();
+              },
+              // ERROR CASE LEVEL 2
+              (_, err) => {
+                console.log(
+                  `Error DELETING medias from the medias table, from database.js`
+                );
+                reject(err);
+                return true;
+              }
+            );
+          });
+        },
+        // ERROR CASE LEVEL 1
+        (_tx, err) => {
+          console.log(
+            `Error DELETING medias from the ${collectionType} collection, from database.js`
+          );
+          reject(err);
+          return true;
+        }
+      );
+    });
+  });
+
+  return promise;
+}
+
+export async function deleteAllTables() {
   // find and change the collection column of the media to FALSE which means it was removed form the collection.
   return await new Promise<void>((resolve, reject) => {
     const tableNames = ["collection", "medias"];

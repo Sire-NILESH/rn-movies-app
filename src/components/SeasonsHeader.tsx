@@ -24,7 +24,7 @@ const SeasonsHeader: React.FC<IProps> = (props) => {
   return (
     <View className="flex-row justify-center bg-secondary py-4">
       {/* <View className="ml-4 mr-2 bg-stone-800 items-center justify-center px-2 rounded-md"> */}
-      <View className="ml-4 mr-2 items-center justify-center  rounded-md">
+      <View className="ml-4 mr-2 items-center justify-center rounded-md">
         <Pressable onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={24} color={Colors.gray[50]} />
         </Pressable>
@@ -37,29 +37,21 @@ const SeasonsHeader: React.FC<IProps> = (props) => {
         keyExtractor={(item) => String(item.id)}
         renderItem={(itemObj) => {
           return (
-            <View className="flex-1 flex-row items-center divide-x-2 divide-stone-700">
-              <View
-                className="border-stone-700"
-                style={{
-                  borderRightWidth:
-                    itemObj.index != props.tvMediaSeasons.length - 1 ? 2 : 0,
-                }}
-              >
-                <SeasonTag
-                  seasonNumber={itemObj.item.season_number}
-                  selectedSeasonNumber={props.selectedSeason.season_number}
-                  onPressHandler={onPresshandler}
-                />
-              </View>
+            <View className="flex-1 flex-row items-center">
+              <SeasonTag
+                seasonNumber={itemObj.item.season_number}
+                selectedSeasonNumber={props.selectedSeason.season_number}
+                onPressHandler={onPresshandler}
+              />
+
               {/* Divider */}
-              {/* {itemObj.index != props.tvMediaSeasons.length - 1 ? (
+              {itemObj.index != props.tvMediaSeasons.length - 1 ? (
                 <View className="border border-stone-700 h-6 w-[1px] rounded-full" />
-              ) : null} */}
+              ) : null}
             </View>
           );
         }}
       />
-      {/* </View> */}
     </View>
   );
 };

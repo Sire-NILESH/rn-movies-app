@@ -4,10 +4,10 @@
     "slug": "Maven",
     "version": "1.0.0",
     "orientation": "adaptive",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/iconV2.png",
     "userInterfaceStyle": "dark",
     "splash": {
-      "image": "./assets/splash.jpg",
+      "image": "./assets/splashV2.png",
       "resizeMode": "cover",
       "backgroundColor": "#000"
     },
@@ -20,12 +20,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
+        "foregroundImage": "./assets/iconV2.png",
         "backgroundColor": "#000"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/faviconV2.png"
     }
   }
 }

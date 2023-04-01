@@ -5,7 +5,11 @@ import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenPr
 import { Colors } from "../utils/Colors";
 import HeaderSearchButton from "../components/ui/HeaderSearchButton";
 import { MediaTypes, MovieMedia, TvMedia } from "../typings";
-import { isMovieArray, showErrorAlert } from "../utils/helpers/helper";
+import {
+  idToGenresMapped,
+  isMovieArray,
+  showErrorAlert,
+} from "../utils/helpers/helper";
 import GenereModal from "../components/GenereModal";
 import { getGenreMediasProps } from "../utils/requests";
 import GenreTags from "../components/GenreTags";
@@ -105,7 +109,12 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   // Header settings
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: userSelectedGenres.length > 0 ? "Custom Genres" : title,
+      headerTitle:
+        userSelectedGenres.length === 1
+          ? idToGenresMapped[String(userSelectedGenres[0])]
+          : userSelectedGenres.length > 1
+          ? "Custom Genres"
+          : title,
       headerRight: (props) => (
         <View className="flex-row items-center space-x-1 mr-2">
           {/* Search button */}
@@ -145,7 +154,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   return (
     <View className="flex-1 bg-tertiary">
       {/* Genre Tags Scrollable Row on top, if user selected some genres */}
-      {userSelectedGenres?.length > 0 ? (
+      {userSelectedGenres?.length > 1 ? (
         <View className="w-full">
           <GenreTags
             genreIdList={userSelectedGenres}

@@ -93,7 +93,7 @@ function Banner({ mediaList }: Props) {
         >
           {/* Title/Name */}
           <Text className="text-2xl font-bold text-text_highLight">
-            {isMovie(media) ? media.title : media?.original_name}
+            {isMovie(media) ? media.title : media?.name}
           </Text>
 
           {/* Ratings and other stats */}

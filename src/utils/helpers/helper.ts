@@ -142,6 +142,22 @@ export function showErrorAlert(title?: string, message?: string) {
   );
 }
 
+export function toHoursAndMinutes(totalMinutes: number) {
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  return `${hours}hr ${minutes}min`;
+}
+
+export function dateFormatter(date: string): string {
+  return new Date(date).toDateString().split(" ").splice(1).join(" ");
+}
+
+// new Date(seasonDetails.air_date)
+//                             .toDateString()
+//                             .split(" ")
+//                             .splice(1)
+//                             .join(" ")
+
 export const movieGenres = [
   // Custom Genres
   [

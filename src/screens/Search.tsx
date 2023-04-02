@@ -8,7 +8,12 @@ import { FlatList } from "react-native-gesture-handler";
 import { searchRequest } from "../utils/requests";
 import { MediaTypes, MovieMedia, TvMedia } from "../typings";
 import HeaderSearchButton from "./../components/ui/HeaderSearchButton";
-import { isMovie, isMovieArray, isTvArray } from "./../utils/helpers/helper";
+import {
+  dateFormatter,
+  isMovie,
+  isMovieArray,
+  isTvArray,
+} from "./../utils/helpers/helper";
 import { StackNavigationProp } from "@react-navigation/stack";
 
 interface ISearchResults {
@@ -112,7 +117,7 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   return (
     <>
       <StatusBar style="light" />
-      <SafeAreaView className="flex-1 bg-stone-800">
+      <SafeAreaView className="flex-1 bg-secondary">
         <View className="flex-1 pb-2">
           {/* Search List suggestions */}
           {searchQuery !== null &&
@@ -183,6 +188,7 @@ function renderFlatList(
           >
             <Pressable
               className="flex-1 px-4 py-3"
+              android_ripple={{ color: "#eee" }}
               onPress={() => {
                 navigateTo(
                   mediaObj.item,
@@ -192,17 +198,17 @@ function renderFlatList(
                 // navigateTo(mediaObj.item, "More Info", searchCategory);
               }}
             >
-              <Text className="text-gray-100">
+              <Text className="text-text_primary">
                 {isMovie(mediaObj.item)
                   ? mediaObj.item.title
                   : mediaObj.item.name}{" "}
-                <Text className="text-xs">
+                <Text className="text-xs text-text_tertiary">
                   {isMovie(mediaObj.item)
                     ? mediaObj.item.release_date
-                      ? "(" + mediaObj.item.release_date + ")"
+                      ? "(" + mediaObj.item.release_date.substring(0, 4) + ")"
                       : null
                     : mediaObj.item.first_air_date
-                    ? "(" + mediaObj.item.first_air_date + ")"
+                    ? "(" + mediaObj.item.first_air_date.substring(0, 4) + ")"
                     : null}
                 </Text>
               </Text>
@@ -213,3 +219,5 @@ function renderFlatList(
     />
   );
 }
+// dateFormatter(mediaObj.item.release_date)
+// dateFormatter(mediaObj.item.first_air_date)

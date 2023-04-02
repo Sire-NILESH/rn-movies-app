@@ -11,7 +11,7 @@ import CustomButton from "./ui/CustomButton";
 import { Colors } from "./../utils/Colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { isMovie } from "./../utils/helpers/helper";
+import { dateFormatter, isMovie } from "./../utils/helpers/helper";
 import { Ionicons } from "@expo/vector-icons";
 import { isoLangs } from "../utils/helpers/isoLangs";
 import { ScrollView } from "react-native-gesture-handler";
@@ -142,7 +142,11 @@ function Banner({ mediaList }: Props) {
                 color={Colors.text_secondary}
               />
               <Text className="text-text_primary font-semibold">
-                {isMovie(media) ? media.release_date : media.first_air_date}
+                {isMovie(media)
+                  ? media.release_date
+                    ? dateFormatter(media.release_date)
+                    : null
+                  : dateFormatter(media.first_air_date)}
               </Text>
             </View>
 

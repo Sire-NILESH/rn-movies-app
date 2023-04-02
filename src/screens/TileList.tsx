@@ -111,7 +111,8 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     navigation.setOptions({
       headerTitle:
         userSelectedGenres.length === 1
-          ? idToGenresMapped[String(userSelectedGenres[0])]
+          ? // @ts-ignore
+            idToGenresMapped[String(userSelectedGenres[0])]
           : userSelectedGenres.length > 1
           ? "Custom Genres"
           : title,
@@ -152,7 +153,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   // };
 
   return (
-    <View className="flex-1 bg-tertiary">
+    <View className="flex-1 bg-secondary">
       {/* Genre Tags Scrollable Row on top, if user selected some genres */}
       {userSelectedGenres?.length > 1 ? (
         <View className="w-full">

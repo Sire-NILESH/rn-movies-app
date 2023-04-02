@@ -1,7 +1,13 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { MovieMedia, TvMedia, TvMediaExtended } from "../typings";
-import { isMovie, isTvExtended } from "../utils/helpers/helper";
+import {
+  dateFormatter,
+  isMovie,
+  isMovieExtended,
+  isTvExtended,
+  toHoursAndMinutes,
+} from "../utils/helpers/helper";
 import { isoLangs } from "../utils/helpers/isoLangs";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
@@ -91,7 +97,11 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
               color={Colors.text_primary}
             />
             <Text className="text-text_highLight">
-              {isMovie(media) ? media.release_date : media.first_air_date}
+              {isMovie(media)
+                ? media.release_date
+                  ? dateFormatter(media.release_date)
+                  : null
+                : dateFormatter(media.first_air_date)}
             </Text>
           </View>
 
@@ -111,6 +121,22 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
               </Text>
             </View>
           ) : null}
+
+          {isMovieExtended(media) && (
+            <View className="flex-row items-center space-x-2 px-4">
+              <Ionicons
+                name="time-outline"
+                size={18}
+                color={Colors.text_primary}
+              />
+              <Text className="text-text_highLight">
+                <Text className="text-text_highLight">
+                  {toHoursAndMinutes(media.runtime)}
+                  {/* { toHoursAndMinutes(media.runtime)} minutes */}
+                </Text>
+              </Text>
+            </View>
+          )}
 
           {isTvExtended(media) && (
             <View className="flex-row items-center space-x-2 px-4">

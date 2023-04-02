@@ -11,7 +11,7 @@ import SeasonsHeader from "../components/SeasonsHeader";
 import { LinearGradient } from "expo-linear-gradient";
 import EpisodeInfoCard from "../components/EpisodeInfoCard";
 import NothingToShow from "../components/NothingToShow";
-import { showErrorAlert } from "../utils/helpers/helper";
+import { dateFormatter, showErrorAlert } from "../utils/helpers/helper";
 import Loader from "../components/ui/Loader";
 
 const SeasonsAndEpisodesListScreen: React.FunctionComponent<
@@ -168,11 +168,12 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                           {seasonDetails.episodes.length} Episodes,
                         </Text>
                         <Text className="text-text_tertiary text">
-                          {new Date(seasonDetails.air_date)
+                          {dateFormatter(seasonDetails.air_date)}
+                          {/* {new Date(seasonDetails.air_date)
                             .toDateString()
                             .split(" ")
                             .splice(1)
-                            .join(" ")}
+                            .join(" ")} */}
                         </Text>
                       </View>
                     </View>

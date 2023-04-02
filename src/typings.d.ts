@@ -126,7 +126,7 @@ export interface TvMediaExtended extends TvMedia {
     vote_count: number;
   };
   networks: Network[];
-  next_episode_to_air: null;
+  next_episode_to_air: null | number;
   number_of_episodes: number;
   number_of_seasons: number;
   production_companies: {

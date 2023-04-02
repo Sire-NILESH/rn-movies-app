@@ -3,6 +3,7 @@ import React from "react";
 import { Episode } from "../typings";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
+import { dateFormatter } from "../utils/helpers/helper";
 
 interface IProps {
   episode: Episode;
@@ -58,7 +59,10 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
             />
           </View>
           <View>
-            <DataElement text={episode.air_date} iconName="calendar" />
+            <DataElement
+              text={dateFormatter(episode.air_date)}
+              iconName="calendar"
+            />
           </View>
           {episode.runtime ? (
             <View>

@@ -193,7 +193,9 @@ export const getScreenProps = async (
 export const getGenreMediasProps = async (
   getTheseGenreMedias: number[],
   mediaType: MediaTypes,
-  pageNumber: number
+  pageNumber: number,
+  networkId?: number,
+  productionCompanyId?: number
 ) => {
   console.log(mediaType, getTheseGenreMedias, pageNumber);
 
@@ -206,6 +208,16 @@ export const getGenreMediasProps = async (
       `${BASE_URL}/discover/${mediaType}?api_key=${API_KEY}&language=en-US&with_genres=${commaSeparatedGenres}&page=${pageNumber}`
     ).then((res) => res.json());
 
+    return data.results;
+  }
+
+  // 0.1111 is a special decided custom genre id that is used to fetch the network-provider/production-companies media list.
+  else if (getTheseGenreMedias[0] === 0.1111) {
+    const URL = `${BASE_URL}/discover/${mediaType}?with_networks=${
+      mediaType === "movie" ? productionCompanyId : networkId
+    }&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US&page=${pageNumber}`;
+
+    const data = await fetch(URL).then((res) => res.json());
     return data.results;
   }
 

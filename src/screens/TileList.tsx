@@ -26,12 +26,16 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     medias: mediaList,
     genreId,
     currentMediaType,
+    networkId,
+    productionCompanyId,
   }: {
     title: string;
     medias: MovieMedia[] | TvMedia[];
     genreId?: number;
     noMoreLoads?: boolean;
     currentMediaType?: MediaTypes;
+    networkId?: number;
+    productionCompanyId?: number;
   } = route.params;
 
   const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>(
@@ -61,7 +65,9 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         const moreMedias = await getGenreMediasProps(
           genreMediasToFetch,
           currentListType,
-          pageNumber
+          pageNumber,
+          networkId ? networkId : undefined,
+          productionCompanyId ? productionCompanyId : undefined
         );
         // if we received some data, then page exists.
         if (moreMedias.length > 0) {

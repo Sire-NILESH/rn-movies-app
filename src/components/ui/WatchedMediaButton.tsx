@@ -47,6 +47,7 @@ const WatchedMediaButton: React.FC<IProps> = ({ media, mediaType }) => {
         console.log(booleanResult);
         setIsWatched(booleanResult);
       } catch (err) {
+        setIsWatched(false);
         console.log(err);
       }
     };

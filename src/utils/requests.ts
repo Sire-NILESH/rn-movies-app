@@ -213,9 +213,34 @@ export const getGenreMediasProps = async (
 
   // 0.1111 is a special decided custom genre id that is used to fetch the network-provider/production-companies media list.
   else if (getTheseGenreMedias[0] === 0.1111) {
-    const URL = `${BASE_URL}/discover/${mediaType}?with_networks=${
+    // let URL;
+    // switch (mediaType) {
+    //   case "movie" as MediaTypes:
+    //     URL =
+    //     `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds.HBO}&api_key=${API_KEY}&language=en-US` +
+    //       "&page=" +
+    //       pageNumber;
+    //     break;
+
+    //   case "tv" as MediaTypes:
+    //     URL =
+    //       // @ts-ignore
+    //       customGenreIdToFetcher.customTvGenresToFetcherURL[
+    //         String(getTheseGenreMedias[0])
+    //       ] +
+    //       "&page=" +
+    //       pageNumber;
+    //     break;
+    // }
+
+    const companyType =
+      mediaType === "movie" ? "with_companies" : "with_networks";
+
+    const URL = `${BASE_URL}/discover/${mediaType}?${companyType}=${
       mediaType === "movie" ? productionCompanyId : networkId
     }&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US&page=${pageNumber}`;
+
+    console.log(URL);
 
     const data = await fetch(URL).then((res) => res.json());
     return data.results;

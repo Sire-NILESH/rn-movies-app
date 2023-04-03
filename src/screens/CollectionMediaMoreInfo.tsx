@@ -36,6 +36,7 @@ import WatchlistButton from "../components/ui/WatchlistButton";
 import FavouriteMediaButton from "../components/ui/FavouriteMediaButton";
 import WatchedMediaButton from "../components/ui/WatchedMediaButton";
 import NothingToShow from "../components/NothingToShow";
+import ProductionCompaines from "../components/ProductionCompaines";
 
 const screenDimensions = Dimensions.get("screen");
 
@@ -208,9 +209,17 @@ const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
           {/* Network List and Watch Provider row */}
           <View className="">
             {/* Networks available on */}
-            {isTvExtended(media) && <NetworkList networks={media.networks} />}
+            {isTvExtended(media) && media.networks.length > 0 && (
+              <NetworkList networks={media.networks} />
+            )}
 
-            {/* Networks available on */}
+            {/* Movie Production companies */}
+            {isMovieExtended(media) &&
+              media.production_companies.length > 0 && (
+                <ProductionCompaines productions={media.production_companies} />
+              )}
+
+            {/* Platforms available on */}
             <WatchProviders mediaId={media.id} mediaType={mediaType} />
           </View>
 

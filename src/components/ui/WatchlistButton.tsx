@@ -47,6 +47,7 @@ const WatchlistButton: React.FC<IProps> = ({ media, mediaType }) => {
         console.log(booleanResult);
         setIsWatchlisted(booleanResult);
       } catch (err) {
+        setIsWatchlisted(false);
         console.log(err);
       }
     };

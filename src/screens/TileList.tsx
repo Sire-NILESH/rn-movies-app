@@ -159,7 +159,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   // };
 
   return (
-    <View className="flex-1 bg-secondary">
+    <View className="flex-1 bg-secondary min-w-full w-full px-2 items-center">
       {/* Genre Tags Scrollable Row on top, if user selected some genres */}
       {userSelectedGenres?.length > 1 ? (
         <View className="w-full">
@@ -181,7 +181,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       ) : null}
 
       {/* Tiles */}
-      <View className="flex-1 items-center relative">
+      <View className="flex-1 relative w-full">
         {error && medias.length === 0 ? (
           <NothingToShow title={"Something went wrong while loading content"} />
         ) : medias?.length > 0 ? (

@@ -36,6 +36,7 @@ import MoreInfoFooterButton from "../components/ui/MoreInfoFooterButton";
 import FavouriteMediaButton from "../components/ui/FavouriteMediaButton";
 import Loader from "./../components/ui/Loader";
 import NothingToShow from "../components/NothingToShow";
+import ProductionCompaines from "../components/ProductionCompaines";
 
 const screenDimensions = Dimensions.get("screen");
 
@@ -203,9 +204,17 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           {/* Network List and Watch Provider row */}
           <View className="">
             {/* Networks available on */}
-            {isTvExtended(media) && <NetworkList networks={media.networks} />}
+            {isTvExtended(media) && media.networks.length > 0 && (
+              <NetworkList networks={media.networks} />
+            )}
 
-            {/* Networks available on */}
+            {/* Movie Production companies */}
+            {isMovieExtended(media) &&
+              media.production_companies.length > 0 && (
+                <ProductionCompaines productions={media.production_companies} />
+              )}
+
+            {/* Platforms available on */}
             <WatchProviders mediaId={media.id} mediaType={mediaType} />
           </View>
 

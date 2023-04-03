@@ -52,6 +52,7 @@ const FavouriteMediaButton: React.FC<IProps> = ({
         console.log(booleanResult);
         setIsFavourite(booleanResult);
       } catch (err) {
+        setIsFavourite(false);
         console.log(err);
       }
     };

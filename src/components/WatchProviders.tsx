@@ -5,7 +5,7 @@ import {
   MediaTypes,
   WatchProvider,
   WatchProviderForCountry,
-} from "../typings";
+} from "../../types/typings";
 import useFetcher from "../hooks/useFetcher";
 import { getWatchProviders } from "../utils/requests";
 import CountriesDropdown from "./ui/CountriesDropdown";

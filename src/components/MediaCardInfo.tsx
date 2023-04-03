@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { MovieMedia, TvMedia, TvMediaExtended } from "../typings";
+import { MovieMedia, TvMedia, TvMediaExtended } from "../../types/typings";
 import { isMovie, isTvExtended } from "../utils/helpers/helper";
 import { isoLangs } from "../utils/helpers/isoLangs";
 // @ts-ignore

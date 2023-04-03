@@ -3,7 +3,7 @@ import { View } from "react-native";
 // import { useAppSelector } from "../hooks/reduxHooks";
 
 import { ITopTabScreenProps } from "../library/NavigatorScreenProps/TopTabScreenProps";
-import { IDBCollectionMedia } from "../typings";
+import { IDBCollectionMedia } from "../../types/typings";
 import CollectionRow from "../components/CollectionRow";
 import { FlatList } from "react-native-gesture-handler";
 import { getMediasFromCollection } from "./../database/database";

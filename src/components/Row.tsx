@@ -1,4 +1,4 @@
-import { MovieMedia, TvMedia } from "../typings";
+import { MovieMedia, TvMedia } from "../../types/typings";
 import Thumbnail from "./Thumbnail";
 import { Text, View, FlatList } from "react-native";
 import IconButton from "./ui/IconButton";

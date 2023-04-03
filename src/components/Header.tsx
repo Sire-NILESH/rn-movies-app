@@ -33,9 +33,9 @@ function Header() {
       navigateTo: () => {
         // @ts-ignore
         navigation.push("Tiles", {
-          title: "Trending TV Shows",
+          title: "Sci-Fi & Fantasy",
           currentMediaType: "tv",
-          genreId: 0.97756,
+          genreId: 10765,
         });
       },
     },

@@ -1,4 +1,4 @@
-import { MovieMedia, TvMedia } from "../typings";
+import { MovieMedia, TvMedia } from "../../types/typings";
 import { useState, useEffect } from "react";
 import {
   Text,

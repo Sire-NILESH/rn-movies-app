@@ -1,4 +1,10 @@
-import { IGenre, IGenresToShowHomeScreen, MediaTypes } from "../typings";
+import { customGenreIdToFetcher } from "../config/genresWithRoutes";
+import { API_KEY, BASE_URL } from "@env";
+import {
+  IGenre,
+  IGenresToShowHomeScreen,
+  MediaTypes,
+} from "../../types/typings";
 
 // Movie search
 // const data = fetch('https://api.themoviedb.org/3/search/movie?api_key=e3e1732f8f495a1b191494b49b813669&query=batman&language=en-US&page=1&include_adult=false').then((data)=>data.json()).then((res)=>console.log(res))
@@ -45,103 +51,6 @@ import { IGenre, IGenresToShowHomeScreen, MediaTypes } from "../typings";
 // Watch Providers.
 // https://api.themoviedb.org/3/tv/{tv_id}/watch/providers?api_key=<<api_key>>
 // const data = fetch('https://api.themoviedb.org/3/tv/94997/watch/providers?api_key=e3e1732f8f495a1b191494b49b813669').then((data)=>data.json()).then((res)=>console.log(res)).catch((err)=>console.log(err.message))
-
-// eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlM2UxNzMyZjhmNDk1YTFiMTkxNDk0YjQ5YjgxMzY2OSIsInN1YiI6IjYzZGY4MTFhY2QyMDQ2MDBjMzBiMDA0ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.A7ER6WylpDsZnk2qUkrhDWweWQ1moBHYFkiXwwU51cw
-const API_KEY = "e3e1732f8f495a1b191494b49b813669";
-const BASE_URL = "https://api.themoviedb.org/3";
-
-const networkIds = {
-  Netflix: 213,
-  HBO: 49,
-  HULU: 453,
-  "Amazon Prime": 1024,
-  "Disney+": 2739,
-  "Cartoon Network": 56,
-  "Adult Swim": 80,
-  AMC: 174,
-};
-
-const productionComapnyIds = {
-  // Netflix: "145174,178464,171251,185004,186222,192478",
-  Lucasfilm: 1,
-  HBO: 3268,
-  "Adult Swim": 6759,
-  Miramax: 14,
-  Paramount: 4,
-  "Columbia Pictures": 5,
-  "Cartoon Network": 7899,
-  Pixar: 3,
-  "Warner Bros": 17,
-  "20th Century Fox": 25,
-  "Metro-Goldwyn-Mayer": 21,
-  "Universal Pictures": 33,
-  "Lions Gate Films": 35,
-  "Sony Pictures": 34,
-};
-
-const customGenreIdToFetcher = {
-  customTvGenresToFetcherURL: {
-    // Netflix 213
-    0.345457: `${BASE_URL}/discover/tv?with_networks=${networkIds.Netflix}&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US`,
-    // HBO 49
-    0.567456: `${BASE_URL}/discover/tv?with_networks=${networkIds.HBO}&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US`,
-    // HULU 453
-    0.23454545: `${BASE_URL}/discover/tv?with_networks=${networkIds.HULU}&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US`,
-    // Amazon Prime 1024
-    0.324778: `${BASE_URL}/discover/tv?with_networks=${networkIds["Amazon Prime"]}&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US`,
-    // Disney+ 2739
-    0.87908: `${BASE_URL}/discover/tv?with_networks=${networkIds["Disney+"]}&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US`,
-    // Cartoon Network 56
-    0.54633: `${BASE_URL}/discover/tv?with_networks=${networkIds["Cartoon Network"]}&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US`,
-    // Adult Swim 80
-    0.9765434: `${BASE_URL}/discover/tv?with_networks=${networkIds["Adult Swim"]}&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US`,
-    // AMC 174
-    0.235456: `${BASE_URL}/discover/tv?with_networks=${networkIds["AMC"]}&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US`,
-
-    // 0.45678886: "Discover",
-    0.97756: `${BASE_URL}/trending/tv/day?api_key=${API_KEY}&language=en-US`,
-    0.63465: `${BASE_URL}/tv/popular?api_key=${API_KEY}&language=en-US`,
-    0.54364: `${BASE_URL}/tv/top_rated?api_key=${API_KEY}&language=en-US`,
-    0.63546: `${BASE_URL}/tv/airing_today?api_key=${API_KEY}&language=en-US`,
-  },
-  customMovieGenresToFetcherURL: {
-    // Netflix
-    // 0.345783442: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds.Netflix}&api_key=${API_KEY}&language=en-US`,
-    // HBO
-    0.9876854: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds.HBO}&api_key=${API_KEY}&language=en-US`,
-    // Lucasfilm
-    0.65436456: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds.Lucasfilm}&api_key=${API_KEY}&language=en-US`,
-    // Columbia Pictures
-    0.89733: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Columbia Pictures"]}&api_key=${API_KEY}&language=en-US`,
-    // Paramount
-    0.214545: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Paramount"]}&api_key=${API_KEY}&language=en-US`,
-    // Warner Bros. Entertainment
-    0.2344565: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Warner Bros"]}&api_key=${API_KEY}&language=en-US`,
-    // 20th Century Fox
-    0.9874323: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["20th Century Fox"]}&api_key=${API_KEY}&language=en-US`,
-    // Metro-Goldwyn-Mayer
-    0.3425567: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Metro-Goldwyn-Mayer"]}&api_key=${API_KEY}&language=en-US`,
-    // Pixar
-    0.745635: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Pixar"]}&api_key=${API_KEY}&language=en-US`,
-    // Miramax
-    0.213775: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Miramax"]}&api_key=${API_KEY}&language=en-US`,
-    // Sony Pictures
-    0.786576: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Sony Pictures"]}&api_key=${API_KEY}&language=en-US`,
-    // Lions Gate Films
-    0.9805434: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Lions Gate Films"]}&api_key=${API_KEY}&language=en-US`,
-    // Universal Pictures
-    0.768343: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Universal Pictures"]}&api_key=${API_KEY}&language=en-US`,
-
-    0.6754435: `${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=en-US`,
-    // "0.768343": "New HD Releases",
-    // "0.9805434": `${BASE_URL}/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false`,
-    0.788734: `${BASE_URL}/trending/movie/day?api_key=${API_KEY}&language=en-US`,
-    0.2345646: `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US`,
-    0.985633: `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=en-US`,
-    0.132323: `${BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=en-US`,
-    // "0.786576": "Wrestling",
-  },
-};
 
 /**
  * API call to get the search results for the keywords.

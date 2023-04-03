@@ -13,7 +13,7 @@ import {
   MediaTypes,
   MovieMediaExtended,
   TvMediaExtended,
-} from "../typings";
+} from "../../types/typings";
 import {
   isMovie,
   isMovieExtended,

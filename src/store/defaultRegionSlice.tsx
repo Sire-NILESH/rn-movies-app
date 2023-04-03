@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { ICountry } from "../typings";
+import { ICountry } from "../../types/typings";
 import { RootState } from "./store";
 
 // Define the initial state using that type

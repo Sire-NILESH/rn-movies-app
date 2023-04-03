@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { Colors } from "../utils/Colors";
 import HeaderSearchButton from "../components/ui/HeaderSearchButton";
-import { MediaTypes, MovieMedia, TvMedia } from "../typings";
+import { MediaTypes, MovieMedia, TvMedia } from "../../types/typings";
 import {
   idToGenresMapped,
   isMovieArray,

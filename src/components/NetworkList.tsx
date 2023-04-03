@@ -1,6 +1,6 @@
 import { View, Text, FlatList } from "react-native";
 import React from "react";
-import { Network } from "../typings";
+import { Network } from "../../types/typings";
 // @ts-ignore
 import ExpoFastImage from "expo-fast-image";
 
@@ -43,6 +43,7 @@ const NetworkList: React.FC<IProps> = (props) => {
                 key={n.id}
                 className="text-text_dark text-xs  text-center w-[60px]"
               >
+                {/* {console.log(n.name, n.id)} */}
                 {n.name}
               </Text>
             </View>

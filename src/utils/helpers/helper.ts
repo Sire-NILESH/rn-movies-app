@@ -8,7 +8,7 @@ import {
   TCollectionToTReduxCollection,
   TvMedia,
   TvMediaExtended,
-} from "../../typings";
+} from "../../../types/typings";
 import { Alert, Dimensions } from "react-native";
 
 export function isMovie(
@@ -152,16 +152,15 @@ export function dateFormatter(date: string): string {
   return new Date(date).toDateString().split(" ").splice(1).join(" ");
 }
 
-// new Date(seasonDetails.air_date)
-//                             .toDateString()
-//                             .split(" ")
-//                             .splice(1)
-//                             .join(" ")
-
 export const movieGenres = [
   // Custom Genres
   [
     // { id: 0.345783442, name: "Netflix Movies" },
+    { id: 0.788734, name: "Trending" },
+    { id: 0.2345646, name: "Popular" },
+    { id: 0.985633, name: "Top Rated" },
+    { id: 0.132323, name: "Now Playing" },
+    { id: 0.6754435, name: "New HD Releases" },
     { id: 0.65436456, name: "Lucasfilm" },
     { id: 0.9876854, name: "HBO Movies" },
     { id: 0.2344565, name: "Warner Bros. Entertainment" },
@@ -169,16 +168,12 @@ export const movieGenres = [
     { id: 0.89733, name: "Columbia Pictures" },
     { id: 0.213775, name: "Miramax" },
     { id: 0.745635, name: "Pixar Movies" },
+    { id: 0.324786, name: "DreamWorks" },
     { id: 0.3425567, name: "Metro-Goldwyn-Mayer" },
     { id: 0.9874323, name: "20th Century Fox" },
     { id: 0.768343, name: "Universal Pictures" },
     { id: 0.9805434, name: "Lions Gate Films" },
     { id: 0.786576, name: "Sony Pictures" },
-    { id: 0.788734, name: "Trending" },
-    { id: 0.2345646, name: "Popular" },
-    { id: 0.985633, name: "Top Rated" },
-    { id: 0.132323, name: "Now Playing" },
-    { id: 0.6754435, name: "New HD Releases" },
   ],
   // Actual Genres below
   [
@@ -207,19 +202,36 @@ export const movieGenres = [
 export const tvGenres = [
   // Custom Genres below
   [
-    { id: 0.345457, name: "Netflix Shows" },
-    { id: 0.567456, name: "HBO Shows" },
-    { id: 0.23454545, name: "HULU Shows" },
-    { id: 0.324778, name: "Amazon Prime Shows" },
-    { id: 0.87908, name: "Disney+ Shows" },
-    { id: 0.9765434, name: "Adult Swim Shows" },
-    { id: 0.235456, name: "AMC" },
-    { id: 0.54633, name: "Cartoon Network Shows" },
-    // { id: 0.45678886, name: "Discover" },
     { id: 0.97756, name: "Trending" },
     { id: 0.63465, name: "Popular" },
     { id: 0.54364, name: "Top Rated" },
     { id: 0.63546, name: "Airing Today" },
+    { id: 0.345457, name: "Netflix Shows" },
+    { id: 0.567456, name: "HBO Shows" },
+    { id: 0.85345435, name: "FOX" },
+    { id: 0.23454545, name: "HULU Shows" },
+    { id: 0.324778, name: "Amazon Prime Shows" },
+    { id: 0.87908, name: "Disney+ Shows" },
+    { id: 0.7786455, name: "Apple TV+ Shows" },
+    { id: 0.9765434, name: "Adult Swim Shows" },
+    { id: 0.235456, name: "AMC" },
+    { id: 0.6556346, name: "ABC" },
+    { id: 0.54633, name: "Cartoon Network Shows" },
+    { id: 0.2324356, name: "Nickelodeon Shows" },
+    // { id: 0.234578, name: "Toon Disney Shows" },
+    { id: 0.34546989, name: "Disney XD Shows" },
+    { id: 0.889763, name: "ANIMAX Shows" },
+    { id: 0.83546345, name: "PBS Shows" },
+    { id: 0.6673423, name: "CBS Shows" },
+    { id: 0.234867865, name: "ShowTime" },
+    { id: 0.5575343, name: "BBC 1" },
+    { id: 0.2234787, name: "BBC 2" },
+    { id: 0.4544342, name: "Sky Atlantic" },
+    { id: 0.9823874, name: "History Tv" },
+    { id: 0.346546, name: "Curiosity stream" },
+    { id: 0.56754623, name: "National Geographic" },
+    { id: 0.952455, name: "Discovery" },
+    // { id: 0.45678886, name: "Discover" },
   ],
   // Actual Genres below
   [

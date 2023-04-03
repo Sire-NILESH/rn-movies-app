@@ -1,6 +1,6 @@
 import { ParamListBase, RouteProp } from "@react-navigation/native";
 import { MaterialTopTabNavigationProp } from "@react-navigation/material-top-tabs";
-import { MediaTypes, TCollectionType } from "../../typings";
+import { MediaTypes, TCollectionType } from "../../../types/typings";
 
 export interface ITopTabScreenProps {
   name: string;

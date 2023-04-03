@@ -14,7 +14,7 @@ import {
 } from "../database/database";
 import { initDB } from "./../database/database";
 import CustomButton from "./../components/ui/CustomButton";
-import { TDbCollectionType } from "../typings";
+import { TDbCollectionType } from "../../types/typings";
 import DeleteSettings from "../components/DeleteSettings";
 
 const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {

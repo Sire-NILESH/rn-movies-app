@@ -5,7 +5,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 import { movieGenres, tvGenres } from "../../utils/helpers/helper";
 import { Colors } from "../../utils/Colors";
-import { MediaTypes } from "../../typings";
+import { MediaTypes } from "../../../types/typings";
 import { Ionicons } from "@expo/vector-icons";
 import CustomButton from "./CustomButton";
 

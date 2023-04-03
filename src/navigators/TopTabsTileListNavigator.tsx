@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import "react-native-gesture-handler";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Colors } from "../utils/Colors";
-import { TCollectionType } from "../typings";
+import { TCollectionType } from "../../types/typings";
 import { topTabRoutesTileList } from "../library/NavigationRoutes/TopTabRoutesTileList";
 
 interface IProps {

@@ -5,7 +5,7 @@ import {
   movieScreenGenresToShow,
   tvScreenGenresToShow,
 } from "../config/screenGenresConfig";
-import { ScreenTypes } from "../typings";
+import { ScreenTypes } from "../../types/typings";
 
 /**
  * This hook is responsible for generating `loading`, `screen props` and `error` states for the `Home`, `TV` and `Movies` screens.

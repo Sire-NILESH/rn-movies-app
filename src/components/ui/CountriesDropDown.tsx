@@ -3,7 +3,7 @@ import React from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { countries } from "../../utils/helpers/helper";
 import { MaterialIcons } from "@expo/vector-icons";
-import { ICountry } from "../../typings";
+import { ICountry } from "../../../types/typings";
 import { Colors } from "../../utils/Colors";
 
 interface IProps {

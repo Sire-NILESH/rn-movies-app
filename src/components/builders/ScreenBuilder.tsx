@@ -1,5 +1,5 @@
 import { View, ScrollView } from "react-native";
-import { MovieMedia, ScreenTypes, TvMedia } from "../../typings";
+import { MovieMedia, ScreenTypes, TvMedia } from "../../../types/typings";
 import Banner from "../Banner";
 import Row from "../Row";
 import NothingToShow from "../NothingToShow";

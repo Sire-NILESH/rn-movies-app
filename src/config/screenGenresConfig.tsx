@@ -1,4 +1,8 @@
-import { IGenre, IGenresToShowHomeScreen, MediaTypes } from "../typings";
+import {
+  IGenre,
+  IGenresToShowHomeScreen,
+  MediaTypes,
+} from "../../types/typings";
 
 // export const tvScreenGenresToShow: IGenre[] = [
 //   { id: 10765, name: "Sci-Fi & Fantasy" },
@@ -23,7 +27,7 @@ import { IGenre, IGenresToShowHomeScreen, MediaTypes } from "../typings";
 // ];
 
 export const homeScreenGenresToShow: IGenresToShowHomeScreen[] = [
-  { id: 0.54364, name: "Top rated TV shows", mediaType: "tv" },
+  { id: 0.97756, name: "Trending TV shows", mediaType: "tv" },
   { id: 0.2345646, name: "Popular Movies", mediaType: "movie" },
   { id: 16, name: "Animation", mediaType: "tv" },
   { id: 35, name: "Comedy", mediaType: "movie" },

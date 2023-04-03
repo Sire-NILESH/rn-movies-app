@@ -1,6 +1,6 @@
 import { ParamListBase, RouteProp } from "@react-navigation/native";
 import { MaterialTopTabNavigationProp } from "@react-navigation/material-top-tabs";
-import { MediaTypes } from "../../typings";
+import { MediaTypes } from "../../../types/typings";
 
 export interface SearchResultsTopTabScreenProps {
   name: string;

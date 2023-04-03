@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { IReduxListMedia } from "../../typings";
+import { IReduxListMedia } from "../../../types/typings";
 
 // Collection List is an Object which is a collection of objects of type  IReduxListMedia. We chose this as an object because it will be easier to look up into objects with an id than traversing through an Array of objects.
 

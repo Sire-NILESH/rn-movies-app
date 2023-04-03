@@ -14,7 +14,7 @@ import {
   MovieMediaExtended,
   TvMedia,
   TvMediaExtended,
-} from "../../typings";
+} from "../../../types/typings";
 import {
   isMovie,
   isTv,

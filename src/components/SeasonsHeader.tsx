@@ -1,6 +1,6 @@
 import { View, Text, FlatList, Pressable } from "react-native";
 import React from "react";
-import { Season } from "../typings";
+import { Season } from "../../types/typings";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
 import { useNavigation } from "@react-navigation/native";

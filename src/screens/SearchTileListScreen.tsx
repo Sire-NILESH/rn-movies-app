@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
-import { MediaTypes, MovieMedia, TvMedia } from "../typings";
+import { MediaTypes, MovieMedia, TvMedia } from "../../types/typings";
 import SearchResultsTopTabsNavigator from "../navigators/SearchResultsTopTabsNavigator";
 
 const SearchTileListScreen: React.FunctionComponent<IStackScreenProps> = (

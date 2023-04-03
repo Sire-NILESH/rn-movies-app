@@ -4,7 +4,7 @@ import {
   MediaTypes,
   TCollectionType,
   TDbCollectionType,
-} from "../typings";
+} from "../../types/typings";
 
 const database = SQlite.openDatabase("mediaCollection.db");
 

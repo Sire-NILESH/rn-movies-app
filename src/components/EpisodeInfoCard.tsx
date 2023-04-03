@@ -1,6 +1,6 @@
 import { View, Text, Image } from "react-native";
 import React from "react";
-import { Episode } from "../typings";
+import { Episode } from "../../types/typings";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
 import { dateFormatter } from "../utils/helpers/helper";

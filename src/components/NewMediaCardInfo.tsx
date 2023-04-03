@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { MovieMedia, TvMedia, TvMediaExtended } from "../typings";
+import { MovieMedia, TvMedia, TvMediaExtended } from "../../types/typings";
 import {
   dateFormatter,
   isMovie,

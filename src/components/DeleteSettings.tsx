@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import CustomButton from "./ui/CustomButton";
 import { deleteCollection } from "../database/database";
 import { Ionicons } from "@expo/vector-icons";
-import { TDbCollectionType } from "../typings";
+import { TDbCollectionType } from "../../types/typings";
 import { Colors } from "../utils/Colors";
 import WarningModal from "./ui/WarningModal";
 

@@ -1,4 +1,4 @@
-import { RootState } from "./store/store";
+import { RootState } from "../src/store/store";
 
 export interface ICountry {
   name: string;

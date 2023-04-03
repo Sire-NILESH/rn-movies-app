@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
 import type { RootState, AppDispatch } from "../store/store";
-import { ICountry, IReduxListMedia } from "../typings";
+import { ICountry, IReduxListMedia } from "../../types/typings";
 import {
   addMediaToWatchlist,
   removeMediaFromWatchlist,

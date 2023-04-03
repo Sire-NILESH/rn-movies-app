@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { View, Text, Dimensions, StyleSheet } from "react-native";
 import * as ScreenOrientation from "expo-screen-orientation";
 import YoutubeIframe from "react-native-youtube-iframe";
-import { Trailer } from "../typings";
+import { Trailer } from "../../types/typings";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
 

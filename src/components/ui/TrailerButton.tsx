@@ -3,7 +3,7 @@ import React from "react";
 import { Colors } from "./../../utils/Colors";
 import CustomButton from "./CustomButton";
 import { Ionicons } from "@expo/vector-icons";
-import { MediaTypes } from "../../typings";
+import { MediaTypes } from "../../../types/typings";
 import { useNavigation } from "@react-navigation/native";
 
 interface IProps {

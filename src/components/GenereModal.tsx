@@ -3,7 +3,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Colors } from "./../utils/Colors";
-import { MediaTypes } from "../typings";
+import { MediaTypes } from "../../types/typings";
 import { movieGenres, tvGenres } from "../utils/helpers/helper";
 
 interface IProps {
@@ -47,7 +47,7 @@ const GenereModal: React.FC<IProps> = ({
         <View className="flex-row items-center justify-between h-[42] bg-black rounded-t-xl px-[20]">
           {/* Header Title */}
           <View>
-            <Text className="text-gray-50 text-base">Choose Genres</Text>
+            <Text className="text-gray-50 text-base">Genres</Text>
           </View>
           {/* Header Buttons */}
           <View className="flex-row justify-between w-[20%]">

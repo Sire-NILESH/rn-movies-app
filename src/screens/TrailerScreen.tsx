@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import { View, FlatList, Dimensions, Text } from "react-native";
 import { useLogging } from "../hooks/useLogging";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
-import { Trailer } from "../typings";
+import { Trailer } from "../../types/typings";
 import { fetchTrailers } from "../utils/requests";
 import NothingToShow from "../components/NothingToShow";
 import Loader from "./../components/ui/Loader";

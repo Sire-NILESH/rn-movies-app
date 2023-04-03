@@ -10,7 +10,7 @@ import {
   MovieMediaExtended,
   TvMedia,
   TvMediaExtended,
-} from "../../typings";
+} from "../../../types/typings";
 import { reduxListMediaObjBuilder } from "../../utils/helpers/helper";
 import {
   insertMediaToCollection,

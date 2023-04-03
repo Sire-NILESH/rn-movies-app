@@ -6,7 +6,7 @@ import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenPr
 import { Colors } from "./../utils/Colors";
 import { FlatList } from "react-native-gesture-handler";
 import { searchRequest } from "../utils/requests";
-import { MediaTypes, MovieMedia, TvMedia } from "../typings";
+import { MediaTypes, MovieMedia, TvMedia } from "../../types/typings";
 import HeaderSearchButton from "./../components/ui/HeaderSearchButton";
 import {
   dateFormatter,

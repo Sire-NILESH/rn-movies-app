@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import IconButton from "./IconButton";
 import { Colors } from "./../../utils/Colors";
-import { MediaTypes, MovieMedia, TvMedia } from "../../typings";
+import { MediaTypes, MovieMedia, TvMedia } from "../../../types/typings";
 
 interface IProps {
   gotoList?: boolean;

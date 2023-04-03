@@ -1,4 +1,4 @@
-import { IReduxListMedia } from "../typings";
+import { IReduxListMedia } from "../../types/typings";
 import { Text, View, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { getDeviceDimensions } from "../utils/helpers/helper";

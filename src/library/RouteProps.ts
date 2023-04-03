@@ -2,7 +2,7 @@ import { DrawerNavigationOptions } from "@react-navigation/drawer";
 import { IDrawerScreenProps } from "./NavigatorScreenProps/DrawerScreenProps";
 import { IStackScreenProps } from "./NavigatorScreenProps/StackScreenProps";
 import { ITopTabScreenProps } from "./NavigatorScreenProps/TopTabScreenProps";
-import { MediaTypes } from "../typings";
+import { MediaTypes } from "../../types/typings";
 import { SearchResultsTopTabScreenProps } from "./NavigatorScreenProps/SearchResultsTopTabScreenProps";
 
 export interface IStackRouteProps {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MediaTypes, MovieMedia, TvMedia } from "../typings";
+import { MediaTypes, MovieMedia, TvMedia } from "../../types/typings";
 import { showErrorAlert } from "../utils/helpers/helper";
 
 interface IProps {

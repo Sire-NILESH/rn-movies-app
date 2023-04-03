@@ -1,6 +1,6 @@
 import { View, Text, FlatList } from "react-native";
 import React from "react";
-import { IProductionCompany, Network } from "../typings";
+import { IProductionCompany, Network } from "../../types/typings";
 // @ts-ignore
 import ExpoFastImage from "expo-fast-image";
 import { Colors } from "../utils/Colors";

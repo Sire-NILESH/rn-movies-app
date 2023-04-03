@@ -1,4 +1,4 @@
-import { IReduxListMedia } from "../typings";
+import { IReduxListMedia } from "../../types/typings";
 import {
   View,
   Pressable,

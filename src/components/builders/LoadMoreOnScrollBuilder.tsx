@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { useState, useEffect } from "react";
-import { MediaTypes, MovieMedia, TvMedia } from "../../typings";
+import { MediaTypes, MovieMedia, TvMedia } from "../../../types/typings";
 import { getRelatedMediasProps, searchRequest } from "../../utils/requests";
 import TilesRenderedView from "../TilesRenderedView";
 import NothingToShow from "../NothingToShow";

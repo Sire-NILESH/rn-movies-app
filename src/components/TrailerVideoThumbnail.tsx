@@ -1,4 +1,4 @@
-import { Trailer } from "../typings";
+import { Trailer } from "../../types/typings";
 import { View, Image, Pressable, Text } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";

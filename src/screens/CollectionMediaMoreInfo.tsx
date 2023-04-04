@@ -101,7 +101,7 @@ const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
 
       {/* {Error } */}
       {errorLoadingProps ? (
-        <NothingToShow title={"Something went wrong"} />
+        <NothingToShow title={"Something went wrong"} problemType="error" />
       ) : null}
 
       {media && (

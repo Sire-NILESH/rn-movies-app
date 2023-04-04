@@ -93,7 +93,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
       {/* {Error } */}
       {errorLoadingProps ? (
-        <NothingToShow title={"Something went wrong"} />
+        <NothingToShow title={"Something went wrong"} problemType="error" />
       ) : null}
 
       {media && (

@@ -69,12 +69,15 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
       {/* if error show nothing*/}
       {error && !loading && (
-        <NothingToShow title={"Something went wrong while loading videos"} />
+        <NothingToShow
+          title={"Something went wrong while loading videos"}
+          problemType="error"
+        />
       )}
 
       {/* When no videos available for that media */}
       {videos.length == 0 && !error && !loading && (
-        <NothingToShow title="No Videos available" />
+        <NothingToShow title="No Videos available" problemType="nothing" />
       )}
 
       {/* When some video is available, show the YT player */}

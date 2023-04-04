@@ -56,7 +56,10 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType }) => {
 
       {!loadingProps && !screenProps ? (
         //   if no props then
-        <NothingToShow title={"Something went wrong while loading content"} />
+        <NothingToShow
+          title={"Something went wrong while loading content"}
+          problemType="error"
+        />
       ) : !errorLoadingProps && screenProps ? (
         //   when no error and props
         <View className="flex-1">

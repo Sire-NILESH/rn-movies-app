@@ -183,7 +183,10 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       {/* Tiles */}
       <View className="flex-1 relative w-full">
         {error && medias.length === 0 ? (
-          <NothingToShow title={"Something went wrong while loading content"} />
+          <NothingToShow
+            title={"Something went wrong while loading content"}
+            problemType="error"
+          />
         ) : medias?.length > 0 ? (
           <>
             <TilesRenderedView
@@ -195,7 +198,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             {/* <RenderLoader /> */}
           </>
         ) : (
-          !loadingNewMedias && <NothingToShow />
+          !loadingNewMedias && <NothingToShow problemType="nothing" />
         )}
       </View>
     </View>

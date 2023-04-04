@@ -90,7 +90,10 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
   return (
     <View className="flex-1 bg-secondary min-w-full items-center px-2">
       {error && medias.length === 0 ? (
-        <NothingToShow title={"Something went wrong while loading content"} />
+        <NothingToShow
+          title={"Something went wrong while loading content"}
+          problemType={"error"}
+        />
       ) : (
         // Tiles
         <View className="flex-1 relative w-full">
@@ -102,7 +105,7 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
               blockNewLoads={blockNewLoads}
             />
           ) : (
-            !loadingNewMedias && <NothingToShow />
+            !loadingNewMedias && <NothingToShow problemType="nothing" />
           )}
         </View>
       )}

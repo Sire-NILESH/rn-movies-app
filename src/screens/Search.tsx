@@ -15,6 +15,7 @@ import {
   isTvArray,
 } from "./../utils/helpers/helper";
 import { StackNavigationProp } from "@react-navigation/stack";
+import NothingToShow from "../components/NothingToShow";
 
 interface ISearchResults {
   results: MovieMedia[] | TvMedia[];
@@ -182,8 +183,10 @@ function renderFlatList(
             className="w-full justify-center overflow-clip"
             style={
               mediaObj.index % 2 === 0
-                ? { backgroundColor: Colors.stone[800] }
-                : { backgroundColor: Colors.stone[900] }
+                ? { backgroundColor: Colors.secondary }
+                : { backgroundColor: Colors.tertiary }
+              // ? { backgroundColor: Colors.stone[800] }
+              // : { backgroundColor: Colors.stone[900] }
             }
           >
             <Pressable

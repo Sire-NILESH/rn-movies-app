@@ -75,8 +75,7 @@ export const searchRequest = async (
       if (err.message === "Aborted") {
         console.log(err.message);
         return;
-      }
-      throw err;
+      } else throw err;
     });
 
   console.log("fetching", searchText);

@@ -57,9 +57,9 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
                 }}
               >
                 <View
-                  className="bg-stone-50 rounded-md p-1 justify-center"
+                  className="bg-stone-300 rounded-md p-1 justify-center"
                   style={{
-                    width: 100,
+                    width: 140,
                     aspectRatio: 16 / 9,
                   }}
                 >
@@ -72,7 +72,7 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
                 </View>
                 <Text
                   key={c.id}
-                  className="text-text_dark text-xs mt-1 text-center w-[100px]"
+                  className="text-text_dark text-xs mt-1 text-center w-[140]"
                 >
                   {c.name}
                 </Text>
@@ -98,49 +98,38 @@ function RenderLogo({
   companyName: string;
   mediaType: MediaTypes;
 }) {
-  const [errorImage, setErrorImage] = useState<boolean>(false);
+  const [fallbackImage, setFallbackImage] = useState<boolean>(true);
 
   function setErrorhandler(state: boolean) {
-    setErrorImage(state);
+    setFallbackImage(state);
   }
 
   return (
     <>
-      {!errorImage ? (
-        <ExpoFastImage
-          uri={imgPath}
-          cacheKey={`${id}-${mediaType === "movie" ? "production" : "network"}`}
-          resizeMode={"contain"}
-          className="border-stone-500"
-          //  onError={(err: Error) => {
-          //    console.log(
-          //      err["_dispatchInstances"]["_debugOwner"]["_debugNeedsRemount"]
-          //    );
-          //    if (
-          //      !err["_dispatchInstances"]["_debugOwner"]["_debugNeedsRemount"]
-          //    ) {
-          //      //   setErrorhandler(true);
-          //    }
-          //    // console.log(
-          //    //   err["_dispatchInstances"]["_debugOwner"]["_debugNeedsRemount"][
-          //    //     "actualDuration"
-          //    //   ]
-          //    // );
-          //    // setTimeout(() => {
-          //    //   setErrorhandler(true);
-          //    // }, 2000);
-          //    // setErrorhandler(true);
-          //    // setErrorImage(true);
-          //  }}
-          style={{
-            width: "100%",
-            height: "100%",
-          }}
-        />
-      ) : (
-        <View className="h-full w-full justify-center">
-          <Text className="text-center text-3xl font-bold text-text_darkest">
-            {companyName[0]}
+      <ExpoFastImage
+        uri={imgPath}
+        cacheKey={`${id}-${mediaType === "movie" ? "production" : "network"}`}
+        resizeMode={"contain"}
+        className="border-stone-500 relative"
+        onLoad={() => {
+          setFallbackImage(false);
+          // console.log("onload event here", event);
+        }}
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
+      />
+      {fallbackImage && (
+        <View className="absolute h-full w-full justify-center">
+          <Text
+            className="text-center text-[42px] font-bold text-text_darkest w-full"
+            numberOfLines={0}
+          >
+            {companyName
+              .split(" ")
+              .map((c) => c[0].toUpperCase())
+              .join(".")}
           </Text>
         </View>
       )}

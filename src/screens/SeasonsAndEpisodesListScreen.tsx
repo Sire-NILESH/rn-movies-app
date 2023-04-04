@@ -100,7 +100,10 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
 
       {errorLoadingProps ? (
         <View className="flex-1">
-          <NothingToShow title="Something went wrong while loading content" />
+          <NothingToShow
+            title="Something went wrong while loading content"
+            problemType="error"
+          />
         </View>
       ) : (
         /* {seasonDetails && tvMediaSeasons[selectedSeason.season_number] && ( */

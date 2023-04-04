@@ -101,7 +101,7 @@ const FavouriteMediaButton: React.FC<IProps> = ({
         }}
       >
         <Ionicons
-          size={24}
+          size={20}
           name={isFavourite ? "heart" : "heart-outline"}
           color={isFavourite ? Colors.stone[50] : Colors.stone[100]}
         ></Ionicons>

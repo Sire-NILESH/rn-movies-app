@@ -40,6 +40,7 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
         keyExtractor={(producitonCompany) => String(producitonCompany.id)}
         renderItem={(itemObj) => {
           const c = itemObj.item;
+          console.log(c.name, c.id);
           return (
             <View className="space-y-3 justify-start mr-5 rounded-md overflow-hidden">
               <Pressable
@@ -57,7 +58,7 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
                 }}
               >
                 <View
-                  className="bg-stone-300 rounded-md p-1 justify-center"
+                  className="bg-green-100 rounded-md p-1 justify-center"
                   style={{
                     width: 140,
                     aspectRatio: 16 / 9,
@@ -100,7 +101,7 @@ function RenderLogo({
 }) {
   const [fallbackImage, setFallbackImage] = useState<boolean>(true);
 
-  function setErrorhandler(state: boolean) {
+  function setFallbackImagehandler(state: boolean) {
     setFallbackImage(state);
   }
 
@@ -112,7 +113,7 @@ function RenderLogo({
         resizeMode={"contain"}
         className="border-stone-500 relative"
         onLoad={() => {
-          setFallbackImage(false);
+          setFallbackImagehandler(false);
           // console.log("onload event here", event);
         }}
         style={{
@@ -123,8 +124,8 @@ function RenderLogo({
       {fallbackImage && (
         <View className="absolute h-full w-full justify-center">
           <Text
-            className="text-center text-[42px] font-bold text-text_darkest w-full"
-            numberOfLines={0}
+            className="text-center text-[36px] font-bold text-text_darkest w-full px-2"
+            numberOfLines={1}
           >
             {companyName
               .split(" ")

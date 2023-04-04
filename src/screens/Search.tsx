@@ -122,7 +122,7 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         <View className="flex-1 pb-2">
           {/* Search List suggestions */}
           {searchQuery !== null &&
-          searchQuery.length >= 2 &&
+          searchQuery.length >= 0 &&
           searchQueryResult &&
           searchQueryResult?.results.length > 0
             ? isMovieArray(searchQueryResult?.results)

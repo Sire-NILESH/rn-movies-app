@@ -36,6 +36,7 @@ export const productionComapnyIds = {
   Miramax: 14,
   Paramount: 4,
   "Columbia Pictures": 5,
+  "Village Roadshow Pictures": 79,
   "Cartoon Network": 7899,
   Pixar: 3,
   "Warner Bros": 17,
@@ -118,6 +119,8 @@ export const customGenreIdToFetcher = {
     0.65436456: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds.Lucasfilm}&api_key=${API_KEY}&language=en-US`,
     // Columbia Pictures
     0.89733: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Columbia Pictures"]}&api_key=${API_KEY}&language=en-US`,
+    // "Village Roadshow Pictures": 79,
+    0.243468: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Village Roadshow Pictures"]}&api_key=${API_KEY}&language=en-US`,
     // Paramount
     0.214545: `${BASE_URL}/discover/movie?with_companies=${productionComapnyIds["Paramount"]}&api_key=${API_KEY}&language=en-US`,
     // Warner Bros. Entertainment

@@ -1,4 +1,4 @@
-import { View, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { useLayoutEffect, useState, useEffect } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
@@ -115,13 +115,23 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   // Header settings
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle:
-        userSelectedGenres.length === 1
-          ? // @ts-ignore
-            idToGenresMapped[String(userSelectedGenres[0])]
-          : userSelectedGenres.length > 1
-          ? "Custom Genres"
-          : title,
+      headerTitle: (props) => {
+        return (
+          <Text
+            className="font-semibold text-xl"
+            style={{ color: props.tintColor }}
+            ellipsizeMode="tail"
+            numberOfLines={1}
+          >
+            {userSelectedGenres.length === 1
+              ? // @ts-ignore
+                idToGenresMapped[String(userSelectedGenres[0])]
+              : userSelectedGenres.length > 1
+              ? "Custom Genres"
+              : title}
+          </Text>
+        );
+      },
       headerRight: (props) => (
         <View className="flex-row items-center space-x-1 mr-2">
           {/* Search button */}

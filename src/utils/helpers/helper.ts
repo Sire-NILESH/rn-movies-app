@@ -166,6 +166,7 @@ export const movieGenres = [
     { id: 0.2344565, name: "Warner Bros. Entertainment" },
     { id: 0.214545, name: "Paramount" },
     { id: 0.89733, name: "Columbia Pictures" },
+    { id: 0.243468, name: "Village Roadshow Pictures" },
     { id: 0.213775, name: "Miramax" },
     { id: 0.745635, name: "Pixar Movies" },
     { id: 0.324786, name: "DreamWorks" },

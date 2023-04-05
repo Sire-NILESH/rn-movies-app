@@ -96,6 +96,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
   const onCloseWithConfirmGenresModal = (genresIdList: number[]) => {
     if (genresIdList.length > 0) {
+      setError(null);
       setUserSelectedGenres(genresIdList);
       setPageNumber(1);
       setMedias([]);

@@ -186,6 +186,45 @@ const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
                 <Text className="text-text_dark">{media.overview}</Text>
               </View>
             ) : null}
+
+            {/* Other Info */}
+            {isTvExtended(media) && media.next_episode_to_air ? (
+              <View className="px-4 mt-5">
+                <Text className="text-lg text-text_highLight">
+                  Latest Episode
+                </Text>
+                <Text className="text-text_dark">{`Episode S${
+                  media.next_episode_to_air.season_number
+                }E${
+                  media.next_episode_to_air.episode_number
+                } is expected to air on ${new Date(
+                  media.next_episode_to_air.air_date
+                ).toDateString()}.`}</Text>
+                {/* <View className="px-4 mt-5 flex-row items-center justify-between space-x-2">
+                  <View className="bg-accent px-4 py-2 rounded-md">
+                    <Text className="text-text_secondary text-lg font-bold text-center">
+                      {media.next_episode_to_air.season_number}
+                    </Text>
+                    <Text className="text-text_dark text-center">Season</Text>
+                  </View>
+
+                  <View className="bg-accent px-4 py-2 rounded-md">
+                    <Text className="text-text_secondary text-lg font-bold text-center">
+                      {media.next_episode_to_air.episode_number}
+                    </Text>
+                    <Text className="text-text_dark text-center">Episode</Text>
+                  </View>
+
+                  <View className="bg-accent px-4 py-2 rounded-md h-full">
+                    <Text className="text-text_secondary text-lg font-bold text-center">
+                      {new Date(
+                        media.next_episode_to_air.air_date
+                      ).toDateString()}
+                    </Text>
+                  </View>
+                </View> */}
+              </View>
+            ) : null}
           </View>
 
           {/* BUTTONS CONTAINER */}

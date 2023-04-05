@@ -66,6 +66,35 @@ export interface WatchProviderForCountry {
   ads?: WatchProvider[];
 }
 
+export interface NextEpisodeToAir {
+  air_date: string;
+  episode_number: number;
+  id: number;
+  name: string;
+  overview: string;
+  production_code: string;
+  runtime: null | number;
+  season_number: number;
+  show_id: number;
+  still_path: string;
+  vote_average: number;
+  vote_count: number;
+}
+// export interface NextEpisodeToAir {
+//   "air_date": "2023-04-06",
+//   "episode_number": 4,
+//   "id": 4194485,
+//   "name": "Episode 4",
+//   "overview": "",
+//   "production_code": "",
+//   "runtime": null,
+//   "season_number": 1,
+//   "show_id": 95558,
+//   "still_path": "/mTVbmWDto55GqhYiwL3qLIsMO3y.jpg",
+//   "vote_average": 0,
+//   "vote_count": 0,
+// }
+
 export interface Media {
   id: number;
   adult: boolean;
@@ -126,7 +155,7 @@ export interface TvMediaExtended extends TvMedia {
     vote_count: number;
   };
   networks: Network[];
-  next_episode_to_air: null | number;
+  next_episode_to_air: null | NextEpisodeToAir;
   number_of_episodes: number;
   number_of_seasons: number;
   production_companies: {

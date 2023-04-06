@@ -3,22 +3,23 @@ import { Text, View, Button } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { IDrawerScreenProps } from "../library/NavigatorScreenProps/DrawerScreenProps";
 import CountriesDropdown from "../components/ui/CountriesDropdown";
-import { Ionicons, MaterialCommunityIcons, Fontisto } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
-import { useDefaultRegionHooks } from "../hooks/reduxHooks";
 import {
   deleteAllTables,
-  deleteCollection,
   getAllFromCollection,
+  getdataFromACollection,
   showAllTablesInDb,
 } from "../database/database";
 import { initDB } from "./../database/database";
-import CustomButton from "./../components/ui/CustomButton";
-import { TDbCollectionType } from "../../types/typings";
-import DeleteSettings from "../components/DeleteSettings";
+import DeleteSettings from "../components/settings/DeleteSettings";
+import LanguageDropdown from "../components/ui/LanguageDropdown";
+import YearsDropdown from "../components/ui/YearsDropdown";
+import DefaultRegionSettings from "../components/settings/DefaultRegionSettings";
+import { useDefaultRegionHooks } from "../hooks/reduxHooks";
 
 const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
-  const { navigation, route } = props;
+  // const { navigation, route } = props;
 
   const { setDefaultRegionHandler, defaultRegion } = useDefaultRegionHooks();
 
@@ -65,16 +66,36 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
           title="Default region"
           subtitle="A default region for the watch providers."
         >
+          <DefaultRegionSettings />
+        </RenderSettingCard>
+
+        {/* Set Default Language */}
+        <RenderSettingCard
+          iconName="language"
+          title="Default Language"
+          subtitle="Set a default language to find medias of that lanuage only."
+        >
           <View
             className="flex-row items-center justify-between px-2 mt-2 mx-2 bg-accent rounded-xl"
             style={{ backgroundColor: "rgb(4, 20, 10)" }}
           >
-            <Text className="text-text_tertiary mx-4">Select a country </Text>
+            <Text className="text-text_tertiary mx-4">Select a Language </Text>
+            <LanguageDropdown saveMode="applicationWide" />
+          </View>
+        </RenderSettingCard>
 
-            <CountriesDropdown
-              currentCountry={defaultRegion}
-              setCountryHandler={setDefaultRegionHandler}
-            />
+        {/* Set Default Year */}
+        <RenderSettingCard
+          iconName="calendar"
+          title="Default Year"
+          subtitle="Set a default year to find medias released in that year."
+        >
+          <View
+            className="flex-row items-center justify-between px-2 mt-2 mx-2 bg-accent rounded-xl"
+            style={{ backgroundColor: "rgb(4, 20, 10)" }}
+          >
+            <Text className="text-text_tertiary mx-4">Select a Year </Text>
+            <YearsDropdown saveMode="applicationWide" />
           </View>
         </RenderSettingCard>
 
@@ -131,6 +152,18 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
           <DeleteSettings />
         </RenderSettingCard>
 
+        {/* Test */}
+        <RenderSettingCard
+          iconName="beaker-outline"
+          title="Tesitng"
+          subtitle="Testing stuffs here."
+        >
+          <View className="flex-row items-center justify-between">
+            <LanguageDropdown saveMode="applicationWide" />
+            <YearsDropdown saveMode="applicationWide" />
+          </View>
+        </RenderSettingCard>
+
         {/* <Text className="text-stone-700 font-bold text-3xl">Settings Screen</Text> */}
         <View className="mt-20 items-center justify-center flex-row flex-wrap">
           <Button
@@ -164,12 +197,27 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
             }}
           />
           <Button
-            title="Show tables"
+            title="Show table"
             color={"black"}
             onPress={() => {
               try {
                 async function showTablesDB() {
                   await showAllTablesInDb();
+                }
+                showTablesDB();
+              } catch (err) {
+                console.log(err);
+              }
+            }}
+          />
+          <Button
+            title="Show Lang table"
+            color={"black"}
+            onPress={() => {
+              try {
+                async function showTablesDB() {
+                  const data = await getdataFromACollection("current_language");
+                  console.log(data);
                 }
                 showTablesDB();
               } catch (err) {

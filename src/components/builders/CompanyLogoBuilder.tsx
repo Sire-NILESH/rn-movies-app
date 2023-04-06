@@ -29,7 +29,7 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
   };
 
   return (
-    <View className="flex-1 space-y-4 mt-12">
+    <View className="flex-1 space-y-4 mt-3">
       <Text className="ml-4 text-text_highLight">
         {props.mediaType === "movie" ? "Production" : "Networks"}
       </Text>

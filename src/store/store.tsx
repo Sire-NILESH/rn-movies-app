@@ -3,6 +3,8 @@ import watchlistReducer from "./watchlistSlice";
 import watchedMediaListReducer from "./watchedMediaListSlice";
 import favouriteListReducer from "./favouritesSlice";
 import defaultRegionSliceReducer from "./defaultRegionSlice";
+import defaultLanguageForMediasReducer from "./languageForMediasSlice";
+import defaultYearFilterForMediasReducer from "./yearFIlterForMediasSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +12,8 @@ export const store = configureStore({
     watchedMedias: watchedMediaListReducer,
     favouriteMedias: favouriteListReducer,
     defaultRegion: defaultRegionSliceReducer,
+    defaultLanguageForMedias: defaultLanguageForMediasReducer,
+    defaultYearFilterForMedias: defaultYearFilterForMediasReducer,
   },
 });
 

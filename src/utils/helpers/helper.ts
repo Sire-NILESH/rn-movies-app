@@ -1,6 +1,7 @@
 import {
   ICountry,
   IReduxListMedia,
+  ISOLang,
   Media,
   MediaTypes,
   MovieMedia,
@@ -132,6 +133,15 @@ export function isReduxCollectionMedia(
   medias: MovieMedia | TvMedia | IReduxListMedia
 ): medias is IReduxListMedia {
   return medias !== null && (medias as IReduxListMedia).dateAdded !== undefined;
+}
+
+export function isISOLang(obj: Object): obj is ISOLang {
+  return (
+    obj !== null &&
+    (obj as ISOLang).iso639_1 !== undefined &&
+    (obj as ISOLang).iso639_2T !== undefined &&
+    (obj as ISOLang).iso639_2B !== undefined
+  );
 }
 
 export function showErrorAlert(title?: string, message?: string) {

@@ -17,13 +17,19 @@ import {
   mediaExistsInCollection,
   removeMediaFromCollection,
 } from "../../database/database";
+import { LinearGradient } from "expo-linear-gradient";
 
 interface IProps {
   media: MovieMediaExtended | TvMediaExtended | MovieMedia | TvMedia;
   mediaType: MediaTypes;
+  isBannerButton?: boolean;
 }
 
-const WatchlistButton: React.FC<IProps> = ({ media, mediaType }) => {
+const WatchlistButton: React.FC<IProps> = ({
+  media,
+  mediaType,
+  isBannerButton,
+}) => {
   // const {
   //   addMediaToWatchlistHandler,
   //   removeMediaFromWatchlistHandler,
@@ -89,9 +95,13 @@ const WatchlistButton: React.FC<IProps> = ({ media, mediaType }) => {
   return (
     <CustomButton
       color={isWatchListed ? Colors.stone[50] : Colors.tertiary}
-      height={45}
+      height={42}
       width={"100%"}
-      radius={10}
+      radius={8}
+      border={isBannerButton && isBannerButton ? 1 : 0}
+      styledClassName={
+        isBannerButton && isBannerButton ? "border-stone-800" : ""
+      }
       method={() => {
         if (isWatchListed) {
           setIsWatchlistedHandler();

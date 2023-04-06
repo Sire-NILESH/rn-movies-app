@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
 import type { RootState, AppDispatch } from "../store/store";
-import { ICountry, IReduxListMedia } from "../../types/typings";
+import { ICountry, IReduxListMedia, ISOLang } from "../../types/typings";
 import {
   addMediaToWatchlist,
   removeMediaFromWatchlist,
@@ -15,6 +15,8 @@ import {
   removeMediaFromFavouriteList,
 } from "../store/favouritesSlice";
 import { setDefaultRegion } from "../store/defaultRegionSlice";
+import { setDefaultLanguageForMedias } from "../store/languageForMediasSlice";
+import { setDefaultYearFilterForMedias } from "../store/yearFIlterForMediasSlice";
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch: () => AppDispatch = useDispatch;
@@ -108,5 +110,39 @@ export const useDefaultRegionHooks = () => {
   return {
     setDefaultRegionHandler,
     defaultRegion,
+  };
+};
+
+export const useDefaultLanguageHooks = () => {
+  // REDUX TOOLKIT HOOKS
+  const defaultLanguage = useAppSelector(
+    (state) => state.defaultLanguageForMedias
+  );
+  const dispatch = useAppDispatch();
+
+  const setDefaultLanguageHandler = (language: ISOLang) => {
+    dispatch(setDefaultLanguageForMedias(language));
+  };
+
+  return {
+    setDefaultLanguageHandler,
+    defaultLanguage,
+  };
+};
+
+export const useDefaultYearHooks = () => {
+  // REDUX TOOLKIT HOOKS
+  const defaultYear = useAppSelector(
+    (state) => state.defaultYearFilterForMedias
+  );
+  const dispatch = useAppDispatch();
+
+  const setDefaultLanguageHandler = (year: number) => {
+    dispatch(setDefaultYearFilterForMedias(year));
+  };
+
+  return {
+    setDefaultLanguageHandler,
+    defaultYear,
   };
 };

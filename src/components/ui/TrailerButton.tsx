@@ -25,9 +25,9 @@ const TrailerButton: React.FC<IProps> = (props) => {
   return (
     <CustomButton
       color={Colors.stone[900]}
-      height={45}
+      height={42}
       width={"100%"}
-      radius={10}
+      radius={8}
       method={onPressHandler}
     >
       <Ionicons

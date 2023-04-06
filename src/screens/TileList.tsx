@@ -119,7 +119,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       headerTitle: (props) => {
         return (
           <Text
-            className="font-semibold text-xl"
+            className="text-xl"
             style={{ color: props.tintColor }}
             ellipsizeMode="tail"
             numberOfLines={1}

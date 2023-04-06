@@ -19,6 +19,13 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   const [medias, setMedias] = useState<IDBCollectionMedia[]>([]);
   const [refresh, setRefresh] = useState(false);
 
+  const currentDate = new Date(Date.now());
+  const currentYear = currentDate.getFullYear();
+  const today = currentDate.toDateString();
+  const yesterday = new Date(
+    currentDate.setDate(currentDate.getDate() - 1)
+  ).toDateString();
+
   // Check if the screen is in focus/in-front-of-the-user, and then accordingly change the state to whether refresh(re-exe) the screen or not.
   useEffect(() => {
     const subscribe = navigation.addListener("focus", () => {
@@ -92,6 +99,9 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
                     key={dateKey}
                     title={dateKey}
                     medias={dateCollection[dateKey]}
+                    currentYear={currentYear}
+                    today={today}
+                    yesterday={yesterday}
                   />
                 );
               } else return null;

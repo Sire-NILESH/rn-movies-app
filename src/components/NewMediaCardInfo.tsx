@@ -15,6 +15,7 @@ import { Colors } from "./../utils/Colors";
 import ImagePlaceholder from "./ui/ImagePlaceholder";
 import ImageCached from "./ui/ImageCached";
 import { useFavouriteMediaListHooks } from "../hooks/reduxHooks";
+import { by639_1 } from "iso-language-codes";
 
 interface IProps {
   media: MovieMedia | TvMedia | TvMediaExtended;
@@ -113,10 +114,8 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
                 color={Colors.text_primary}
               />
               <Text className="text-text_highLight">
-                {/*  @ts-ignore */}
-                {isoLangs[media.original_language]?.name
-                  ? // @ts-ignore
-                    isoLangs[media.original_language]?.name
+                {by639_1[media.original_language]?.name
+                  ? by639_1[media.original_language]?.name
                   : media.original_language}
               </Text>
             </View>

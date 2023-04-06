@@ -42,7 +42,7 @@ const WatchProviders: React.FC<IProps> = ({ mediaId, mediaType }) => {
     screenProps && screenProps[currentCountry.code];
 
   return (
-    <View className="flex-1 mt-12 space-y-5">
+    <View className="flex-1 mt-10 space-y-5">
       <View
         className="flex-row  items-center justify-between px-4 mt-2 mx-2 bg-accent rounded-xl"
         // style={{ backgroundColor: "rgb(4, 20, 10)" }}

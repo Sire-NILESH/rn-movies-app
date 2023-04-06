@@ -22,7 +22,7 @@ const SeasonsHeader: React.FC<IProps> = (props) => {
   };
 
   return (
-    <View className="flex-row justify-center bg-secondary py-4">
+    <View className="flex-row justify-center bg-secondary py-3">
       {/* <View className="ml-4 mr-2 bg-stone-800 items-center justify-center px-2 rounded-md"> */}
       <View className="ml-4 mr-2 items-center justify-center rounded-md">
         <Pressable onPress={() => navigation.goBack()}>
@@ -66,20 +66,22 @@ interface ISeasonTagProps {
 
 function SeasonTag(props: ISeasonTagProps) {
   return (
-    <Pressable
-      onPress={() => props.onPressHandler(props.seasonNumber)}
-      android_ripple={{ color: "#e9e9e9" }}
-      className="flex-1 mx-2 px-4 h-8 items-center justify-center"
-    >
-      <Text className="text-text_highLight uppercase tracking-[2px] font-semibold px-1">
-        {props.seasonNumber === 0 ? "Extras" : `Season ${props.seasonNumber}`}
-      </Text>
-      {/* Underline of selected tag */}
-      {props.selectedSeasonNumber === props.seasonNumber ? (
-        <View className="border border-green-500 h-[1px] w-full rounded-full mt-1" />
-      ) : (
-        <View className="border border-transparent h-[1px] w-full rounded-full mt-1" />
-      )}
-    </Pressable>
+    <View className="relative mx-2 items-center justify-center rounded-md overflow-hidden">
+      <Pressable
+        onPress={() => props.onPressHandler(props.seasonNumber)}
+        android_ripple={{ color: "#e9e9e9" }}
+        className="px-4 py-2"
+      >
+        <Text className="text-text_highLight uppercase tracking-[2px] font-semibold px-1">
+          {props.seasonNumber === 0 ? "Extras" : `Season ${props.seasonNumber}`}
+        </Text>
+        {/* Underline of selected tag */}
+        {props.selectedSeasonNumber === props.seasonNumber ? (
+          <View className="absolute bottom-0 mx-4 border border-green-500 h-[1px] w-full rounded-full mt-1" />
+        ) : (
+          <View className="absolute border border-transparent h-[1px] w-full rounded-full mt-1" />
+        )}
+      </Pressable>
+    </View>
   );
 }

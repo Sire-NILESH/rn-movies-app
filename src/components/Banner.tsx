@@ -63,11 +63,13 @@ function Banner({ mediaList }: Props) {
       >
         <LinearGradient
           colors={[
-            "rgba(0,0,0,0.2)",
-            "rgba(28, 25, 23, 0.5)",
-            "rgba(28, 25, 23, 0.5)",
+            "rgba(0,0,0,0.4)",
+            // "rgba(28, 25, 23, 0.6)",
+            // "rgba(28, 25, 23, 0.6)",
+            "rgba(28, 25, 23, 0.7)",
+            "rgba(28, 25, 23, 0.7)",
             "rgba(28, 25, 23, 0.6)",
-            Colors.tertiary,
+            // Colors.tertiary,
             Colors.secondary,
           ]}
           style={styles.rootScreen}
@@ -87,10 +89,7 @@ function Banner({ mediaList }: Props) {
 
       {/* Text Contents and Buttons */}
       {media ? (
-        <LinearGradient
-          className="px-4 mt-10 space-y-3"
-          colors={["rgba(0,0,0,0)", "rgba(0,0,0,0)"]}
-        >
+        <View className="px-4 mt-10 space-y-3">
           {/* Title/Name */}
           <Text className="text-2xl font-bold text-text_highLight">
             {isMovie(media) ? media.title : media?.name}
@@ -170,17 +169,18 @@ function Banner({ mediaList }: Props) {
 
           {/* OverView */}
           <Text
-            className="max-w-xs text-xs font-semibold text-text_primary"
+            className="max-w-xs text-xs text-text_secondary"
             numberOfLines={4}
           >
             {media?.overview}
           </Text>
 
           <View className="flex-row space-x-3">
-            <View className="mt-5 w-[140]">
+            <View className="mt-5 w-[120]">
               <WatchlistButton
                 media={media}
                 mediaType={isMovie(media) ? "movie" : "tv"}
+                isBannerButton={true}
               />
               {/* <CustomButton
                 width={100}
@@ -202,9 +202,9 @@ function Banner({ mediaList }: Props) {
             <View className="mt-5 w-[140]">
               <CustomButton
                 width={140}
-                height={45}
-                radius={10}
-                color={Colors.stone["700"]}
+                height={42}
+                radius={8}
+                color={Colors.neutral["700"]}
                 // border={1}
                 styledClassName="border-stone-800"
                 method={infoButtonPressHandler}
@@ -221,7 +221,7 @@ function Banner({ mediaList }: Props) {
               </CustomButton>
             </View>
           </View>
-        </LinearGradient>
+        </View>
       ) : null}
     </View>
   );

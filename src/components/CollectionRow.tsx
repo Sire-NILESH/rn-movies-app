@@ -9,25 +9,46 @@ import React from "react";
 interface Props {
   title: string;
   medias: IReduxListMedia[];
+  currentYear: number;
+  today: string;
+  yesterday: string;
 }
 
-function CollectionRow({ title, medias }: Props) {
+function CollectionRow({
+  title,
+  medias,
+  currentYear,
+  today,
+  yesterday,
+}: Props) {
+  let titleForRow: string = "";
+
+  if (title === today) {
+    titleForRow = "Today";
+  } else if (title === yesterday) {
+    titleForRow = "Yesterday";
+  } else if (String(currentYear) === title.split(" ")[3]) {
+    titleForRow = title.substring(0, 10);
+  } else {
+    titleForRow = `${title.substring(0, 10)}, ${title.substring(11)}`;
+  }
+
   return (
     <View className="space-y-1 mt-8">
       <View className="flex-row space-x-4 mb-1">
         <Text className="pl-5 text-sm font-semibold text-text_primary">
-          {title}
+          {titleForRow}
         </Text>
       </View>
 
-      {renderFlatList(medias, title)}
+      {renderFlatList(medias)}
     </View>
   );
 }
 
 export default React.memo(CollectionRow);
 
-function renderFlatList(medias: IReduxListMedia[], title: string) {
+function renderFlatList(medias: IReduxListMedia[]) {
   const navigation = useNavigation();
 
   // Navigation handler for child components like thumbnail and jumpTo button.

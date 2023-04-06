@@ -1,5 +1,6 @@
 import * as SQlite from "expo-sqlite";
 import {
+  ICountry,
   IReduxListMedia,
   MediaTypes,
   TCollectionType,
@@ -15,7 +16,234 @@ const mapper: { [key in TCollectionType]: TDbCollectionType } = {
   watched: "watched",
 };
 
-export function initDB() {
+interface ISQLQuery {
+  query: string;
+  arguments: (string | number | null)[];
+  successMessage: string;
+  errorMessage: string;
+  rowsAffectedSuccess?: String;
+}
+
+// define function to execute multiple SQL statements
+const executeMultipleQueries = async (
+  sqlStatements: ISQLQuery[],
+  finalMessage: string
+) => {
+  return new Promise<void>((resolve, reject) => {
+    database.transaction(
+      (tx) => {
+        sqlStatements.forEach((sql) => {
+          tx.executeSql(
+            sql.query,
+            sql.arguments,
+            (_tx, results) => {
+              console.log(sql.successMessage);
+              if (sql.rowsAffectedSuccess && results.rowsAffected > 0) {
+                console.log(sql.rowsAffectedSuccess);
+              }
+            },
+            (_, err) => {
+              console.log(sql.errorMessage);
+              console.log(err);
+              // reject(err);
+              return true;
+            }
+          );
+        });
+      },
+      (error) => {
+        reject(error);
+      },
+      () => {
+        console.log(finalMessage);
+        resolve();
+      }
+    );
+  });
+};
+
+export async function initDB() {
+  const sqlStatements: ISQLQuery[] = [
+    // MEDIAS TABLE
+    {
+      query: `CREATE TABLE IF NOT EXISTS medias (
+      mediaId REAL NOT NULL,
+      mediaType TEXT NOT NULL,
+      dateAdded REAL NOT NULL,
+      dateAddedString TEXT NOT NULL,
+      mediaTitle REAL NULL,
+      mediaDate REAL NULL,
+      poster_path TEXT NULL,
+      backdrop_path TEXT NULL,
+      PRIMARY KEY (mediaId, mediaType)
+     ) `,
+      arguments: [],
+      successMessage: "...checked media table STATUS: FINE",
+      rowsAffectedSuccess: "...media table was CREATED into the database ✨",
+      errorMessage: "Error creating media table",
+    },
+    // COLLECTION TABLE
+    {
+      query: `CREATE TABLE IF NOT EXISTS collection (
+        mediaId REAL NOT NULL,
+        mediaType TEXT NOT NULL,
+        collection TEXT NOT NULL CHECK (collection IN ('favourites', 'watchlist', 'watched')),
+        PRIMARY KEY (mediaId, mediaType, collection),
+        FOREIGN KEY (mediaId, mediaType) REFERENCES medias (mediaId, mediaType) ON DELETE CASCADE
+      )`,
+      arguments: [],
+      successMessage: "...checked collection table STATUS: FINE",
+      rowsAffectedSuccess:
+        "...collection table was CREATED into the database ✨",
+      errorMessage: "Error creating collection table",
+    },
+    // CURRENT LANGUAGE TABLE
+    {
+      query: `CREATE TABLE IF NOT EXISTS current_language (
+        name TEXT NOT NULL,
+        nativeName TEXT NOT NULL,
+        iso639_1 TEXT NOT NULL ,
+        iso639_2T TEXT NOT NULL ,
+        iso639_2B TEXT NOT NULL ,
+        PRIMARY KEY (iso639_1)
+      );`,
+      arguments: [],
+      successMessage: "...checked current_language table STATUS: FINE",
+      rowsAffectedSuccess:
+        "...current_language table was CREATED into the database ✨",
+      errorMessage: "Error creating current_language table",
+    },
+    // CURRENT REGION TABLE
+    {
+      query: `CREATE TABLE IF NOT EXISTS current_region (
+        name TEXT NOT NULL,
+        code TEXT NOT NULL,
+        PRIMARY KEY (code)
+      );`,
+      arguments: [],
+      successMessage: "...checked current_region table STATUS: FINE",
+      rowsAffectedSuccess:
+        "...current_region table was CREATED into the database ✨",
+      errorMessage: "Error creating current_region table",
+    },
+    // INSERT INITIAL DATA TO CURRENT LANGUAGE TABLE
+    {
+      query: `INSERT INTO current_language (
+        name, 
+        nativeName, 
+        iso639_1, 
+        iso639_2T, 
+        iso639_2B
+        ) SELECT ?, ?, ?, ?, ?
+        WHERE NOT EXISTS (
+          SELECT *
+          FROM current_language
+      );`,
+      arguments: ["English", "English", "en", "eng", "eng"],
+      successMessage: "...checked current_language table STATUS: FINE",
+      rowsAffectedSuccess:
+        "...current_language table's initial data was added into the table since it was found empty  ✨",
+      errorMessage: "Error add initial data to current_language table",
+    },
+    // INSERT INITIAL DATA TO CURRENT REGION TABLE
+    {
+      query: `INSERT INTO current_region (
+        name,
+        code
+        ) SELECT ?, ?
+        WHERE NOT EXISTS (
+          SELECT *
+          FROM current_region
+      );`,
+      arguments: ["United States", "US"],
+      successMessage: "...checked current_region table STATUS: FINE",
+      rowsAffectedSuccess:
+        "...current_region table's initial data was added into the table since it was found empty",
+      errorMessage: "Error add initial data to current_language table",
+    },
+  ];
+
+  // execute querys
+  try {
+    await executeMultipleQueries(sqlStatements, "Inital DB setup completed");
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function addRegion(country: ICountry) {
+  const sqlStatements: ISQLQuery[] = [
+    // DELETE PRIOR DATA FROM CURRENT REGION TABLE
+    {
+      query: `DELETE FROM current_region;`,
+      arguments: [],
+      successMessage:
+        "...attempt to delete prior data from current_region table",
+      rowsAffectedSuccess: "...deleted prior data from current_region table",
+      errorMessage: "Error deleting prior data from current_language table",
+    },
+
+    // INSERT REGION DATA TO CURRENT REGION TABLE
+    {
+      query: `INSERT INTO current_region (
+        name,
+        code
+        ) VALUES (?, ?);`,
+      arguments: [country.name, country.code],
+      successMessage: "...attempt to add data into current_region table",
+      rowsAffectedSuccess:
+        "SUCCESS, new region data added to current_region table",
+      errorMessage: "Error adding new region data to current_region table",
+    },
+  ];
+
+  await executeMultipleQueries(sqlStatements, "added new default region");
+}
+
+// async function getDefaultRegionDB() {
+//    const promise = new Promise<void>((resolve, reject) => {
+//     database.transaction((tx) => {
+//       tx.executeSql(
+//         `
+//       DELETE FROM current_region;`,
+//         [],
+//         (_tx, results) => {
+//           console.log("...deleted prior data from current_region table");
+
+//           // Now add the new region to the table
+//           database.transaction((tx) => {
+//             tx.executeSql(`INSERT INTO current_region (
+//               name,
+//               code
+//               ) VALUES ?, ?
+//               ;`,
+//               [country.name, country.code],
+//               (_tx, results) => {
+//                 if (results.rowsAffected > 0) {
+//                   console.log("SUCCESS, new region data added to current_region table")
+//                   resolve()
+//                 }
+//               },
+//               (_tx, err) => {
+//                 console.log("Error deleting prior data from current_language table")
+//                 reject(err)
+//                 return true
+//               }
+//             )
+//           })
+//         },
+//         (_, err) => {
+//           console.log("Error deleting prior data from current_language table")
+//           return true;
+//         }
+//       );
+//     });
+//   });
+
+//   return promise
+// }
+
+export function initDBV2() {
   // initialize the database
   const promise = new Promise<void>((resolve, reject) => {
     database.transaction((tx) => {
@@ -44,7 +272,7 @@ export function initDB() {
             FOREIGN KEY (mediaId, mediaType) REFERENCES medias (mediaId, mediaType) ON DELETE CASCADE
           )`,
             [],
-            (tx, results) => {
+            (_tx, _results) => {
               console.log("...collection Table was CREATED into the database");
               console.log("Initial DB setup completed.");
               resolve();
@@ -351,6 +579,34 @@ export function getAllFromCollection() {
   return promise;
 }
 
+export function getdataFromACollection(collectionName: string) {
+  const promise = new Promise<SQlite.SQLResultSet>((resolve, reject) => {
+    database.transaction((tx) => {
+      tx.executeSql(
+        `SELECT * 
+        FROM ${collectionName}
+        `,
+        [],
+        (_, results) => {
+          console.log("Got data from table");
+          console.log();
+          resolve(results);
+        },
+        (_, err) => {
+          console.log(
+            "error retrieveing data from table, from database.js\n",
+            err
+          );
+          reject(err);
+          return true;
+        }
+      );
+    });
+  });
+
+  return promise;
+}
+
 export async function deleteCollection(collectionType: TDbCollectionType) {
   // find and change the collection column of the media to FALSE which means it was removed form the collection.
   const promise = new Promise<void>((resolve, reject) => {
@@ -419,7 +675,12 @@ export async function deleteCollection(collectionType: TDbCollectionType) {
 export async function deleteAllTables() {
   // find and change the collection column of the media to FALSE which means it was removed form the collection.
   return await new Promise<void>((resolve, reject) => {
-    const tableNames = ["collection", "medias"];
+    const tableNames = [
+      "collection",
+      "medias",
+      "current_language",
+      "current_region",
+    ];
 
     database.transaction((tx) => {
       tableNames.forEach((tableName) => {

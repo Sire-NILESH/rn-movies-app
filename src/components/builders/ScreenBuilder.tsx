@@ -7,6 +7,7 @@ import { showErrorAlert } from "../../utils/helpers/helper";
 import useFetchScreenProps from "../../hooks/useFetchScreenProps";
 import Loader from "../ui/Loader";
 import { memo } from "react";
+import LoaderShimmer from "../ui/LoaderShimmer";
 // import * as SplashScreen from "expo-splash-screen";
 // import { useRoute } from "@react-navigation/native";
 

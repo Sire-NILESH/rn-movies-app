@@ -1,5 +1,8 @@
-import { MovieMedia, TvMedia } from "../../types/typings";
-import Thumbnail from "./Thumbnail";
+import {
+  IGenresToShowHomeScreen,
+  MovieMedia,
+  TvMedia,
+} from "../../types/typings";
 import { Text, View, FlatList } from "react-native";
 import IconButton from "./ui/IconButton";
 import { Colors } from "./../utils/Colors";
@@ -7,14 +10,29 @@ import { Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
 import { isMovie } from "./../utils/helpers/helper";
+import { getGenreMediasProps } from "../utils/requests";
+import useFetcher from "../hooks/useFetcher";
+import React, { memo } from "react";
+import ThumbnailSkeleton from "./ThumbnailSkeleton";
+import ThumbnailMemoised from "./ThumbnailMemoised";
 
 interface Props {
   title: string;
-  medias: TvMedia[] | MovieMedia[];
-  genreIdOfList: number;
+  mediaGenre: IGenresToShowHomeScreen;
 }
 
-function Row({ title, medias, genreIdOfList }: Props) {
+function RowAsync({ title, mediaGenre }: Props) {
+  const params = [[mediaGenre.id], mediaGenre.mediaType, 1];
+  const useFetcherMemo = React.useCallback(() => {
+    return useFetcher(getGenreMediasProps, [...params]);
+  }, []);
+
+  const {
+    screenProps: medias,
+    loadingProps,
+    errorLoadingProps,
+  } = useFetcherMemo();
+
   return (
     <View className="space-y-1 mb-5">
       <View className="flex-row space-x-4 mb-1">
@@ -23,14 +41,25 @@ function Row({ title, medias, genreIdOfList }: Props) {
         </Text>
       </View>
 
-      {isMovieArray(medias)
-        ? renderFlatList(medias as MovieMedia[], title, genreIdOfList)
-        : renderFlatList(medias as TvMedia[], title, genreIdOfList)}
+      {/* {isMovieArray(medias)
+        ? renderFlatList(medias as MovieMedia[], title, mediaGenre.id)
+        : renderFlatList(medias as TvMedia[], title, mediaGenre.id)} */}
+      {loadingProps ? (
+        // null
+        <ThumbnailSkeleton />
+      ) : isMovieArray(medias) ? (
+        renderFlatList(medias as MovieMedia[], title, mediaGenre.id)
+      ) : (
+        renderFlatList(medias as TvMedia[], title, mediaGenre.id)
+      )}
     </View>
   );
 }
 
-export default Row;
+// ) : null}
+
+// export default RowAsync;
+export default memo(RowAsync);
 
 function renderFlatList(
   medias: MovieMedia[] | TvMedia[],
@@ -67,7 +96,7 @@ function renderFlatList(
           data={medias}
           renderItem={(media) => (
             <View className="ml-1 bg-tertiary rounded-md">
-              <Thumbnail
+              <ThumbnailMemoised
                 media={isMovie(media.item) ? media.item : media.item}
                 orientation="portrait"
                 navigateTo={navigateTo}
@@ -83,7 +112,7 @@ function renderFlatList(
         />
       ) : (
         <FlatList
-          initialNumToRender={20}
+          initialNumToRender={5}
           ListFooterComponent={renderFooterItemFunction(
             medias,
             title,
@@ -96,7 +125,7 @@ function renderFlatList(
           data={medias}
           renderItem={(media) => (
             <View className="ml-1 bg-tertiary rounded-md">
-              <Thumbnail
+              <ThumbnailMemoised
                 media={isMovie(media.item) ? media.item : media.item}
                 orientation="portrait"
                 navigateTo={navigateTo}

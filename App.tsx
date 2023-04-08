@@ -14,6 +14,7 @@ import { stackRoutes } from "./src/library/NavigationRoutes/StackRoutes";
 import Loader from "./src/components/ui/Loader";
 import NothingToShow from "./src/components/NothingToShow";
 import useDBInitialize from "./src/hooks/useDBInitialize";
+import LoaderShimmer from "./src/components/ui/LoaderShimmer";
 
 // Keep the splash screen visible while we fetch resources
 // SplashScreen.preventAutoHideAsync();

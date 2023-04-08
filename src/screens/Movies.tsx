@@ -3,6 +3,7 @@ import HeaderSearchButton from "../components/ui/HeaderSearchButton";
 import ScreenBuilder from "../components/builders/ScreenBuilder";
 import { IDrawerScreenProps } from "../library/NavigatorScreenProps/DrawerScreenProps";
 import { View } from "react-native";
+import ScreenBuilderV2 from "../components/builders/ScreenBuilderV2";
 
 // const MoviesScreen: React.FC<IStackScreenProps> = (props) => {
 const MoviesScreen: React.FC<IDrawerScreenProps> = (props) => {
@@ -19,7 +20,8 @@ const MoviesScreen: React.FC<IDrawerScreenProps> = (props) => {
     });
   }, []);
 
-  return <ScreenBuilder screenType="movie" />;
+  return <ScreenBuilderV2 screenType="movie" />;
+  // return <ScreenBuilder screenType="movie" />;
 };
 
 export default MoviesScreen;

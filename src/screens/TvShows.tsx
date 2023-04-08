@@ -4,6 +4,7 @@ import HeaderSearchButton from "../components/ui/HeaderSearchButton";
 import ScreenBuilder from "../components/builders/ScreenBuilder";
 import { IDrawerScreenProps } from "../library/NavigatorScreenProps/DrawerScreenProps";
 import { View } from "react-native";
+import ScreenBuilderV2 from "../components/builders/ScreenBuilderV2";
 
 // const TvShowsScreen: React.FC<IStackScreenProps> = (props) => {
 const TvShowsScreen: React.FC<IDrawerScreenProps> = (props) => {
@@ -20,7 +21,8 @@ const TvShowsScreen: React.FC<IDrawerScreenProps> = (props) => {
     });
   }, []);
 
-  return <ScreenBuilder screenType="tv" />;
+  return <ScreenBuilderV2 screenType="tv" />;
+  // return <ScreenBuilder screenType="tv" />;
 };
 
 export default TvShowsScreen;

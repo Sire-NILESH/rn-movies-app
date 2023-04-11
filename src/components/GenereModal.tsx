@@ -3,14 +3,20 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Colors } from "./../utils/Colors";
-import { MediaTypes } from "../../types/typings";
-import { movieGenres, tvGenres } from "../utils/helpers/helper";
+import { IUrlObject, MediaTypes } from "../../types/typings";
+import {
+  movieGenres,
+  movieGenresList,
+  tvGenres,
+  tvGenresList,
+} from "../utils/helpers/helper";
+import { moviePlaylist, tvPlaylist } from "../config/genresWithRoutes";
 
 interface IProps {
   isVisible: boolean;
   onClose: () => void;
   mediaListType: MediaTypes;
-  closeWithConfirm: (genresIdList: number[]) => void;
+  closeWithConfirm: (playlists: IUrlObject[]) => void;
 }
 
 const GenereModal: React.FC<IProps> = ({
@@ -19,27 +25,33 @@ const GenereModal: React.FC<IProps> = ({
   mediaListType,
   closeWithConfirm,
 }) => {
-  const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
+  const [selectedPlaylists, setSelectedPlaylists] = useState<IUrlObject[]>([]);
 
-  function selectedGenresHandlers(genreId: number, remove?: boolean): void {
+  function selectedPlaylistHandlers(
+    playlist: IUrlObject,
+    remove?: boolean
+  ): void {
     if (remove !== undefined && remove === true) {
-      setSelectedGenres((prev) => {
-        const i = prev.findIndex((genre) => genre === genreId);
+      setSelectedPlaylists((prev) => {
+        const i = prev.findIndex(
+          (playlistCurrent) => playlistCurrent.name === playlist.name
+        );
         prev.splice(i, 1);
         return [...prev];
       });
-    } else setSelectedGenres((prev) => [...prev, genreId]);
+    } else setSelectedPlaylists((prev) => [...prev, playlist]);
   }
 
   function onConfirmHandler() {
-    closeWithConfirm(selectedGenres);
+    closeWithConfirm(selectedPlaylists);
   }
 
-  function onConfirmCustomGenres(genreId: number) {
-    closeWithConfirm([genreId]);
+  function onConfirmPlaylist(playlist: IUrlObject) {
+    closeWithConfirm([playlist]);
   }
 
-  const mediaGenreList = mediaListType === "movie" ? movieGenres : tvGenres;
+  // const mediaGenreList = mediaListType === "movie" ? movieGenres : tvGenres;
+  const playlists = mediaListType === "movie" ? moviePlaylist : tvPlaylist;
 
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible}>
@@ -53,7 +65,7 @@ const GenereModal: React.FC<IProps> = ({
           <View className="flex-row justify-between w-[20%]">
             <View className="rounded-full overflow-hidden">
               <Pressable
-                disabled={selectedGenres.length > 0 ? false : true}
+                disabled={setSelectedPlaylists.length > 0 ? false : true}
                 className="p-2"
                 onPress={onConfirmHandler}
                 android_ripple={{ color: "#eee" }}
@@ -63,7 +75,7 @@ const GenereModal: React.FC<IProps> = ({
                   name="done"
                   color={Colors.gray[100]}
                   size={18}
-                  style={{ opacity: selectedGenres.length > 0 ? 1 : 0 }}
+                  style={{ opacity: selectedPlaylists.length > 0 ? 1 : 0 }}
                 />
               </Pressable>
             </View>
@@ -87,14 +99,14 @@ const GenereModal: React.FC<IProps> = ({
           {movieGenres ? (
             <ScrollView className="flex-1">
               {/* Custom/Unsupported Genres */}
-              {mediaGenreList[0].map((mediaGenre, index) => (
+              {playlists[0].map((playlist, index) => (
                 <Pressable
                   onPress={() => {
                     // Directly add single genre to the list of selections and confirm modal too
-                    onConfirmCustomGenres(mediaGenre.id);
+                    onConfirmPlaylist(playlist);
                   }}
                   android_ripple={{ color: "#eee" }}
-                  key={mediaGenre.id}
+                  key={playlist.name}
                   className="flex-row px-4"
                   style={
                     index % 2 === 0
@@ -103,7 +115,7 @@ const GenereModal: React.FC<IProps> = ({
                   }
                 >
                   <Text className="px-2 py-2 text-left text-gray-300">
-                    {mediaGenre.name}
+                    {playlist.name}
                   </Text>
                 </Pressable>
               ))}
@@ -119,9 +131,9 @@ const GenereModal: React.FC<IProps> = ({
                 </View>
               </View>
 
-              {mediaGenreList[1].map((mediaGenre, index) => (
+              {playlists[1].map((playlist, index) => (
                 <View
-                  key={mediaGenre.id}
+                  key={playlist.name}
                   className="flex-row px-4"
                   style={
                     index % 2 === 0
@@ -136,12 +148,12 @@ const GenereModal: React.FC<IProps> = ({
                     innerIconStyle={{ borderWidth: 1 }}
                     onPress={(isChecked: boolean) => {
                       isChecked === true
-                        ? selectedGenresHandlers(mediaGenre.id)
-                        : selectedGenresHandlers(mediaGenre.id, true);
+                        ? selectedPlaylistHandlers(playlist)
+                        : selectedPlaylistHandlers(playlist, true);
                     }}
                   />
                   <Text className="px-2 py-2 text-left text-gray-300">
-                    {mediaGenre.name}
+                    {playlist.name}
                   </Text>
                 </View>
               ))}

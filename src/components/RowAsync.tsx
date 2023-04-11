@@ -1,5 +1,6 @@
 import {
   IGenresToShowHomeScreen,
+  IPlaylist,
   MovieMedia,
   TvMedia,
 } from "../../types/typings";
@@ -10,21 +11,24 @@ import { Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
 import { isMovie } from "./../utils/helpers/helper";
-import { getGenreMediasProps } from "../utils/requests";
+import { getGenreMediasProps, sendUrlObjApiRequest } from "../utils/requests";
 import useFetcher from "../hooks/useFetcher";
 import React, { memo } from "react";
 import ThumbnailSkeleton from "./ThumbnailSkeleton";
 import ThumbnailMemoised from "./ThumbnailMemoised";
+import Thumbnail from "./Thumbnail";
 
 interface Props {
   title: string;
-  mediaGenre: IGenresToShowHomeScreen;
+  // mediaGenre: IGenresToShowHomeScreen;
+  playlist: IPlaylist;
 }
 
-function RowAsync({ title, mediaGenre }: Props) {
-  const params = [[mediaGenre.id], mediaGenre.mediaType, 1];
+function RowAsync({ title, playlist }: Props) {
+  const params = [[playlist]];
+  // const params = [[mediaGenre.id], mediaGenre.mediaType, 1];
   const useFetcherMemo = React.useCallback(() => {
-    return useFetcher(getGenreMediasProps, [...params]);
+    return useFetcher(sendUrlObjApiRequest, [...params]);
   }, []);
 
   const {
@@ -48,9 +52,9 @@ function RowAsync({ title, mediaGenre }: Props) {
         // null
         <ThumbnailSkeleton />
       ) : isMovieArray(medias) ? (
-        renderFlatList(medias as MovieMedia[], title, mediaGenre.id)
+        renderFlatList(medias as MovieMedia[], title, playlist)
       ) : (
-        renderFlatList(medias as TvMedia[], title, mediaGenre.id)
+        renderFlatList(medias as TvMedia[], title, playlist)
       )}
     </View>
   );
@@ -64,7 +68,7 @@ export default memo(RowAsync);
 function renderFlatList(
   medias: MovieMedia[] | TvMedia[],
   title: string,
-  genreId: number
+  playlist: IPlaylist
 ) {
   const navigation = useNavigation();
 
@@ -87,7 +91,7 @@ function renderFlatList(
           ListFooterComponent={renderFooterItemFunction(
             medias,
             title,
-            genreId,
+            playlist,
             navigateTo
           )}
           bounces
@@ -116,7 +120,7 @@ function renderFlatList(
           ListFooterComponent={renderFooterItemFunction(
             medias,
             title,
-            genreId,
+            playlist,
             navigateTo
           )}
           bounces
@@ -125,7 +129,8 @@ function renderFlatList(
           data={medias}
           renderItem={(media) => (
             <View className="ml-1 bg-tertiary rounded-md">
-              <ThumbnailMemoised
+              {/* <ThumbnailMemoised */}
+              <Thumbnail
                 media={isMovie(media.item) ? media.item : media.item}
                 orientation="portrait"
                 navigateTo={navigateTo}
@@ -135,7 +140,7 @@ function renderFlatList(
             </View>
           )}
           keyExtractor={(media) => {
-            return String(media.id) + String(Math.random() * 20);
+            return String(media.id);
           }}
           horizontal
         />
@@ -147,7 +152,7 @@ function renderFlatList(
 function renderFooterItemFunction(
   medias: MovieMedia[] | TvMedia[],
   title: string,
-  genreId: number,
+  playlist: IPlaylist,
   navigateTo: (screen: string, paramOption: Object) => void
 ) {
   return (
@@ -162,14 +167,14 @@ function renderFooterItemFunction(
           if (isMovieArray(medias)) {
             navigateTo("Tiles", {
               title,
-              genreId,
+              playlist,
               currentMediaType: "movie",
             });
           } else {
             {
               navigateTo("Tiles", {
                 title,
-                genreId,
+                playlist,
                 currentMediaType: "tv",
               });
             }

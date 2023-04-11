@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, FlatList } from "react-native";
 import {
   IGenresToShowHomeScreen,
+  IPlaylist,
   MovieMedia,
   ScreenTypes,
   TvMedia,
@@ -14,13 +15,20 @@ import useFetchScreenProps from "../../hooks/useFetchScreenProps";
 import Loader from "../ui/Loader";
 import { memo } from "react";
 import {
-  homeScreenGenresToShow,
-  movieScreenGenresToShow,
-  tvScreenGenresToShow,
+  // homeScreenGenresToShow,
+  homeScreenPlaylists,
+  // movieScreenGenresToShow,
+  movieScreenPlaylists,
+  // tvScreenGenresToShow,
+  tvScreenPlaylists,
 } from "../../config/screenGenresConfig";
 import RowAsync from "../RowAsync";
 import useFetcher from "../../hooks/useFetcher";
-import { getGenreMediasProps } from "../../utils/requests";
+import {
+  getGenreMediasProps,
+  sendUrlObjApiRequest,
+} from "../../utils/requests";
+import { useRoute } from "@react-navigation/native";
 
 interface IProps {
   screenType: ScreenTypes;
@@ -32,32 +40,33 @@ interface IState {
   genreMedias: TvMedia[] | MovieMedia[];
 }
 
-function getGenresToFetch(screenType: ScreenTypes) {
+function getPlaylistsToFetch(screenType: ScreenTypes) {
   // Get the genre list to fetch depending on the screen type.
-  let genresToFetch;
+  let playlistsToFetch: IPlaylist[];
   switch (screenType) {
     case "tv":
-      genresToFetch = tvScreenGenresToShow;
+      playlistsToFetch = tvScreenPlaylists;
       break;
     case "movie":
-      genresToFetch = movieScreenGenresToShow;
+      playlistsToFetch = movieScreenPlaylists;
       break;
     default:
-      genresToFetch = homeScreenGenresToShow;
+      playlistsToFetch = homeScreenPlaylists;
   }
 
-  return genresToFetch;
+  return playlistsToFetch;
 }
 
 const ScreenBuilderV2: React.FC<IProps> = ({ screenType }) => {
-  const genresToFetch = useMemo(() => {
-    const result = getGenresToFetch(screenType);
+  const playlistsToFetch = useMemo(() => {
+    const result = getPlaylistsToFetch(screenType);
     return result;
   }, []);
 
-  const params = [[genresToFetch[0].id], genresToFetch[0].mediaType, 1];
+  const params = [playlistsToFetch, {}];
+  // const params = [[playlistsToFetch[0].id], playlistsToFetch[0].mediaType, 1];
   const useFetcherMemo = React.useCallback(() => {
-    return useFetcher(getGenreMediasProps, [...params]);
+    return useFetcher(sendUrlObjApiRequest, [...params]);
   }, []);
 
   const { screenProps, loadingProps, errorLoadingProps } = useFetcherMemo();
@@ -83,20 +92,20 @@ const ScreenBuilderV2: React.FC<IProps> = ({ screenType }) => {
               ) : null}
 
               {!loadingProps &&
-                genresToFetch.map((m: IGenresToShowHomeScreen, i) => {
+                playlistsToFetch.map((p, i) => {
                   //  return <RowAsync key={m.id} title={m.name} mediaGenre={m} />;
                   if (i === 0) {
                     return (
                       <Row
-                        key={m.id}
-                        title={m.name}
+                        key={p.name}
+                        title={p.name}
                         medias={screenProps}
-                        genreIdOfList={m.id}
+                        playlist={p}
                       />
                     );
                   } else {
                     return (
-                      <RowAsync key={m.id} title={m.name} mediaGenre={m} />
+                      <RowAsync key={p.name} title={p.name} playlist={p} />
                     );
                   }
                 })}
@@ -116,7 +125,6 @@ export default memo(ScreenBuilderV2);
   {mediaForBanner.length > 0 ? (
     <Banner mediaList={mediaForBanner} />
   ) : null}
-
   {genresToFetch.map((m: IGenresToShowHomeScreen) => {
     return <RowAsync key={m.id} title={m.name} mediaGenre={m} />;
   })}

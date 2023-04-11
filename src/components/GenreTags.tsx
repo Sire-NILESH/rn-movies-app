@@ -2,9 +2,11 @@ import { View, Text, FlatList } from "react-native";
 import React from "react";
 import { idToGenresMapped } from "../utils/helpers/helper";
 import { Colors } from "./../utils/Colors";
+import { IUrlObject } from "../../types/typings";
 
 interface IProps {
-  genreIdList: number[];
+  genreNames?: IUrlObject[];
+  genreIdList?: number[];
   backgroundType: "transparent" | "colored";
 }
 
@@ -19,12 +21,25 @@ const GenreTags: React.FC<IProps> = (props) => {
             : Colors.stone[900],
       }}
     >
-      <FlatList
-        horizontal
-        data={props.genreIdList}
-        keyExtractor={(item) => String(item)}
-        renderItem={(itemObj) => <GerneTag genreId={itemObj.item} />}
-      />
+      {props.genreIdList ? (
+        <FlatList
+          horizontal
+          data={props.genreIdList}
+          keyExtractor={(item) =>
+            String(item) + ":" + String(Math.random() * 10)
+          }
+          renderItem={(itemObj) => <GerneTag genreId={itemObj.item} />}
+        />
+      ) : (
+        <FlatList
+          horizontal
+          data={props.genreNames}
+          keyExtractor={(item) =>
+            String(item.name) + ":" + String(Math.random() * 10)
+          }
+          renderItem={(itemObj) => <GerneTag genreName={itemObj.item} />}
+        />
+      )}
     </View>
   );
 };
@@ -32,15 +47,18 @@ const GenreTags: React.FC<IProps> = (props) => {
 export default GenreTags;
 
 interface IGenreProps {
-  genreId: number;
+  genreName?: IUrlObject;
+  genreId?: number;
 }
 
 function GerneTag(props: IGenreProps) {
   return (
     <View className="flex-1 mx-2 bg-black/40 border border-stone-700 px-4 h-8 rounded-xl items-center justify-center">
       <Text className="text-text_highLight">
-        {/* @ts-ignore */}
-        {idToGenresMapped[String(props.genreId)]}
+        {props.genreName
+          ? props.genreName.name
+          : // @ts-ignore
+            idToGenresMapped[String(props.genreId)]}
       </Text>
     </View>
   );

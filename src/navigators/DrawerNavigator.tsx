@@ -40,6 +40,7 @@ const DrawerNavigator = () => {
         drawerActiveTintColor: Colors.green[300],
         drawerInactiveTintColor: Colors.stone[400],
         drawerAllowFontScaling: true,
+        overlayColor: "",
         drawerStyle: {
           // backgroundColor: "rgba(20, 15, 15, 1)",
           backgroundColor: Colors.tertiary,

@@ -1,5 +1,8 @@
 import {
+  Genre,
   ICountry,
+  INetworkIds,
+  IProductionComapnyIds,
   IReduxListMedia,
   ISOLang,
   Media,
@@ -162,6 +165,154 @@ export function dateFormatter(date: string): string {
   return new Date(date).toDateString().split(" ").splice(1).join(" ");
 }
 
+export const networkIds: INetworkIds = {
+  Netflix: 213,
+  HBO: 49,
+  FOX: 19,
+  HULU: 453,
+  "Amazon Prime": 1024,
+  "Disney+": 2739,
+  "Apple TV+": 2552,
+  "Cartoon Network": 56,
+  "Adult Swim": 80,
+  AMC: 174,
+  PBS: 14,
+  CBS: 16,
+  "History Tv": 65,
+  "BBC One": 4,
+  "BBC Two": 332,
+  "Sky Atlantic": 1063,
+  CuriosityStream: 2349,
+  "National Geographic": 43,
+  Discovery: 64,
+  ShowTime: 67,
+  ABC: 2,
+  Nickelodeon: 13,
+  "Toon Disney": 142,
+  "Disney XD": 44,
+  ANIMAX: 171,
+};
+
+export const productionComapnyIds = {
+  // Netflix: "145174,178464,171251,185004,186222,192478",
+  Lucasfilm: 1,
+  HBO: 3268,
+  "Adult Swim": 6759,
+  Miramax: 14,
+  Paramount: 4,
+  "Columbia Pictures": 5,
+  "Village Roadshow Pictures": 79,
+  "Cartoon Network": 7899,
+  Pixar: 3,
+  "Warner Bros": 17,
+  "20th Century Fox": 25,
+  "Metro-Goldwyn-Mayer": 21,
+  "Universal Pictures": 33,
+  "Lions Gate Films": 35,
+  "Sony Pictures": 34,
+  DreamWorks: "521",
+  // DreamWorks: [
+  //   7, 521, 3486, 15258, 42141, 73933, 114185, 114539, 125083, 144867, 183771,
+  // ],
+};
+
+export function buildTvPlaylist(name: string, networkId: keyof INetworkIds) {
+  return {
+    name: name,
+    url: `/discover/tv`,
+    queryParams: {
+      with_networks: networkIds[networkId],
+      include_null_first_air_dates: true,
+      language: "en-US",
+    },
+  };
+}
+export function buildMoviePlaylist(
+  name: string,
+  productionCompanyId: keyof IProductionComapnyIds
+) {
+  return {
+    name: name,
+    url: `/discover/tv`,
+    queryParams: {
+      with_networks: productionComapnyIds[productionCompanyId],
+      include_null_first_air_dates: true,
+      language: "en-US",
+    },
+  };
+}
+
+export function buildTrendingPlaylist(name: string, mediaType: MediaTypes) {
+  return {
+    name: name,
+    url: `/trending/${mediaType}/day`,
+    queryParams: {
+      language: "en-US",
+    },
+  };
+}
+
+export function buildPopularPlaylist(name: string, mediaType: MediaTypes) {
+  return {
+    name: name,
+    url: `/${mediaType}/popular`,
+    queryParams: {
+      language: "en-US",
+    },
+  };
+}
+
+export function buildTopRatedPlaylist(name: string, mediaType: MediaTypes) {
+  return {
+    name: name,
+    url: `/${mediaType}/top_rated`,
+    queryParams: {
+      language: "en-US",
+    },
+  };
+}
+
+export function buildAiringTodayPlaylist(name: string, mediaType: MediaTypes) {
+  return {
+    name: name,
+    url: `/${mediaType}/airing_today`,
+    queryParams: {
+      language: "en-US",
+    },
+  };
+}
+
+export function buildNowPlayingPlaylist(name: string, mediaType: MediaTypes) {
+  return {
+    name: name,
+    url: `/${mediaType}/now_playing`,
+    queryParams: {
+      language: "en-US",
+    },
+  };
+}
+
+export function buildUpcomingPlaylist(name: string, mediaType: MediaTypes) {
+  return {
+    name: name,
+    url: `/${mediaType}/upcoming`,
+    queryParams: {
+      language: "en-US",
+    },
+  };
+}
+
+export function buildGenrePlaylist(mediaType: MediaTypes, genre: Genre) {
+  return {
+    name: genre.name,
+    url: `/discover/${mediaType}`,
+    queryParams: {
+      with_genres: String(genre.id),
+      language: "en-US",
+    },
+  };
+}
+
 export const movieGenres = [
   // Custom Genres
   [
@@ -208,6 +359,47 @@ export const movieGenres = [
     { id: 10752, name: "War" },
     { id: 37, name: "Western" },
   ],
+];
+
+export const tvGenresList: Genre[] = [
+  { id: 10759, name: "Action & Adventure" },
+  { id: 16, name: "Animation" },
+  { id: 35, name: "Comedy" },
+  { id: 80, name: "Crime" },
+  { id: 99, name: "Documentary" },
+  { id: 18, name: "Drama" },
+  { id: 10751, name: "Family" },
+  { id: 10762, name: "Kids" },
+  { id: 9648, name: "Mystery" },
+  { id: 10763, name: "News" },
+  { id: 10764, name: "Reality" },
+  { id: 10765, name: "Sci-Fi & Fantasy" },
+  { id: 10766, name: "Soap" },
+  { id: 10767, name: "Talk" },
+  { id: 10768, name: "War & Politics" },
+  { id: 37, name: "Western" },
+];
+
+export const movieGenresList: Genre[] = [
+  { id: 28, name: "Action" },
+  { id: 12, name: "Adventure" },
+  { id: 16, name: "Animation" },
+  { id: 35, name: "Comedy" },
+  { id: 80, name: "Crime" },
+  { id: 99, name: "Documentary" },
+  { id: 18, name: "Drama" },
+  { id: 10751, name: "Family" },
+  { id: 14, name: "Fantasy" },
+  { id: 36, name: "History" },
+  { id: 27, name: "Horror" },
+  { id: 10402, name: "Music" },
+  { id: 9648, name: "Mystery" },
+  { id: 10749, name: "Romance" },
+  { id: 878, name: "Science Fiction" },
+  { id: 10770, name: "TV Movie" },
+  { id: 53, name: "Thriller" },
+  { id: 10752, name: "War" },
+  { id: 37, name: "Western" },
 ];
 
 export const tvGenres = [

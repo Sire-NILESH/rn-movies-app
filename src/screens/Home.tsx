@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, memo } from "react";
 import { useLogging } from "../hooks/useLogging";
 import Header from "./../components/Header";
 import ScreenBuilder from "../components/builders/ScreenBuilder";
@@ -27,4 +27,4 @@ const HomeScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   return <ScreenBuilderV2 screenType="home" />;
 };
 
-export default HomeScreen;
+export default memo(HomeScreen);

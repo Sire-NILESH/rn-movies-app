@@ -1,4 +1,4 @@
-import { MovieMedia, TvMedia } from "../../types/typings";
+import { IPlaylist, MovieMedia, TvMedia } from "../../types/typings";
 import Thumbnail from "./Thumbnail";
 import { Text, View, FlatList } from "react-native";
 import IconButton from "./ui/IconButton";
@@ -7,14 +7,16 @@ import { Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
 import { isMovie } from "./../utils/helpers/helper";
+import { getTileListScreenMedias } from "../utils/requests";
+import { useEffect } from "react";
 
 interface Props {
   title: string;
   medias: TvMedia[] | MovieMedia[];
-  genreIdOfList: number;
+  playlist: IPlaylist;
 }
 
-function Row({ title, medias, genreIdOfList }: Props) {
+function Row({ title, medias, playlist }: Props) {
   return (
     <View className="space-y-1 mb-5">
       <View className="flex-row space-x-4 mb-1">
@@ -24,8 +26,8 @@ function Row({ title, medias, genreIdOfList }: Props) {
       </View>
 
       {isMovieArray(medias)
-        ? renderFlatList(medias as MovieMedia[], title, genreIdOfList)
-        : renderFlatList(medias as TvMedia[], title, genreIdOfList)}
+        ? renderFlatList(medias as MovieMedia[], title, playlist)
+        : renderFlatList(medias as TvMedia[], title, playlist)}
     </View>
   );
 }
@@ -35,7 +37,7 @@ export default Row;
 function renderFlatList(
   medias: MovieMedia[] | TvMedia[],
   title: string,
-  genreId: number
+  playlist: IPlaylist
 ) {
   const navigation = useNavigation();
 
@@ -58,7 +60,7 @@ function renderFlatList(
           ListFooterComponent={renderFooterItemFunction(
             medias,
             title,
-            genreId,
+            playlist,
             navigateTo
           )}
           bounces
@@ -87,7 +89,7 @@ function renderFlatList(
           ListFooterComponent={renderFooterItemFunction(
             medias,
             title,
-            genreId,
+            playlist,
             navigateTo
           )}
           bounces
@@ -118,7 +120,7 @@ function renderFlatList(
 function renderFooterItemFunction(
   medias: MovieMedia[] | TvMedia[],
   title: string,
-  genreId: number,
+  playlist: IPlaylist,
   navigateTo: (screen: string, paramOption: Object) => void
 ) {
   return (
@@ -133,14 +135,14 @@ function renderFooterItemFunction(
           if (isMovieArray(medias)) {
             navigateTo("Tiles", {
               title,
-              genreId,
+              playlist,
               currentMediaType: "movie",
             });
           } else {
             {
               navigateTo("Tiles", {
                 title,
-                genreId,
+                playlist,
                 currentMediaType: "tv",
               });
             }
@@ -156,3 +158,8 @@ function renderFooterItemFunction(
     </View>
   );
 }
+
+// `/discover/${mediaType}`, {
+//   with_genres: commaSeparatedGenres,
+//   page: pageNumber,
+// })

@@ -4,38 +4,45 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { Colors } from "../utils/Colors";
 import HeaderSearchButton from "../components/ui/HeaderSearchButton";
-import { MediaTypes, MovieMedia, TvMedia } from "../../types/typings";
+import {
+  IQueryParams,
+  IUrlObject,
+  MediaTypes,
+  MovieMedia,
+  TvMedia,
+} from "../../types/typings";
 import {
   idToGenresMapped,
   isMovieArray,
   showErrorAlert,
 } from "../utils/helpers/helper";
 import GenereModal from "../components/GenereModal";
-import { getGenreMediasProps } from "../utils/requests";
+import {
+  getGenreMediasProps,
+  getTileListScreenMedias,
+} from "../utils/requests";
 import GenreTags from "../components/GenreTags";
 import TilesRenderedView from "../components/TilesRenderedView";
 import NothingToShow from "../components/NothingToShow";
 
 const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [showGenresModal, setShowGenresModal] = useState<boolean>(false);
-  const [userSelectedGenres, setUserSelectedGenres] = useState<number[]>([]);
+  const [userSelectedPlaylists, setUserSelectedPlaylists] = useState<
+    IUrlObject[]
+  >([]);
   const { navigation, route } = props;
   // @ts-ignore
   const {
     title,
     medias: mediaList,
-    genreId,
+    playlist: pastPlaylist,
     currentMediaType,
-    networkId,
-    productionCompanyId,
   }: {
     title: string;
     medias: MovieMedia[] | TvMedia[];
-    genreId?: number;
+    playlist?: IUrlObject;
     noMoreLoads?: boolean;
     currentMediaType?: MediaTypes;
-    networkId?: number;
-    productionCompanyId?: number;
   } = route.params;
 
   const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>(
@@ -52,26 +59,29 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     ? "movie"
     : "tv";
 
+  // const filters: IQueryParams = { page: pageNumber };
+
   // Loading Data
   useEffect(() => {
     async function loadMedias() {
-      if (!genreId) return;
+      if (!pastPlaylist) return;
 
+      const filters: IQueryParams = { page: pageNumber };
       setLoadingNewMedias(true);
       try {
-        const genreMediasToFetch =
-          userSelectedGenres.length > 0 ? userSelectedGenres : [genreId];
+        const playlistsToFetch =
+          userSelectedPlaylists.length > 0
+            ? userSelectedPlaylists
+            : [pastPlaylist];
 
-        const moreMedias = await getGenreMediasProps(
-          genreMediasToFetch,
-          currentListType,
-          pageNumber,
-          networkId ? networkId : undefined,
-          productionCompanyId ? productionCompanyId : undefined
+        const moreMedias = await getTileListScreenMedias(
+          playlistsToFetch,
+          filters
         );
         // if we received some data, then page exists.
         if (moreMedias.length > 0) {
           setMedias((prev) => [...prev, ...moreMedias]);
+          setLoadingNewMedias(false);
         }
         // else, no more pages to fetch. Block any further new loads.
         else {
@@ -81,10 +91,11 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         setBlockNewLoads(true);
         setError(err as Error);
       }
-      setLoadingNewMedias(false);
+      // setLoadingNewMedias(false);
     }
     loadMedias();
-  }, [mediaList, pageNumber, userSelectedGenres, getGenreMediasProps, genreId]);
+  }, [mediaList, pageNumber, userSelectedPlaylists]);
+  // }, [mediaList, pageNumber, userSelectedPlaylists, pastPlaylist]);
 
   const onShowGenresModal = () => {
     setShowGenresModal(true);
@@ -94,10 +105,10 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     setShowGenresModal(false);
   };
 
-  const onCloseWithConfirmGenresModal = (genresIdList: number[]) => {
-    if (genresIdList.length > 0) {
+  const onCloseWithConfirmGenresModal = (playlists: IUrlObject[]) => {
+    if (playlists.length > 0) {
       setError(null);
-      setUserSelectedGenres(genresIdList);
+      setUserSelectedPlaylists(playlists);
       setPageNumber(1);
       setMedias([]);
       setShowGenresModal(false);
@@ -124,10 +135,9 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             ellipsizeMode="tail"
             numberOfLines={1}
           >
-            {userSelectedGenres.length === 1
-              ? // @ts-ignore
-                idToGenresMapped[String(userSelectedGenres[0])]
-              : userSelectedGenres.length > 1
+            {userSelectedPlaylists.length === 1
+              ? userSelectedPlaylists[0].name
+              : userSelectedPlaylists.length > 1
               ? "Custom Genres"
               : title}
           </Text>
@@ -158,7 +168,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         </View>
       ),
     });
-  }, [userSelectedGenres]);
+  }, [userSelectedPlaylists]);
 
   // Footer loader component
   // const RenderLoader = () => {
@@ -170,12 +180,12 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   // };
 
   return (
-    <View className="flex-1 bg-secondary min-w-full w-full px-2 items-center">
+    <View className="flex-1 bg-secondary min-w-full w-full items-center">
       {/* Genre Tags Scrollable Row on top, if user selected some genres */}
-      {userSelectedGenres?.length > 1 ? (
+      {userSelectedPlaylists?.length > 1 ? (
         <View className="w-full">
           <GenreTags
-            genreIdList={userSelectedGenres}
+            genreNames={userSelectedPlaylists}
             backgroundType="colored"
           />
         </View>
@@ -192,7 +202,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       ) : null}
 
       {/* Tiles */}
-      <View className="flex-1 relative w-full">
+      <View className="flex-1 relative w-full px-2">
         {error && medias.length === 0 ? (
           <NothingToShow
             title={"Something went wrong while loading content"}

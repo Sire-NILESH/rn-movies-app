@@ -1,10 +1,12 @@
-import { customGenreIdToFetcher } from "../config/genresWithRoutes";
 import { API_KEY, BASE_URL } from "@env";
 import {
   IGenre,
   IGenresToShowHomeScreen,
+  IQueryParams,
+  IUrlObject,
   MediaTypes,
 } from "../../types/typings";
+import { fetchDataFromApi, fetchDataFromApiV2 } from "./api";
 
 // Movie search
 // const data = fetch('https://api.themoviedb.org/3/search/movie?api_key=e3e1732f8f495a1b191494b49b813669&query=batman&language=en-US&page=1&include_adult=false').then((data)=>data.json()).then((res)=>console.log(res))
@@ -67,7 +69,7 @@ export const searchRequest = async (
   abortController?: AbortController
 ) => {
   const page = pageNumber ? pageNumber : 1;
-  const url = `${BASE_URL}/search/${mediaType}?api_key=${API_KEY}&query=${searchText}&language=en-US&page=1&include_adult=false&page=${page}`;
+  const url = `${BASE_URL}/search/${mediaType}?api_key=${API_KEY}&query=${searchText}&language=en-US&include_adult=false&page=${page}`;
   // const abortController = new AbortController();
   const data = await fetch(url, { signal: abortController?.signal })
     .then((res) => res.json())
@@ -97,9 +99,14 @@ export const getHomeScreenProps = async (
     ...getTheseGenreMedias.map((genre, i) => {
       // Real genre ids are > 1
       if (genre.id >= 1) {
-        return fetch(
-          `${BASE_URL}/discover/${genre.mediaType}?api_key=${API_KEY}&language=en-US&with_genres=${genre.id}`
-        ).then((res) => res.json());
+        return fetchDataFromApi(`/discover/${genre.mediaType}`, {
+          with_genres: String(genre.id),
+          page: 1,
+        })
+          .then((res) => res.data)
+          .catch((err) => {
+            throw err;
+          });
       }
 
       // If reached here, we are dealing with a custom genre i.e. < 0
@@ -162,9 +169,10 @@ export const getScreenProps = async (
   try {
     data = await Promise.all([
       ...getTheseGenreMedias.map((genre) =>
-        fetch(
-          `${BASE_URL}/discover/${mediaType}?api_key=${API_KEY}&language=en-US&with_genres=${genre.id}`
-        ).then((res) => res.json())
+        fetchDataFromApi(`/discover/${mediaType}`, {
+          with_genres: String(genre.id),
+          page: 1,
+        }).then((res) => res.data)
       ),
     ]);
 
@@ -177,6 +185,56 @@ export const getScreenProps = async (
     });
 
     return results;
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
+ * Common function that calls the API and returns screen props for Tile list screens.
+ * Requires a list of IUrlObject to be fetched.
+ *
+ *
+ * @param urlObject - An array of the type IUrlObject to be fetched that contains the url and query params object.
+ */
+export const getTileListScreenMedias = async (
+  urlObjects: IUrlObject[],
+  filters: IQueryParams
+) => {
+  try {
+    const data = await Promise.all([
+      ...urlObjects.map((urlObj) =>
+        fetchDataFromApi(urlObj.url, { ...urlObj.queryParams, ...filters })
+      ),
+    ]);
+
+    // console.log(data[0].data);
+    return data[0].data.results;
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
+ * Common function that calls the API and returns screen props
+ * Requires a list of IUrlObject to be fetched.
+ *
+ *
+ * @param urlObject - An array of the type IUrlObject to be fetched that contains the url and query params object.
+ */
+export const sendUrlObjApiRequest = async (
+  urlObjects: IUrlObject[],
+  filters?: IQueryParams
+) => {
+  try {
+    const data = await Promise.all([
+      ...urlObjects.map((urlObj) =>
+        fetchDataFromApi(urlObj.url, { ...urlObj.queryParams, ...filters })
+      ),
+    ]);
+
+    // console.log(data[0].data);
+    return data[0].data.results;
   } catch (err) {
     throw err;
   }
@@ -203,26 +261,37 @@ export const getGenreMediasProps = async (
 
   if (getTheseGenreMedias[0] >= 1) {
     const commaSeparatedGenres = getTheseGenreMedias.join(",");
-    const data = await fetch(
-      `${BASE_URL}/discover/${mediaType}?api_key=${API_KEY}&language=en-US&with_genres=${commaSeparatedGenres}&page=${pageNumber}`
-    ).then((res) => res.json());
 
-    return data.results;
+    try {
+      const data = await fetchDataFromApi(`/discover/${mediaType}`, {
+        with_genres: commaSeparatedGenres,
+        page: pageNumber,
+      });
+
+      return data.data.results;
+    } catch (err) {
+      return err;
+    }
   }
 
   // 0.1111 is a special decided custom genre id that is used to fetch the network-provider/production-companies media list.
   else if (getTheseGenreMedias[0] === 0.1111) {
     const companyType =
-      mediaType === "movie" ? "with_companies" : "with_networks";
+      mediaType === "movie"
+        ? { queryParam: "with_companies", queryParamValue: productionCompanyId }
+        : { queryParam: "with_networks", queryParamValue: networkId };
 
-    const URL = `${BASE_URL}/discover/${mediaType}?${companyType}=${
-      mediaType === "movie" ? productionCompanyId : networkId
-    }&include_null_first_air_dates=true&api_key=${API_KEY}&language=en-US&page=${pageNumber}`;
+    try {
+      const data = await fetchDataFromApi(`/discover/${mediaType}`, {
+        [companyType.queryParam]: companyType.queryParamValue,
+        include_null_first_air_dates: true,
+        page: pageNumber,
+      });
 
-    console.log(URL);
-
-    const data = await fetch(URL).then((res) => res.json());
-    return data.results;
+      return data.data.results;
+    } catch (err) {
+      throw err;
+    }
   }
 
   // If reached here, we are dealing with a custom genre.
@@ -267,20 +336,20 @@ export const getRelatedMediasProps = async (
   mediaType: MediaTypes,
   pageNumber: number
 ) => {
-  const data = await fetch(
-    // https://api.themoviedb.org/3/movie/{movie_id}/recommendations?api_key=<<api_key>>&language=en-US&page=1
-    `${BASE_URL}/${mediaType}/${relatedToMediaId}/recommendations?api_key=${API_KEY}&language=en-US&page=${pageNumber}`
-    // this was for similar only
-    // `${BASE_URL}/${mediaType}/${relatedToMediaId}/similar?api_key=${API_KEY}&language=en-US&page=${pageNumber}`
-  )
-    .then((res) => res.json())
-    .catch((err) => {
-      console.log(err.message);
-      throw new err();
-    });
-
-  console.log(mediaType);
-  return data.results;
+  try {
+    const data = await fetchDataFromApi(
+      `/${mediaType}/${relatedToMediaId}/recommendations?`,
+      {
+        language: "en-US",
+        page: pageNumber,
+      }
+    );
+    // return data.results;
+    return data.data.results;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
 };
 
 /**
@@ -290,17 +359,15 @@ export const getRelatedMediasProps = async (
  * @return {*}
  */
 export const getTvShowInfo = async (tvMediaId: number) => {
-  const data = await fetch(
-    // https://api.themoviedb.org/3/tv/{tv_id}?api_key=<<api_key>>&language=en-US
-    `${BASE_URL}/tv/${tvMediaId}?api_key=${API_KEY}&language=en-US`
-  )
-    .then((res) => res.json())
-    .catch((err) => {
-      console.log(err.message);
-      throw new err();
+  try {
+    const data = await fetchDataFromApi(`/tv/${tvMediaId}`, {
+      language: "en-US",
     });
 
-  return data;
+    return data.data.results;
+  } catch (err) {
+    throw err;
+  }
 };
 
 /**
@@ -311,17 +378,14 @@ export const getTvShowInfo = async (tvMediaId: number) => {
  * @return {*}
  */
 export const getMediaInfo = async (mediaId: number, mediaType: MediaTypes) => {
-  const data = await fetch(
-    // https://api.themoviedb.org/3/tv/{tv_id}?api_key=<<api_key>>&language=en-US
-    `${BASE_URL}/${mediaType}/${mediaId}?api_key=${API_KEY}&language=en-US`
-  )
-    .then((res) => res.json())
-    .catch((err) => {
-      console.log(err.message);
-      throw new err();
+  try {
+    const data = await fetchDataFromApi(`/${mediaType}/${mediaId}`, {
+      language: "en-US",
     });
-
-  return data;
+    return data.data;
+  } catch (err) {
+    throw err;
+  }
 };
 
 /**
@@ -335,17 +399,18 @@ export const getWatchProviders = async (
   mediaId: number,
   mediaType: MediaTypes
 ) => {
-  const data = await fetch(
-    `${BASE_URL}/${mediaType}/${mediaId}/watch/providers?api_key=${API_KEY}&language=en-US`
-  )
-    .then((res) => res.json())
-    .catch((err) => {
-      console.log(err.message);
-      throw new err();
-    });
-
-  return data.results;
-  // return data.results["IN"];
+  try {
+    const data = await fetchDataFromApi(
+      `/${mediaType}/${mediaId}/watch/providers`,
+      {
+        language: "en-US",
+      }
+    );
+    return data.data.results;
+    // return data.data.results["IN"];
+  } catch (err) {
+    throw err;
+  }
 };
 
 /**
@@ -359,17 +424,17 @@ export const getTvSeasonInfo = async (
   tvMediaId: number,
   seasonNumber: number
 ) => {
-  const data = await fetch(
-    // https://api.themoviedb.org/3/tv/{tv_id}/season/{season_number}?api_key=<<api_key>>&language=en-US
-    `${BASE_URL}/tv/${tvMediaId}/season/${seasonNumber}?api_key=${API_KEY}&language=en-US`
-  )
-    .then((res) => res.json())
-    .catch((err) => {
-      console.log(err.message);
-      throw new err();
-    });
-
-  return data.results;
+  try {
+    const data = await fetchDataFromApi(
+      `/tv/${tvMediaId}/season/${seasonNumber}`,
+      {
+        language: "en-US",
+      }
+    );
+    return data.data.results;
+  } catch (err) {
+    throw err;
+  }
 };
 
 /**
@@ -380,38 +445,34 @@ export const getTvSeasonInfo = async (
  * @returns - returns data as an object {`props`}
  */
 export const fetchTrailers = async (mediaId: number, mediaType: MediaTypes) => {
-  const url = `${BASE_URL}/${mediaType}/${mediaId}/videos?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US`;
-  const data = await fetch(url)
-    .then((data) => data.json())
-    .catch((err) => {
-      console.log(err.message);
-      throw new Error(err.message);
+  try {
+    const data = await fetchDataFromApi(`/${mediaType}/${mediaId}/videos`, {
+      language: "en-US",
     });
-
-  if (data) {
-    // console.log("from requests", data);
-    return { props: data?.results };
+    if (data.data.results) {
+      return { props: data.data?.results };
+    }
+  } catch (err) {
+    throw err;
   }
 };
 
 /**
  * To fetch for the list of genres for the given media type
  *
- * @param media - The media type to fetch
+ * @param mediaType - The media type to fetch
  * @returns  - returns data as an object {`props`}
  */
-export const fetchGenres = async (media: MediaTypes) => {
-  const url = `https://api.themoviedb.org/3/genre/${media}/list?api_key=e3e1732f8f495a1b191494b49b813669&language=en-US`;
-  const data = await fetch(url)
-    .then((data) => data.json())
-    .catch((err) => {
-      console.log(err.message);
-      throw new Error(err.message);
+export const fetchGenres = async (mediaType: MediaTypes) => {
+  try {
+    const data = await fetchDataFromApi(`/genre/${mediaType}/list`, {
+      language: "en-US",
     });
-
-  if (data) {
-    // console.log("from requests", data);
-    return { props: data?.genres };
+    if (data.data?.genres) {
+      return { props: data.data?.genres };
+    }
+  } catch (err) {
+    throw err;
   }
 };
 
@@ -427,21 +488,24 @@ export const fetchSeasonDetails = async (
   tvMediaId: number,
   seasonNumber: number
 ) => {
-  const url = `${BASE_URL}/tv/${tvMediaId}/season/${seasonNumber}?api_key=${API_KEY}&language=en-US`;
-  const data = await fetch(url)
-    .then((data) => data.json())
-    .catch((err) => {
-      console.log(err.message);
-      throw new Error(err.message);
-    });
+  try {
+    const data = await fetchDataFromApi(
+      `/tv/${tvMediaId}/season/${seasonNumber}`,
+      {
+        language: "en-US",
+      }
+    );
 
-  if (data) {
-    // Deleting unnecessary data from each season that we won't use.
-    data.episodes.forEach((e: any) => {
-      delete e["crew"];
-      delete e["guest_stars"];
-    });
-    return data;
+    if (data.data) {
+      // Deleting unnecessary data from each season that we won't use.
+      data.data.episodes.forEach((e: any) => {
+        delete e["crew"];
+        delete e["guest_stars"];
+      });
+      return data.data;
+    }
+  } catch (err) {
+    throw err;
   }
 };
 

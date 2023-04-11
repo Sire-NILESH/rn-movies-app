@@ -60,7 +60,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
         <NothingToShow title={"Something went wrong"} problemType="error" />
       ) : null}
 
-      {media && (
+      {media && !errorLoadingProps && (
         <ScrollView className="flex-1 pb-24">
           {/* BackDrop Image */}
           <View

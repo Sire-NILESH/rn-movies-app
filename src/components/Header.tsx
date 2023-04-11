@@ -5,6 +5,10 @@ import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "./../utils/Colors";
 import { DrawerNavigationOptions } from "@react-navigation/drawer";
 import { LinearGradient } from "expo-linear-gradient";
+import {
+  buildGenrePlaylist,
+  buildTrendingPlaylist,
+} from "../utils/helpers/helper";
 
 function Header() {
   const navigation = useNavigation<DrawerNavigationOptions>();
@@ -23,8 +27,8 @@ function Header() {
         // @ts-ignore
         navigation.push("Tiles", {
           title: "Trending Movies",
+          playlist: buildTrendingPlaylist("Trending", "movie"),
           currentMediaType: "movie",
-          genreId: 0.788734,
         });
       },
     },
@@ -34,8 +38,11 @@ function Header() {
         // @ts-ignore
         navigation.push("Tiles", {
           title: "Sci-Fi & Fantasy",
+          playlist: buildGenrePlaylist("tv", {
+            id: 10765,
+            name: "Sci-Fi & Fantasy",
+          }),
           currentMediaType: "tv",
-          genreId: 10765,
         });
       },
     },

@@ -1,5 +1,3 @@
-// CompanyLogoBuilder
-
 import React, { useState } from "react";
 import { View, Text, FlatList, Pressable } from "react-native";
 
@@ -47,13 +45,29 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
                 className="h-full w-full"
                 android_ripple={{ color: "#eee" }}
                 onPress={() => {
+                  const companyType =
+                    props.mediaType === "movie"
+                      ? {
+                          queryParam: "with_companies",
+                          queryParamValue: c.id,
+                        }
+                      : {
+                          queryParam: "with_networks",
+                          queryParamValue: c.id,
+                        };
+
                   navigateTo("Tiles", {
                     title: c.name,
                     genreId: 0.1111,
+                    playlist: {
+                      name: c.name,
+                      url: `/discover/${props.mediaType}`,
+                      queryParams: {
+                        [companyType.queryParam]: companyType.queryParamValue,
+                        language: "en-US",
+                      },
+                    },
                     currentMediaType: props.mediaType,
-                    productionCompanyId:
-                      props.mediaType === "movie" ? c.id : undefined,
-                    networkId: props.mediaType === "tv" ? c.id : undefined,
                   });
                 }}
               >

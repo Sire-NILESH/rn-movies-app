@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, memo } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import HeaderSearchButton from "../components/ui/HeaderSearchButton";
 import ScreenBuilder from "../components/builders/ScreenBuilder";
@@ -25,4 +25,4 @@ const TvShowsScreen: React.FC<IDrawerScreenProps> = (props) => {
   // return <ScreenBuilder screenType="tv" />;
 };
 
-export default TvShowsScreen;
+export default memo(TvShowsScreen);

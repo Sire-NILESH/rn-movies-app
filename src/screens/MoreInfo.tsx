@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import { useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import {
+  ICredits,
   MediaTypes,
   MovieMedia,
   MovieMediaExtended,
@@ -36,16 +37,19 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   let extendedMedia;
 
   const {
-    screenProps: media,
+    screenProps,
     loadingProps,
     errorLoadingProps,
   }: {
-    screenProps: TvMediaExtended | MovieMediaExtended;
+    screenProps: {
+      media: TvMediaExtended | MovieMediaExtended;
+      mediaCredits: ICredits;
+    };
     loadingProps: boolean;
     errorLoadingProps: Error | null;
   } = useFetcher(getMediaInfo, [prevMedia.id, mediaType]);
 
-  extendedMedia = media;
+  extendedMedia = screenProps?.media;
 
   function getTitle(): string {
     if ("title" in prevMedia) return prevMedia.title;
@@ -59,19 +63,20 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       headerRight: () => {
         return (
           <FavouriteMediaButton
-            media={prevMedia || media}
-            mediaId={prevMedia.id || media.id}
+            media={prevMedia || (screenProps?.media && screenProps?.media)}
+            mediaId={prevMedia.id || screenProps?.media.id}
             mediaType={mediaType}
           />
         );
       },
     });
-  }, [media]);
+  }, [screenProps]);
 
   return (
     <MediaMoreInfo
-      media={media}
+      media={screenProps?.media}
       extendedMedia={extendedMedia}
+      credits={screenProps?.mediaCredits}
       mediaType={mediaType}
       errorLoadingProps={errorLoadingProps}
       loadingProps={loadingProps}
@@ -80,3 +85,18 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 };
 
 export default memo(MoreInfoScreen);
+
+//  <>
+//       {/* Loader */}
+//       {loadingProps && !screenProps ? (
+//         <Loader loading={loadingProps} />
+//       ) : (
+//         <MediaMoreInfo
+//           media={screenProps && screenProps?.media}
+//           extendedMedia={extendedMedia}
+//           mediaType={mediaType}
+//           errorLoadingProps={errorLoadingProps}
+//           loadingProps={loadingProps}
+//         />
+//       )}
+//     </>

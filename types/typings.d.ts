@@ -61,6 +61,7 @@ export interface WatchProvider {
 export interface WatchProviderForCountry {
   link: string;
   flatrate?: WatchProvider[];
+  rent?: WatchProvider[];
   free?: WatchProvider[];
   buy?: WatchProvider[];
   ads?: WatchProvider[];
@@ -253,6 +254,43 @@ export interface MovieMediaExtended extends MovieMedia {
   video: boolean;
 }
 
+interface ICreditPersonGender {
+  0: "Not specified";
+  1: "Female";
+  2: "Male";
+  3: "Non Binary";
+}
+
+interface ICreditPerson {
+  adult: boolean;
+  gender: 0 | 1 | 2 | 3 | null;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string | null;
+}
+
+export interface ICast extends ICreditPerson {
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  order: number;
+}
+
+export interface ICrew extends ICreditPerson {
+  credit_id: string;
+  department: string;
+  job: string;
+}
+
+export interface ICredits {
+  id: number;
+  cast: ICast[];
+  crew: ICrew[];
+}
+
 // Define a type for the watchlist slice state
 // interface IWatchListMedia {
 //   mediaId: number;
@@ -370,6 +408,8 @@ export interface IQueryParams {
   include_null_first_air_dates?: boolean;
   with_companies?: string;
   with_networks?: string;
+  with_cast?: string;
+  with_people?: string;
 }
 
 export interface IUrlObject {

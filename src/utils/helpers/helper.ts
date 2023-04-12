@@ -165,6 +165,21 @@ export function dateFormatter(date: string): string {
   return new Date(date).toDateString().split(" ").splice(1).join(" ");
 }
 
+export function tvMediaType(code: string): string {
+  const codes = {
+    "0": "Documentary",
+    "1": "News",
+    "2": "Miniseries",
+    "3": "Reality",
+    "4": "Scripted",
+    "5": "Talk Show",
+    "6": "Video",
+  };
+
+  // @ts-ignore
+  return codes[code];
+}
+
 export const networkIds: INetworkIds = {
   Netflix: 213,
   HBO: 49,

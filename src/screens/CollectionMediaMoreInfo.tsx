@@ -1,6 +1,7 @@
 import { useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import {
+  ICredits,
   IDbListMedia,
   IReduxListMedia,
   MediaTypes,
@@ -29,21 +30,24 @@ const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
   const parametersForFetcher = [collectionMedia.mediaId, mediaType];
 
   const {
-    screenProps: media,
+    screenProps,
     loadingProps,
     errorLoadingProps,
   }: {
-    screenProps: TvMediaExtended | MovieMediaExtended;
+    screenProps: {
+      media: TvMediaExtended | MovieMediaExtended;
+      mediaCredits: ICredits;
+    };
     loadingProps: boolean;
     errorLoadingProps: Error | null;
   } = useFetcher(getMediaInfo, parametersForFetcher);
 
-  extendedMedia = media;
+  extendedMedia = screenProps?.media;
 
-  function getTitle(): string {
-    if (media && "title" in media) return media.title;
-    return media && media.name;
-  }
+  // function getTitle(): string {
+  //   if (media && "title" in media) return media.title;
+  //   return media && media.name;
+  // }
 
   // Header settings
   useLayoutEffect(() => {
@@ -52,21 +56,22 @@ const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
       headerRight: (props) => {
         return (
           <FavouriteMediaButton
-            media={media}
-            mediaId={collectionMedia.mediaId || media.id}
+            media={screenProps?.media}
+            mediaId={collectionMedia.mediaId || screenProps?.media.id}
             mediaType={mediaType}
           />
         );
       },
     });
-  }, [media]);
+  }, [screenProps]);
 
-  console.log("Media from collection more info", media);
+  console.log("Media from collection more info", screenProps?.media);
 
   return (
     <MediaMoreInfo
-      media={media}
+      media={screenProps?.media}
       extendedMedia={extendedMedia}
+      credits={screenProps?.mediaCredits}
       mediaType={mediaType}
       errorLoadingProps={errorLoadingProps}
       loadingProps={loadingProps}

@@ -208,8 +208,17 @@ export const getTileListScreenMedias = async (
       ),
     ]);
 
-    // console.log(data[0].data);
-    return data[0].data.results;
+    if (urlObjects[0].url.startsWith("/person/")) {
+      return {
+        medias: [...data[0].data.cast, ...data[0].data.crew],
+        totalPages: data[0].data.total_pages,
+      };
+    }
+
+    return {
+      medias: data[0].data.results,
+      totalPages: data[0].data.total_pages,
+    };
   } catch (err) {
     throw err;
   }
@@ -379,14 +388,36 @@ export const getTvShowInfo = async (tvMediaId: number) => {
  */
 export const getMediaInfo = async (mediaId: number, mediaType: MediaTypes) => {
   try {
-    const data = await fetchDataFromApi(`/${mediaType}/${mediaId}`, {
-      language: "en-US",
-    });
-    return data.data;
+    const data = await Promise.all([
+      fetchDataFromApi(`/${mediaType}/${mediaId}`, {
+        language: "en-US",
+      }),
+      fetchDataFromApi(`/${mediaType}/${mediaId}/credits`, {
+        language: "en-US",
+      }),
+    ]);
+    return { media: data[0].data, mediaCredits: data[1].data };
   } catch (err) {
     throw err;
   }
 };
+// /**
+//  *Is used to load more  info on the TV media on the more info screen, specifically to access total number seasons for that show and others too while we are there at it.
+//  *
+//  * @param {number} mediaId - The ID of the TV show on the `MoreInfo` screen whose details are to be fetched
+//  * @param {MediaTypes} mediaType - The media type of the show on the `MoreInfo` screen whose details are to be fetched
+//  * @return {*}
+//  */
+// export const getMediaInfo = async (mediaId: number, mediaType: MediaTypes) => {
+//   try {
+//     const data = await fetchDataFromApi(`/${mediaType}/${mediaId}`, {
+//       language: "en-US",
+//     });
+//     return data.data;
+//   } catch (err) {
+//     throw err;
+//   }
+// };
 
 /**
  * This function is used to retrieve information about the media's watch providers for all the regions.

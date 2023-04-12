@@ -1,6 +1,7 @@
 import { View, Text, ImageBackground, Dimensions } from "react-native";
 import React from "react";
 import {
+  ICredits,
   MediaTypes,
   MovieMedia,
   MovieMediaExtended,
@@ -28,10 +29,12 @@ import NetworkList from "./NetworkList";
 import ProductionCompaines from "./ProductionCompaines";
 import MoreInfoFooterButton from "./ui/MoreInfoFooterButton";
 import WatchProviders from "./WatchProviders";
+import Cast from "./Cast";
 
 interface IProps {
   media: TvMediaExtended | MovieMediaExtended;
   mediaType: MediaTypes;
+  credits: ICredits;
   extendedMedia: TvMediaExtended | MovieMediaExtended;
   loadingProps: boolean;
   errorLoadingProps: Error | null;
@@ -40,16 +43,25 @@ interface IProps {
 const screenDimensions = Dimensions.get("screen");
 
 const MediaMoreInfo: React.FC<IProps> = (props) => {
-  const { media, mediaType, extendedMedia, loadingProps, errorLoadingProps } =
-    props;
+  const {
+    media,
+    credits,
+    mediaType,
+    extendedMedia,
+    loadingProps,
+    errorLoadingProps,
+  } = props;
   const navigation = useNavigation();
-  const route = useRoute();
   const mediaPosterPath = media?.poster_path || media?.backdrop_path;
+
+  const cast = credits?.cast;
+  const directedBy = credits?.crew.filter((c) => c.job === "Director");
 
   function getTitle(): string {
     if (media && "title" in media) return media.title;
     return media && media.name;
   }
+
   return (
     <View className="flex-1 bg-secondary">
       {/* Loader */}
@@ -60,7 +72,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
         <NothingToShow title={"Something went wrong"} problemType="error" />
       ) : null}
 
-      {media && !errorLoadingProps && (
+      {media && credits && extendedMedia && (
         <ScrollView className="flex-1 pb-24">
           {/* BackDrop Image */}
           <View
@@ -206,7 +218,40 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
           </View>
 
           {/* Network List and Watch Provider row */}
+
+          {/* <View className="mb-10 space-y-6">
+            {cast ? (
+              <View className="bg-neutral-900/60 pb-6 mx-2 rounded-lg">
+                <Cast personList={credits.cast} title="Cast" />
+              </View>
+            ) : null}
+            <View className="bg-neutral-900/60 pb-6 mx-2 rounded-md">
+              {directedBy ? (
+                <Cast
+                  personList={credits.crew.filter((c) => c.job === "Director")}
+                  title="Directed by"
+                />
+              ) : null}
+            </View>
+          </View> */}
+
+          {/* Network List and Watch Provider row */}
           <View className="mt-10 space-y-12">
+            <View className="mb-10 space-y-6">
+              {cast.length > 0 ? (
+                <View className="h-[176] pb-6 mx-2 rounded-lg">
+                  <Cast personList={cast} title="Cast" />
+                </View>
+              ) : null}
+
+              {directedBy.length > 0 ? (
+                <View className="h-[176] pb-6 mx-2 rounded-md">
+                  <Cast personList={directedBy} title="Directed by" />
+                </View>
+              ) : null}
+            </View>
+            {/* ) : null} */}
+
             {/* Networks available on */}
             {isTvExtended(media) && media.networks.length > 0 && (
               <NetworkList networks={media.networks} />

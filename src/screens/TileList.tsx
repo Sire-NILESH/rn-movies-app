@@ -79,9 +79,8 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           filters
         );
         // if we received some data, then page exists.
-        if (moreMedias.length > 0) {
-          setMedias((prev) => [...prev, ...moreMedias]);
-          setLoadingNewMedias(false);
+        if (moreMedias.medias.length > 0) {
+          setMedias((prev) => [...prev, ...moreMedias.medias]);
         }
         // else, no more pages to fetch. Block any further new loads.
         else {
@@ -91,7 +90,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         setBlockNewLoads(true);
         setError(err as Error);
       }
-      // setLoadingNewMedias(false);
+      setLoadingNewMedias(false);
     }
     loadMedias();
   }, [mediaList, pageNumber, userSelectedPlaylists]);

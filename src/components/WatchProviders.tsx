@@ -62,6 +62,10 @@ const WatchProviders: React.FC<IProps> = ({ mediaId, mediaType }) => {
         <View>{renderFlatlist(watchProviders.flatrate, "Subscription")}</View>
       ) : null}
 
+      {watchProviders?.rent ? (
+        <View>{renderFlatlist(watchProviders.rent, "Rent")}</View>
+      ) : null}
+
       {watchProviders?.buy ? (
         <View>{renderFlatlist(watchProviders.buy, "Buy")}</View>
       ) : null}
@@ -97,7 +101,7 @@ export default WatchProviders;
 
 function renderFlatlist(
   providerType: WatchProvider[],
-  availableType: "Subscription" | "Free" | "Buy" | "With Adverts"
+  availableType: "Subscription" | "Rent" | "Free" | "Buy" | "With Adverts"
 ) {
   return (
     <View className="space-y-3 py-4 mx-2 rounded-xl border-2 bg-accent">

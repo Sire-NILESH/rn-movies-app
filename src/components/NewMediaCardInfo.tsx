@@ -5,8 +5,10 @@ import {
   dateFormatter,
   isMovie,
   isMovieExtended,
+  isTv,
   isTvExtended,
   toHoursAndMinutes,
+  tvMediaType,
 } from "../utils/helpers/helper";
 import { isoLangs } from "../utils/helpers/isoLangs";
 import { LinearGradient } from "expo-linear-gradient";
@@ -88,6 +90,9 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
             />
             <Text className="text-text_highLight">
               {isMovie(media) ? "Movie" : "TV"}
+              {/* {`${isMovie(media) ? "Movie" : "TV"} ${
+                isTv(media) ? `, ${tvMediaType(media.type)}` : ""
+              }`} */}
             </Text>
           </View>
 

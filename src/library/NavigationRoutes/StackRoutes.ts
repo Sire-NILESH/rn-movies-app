@@ -1,5 +1,6 @@
 import CollectionMediaMoreInfo from "../../screens/CollectionMediaMoreInfo";
 import MoreInfoScreen from "../../screens/MoreInfo";
+import PersonMediasStackScreen from "../../screens/PersonMediasStackScreen";
 import RelatedTileListScreen from "../../screens/RelatedTileListScreen";
 import SearchScreen from "../../screens/Search";
 import SearchTileListScreen from "../../screens/SearchTileListScreen";
@@ -40,6 +41,10 @@ export const stackRoutes: IStackRouteProps[] = [
   {
     name: "Season and Episodes",
     component: SeasonsAndEpisodesListScreen,
+  },
+  {
+    name: "Person Medias",
+    component: PersonMediasStackScreen,
   },
   // {
   //   name: "Drawer",

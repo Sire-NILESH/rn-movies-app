@@ -37,7 +37,7 @@ export default function App() {
     <>
       <StatusBar style="light" />
       <Provider store={store}>
-        <SafeAreaView className="flex-1 bg-secondary">
+        <SafeAreaView className="flex-1 bg-tertiary">
           <Loader loading={dbInitLoading} />
 
           {!dbInitLoading && dbInitError ? (

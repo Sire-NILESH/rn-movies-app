@@ -204,9 +204,9 @@ function Banner({ mediaList }: Props) {
                 width={140}
                 height={42}
                 radius={8}
-                color={Colors.neutral["700"]}
+                // color={Colors.neutral["700"]}
                 // border={1}
-                styledClassName="border-stone-800"
+                styledClassName="border-stone-800 bg-neutral-700/60"
                 method={infoButtonPressHandler}
                 shadow={false}
               >

@@ -248,9 +248,9 @@ export function buildMoviePlaylist(
 ) {
   return {
     name: name,
-    url: `/discover/tv`,
+    url: `/discover/movie`,
     queryParams: {
-      with_networks: productionComapnyIds[productionCompanyId],
+      with_companies: productionComapnyIds[productionCompanyId],
       include_null_first_air_dates: true,
       language: "en-US",
     },

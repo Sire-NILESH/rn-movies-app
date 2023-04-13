@@ -28,8 +28,8 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
 
   return (
     <View className="flex-1 space-y-4 mt-3">
-      <Text className="ml-4 text-text_highLight">
-        {props.mediaType === "movie" ? "Produced By" : "TV Networks"}
+      <Text className="ml-4 text-text_highLight uppercase tracking-[3px] text-xs">
+        {props.mediaType === "movie" ? "Producers" : "TV Networks"}
       </Text>
       <FlatList
         horizontal
@@ -58,7 +58,7 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
 
                   navigateTo("Tiles", {
                     title: c.name,
-                    genreId: 0.1111,
+                    // genreId: 0.1111,
                     playlist: {
                       name: c.name,
                       url: `/discover/${props.mediaType}`,

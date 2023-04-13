@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, Pressable } from "react-native";
-
 // @ts-ignore
 import ExpoFastImage from "expo-fast-image";
-
 import { useNavigation } from "@react-navigation/native";
-import { ICast, ICreditPerson, ICrew } from "../../types/typings";
-import { Colors } from "../utils/Colors";
+import { ICast, ICreditPerson, ICredits, ICrew } from "../../types/typings";
 
 interface IProps {
-  personList: ICreditPerson[];
-  title: "Cast" | "Directed by";
-  //   cast: ICast[] | ICrew[];
-  //   cast: ICast[];
+  cast: ICast[];
+  directedBy: ICrew[];
+  title: string;
 }
 
 const Cast: React.FC<IProps> = (props) => {
@@ -25,20 +21,87 @@ const Cast: React.FC<IProps> = (props) => {
   };
 
   return (
-    <View className="flex-1 space-y-4 mt-3">
-      <Text className="ml-4 text-text_highLight text-base">{props.title}</Text>
+    <View className="flex-1 ">
+      <Text className="ml-4 mb-4 text-text_highLight uppercase tracking-[3px] text-xs">
+        {props.title}
+      </Text>
       <FlatList
         horizontal
-        data={props.personList}
-        className="pl-4"
+        data={props.cast}
+        className=" mx-2 rounded-lg"
         keyExtractor={(person) => String(person.id)}
+        ListHeaderComponent={() => {
+          return (
+            <View className="flex-row px-1 mx-1 space-x-2">
+              {props.directedBy.map((p) => {
+                return (
+                  <View
+                    key={p.id + p.job}
+                    className="bg-accent pt-3 rounded-lg  overflow-hidden"
+                  >
+                    <Pressable
+                      className="h-full w-full items-center space-y-2 px-1"
+                      android_ripple={{ color: "#eee" }}
+                      onPress={() => {
+                        navigateTo("Person Medias", {
+                          title: p.name,
+                          urlObject: {
+                            name: p.name,
+                            url: `/person/${p.id}`,
+                            queryParams: {
+                              language: "en-US",
+                            },
+                          },
+                          currentMediaType: "movie",
+                        });
+                      }}
+                    >
+                      <View
+                        className="rounded-md justify-center"
+                        style={{
+                          width: 80,
+                          //   height: 80,
+                          aspectRatio: 1 / 1,
+                        }}
+                      >
+                        <RenderProfile
+                          id={p.id}
+                          name={p.name}
+                          imgPath={`https://image.tmdb.org/t/p/w500${p.profile_path}`}
+                        />
+                      </View>
+                      <View className="justify-start">
+                        <Text
+                          key={p.id}
+                          numberOfLines={1}
+                          className="text-text_dark text-xs mt-1 text-center w-[100]"
+                        >
+                          {p.name}
+                        </Text>
+                        <Text
+                          className="w-[100] mt-1 text-center text-text_highLight text-xs"
+                          numberOfLines={2}
+                        >
+                          {p.job}
+                        </Text>
+                      </View>
+                    </Pressable>
+                  </View>
+                );
+              })}
+            </View>
+          );
+        }}
+        // contentContainerStyle={{
+        //   alignItems: "center",
+        // }}
         renderItem={(itemObj) => {
           const p = itemObj.item;
 
           return (
-            <View className="space-y-3 justify-start mr-1 rounded-md overflow-hidden">
+            <View className="bg-neutral-900/80 space-y-3 mr-2 rounded-lg justify-start overflow-hidden">
               <Pressable
-                className="h-full w-full items-center justify-center"
+                className="h-full w-full items-center space-y-2 py-3 px-1"
                 android_ripple={{ color: "#eee" }}
                 onPress={() => {
                   navigateTo("Person Medias", {
@@ -95,6 +158,13 @@ const Cast: React.FC<IProps> = (props) => {
                   // });
                 }}
               >
+                {/* <Text
+                  key={p.id}
+                  numberOfLines={1}
+                  className="text-text_dark text-xs mb-1 text-center w-[100]"
+                >
+                  {p.name}
+                </Text> */}
                 <View
                   className="rounded-md justify-center"
                   style={{
@@ -109,13 +179,24 @@ const Cast: React.FC<IProps> = (props) => {
                     imgPath={`https://image.tmdb.org/t/p/w500${p.profile_path}`}
                   />
                 </View>
-                <Text
-                  key={p.id}
-                  numberOfLines={1}
-                  className="text-text_dark text-xs mt-1 text-center w-[100]"
-                >
-                  {p.name}
-                </Text>
+                <View className="justify-start">
+                  <Text
+                    key={p.id}
+                    numberOfLines={1}
+                    className="text-text_dark text-xs mt-1 text-center w-[100]"
+                  >
+                    {p.name}
+                  </Text>
+                  {/* <Text className="text-center text-text_highLight text-xs">
+                  as
+                </Text> */}
+                  <Text
+                    className="w-[100] mt-1 text-center text-text_highLight text-xs"
+                    numberOfLines={2}
+                  >
+                    {p.character}
+                  </Text>
+                </View>
               </Pressable>
             </View>
           );
@@ -143,7 +224,7 @@ function RenderProfile({
   }
 
   return (
-    <View className="h-full w-full rounded-full border-2 border-green-800">
+    <View className="h-full w-full rounded-xl overflow-hidden border-2 border-stone-800/40">
       <ExpoFastImage
         uri={imgPath}
         cacheKey={`${id}`}
@@ -156,7 +237,7 @@ function RenderProfile({
         style={{
           width: "100%",
           height: "100%",
-          borderRadius: 9999,
+          // borderRadius: 9999,
         }}
       />
       {fallbackImage && (

@@ -216,7 +216,7 @@ export const moviePlaylist = [
     buildNowPlayingPlaylist("Now Playing", "movie"),
     buildUpcomingPlaylist("New Releases", "movie"),
     buildMoviePlaylist("Lucasfilm", "Lucasfilm"),
-    buildMoviePlaylist("HBO Shows", "HBO"),
+    buildMoviePlaylist("HBO Movies", "HBO"),
     buildMoviePlaylist("Warner Bros. Entertainment", "Warner Bros"),
     buildMoviePlaylist("Paramount", "Paramount"),
     buildMoviePlaylist("Columbia Pictures", "Columbia Pictures"),

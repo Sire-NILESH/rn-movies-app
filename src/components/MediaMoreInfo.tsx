@@ -3,9 +3,7 @@ import React from "react";
 import {
   ICredits,
   MediaTypes,
-  MovieMedia,
   MovieMediaExtended,
-  TvMedia,
   TvMediaExtended,
 } from "../../types/typings";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -55,7 +53,16 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
   const mediaPosterPath = media?.poster_path || media?.backdrop_path;
 
   const cast = credits?.cast;
-  const directedBy = credits?.crew.filter((c) => c.job === "Director");
+  const directedBy = credits?.crew.filter((c) => {
+    if (mediaType === "tv") {
+      return c.job === "Director" || c.department === "Writing";
+    }
+    return c.job === "Director" || c.job === "Novel";
+  });
+  const people = [];
+
+  if (directedBy && directedBy.length > 0) people.push(directedBy);
+  if (cast && cast.length > 0) people.push(cast);
 
   function getTitle(): string {
     if (media && "title" in media) return media.title;
@@ -154,16 +161,18 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             {/* DESCRIPTION */}
             {media.overview ? (
               <View className="px-4 mt-5 space-y-2">
-                <Text className="text-lg text-text_highLight">Overview</Text>
+                <Text className="text-xs text-text_highLight uppercase tracking-[3px]">
+                  Overview
+                </Text>
                 <Text className="text-text_dark">{media.overview}</Text>
               </View>
             ) : null}
 
             {/* Other Info */}
             {isTvExtended(media) && media.next_episode_to_air ? (
-              <View className="px-4 mt-5">
-                <Text className="text-lg text-text_highLight">
-                  Latest Episode
+              <View className="px-4 space-y-2 mt-8">
+                <Text className="text-xs text-text_highLight uppercase tracking-[3px]">
+                  Latest
                 </Text>
                 <Text className="text-text_dark">{`Episode S${
                   media.next_episode_to_air.season_number
@@ -237,21 +246,6 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
 
           {/* Network List and Watch Provider row */}
           <View className="mt-10 space-y-12">
-            <View className="mb-10 space-y-6">
-              {cast.length > 0 ? (
-                <View className="h-[176] pb-6 mx-2 rounded-lg">
-                  <Cast personList={cast} title="Cast" />
-                </View>
-              ) : null}
-
-              {directedBy.length > 0 ? (
-                <View className="h-[176] pb-6 mx-2 rounded-md">
-                  <Cast personList={directedBy} title="Directed by" />
-                </View>
-              ) : null}
-            </View>
-            {/* ) : null} */}
-
             {/* Networks available on */}
             {isTvExtended(media) && media.networks.length > 0 && (
               <NetworkList networks={media.networks} />
@@ -263,8 +257,76 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
                 <ProductionCompaines productions={media.production_companies} />
               )}
 
-            {/* Platforms available on */}
+            {/* Cast and Directors */}
+            {/* <ScrollView
+              horizontal
+              className="space-x-2 mx-2"
+              contentContainerStyle={{
+                justifyContent: "center",
+              }}
+            >
+              {directedBy.length > 0 ? (
+                <View className="h-[176] pb-6 mx-2 rounded-lg bg-accent">
+                  <Cast personList={directedBy} title="Director" />
+                </View>
+              ) : null}
 
+              {cast.length > 0 ? (
+                <View className="h-[176] pb-6 mx-2 rounded-lg bg-neutral-900/80">
+                  <Cast personList={cast} title="Cast" />
+                </View>
+              ) : null}
+            </ScrollView> */}
+
+            {/* <FlatList
+              className="space-x-2 mx-2"
+              // contentContainerStyle={{
+              //   justifyContent: "center",
+              // }}
+              data={[
+                // <View className="h-[176] pb-6 mx-2 rounded-lg bg-accent">
+                //   <Cast personList={directedBy} title="Director" />
+                // </View>,
+                <View className="h-[176] pb-6 mx-2 rounded-lg bg-neutral-900/80">
+                  <Cast personList={cast} title="Cast" />
+                </View>,
+              ]}
+              horizontal
+              keyExtractor={() => String(Math.random() * 2)}
+              // ListHeaderComponent={() => {
+              //   return (
+              //     <View className="h-[176] pb-6 mx-2 rounded-lg bg-accent">
+              //       <Cast personList={directedBy} title="Director" />
+              //     </View>
+              //   );
+              // }}
+              renderItem={(peopleObj) => {
+                // if (peopleObj.index === 0) {
+                //   return (
+                //     <View className="h-[176] pb-6 mx-2 rounded-lg bg-accent">
+                //       <Cast personList={peopleObj.item} title="Director" />
+                //     </View>
+                //   );
+                // }
+                // if (peopleObj.index === 1) {
+                //   return (
+                //     <View className="h-[176] pb-6 mx-2 rounded-lg bg-neutral-900/80">
+                //       <Cast personList={peopleObj.item} title="Cast" />
+                //     </View>
+                //   );
+                // }
+
+                return peopleObj.item;
+              }}
+            ></FlatList> */}
+
+            {/* <Persons cast={cast} directedBy={directedBy} /> */}
+
+            <View className="mt-8 h-[195]">
+              <Cast cast={cast} directedBy={directedBy} title="Cast" />
+            </View>
+
+            {/* Platforms available on */}
             <WatchProviders mediaId={media.id} mediaType={mediaType} />
           </View>
 

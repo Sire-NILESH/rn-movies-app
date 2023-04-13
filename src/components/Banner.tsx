@@ -50,9 +50,8 @@ function Banner({ mediaList }: Props) {
 
   return (
     <View className="flex-1 py-10 w-[100%]">
-      {route.name === "Home" ? (
-        <View className="h-[80px] w-full">{/* <Text> T</Text> */}</View>
-      ) : null}
+      {/* {route.name === "Home" ? <View className="h-[80px] w-full"></View> : null} */}
+      <View className="h-[80px] w-full"></View>
       <View
         className="absolute top-0 left-0 w-[100%] flex-1 h-full"
         style={{
@@ -64,12 +63,9 @@ function Banner({ mediaList }: Props) {
         <LinearGradient
           colors={[
             "rgba(0,0,0,0.4)",
-            // "rgba(28, 25, 23, 0.6)",
-            // "rgba(28, 25, 23, 0.6)",
             "rgba(28, 25, 23, 0.7)",
-            "rgba(28, 25, 23, 0.7)",
-            "rgba(28, 25, 23, 0.6)",
-            // Colors.tertiary,
+            // "rgba(28, 25, 23, 0.7)",
+            // "rgba(28, 25, 23, 0.6)",
             Colors.secondary,
           ]}
           style={styles.rootScreen}

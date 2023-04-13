@@ -322,9 +322,11 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
 
             {/* <Persons cast={cast} directedBy={directedBy} /> */}
 
-            <View className="mt-8 h-[195]">
-              <Cast cast={cast} directedBy={directedBy} title="Cast" />
-            </View>
+            {cast.length > 0 || directedBy.length > 0 ? (
+              <View className="mt-8 h-[195]">
+                <Cast cast={cast} directedBy={directedBy} title="Cast" />
+              </View>
+            ) : null}
 
             {/* Platforms available on */}
             <WatchProviders mediaId={media.id} mediaType={mediaType} />

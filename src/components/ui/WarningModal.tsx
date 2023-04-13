@@ -41,7 +41,7 @@ const WarningModal: React.FC<IProps> = (props) => {
       visible={props.isVisible}
       className="items-center justify-center"
     >
-      <View className="absolute mt-[55%] mx-[10%] h-[38%] w-[80%] bg-stone-800 rounded-xl pb-2  [elevation:10] px-4 py-4">
+      <View className="absolute mt-[55%] mx-[5%] h-[30%] w-[90%] bg-stone-800 rounded-xl pb-2  [elevation:10] px-4 py-4">
         {/* header */}
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center space-x-2">
@@ -61,11 +61,7 @@ const WarningModal: React.FC<IProps> = (props) => {
               className="p-2"
               android_ripple={{ color: "#eee" }}
             >
-              <Ionicons
-                name="close-circle-outline"
-                color={Colors.gray[100]}
-                size={24}
-              />
+              <Ionicons name="close" color={Colors.gray[100]} size={24} />
             </Pressable>
           </View>
         </View>
@@ -73,21 +69,21 @@ const WarningModal: React.FC<IProps> = (props) => {
         {/* body */}
         <View className="mt-2 space-y-2">
           <Text className="text-lg text-text_primary">
-            {`Do you want to delete "${deletingItem}" ?`}
+            {`Do you really want to delete "${deletingItem}" ?`}
           </Text>
           <Text className="text-text_dark">
-            {`Doing this will permanently delete all your data from "${deletingItem}" and this action is irreversible.`}
+            {`Doing this will permanently delete all your data from "${deletingItem}" and cannot be undone.`}
           </Text>
         </View>
 
         {/* footer */}
-        <View className="mt-10 space-y-3">
-          <View>
+        <View className="mt-auto flex-row space-x-4 mb-1">
+          <View className="flex-1">
             <CustomButton
-              radius={100}
+              radius={8}
               color={Colors.red[600]}
               width={"100%"}
-              height={48}
+              height={42}
               method={onConfirmHandler}
             >
               <View className="flex-row items-center space-x-2">
@@ -101,17 +97,17 @@ const WarningModal: React.FC<IProps> = (props) => {
             </CustomButton>
           </View>
 
-          <View>
+          <View className="flex-1">
             <CustomButton
-              radius={100}
+              radius={8}
               color={Colors.text_primary}
               width={"100%"}
-              height={48}
+              height={42}
               method={onCancelHandler}
             >
               <View className="flex-row items-center space-x-2">
                 <Ionicons
-                  name={"close-circle-outline"}
+                  name={"close"}
                   size={20}
                   color={Colors.text_darkest}
                 />

@@ -24,7 +24,7 @@ interface ISQLQuery {
   rowsAffectedSuccess?: String;
 }
 
-// define function to execute multiple SQL statements
+// function to execute multiple SQL statements
 const executeMultipleQueries = async (
   sqlStatements: ISQLQuery[],
   finalMessage: string

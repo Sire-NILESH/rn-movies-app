@@ -12,7 +12,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import ImageCached from "./ui/ImageCached";
 import ImagePlaceholder from "./ui/ImagePlaceholder";
 import React from "react";
-import { isMovie } from "../utils/helpers/helper";
 
 export interface ICollectionThumbnailProps {
   media: IReduxListMedia;
@@ -78,16 +77,10 @@ function CollectionThumbnail({
         className="flex-1"
         onPress={() => {
           console.log(media);
-          // @ts-ignore
           navigateTo("CollectionMoreInfo", {
             mediaType: media.mediaType,
             collectionMedia: media,
           });
-          //  // @ts-ignore
-          //  navigateTo("More Info", {
-          //    mediaType: media.mediaType,
-          //    collectionMedia: media,
-          //  });
         }}
       >
         {/* https://github.com/dcodeteam/react-native-fast-image-expo */}

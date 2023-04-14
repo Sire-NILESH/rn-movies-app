@@ -128,7 +128,6 @@ const MediaWizardModal: React.FC<IProps> = ({
                 className="p-2"
                 onPress={onConfirmHandler}
                 android_ripple={{ color: "#eee" }}
-                // className="flex-1"
               >
                 <MaterialIcons
                   name="done"

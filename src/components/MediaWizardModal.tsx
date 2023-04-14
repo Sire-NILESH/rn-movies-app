@@ -4,7 +4,6 @@ import { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Colors } from "./../utils/Colors";
 import { IUrlObject, MediaTypes } from "../../types/typings";
-import { movieGenres } from "../utils/helpers/helper";
 import { moviePlaylist, tvPlaylist } from "../config/genresWithRoutes";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import LanguageDropdown from "./ui/LanguageDropdown";
@@ -155,135 +154,133 @@ const MediaWizardModal: React.FC<IProps> = ({
         </View>
 
         <View className="flex-1">
-          {movieGenres ? (
-            <ScrollView className="flex-1">
-              {/* CUSTOM PLAYLIST */}
-              <View className="my-8">
-                {/* <View className="ml-5 rounded-full bg-stone-800/80 px-2 py-2 w-28 mb-1">
+          <ScrollView className="flex-1">
+            {/* CUSTOM PLAYLIST */}
+            <View className="my-8">
+              {/* <View className="ml-5 rounded-full bg-stone-800/80 px-2 py-2 w-28 mb-1">
                   <Text className="text-center text-green-500 rounded-full font-semibold uppercase tracking-[3px] text-xs">
                     Playlists
                   </Text>
                 </View> */}
 
-                <Text className="mb-1 text-center text-green-500 rounded-full font-semibold uppercase tracking-[3px] text-xs">
-                  • Playlists •
-                </Text>
+              <Text className="mb-1 text-center text-green-500 rounded-full font-semibold uppercase tracking-[3px] text-xs">
+                • Playlists •
+              </Text>
 
-                <Text
-                  className="text-center mx-6 text-text_dark text-sm mb-4"
-                  numberOfLines={2}
-                >
-                  Select from one of our handpicked playlists
-                </Text>
+              <Text
+                className="text-center mx-6 text-text_dark text-sm mb-4"
+                numberOfLines={2}
+              >
+                Select from one of our handpicked playlists
+              </Text>
 
-                <View className="rounded-xl mx-5 overflow-hidden">
-                  {playlists[0].map((playlist, index) => (
-                    <Pressable
-                      onPress={() => {
-                        // Directly add single genre to the list of selections and confirm modal too
-                        onConfirmPlaylist(playlist);
+              <View className="rounded-xl mx-5 overflow-hidden">
+                {playlists[0].map((playlist, index) => (
+                  <Pressable
+                    onPress={() => {
+                      // Directly add single genre to the list of selections and confirm modal too
+                      onConfirmPlaylist(playlist);
+                    }}
+                    android_ripple={{ color: "#eee" }}
+                    key={playlist.name}
+                    className="flex-row px-4 bg-stone-800/50"
+                    style={
+                      index % 2 === 0
+                        ? { backgroundColor: "rgba(23, 23, 23, 1)" }
+                        : { backgroundColor: "rgba(23, 23, 23, 0.7)" }
+                    }
+                    //  style={
+                    //    index % 2 === 0
+                    //      ? { backgroundColor: Colors.neutral[800] }
+                    //      : { backgroundColor: Colors.stone[900] }
+                    //  }
+                  >
+                    <Text className="px-2 py-2 text-left text-gray-300">
+                      {playlist.name}
+                    </Text>
+                  </Pressable>
+                ))}
+              </View>
+            </View>
+
+            {/* DIVIDER */}
+            <View className="flex-row items-center my-3">
+              <View className="flex-1 border-[1px] border-tertiary rounded-full mx-10" />
+              <Text className="text-text_tertiary">OR</Text>
+              <View className="flex-1 border-[1px] border-tertiary rounded-full mx-10" />
+            </View>
+
+            {/* FILTER */}
+            <View className="mt-8">
+              <Text className="mb-1 text-center text-green-500 rounded-full font-semibold uppercase tracking-[3px] text-xs">
+                • Filters •
+              </Text>
+
+              <Text
+                className="text-center mx-6 text-text_dark text-sm mb-2"
+                numberOfLines={2}
+              >
+                Select a language and/or year of release
+              </Text>
+
+              <View
+                className="flex-row space-x-4 items-center justify-between px-4 mt-2 rounded-xl"
+                // style={{ backgroundColor: "rgb(4, 20, 10)" }}
+              >
+                <LanguageDropdown
+                  saveMode="local"
+                  localLangSetter={setCurrentLangHandler}
+                />
+                <YearsDropdown
+                  saveMode="local"
+                  localYearSetter={setCurrentYearHandler}
+                />
+              </View>
+            </View>
+
+            {/* CUSTOM GENRES SELECTS */}
+            <View className="my-8">
+              <Text className="mb-1 text-center text-green-500 rounded-full font-semibold uppercase tracking-[3px] text-xs">
+                • Genres •
+              </Text>
+
+              <Text
+                className="text-center mx-6 text-text_dark text-sm mb-4"
+                numberOfLines={2}
+              >
+                Select one or more genres from the list below
+              </Text>
+
+              <View className="rounded-xl mx-5 overflow-hidden">
+                {playlists[1].map((playlist, index) => (
+                  <View
+                    key={playlist.name}
+                    className="flex-row px-4"
+                    style={
+                      index % 2 === 0
+                        ? { backgroundColor: "rgba(23, 23, 23, 1)" }
+                        : { backgroundColor: "rgba(23, 23, 23, 0.7)" }
+                    }
+                  >
+                    <BouncyCheckbox
+                      size={20}
+                      fillColor={Colors.green[800]}
+                      unfillColor={"transparent"}
+                      innerIconStyle={{ borderWidth: 1 }}
+                      onPress={(isChecked: boolean) => {
+                        isChecked === true
+                          ? selectedPlaylistHandlers(playlist)
+                          : selectedPlaylistHandlers(playlist, true);
                       }}
-                      android_ripple={{ color: "#eee" }}
-                      key={playlist.name}
-                      className="flex-row px-4 bg-stone-800/50"
-                      style={
-                        index % 2 === 0
-                          ? { backgroundColor: "rgba(23, 23, 23, 1)" }
-                          : { backgroundColor: "rgba(23, 23, 23, 0.7)" }
-                      }
-                      //  style={
-                      //    index % 2 === 0
-                      //      ? { backgroundColor: Colors.neutral[800] }
-                      //      : { backgroundColor: Colors.stone[900] }
-                      //  }
-                    >
-                      <Text className="px-2 py-2 text-left text-gray-300">
-                        {playlist.name}
-                      </Text>
-                    </Pressable>
-                  ))}
-                </View>
+                    />
+                    <Text className="px-2 py-2 text-left text-gray-300">
+                      {playlist.name}
+                    </Text>
+                  </View>
+                ))}
               </View>
-
-              {/* DIVIDER */}
-              <View className="flex-row items-center my-3">
-                <View className="flex-1 border-[1px] border-tertiary rounded-full mx-10" />
-                <Text className="text-text_tertiary">OR</Text>
-                <View className="flex-1 border-[1px] border-tertiary rounded-full mx-10" />
-              </View>
-
-              {/* FILTER */}
-              <View className="mt-8">
-                <Text className="mb-1 text-center text-green-500 rounded-full font-semibold uppercase tracking-[3px] text-xs">
-                  • Filters •
-                </Text>
-
-                <Text
-                  className="text-center mx-6 text-text_dark text-sm mb-2"
-                  numberOfLines={2}
-                >
-                  Select a language and/or year of release
-                </Text>
-
-                <View
-                  className="flex-row space-x-4 items-center justify-between px-4 mt-2 rounded-xl"
-                  // style={{ backgroundColor: "rgb(4, 20, 10)" }}
-                >
-                  <LanguageDropdown
-                    saveMode="local"
-                    localLangSetter={setCurrentLangHandler}
-                  />
-                  <YearsDropdown
-                    saveMode="local"
-                    localYearSetter={setCurrentYearHandler}
-                  />
-                </View>
-              </View>
-
-              {/* CUSTOM GENRES SELECTS */}
-              <View className="my-8">
-                <Text className="mb-1 text-center text-green-500 rounded-full font-semibold uppercase tracking-[3px] text-xs">
-                  • Genres •
-                </Text>
-
-                <Text
-                  className="text-center mx-6 text-text_dark text-sm mb-4"
-                  numberOfLines={2}
-                >
-                  Select one or more genres from the list below
-                </Text>
-
-                <View className="rounded-xl mx-5 overflow-hidden">
-                  {playlists[1].map((playlist, index) => (
-                    <View
-                      key={playlist.name}
-                      className="flex-row px-4"
-                      style={
-                        index % 2 === 0
-                          ? { backgroundColor: "rgba(23, 23, 23, 1)" }
-                          : { backgroundColor: "rgba(23, 23, 23, 0.7)" }
-                      }
-                    >
-                      <BouncyCheckbox
-                        size={20}
-                        fillColor={Colors.green[800]}
-                        unfillColor={"transparent"}
-                        innerIconStyle={{ borderWidth: 1 }}
-                        onPress={(isChecked: boolean) => {
-                          isChecked === true
-                            ? selectedPlaylistHandlers(playlist)
-                            : selectedPlaylistHandlers(playlist, true);
-                        }}
-                      />
-                      <Text className="px-2 py-2 text-left text-gray-300">
-                        {playlist.name}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
-              </View>
-            </ScrollView>
-          ) : null}
+            </View>
+          </ScrollView>
         </View>
       </View>
     </Modal>

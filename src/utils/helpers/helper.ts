@@ -490,24 +490,27 @@ export const tvGenres = [
 
 export let idToGenresMapped = {};
 
-// Custom TV genres
-for (let i = 0; i < tvGenres[0].length; i++) {
-  const genreObj = tvGenres[0][i];
-  // @ts-ignore
-  idToGenresMapped[String(genreObj.id)] = genreObj.name;
-}
+// // Custom TV genres
+// for (let i = 0; i < tvGenres[0].length; i++) {
+//   const genreObj = tvGenres[0][i];
+//   // @ts-ignore
+//   idToGenresMapped[String(genreObj.id)] = genreObj.name;
+// }
+
 // Default TV genres
 for (let i = 0; i < tvGenres[1].length; i++) {
   const genreObj = tvGenres[1][i];
   // @ts-ignore
   idToGenresMapped[String(genreObj.id)] = genreObj.name;
 }
+
 // Custom Movie genres
-for (let i = 0; i < movieGenres[0].length; i++) {
-  const genreObj = movieGenres[0][i];
-  // @ts-ignore
-  idToGenresMapped[String(genreObj.id)] = genreObj.name;
-}
+// for (let i = 0; i < movieGenres[0].length; i++) {
+//   const genreObj = movieGenres[0][i];
+//   // @ts-ignore
+//   idToGenresMapped[String(genreObj.id)] = genreObj.name;
+// }
+
 // Default Movie genres
 for (let i = 0; i < movieGenres[1].length; i++) {
   const genreObj = movieGenres[1][i];

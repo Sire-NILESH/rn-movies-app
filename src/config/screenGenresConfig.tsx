@@ -1,15 +1,8 @@
-import {
-  IGenre,
-  IGenresToShowHomeScreen,
-  IPlaylist,
-  MediaTypes,
-} from "../../types/typings";
+import { IPlaylist } from "../../types/typings";
 import {
   buildGenrePlaylist,
   buildPopularPlaylist,
   buildTrendingPlaylist,
-  movieGenresList,
-  tvGenresList,
 } from "../utils/helpers/helper";
 
 // export const tvScreenGenresToShow: IGenre[] = [

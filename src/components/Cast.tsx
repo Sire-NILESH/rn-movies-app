@@ -37,10 +37,10 @@ const Cast: React.FC<IProps> = (props) => {
                 return (
                   <View
                     key={p.id + p.job}
-                    className="bg-accent pt-3 rounded-lg  overflow-hidden"
+                    className="bg-accent rounded-lg  overflow-hidden"
                   >
                     <Pressable
-                      className="h-full w-full items-center space-y-2 px-1"
+                      className="pt-3 h-full w-full items-center space-y-2 px-1"
                       android_ripple={{ color: "#eee" }}
                       onPress={() => {
                         navigateTo("Person Medias", {

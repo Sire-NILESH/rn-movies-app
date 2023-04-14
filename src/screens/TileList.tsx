@@ -49,8 +49,8 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>(
     mediaList ? mediaList : []
   );
-  const [langAndYearFilter, setLangAndYearFilter] =
-    useState<IQueryParams | null>();
+  // const [langAndYearFilter, setLangAndYearFilter] =
+  //   useState<IQueryParams | null>();
   const [loadingNewMedias, setLoadingNewMedias] = useState<boolean>(false);
   const [blockNewLoads, setBlockNewLoads] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(1);
@@ -92,26 +92,26 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             ? userSelectedPlaylists
             : [pastPlaylist];
 
-        // prepare the filters
-        playlistsToFetch.map((p) => {
-          const currentQueryParams = p.queryParams;
+        // // prepare the filters
+        // playlistsToFetch.map((p) => {
+        //   const currentQueryParams = p.queryParams;
 
-          // language filter
-          currentQueryParams.with_original_language === undefined &&
-          langAndYearFilter?.with_original_language
-            ? (currentQueryParams.with_original_language =
-                langAndYearFilter?.with_original_language)
-            : null;
+        //   // language filter
+        //   currentQueryParams.with_original_language === undefined &&
+        //   langAndYearFilter?.with_original_language
+        //     ? (currentQueryParams.with_original_language =
+        //         langAndYearFilter?.with_original_language)
+        //     : null;
 
-          // release year filter
-          currentQueryParams.primary_release_year === undefined &&
-          langAndYearFilter?.primary_release_year
-            ? (currentQueryParams.primary_release_year =
-                langAndYearFilter?.primary_release_year)
-            : null;
+        //   // release year filter
+        //   currentQueryParams.primary_release_year === undefined &&
+        //   langAndYearFilter?.primary_release_year
+        //     ? (currentQueryParams.primary_release_year =
+        //         langAndYearFilter?.primary_release_year)
+        //     : null;
 
-          return p;
-        });
+        //   return p;
+        // });
 
         const moreMedias = await getTileListScreenMedias(
           playlistsToFetch,
@@ -136,7 +136,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   // }, [mediaList, pageNumber, userSelectedPlaylists, pastPlaylist]);
 
   const onShowGenresModal = () => {
-    setLangAndYearFilter({});
+    // setLangAndYearFilter({});
     setShowGenresModal(true);
   };
 
@@ -145,8 +145,8 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   };
 
   const onCloseWithConfirmGenresModal = (
-    playlists: IUrlObject[],
-    langAndYearFilter: IQueryParams
+    playlists: IUrlObject[]
+    // langAndYearFilter: IQueryParams
   ) => {
     if (playlists.length > 0) {
       setError(null);
@@ -155,7 +155,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       setMedias([]);
       setShowGenresModal(false);
       // set the year and lang filter
-      setLangAndYearFilter(langAndYearFilter);
+      // setLangAndYearFilter(langAndYearFilter);
       // since we now have new set of Genres, we can unblock new loads
       setBlockNewLoads(false);
     }

@@ -203,9 +203,13 @@ export const getTileListScreenMedias = async (
 ) => {
   try {
     const data = await Promise.all([
-      ...urlObjects.map((urlObj) =>
-        fetchDataFromApi(urlObj.url, { ...urlObj.queryParams, ...filters })
-      ),
+      ...urlObjects.map((urlObj) => {
+        console.log(urlObj);
+        return fetchDataFromApi(urlObj.url, {
+          ...urlObj.queryParams,
+          ...filters,
+        });
+      }),
     ]);
 
     if (urlObjects[0].url.startsWith("/person/")) {

@@ -28,8 +28,8 @@ interface IProps {
   onClose: () => void;
   mediaListType: MediaTypes;
   closeWithConfirm: (
-    playlists: IUrlObject[],
-    langAndYearFilter: IQueryParams
+    playlists: IUrlObject[]
+    // langAndYearFilter: IQueryParams
   ) => void;
 }
 
@@ -64,6 +64,13 @@ const MediaWizardModal: React.FC<IProps> = ({
   console.log("YYYYYOOOOOO YEAR", currentYear);
   console.log("YYYYYOOOOOO LANG", currentLang);
 
+  const filters = {
+    primary_release_year: String(currentYear),
+    with_original_language: currentLang,
+  };
+
+  console.log("fffffffiiilters", filters);
+
   function selectedPlaylistHandlers(
     playlist: IUrlObject,
     remove?: boolean
@@ -80,16 +87,20 @@ const MediaWizardModal: React.FC<IProps> = ({
   }
 
   function onConfirmHandler() {
-    const filters = {
-      primary_release_year: String(currentYear),
-      with_original_language: currentLang,
-    };
+    // const filters = {
+    //   primary_release_year: String(currentYear),
+    //   with_original_language: currentLang,
+    // };
 
-    selectedPlaylists.map((p) => {
-      p.queryParams = { ...filters, ...p.queryParams };
+    const playlistsWithFilters: IUrlObject[] = selectedPlaylists.map((p) => {
+      const temp = { ...p };
+      temp.queryParams = { ...p.queryParams, ...filters };
+      return temp;
     });
 
-    closeWithConfirm(selectedPlaylists);
+    console.log("yyyyeeeeellllooo", playlistsWithFilters);
+
+    closeWithConfirm(playlistsWithFilters);
     // closeWithConfirm(selectedPlaylists, {
     //   primary_release_year: String(currentYear),
     //   with_original_language: currentLang,
@@ -97,12 +108,14 @@ const MediaWizardModal: React.FC<IProps> = ({
   }
 
   function onConfirmPlaylist(playlist: IUrlObject) {
-    const filters = {
-      primary_release_year: String(currentYear),
-      with_original_language: currentLang,
-    };
+    // const filters = {
+    //   primary_release_year: String(currentYear),
+    //   with_original_language: currentLang,
+    // };
 
-    playlist.queryParams = { ...filters, ...playlist.queryParams };
+    // console.log("concerning queryparams", playlist.queryParams);
+
+    // playlist.queryParams = { ...filters, ...playlist.queryParams };
 
     closeWithConfirm([playlist]);
 
@@ -169,34 +182,6 @@ const MediaWizardModal: React.FC<IProps> = ({
         <View className="flex-1">
           {movieGenres ? (
             <ScrollView className="flex-1">
-              {/* FILTER */}
-              <View className="my-8">
-                <Text className="mb-1 text-center text-green-500 rounded-full font-semibold uppercase tracking-[3px] text-xs">
-                  • Filters •
-                </Text>
-
-                <Text
-                  className="text-center mx-6 text-text_dark text-sm mb-2"
-                  numberOfLines={2}
-                >
-                  Select a language and/or year of release
-                </Text>
-
-                <View
-                  className="flex-row space-x-4 items-center justify-between px-4 mt-2 rounded-xl"
-                  // style={{ backgroundColor: "rgb(4, 20, 10)" }}
-                >
-                  <LanguageDropdown
-                    saveMode="local"
-                    localLangSetter={setCurrentLangHandler}
-                  />
-                  <YearsDropdown
-                    saveMode="local"
-                    localYearSetter={setCurrentYearHandler}
-                  />
-                </View>
-              </View>
-
               {/* CUSTOM PLAYLIST */}
               <View className="my-8">
                 {/* <View className="ml-5 rounded-full bg-stone-800/80 px-2 py-2 w-28 mb-1">
@@ -250,6 +235,34 @@ const MediaWizardModal: React.FC<IProps> = ({
                 <View className="flex-1 border-[1px] border-tertiary rounded-full mx-10" />
                 <Text className="text-text_tertiary">OR</Text>
                 <View className="flex-1 border-[1px] border-tertiary rounded-full mx-10" />
+              </View>
+
+              {/* FILTER */}
+              <View className="mt-8">
+                <Text className="mb-1 text-center text-green-500 rounded-full font-semibold uppercase tracking-[3px] text-xs">
+                  • Filters •
+                </Text>
+
+                <Text
+                  className="text-center mx-6 text-text_dark text-sm mb-2"
+                  numberOfLines={2}
+                >
+                  Select a language and/or year of release
+                </Text>
+
+                <View
+                  className="flex-row space-x-4 items-center justify-between px-4 mt-2 rounded-xl"
+                  // style={{ backgroundColor: "rgb(4, 20, 10)" }}
+                >
+                  <LanguageDropdown
+                    saveMode="local"
+                    localLangSetter={setCurrentLangHandler}
+                  />
+                  <YearsDropdown
+                    saveMode="local"
+                    localYearSetter={setCurrentYearHandler}
+                  />
+                </View>
               </View>
 
               {/* CUSTOM GENRES SELECTS */}

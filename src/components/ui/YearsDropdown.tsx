@@ -43,7 +43,7 @@ const YearsDropdown: React.FC<IProps> = (props) => {
   //   -1
   // );
 
-  const currentYear = Number(new Date(Date.now()).getFullYear());
+  const currentYear = new Date(Date.now()).getFullYear();
 
   function createArrayOfDateObjects() {
     let arr: TDropdownYearsArrayObj[] = [

@@ -13,7 +13,7 @@ interface IProps {
 const GenreTags: React.FC<IProps> = (props) => {
   return (
     <View
-      className="w-full justify-center px-2 bg-tertiary pb-2"
+      className="w-full justify-center bg-tertiary pb-2"
       style={{
         backgroundColor:
           props.backgroundType === "transparent"

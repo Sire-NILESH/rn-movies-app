@@ -71,8 +71,8 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
       let filters: IQueryParams = {
         page: pageNumber,
-        primary_release_year: langAndYearFilter?.primary_release_year,
-        with_original_language: langAndYearFilter?.with_original_language,
+        // primary_release_year: langAndYearFilter?.primary_release_year,
+        // with_original_language: langAndYearFilter?.with_original_language,
       };
 
       // only discover url supports language filter
@@ -91,6 +91,27 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           userSelectedPlaylists.length > 0
             ? userSelectedPlaylists
             : [pastPlaylist];
+
+        // prepare the filters
+        playlistsToFetch.map((p) => {
+          const currentQueryParams = p.queryParams;
+
+          // language filter
+          currentQueryParams.with_original_language === undefined &&
+          langAndYearFilter?.with_original_language
+            ? (currentQueryParams.with_original_language =
+                langAndYearFilter?.with_original_language)
+            : null;
+
+          // release year filter
+          currentQueryParams.primary_release_year === undefined &&
+          langAndYearFilter?.primary_release_year
+            ? (currentQueryParams.primary_release_year =
+                langAndYearFilter?.primary_release_year)
+            : null;
+
+          return p;
+        });
 
         const moreMedias = await getTileListScreenMedias(
           playlistsToFetch,
@@ -115,6 +136,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   // }, [mediaList, pageNumber, userSelectedPlaylists, pastPlaylist]);
 
   const onShowGenresModal = () => {
+    setLangAndYearFilter({});
     setShowGenresModal(true);
   };
 

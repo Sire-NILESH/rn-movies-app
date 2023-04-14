@@ -42,9 +42,7 @@ const MediaWizardModal: React.FC<IProps> = ({
   const [selectedPlaylists, setSelectedPlaylists] = useState<IUrlObject[]>([]);
 
   // const [currentYear, setCurrentYear] = useState<number>(0);
-  const [currentYear, setCurrentYear] = useState<number>(
-    new Date(Date.now()).getFullYear()
-  );
+  const [currentYear, setCurrentYear] = useState<number>(0);
 
   const [currentLang, setCurrentLang] = useState<string>("en");
   // const [currentLang, setCurrentLang] = useState<ISOLang>({
@@ -82,17 +80,36 @@ const MediaWizardModal: React.FC<IProps> = ({
   }
 
   function onConfirmHandler() {
-    closeWithConfirm(selectedPlaylists, {
+    const filters = {
       primary_release_year: String(currentYear),
       with_original_language: currentLang,
+    };
+
+    selectedPlaylists.map((p) => {
+      p.queryParams = { ...filters, ...p.queryParams };
     });
+
+    closeWithConfirm(selectedPlaylists);
+    // closeWithConfirm(selectedPlaylists, {
+    //   primary_release_year: String(currentYear),
+    //   with_original_language: currentLang,
+    // });
   }
 
   function onConfirmPlaylist(playlist: IUrlObject) {
-    closeWithConfirm([playlist], {
+    const filters = {
       primary_release_year: String(currentYear),
       with_original_language: currentLang,
-    });
+    };
+
+    playlist.queryParams = { ...filters, ...playlist.queryParams };
+
+    closeWithConfirm([playlist]);
+
+    // closeWithConfirm([playlist], {
+    //   primary_release_year: String(currentYear),
+    //   with_original_language: currentLang,
+    // });
   }
 
   // const mediaGenreList = mediaListType === "movie" ? movieGenres : tvGenres;

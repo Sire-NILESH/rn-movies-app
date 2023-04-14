@@ -313,6 +313,7 @@ export function buildUpcomingPlaylist(name: string, mediaType: MediaTypes) {
     url: `/${mediaType}/upcoming`,
     queryParams: {
       language: "en-US",
+      primary_release_year: new Date(new Date()).getFullYear,
     },
   };
 }

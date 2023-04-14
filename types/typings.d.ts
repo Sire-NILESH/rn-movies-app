@@ -421,3 +421,15 @@ export interface IUrlObject {
 }
 
 export interface IPlaylist extends IUrlObject {}
+
+export interface IDropdownYearsObj {
+  year: number;
+  value: string;
+}
+
+export type TDropdownYearsArrayObj =
+  | {
+      year: 0;
+      value: "All Years";
+    }
+  | IDropdownYearsObj;

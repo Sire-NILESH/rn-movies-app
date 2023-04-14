@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import Dropdown from "./Dropdown";
 import { useDefaultYearHooks } from "../../hooks/reduxHooks";
+import {
+  IDropdownYearsObj,
+  TDropdownYearsArrayObj,
+} from "../../../types/typings";
 
 interface IProps {
   saveMode: "local" | "applicationWide";
@@ -14,61 +18,65 @@ interface IProps {
  */
 const YearsDropdown: React.FC<IProps> = (props) => {
   const { setDefaultLanguageHandler, defaultYear } = useDefaultYearHooks();
-  const [localYear, setLocalYear] = useState<number>(defaultYear);
+  const [localYear, setLocalYear] = useState<number>(0);
 
-  const setLocalLanguageHandler = (year: number) => {
-    setLocalYear(year);
+  const setLocalLanguageHandler = (item: IDropdownYearsObj) => {
+    setLocalYear(item.year);
     if (props.localYearSetter) {
-      props.localYearSetter(year);
+      props.localYearSetter(item.year);
     }
   };
 
-  const arrayRange = (start: number, stop: number, step: number) =>
-    Array.from(
-      { length: (stop - start) / step + 1 },
-      (value, index) => start + index * step
-    );
+  const setDefaultYearOfHook = (item: IDropdownYearsObj) => {
+    setDefaultLanguageHandler(item.year);
+  };
 
-  const yearList = arrayRange(
-    Number(new Date(Date.now()).getFullYear()),
-    1900,
-    -1
-  );
+  // const arrayRange = (start: number, stop: number, step: number) =>
+  //   Array.from(
+  //     { length: (stop - start) / step + 1 },
+  //     (value, index) => start + index * step
+  //   );
 
-  interface IDropdownYearsObj {
-    [key: string]: number;
-  }
-
-  type TDropdownYearsArray = [{ "All Years": 0 } | IDropdownYearsObj];
+  // const yearList = arrayRange(
+  //   Number(new Date(Date.now()).getFullYear()),
+  //   1900,
+  //   -1
+  // );
 
   const currentYear = Number(new Date(Date.now()).getFullYear());
 
   function createArrayOfDateObjects() {
-    let arr: TDropdownYearsArray = [{ "All Years": 0 }];
+    let arr: TDropdownYearsArrayObj[] = [
+      {
+        year: 0,
+        value: "All Years",
+      },
+    ];
     for (let i = currentYear; i >= 1900; i--) {
-      let obj: IDropdownYearsObj = {};
-      obj[String(i)] = i;
+      let obj: IDropdownYearsObj = {
+        year: i,
+        value: String(i),
+      };
+
       arr.push(obj);
     }
     return arr;
   }
 
   const yearsArr = createArrayOfDateObjects();
-  console.log(yearsArr);
-
-  // add a 0 as a year and that is treated as all years by the api
-  yearList.unshift(0);
 
   return (
     <Dropdown
       borderRadius="full"
       currentSelected={
-        props.saveMode === "applicationWide" ? defaultYear : localYear
+        props.saveMode === "applicationWide"
+          ? { year: defaultYear, value: String(defaultYear) }
+          : { year: 0, value: "All Years" }
       }
-      listData={yearList}
+      listData={yearsArr}
       setSelected={
         props.saveMode === "applicationWide"
-          ? setDefaultLanguageHandler
+          ? setDefaultYearOfHook
           : setLocalLanguageHandler
       }
     />

@@ -31,18 +31,6 @@ const YearsDropdown: React.FC<IProps> = (props) => {
     setDefaultLanguageHandler(item.year);
   };
 
-  // const arrayRange = (start: number, stop: number, step: number) =>
-  //   Array.from(
-  //     { length: (stop - start) / step + 1 },
-  //     (value, index) => start + index * step
-  //   );
-
-  // const yearList = arrayRange(
-  //   Number(new Date(Date.now()).getFullYear()),
-  //   1900,
-  //   -1
-  // );
-
   const currentYear = new Date(Date.now()).getFullYear();
 
   function createArrayOfDateObjects() {

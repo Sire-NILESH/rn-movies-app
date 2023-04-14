@@ -3,23 +3,10 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Colors } from "./../utils/Colors";
-import {
-  ICountry,
-  IQueryParams,
-  ISOLang,
-  IUrlObject,
-  MediaTypes,
-} from "../../types/typings";
-import {
-  movieGenres,
-  movieGenresList,
-  tvGenres,
-  tvGenresList,
-} from "../utils/helpers/helper";
+import { IUrlObject, MediaTypes } from "../../types/typings";
+import { movieGenres } from "../utils/helpers/helper";
 import { moviePlaylist, tvPlaylist } from "../config/genresWithRoutes";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import CountriesDropdown from "./ui/CountriesDropdown";
-import { useDefaultRegionHooks } from "../hooks/reduxHooks";
 import LanguageDropdown from "./ui/LanguageDropdown";
 import YearsDropdown from "./ui/YearsDropdown";
 
@@ -27,10 +14,7 @@ interface IProps {
   isVisible: boolean;
   onClose: () => void;
   mediaListType: MediaTypes;
-  closeWithConfirm: (
-    playlists: IUrlObject[]
-    // langAndYearFilter: IQueryParams
-  ) => void;
+  closeWithConfirm: (playlists: IUrlObject[]) => void;
 }
 
 const MediaWizardModal: React.FC<IProps> = ({
@@ -40,18 +24,8 @@ const MediaWizardModal: React.FC<IProps> = ({
   closeWithConfirm,
 }) => {
   const [selectedPlaylists, setSelectedPlaylists] = useState<IUrlObject[]>([]);
-
-  // const [currentYear, setCurrentYear] = useState<number>(0);
   const [currentYear, setCurrentYear] = useState<number>(0);
-
   const [currentLang, setCurrentLang] = useState<string>("en");
-  // const [currentLang, setCurrentLang] = useState<ISOLang>({
-  //   iso639_1: "en",
-  //   iso639_2B: "eng",
-  //   iso639_2T: "eng",
-  //   name: "English",
-  //   nativeName: "English",
-  // });
 
   const setCurrentYearHandler = (year: number) => {
     setCurrentYear(year);
@@ -87,45 +61,47 @@ const MediaWizardModal: React.FC<IProps> = ({
   }
 
   function onConfirmHandler() {
-    // const filters = {
-    //   primary_release_year: String(currentYear),
-    //   with_original_language: currentLang,
-    // };
+    const selectedGenresNames: string[] = [];
+    const selectedGenresList: string[] = [];
 
-    const playlistsWithFilters: IUrlObject[] = selectedPlaylists.map((p) => {
-      const temp = { ...p };
-      temp.queryParams = { ...p.queryParams, ...filters };
-      return temp;
+    selectedPlaylists.forEach((p) => {
+      if (p.queryParams.with_genres) {
+        selectedGenresList.push(p.queryParams.with_genres);
+        selectedGenresNames.push(p.name);
+      }
     });
 
-    console.log("yyyyeeeeellllooo", playlistsWithFilters);
+    // if we have a case of multiple selections of genres, we make a single new  IUrlObject playlist and have all the genres as one single comma separated list and filters.
+    if (selectedGenresList.length > 1) {
+      const commaSeperatedGenresList: string = selectedGenresList.join(",");
 
-    closeWithConfirm(playlistsWithFilters);
-    // closeWithConfirm(selectedPlaylists, {
-    //   primary_release_year: String(currentYear),
-    //   with_original_language: currentLang,
-    // });
+      const playlist: IUrlObject = {
+        name: "Custom Genres",
+        url: `/discover/${mediaListType}`,
+        queryParams: {
+          with_genres: commaSeperatedGenresList,
+          ...filters,
+        },
+      };
+
+      closeWithConfirm([playlist]);
+    }
+    // else we can simply just add filters and pass the selected playlists
+    else {
+      const selectedPlaylistsWithFilters = selectedPlaylists.map((p) => {
+        const temp = p;
+        temp.queryParams = { ...p.queryParams, ...filters };
+        return temp;
+      });
+      closeWithConfirm(selectedPlaylistsWithFilters);
+    }
   }
 
   function onConfirmPlaylist(playlist: IUrlObject) {
-    // const filters = {
-    //   primary_release_year: String(currentYear),
-    //   with_original_language: currentLang,
-    // };
-
-    // console.log("concerning queryparams", playlist.queryParams);
-
-    // playlist.queryParams = { ...filters, ...playlist.queryParams };
-
     closeWithConfirm([playlist]);
-
-    // closeWithConfirm([playlist], {
-    //   primary_release_year: String(currentYear),
-    //   with_original_language: currentLang,
-    // });
   }
 
-  // const mediaGenreList = mediaListType === "movie" ? movieGenres : tvGenres;
+  // playlists to show in the modal
   const playlists = mediaListType === "movie" ? moviePlaylist : tvPlaylist;
 
   return (

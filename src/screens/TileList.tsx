@@ -11,16 +11,8 @@ import {
   MovieMedia,
   TvMedia,
 } from "../../types/typings";
-import {
-  idToGenresMapped,
-  isMovieArray,
-  showErrorAlert,
-} from "../utils/helpers/helper";
-import GenereModal from "../components/GenereModal";
-import {
-  getGenreMediasProps,
-  getTileListScreenMedias,
-} from "../utils/requests";
+import { isMovieArray, showErrorAlert } from "../utils/helpers/helper";
+import { getTileListScreenMedias } from "../utils/requests";
 import GenreTags from "../components/GenreTags";
 import TilesRenderedView from "../components/TilesRenderedView";
 import NothingToShow from "../components/NothingToShow";
@@ -49,8 +41,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>(
     mediaList ? mediaList : []
   );
-  // const [langAndYearFilter, setLangAndYearFilter] =
-  //   useState<IQueryParams | null>();
+  const [genreIds, setGenreIds] = useState<number[] | null>();
   const [loadingNewMedias, setLoadingNewMedias] = useState<boolean>(false);
   const [blockNewLoads, setBlockNewLoads] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(1);
@@ -62,8 +53,6 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     ? "movie"
     : "tv";
 
-  // const filters: IQueryParams = { page: pageNumber };
-
   // Loading Data
   useEffect(() => {
     async function loadMedias() {
@@ -71,17 +60,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
       let filters: IQueryParams = {
         page: pageNumber,
-        // primary_release_year: langAndYearFilter?.primary_release_year,
-        // with_original_language: langAndYearFilter?.with_original_language,
       };
-
-      // only discover url supports language filter
-      // if (langAndYearFilter && pastPlaylist.url.startsWith("/discover")) {
-      //   filters = {
-      //     ...filters,
-      //     with_original_language: langAndYearFilter.with_original_language,
-      //   };
-      // }
 
       console.log(filters);
 
@@ -91,27 +70,6 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           userSelectedPlaylists.length > 0
             ? userSelectedPlaylists
             : [pastPlaylist];
-
-        // // prepare the filters
-        // playlistsToFetch.map((p) => {
-        //   const currentQueryParams = p.queryParams;
-
-        //   // language filter
-        //   currentQueryParams.with_original_language === undefined &&
-        //   langAndYearFilter?.with_original_language
-        //     ? (currentQueryParams.with_original_language =
-        //         langAndYearFilter?.with_original_language)
-        //     : null;
-
-        //   // release year filter
-        //   currentQueryParams.primary_release_year === undefined &&
-        //   langAndYearFilter?.primary_release_year
-        //     ? (currentQueryParams.primary_release_year =
-        //         langAndYearFilter?.primary_release_year)
-        //     : null;
-
-        //   return p;
-        // });
 
         const moreMedias = await getTileListScreenMedias(
           playlistsToFetch,
@@ -133,7 +91,6 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     }
     loadMedias();
   }, [mediaList, pageNumber, userSelectedPlaylists]);
-  // }, [mediaList, pageNumber, userSelectedPlaylists, pastPlaylist]);
 
   const onShowGenresModal = () => {
     // setLangAndYearFilter({});
@@ -154,6 +111,15 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       setPageNumber(1);
       setMedias([]);
       setShowGenresModal(false);
+
+      const genrelist = playlists[0].queryParams.with_genres
+        ?.split(",")
+        .map((g) => Number(g));
+
+      if (genrelist && genrelist?.length > 0) {
+        setGenreIds(genrelist);
+      }
+
       // set the year and lang filter
       // setLangAndYearFilter(langAndYearFilter);
       // since we now have new set of Genres, we can unblock new loads
@@ -226,12 +192,9 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   return (
     <View className="flex-1 bg-secondary min-w-full w-full items-center">
       {/* Genre Tags Scrollable Row on top, if user selected some genres */}
-      {userSelectedPlaylists?.length > 1 ? (
+      {genreIds && genreIds.length > 1 ? (
         <View className="w-full">
-          <GenreTags
-            genreNames={userSelectedPlaylists}
-            backgroundType="colored"
-          />
+          <GenreTags genreIdList={genreIds} backgroundType="colored" />
         </View>
       ) : null}
 
@@ -243,13 +206,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           onClose={onCloseGenresModal}
           closeWithConfirm={onCloseWithConfirmGenresModal}
         />
-      ) : // <GenereModal
-      //   mediaListType={currentListType}
-      //   isVisible={showGenresModal}
-      //   onClose={onCloseGenresModal}
-      //   closeWithConfirm={onCloseWithConfirmGenresModal}
-      // />
-      null}
+      ) : null}
 
       {/* Tiles */}
       <View className="flex-1 relative w-full px-2">

@@ -3,9 +3,11 @@ import Dropdown from "./Dropdown";
 import { by639_1 } from "iso-language-codes";
 import { useDefaultLanguageHooks } from "../../hooks/reduxHooks";
 import { ISOLang } from "../../../types/typings";
+import { isoLangs } from "../../utils/helpers/isoLangs";
 
 interface IProps {
   saveMode: "local" | "applicationWide";
+  localLangSetter?: (language: string) => void;
 }
 
 /**
@@ -20,7 +22,12 @@ const LanguageDropdown: React.FC<IProps> = (props) => {
 
   const setLocalLanguageHandler = (language: ISOLang) => {
     setLocalLanguage(language);
+    if (props.localLangSetter) {
+      props.localLangSetter(language.iso639_1);
+    }
   };
+
+  // console.log(Object.values(by639_1).filter((a) => a.name === "English"));
 
   return (
     <Dropdown
@@ -35,7 +42,10 @@ const LanguageDropdown: React.FC<IProps> = (props) => {
       //   iso639_2T: "eng",
       //   iso639_2B: "eng",
       // }}
-      listData={Object.values(by639_1)}
+      listData={Object.values(by639_1).sort((a, b) =>
+        a.name > b.name ? 1 : -1
+      )}
+      // listData={Object.values(by639_1)}
       setSelected={
         props.saveMode === "applicationWide"
           ? setDefaultLanguageHandler

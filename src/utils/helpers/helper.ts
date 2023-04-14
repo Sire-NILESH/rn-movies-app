@@ -328,6 +328,21 @@ export function buildGenrePlaylist(mediaType: MediaTypes, genre: Genre) {
   };
 }
 
+export function buildLanguagePlaylist(
+  name: string,
+  mediaType: MediaTypes,
+  language: ISOLang
+) {
+  return {
+    name: name,
+    url: `/discover/${mediaType}`,
+    queryParams: {
+      with_original_language: language.iso639_1,
+      primary_release_year: String(new Date(Date.now()).getFullYear()),
+    },
+  };
+}
+
 export const movieGenres = [
   // Custom Genres
   [

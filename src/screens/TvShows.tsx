@@ -14,7 +14,7 @@ const TvShowsScreen: React.FC<IDrawerScreenProps> = (props) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: (props) => (
-        <View className="mr-2 bg-stone-800/50">
+        <View className="mr-2">
           <HeaderSearchButton searchCategory="tv" />
         </View>
       ),

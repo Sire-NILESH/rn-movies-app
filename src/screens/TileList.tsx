@@ -24,6 +24,7 @@ import {
 import GenreTags from "../components/GenreTags";
 import TilesRenderedView from "../components/TilesRenderedView";
 import NothingToShow from "../components/NothingToShow";
+import MediaWizardModal from "../components/MediaWizardModal";
 
 const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [showGenresModal, setShowGenresModal] = useState<boolean>(false);
@@ -48,6 +49,8 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>(
     mediaList ? mediaList : []
   );
+  const [langAndYearFilter, setLangAndYearFilter] =
+    useState<IQueryParams | null>();
   const [loadingNewMedias, setLoadingNewMedias] = useState<boolean>(false);
   const [blockNewLoads, setBlockNewLoads] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(1);
@@ -66,7 +69,22 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     async function loadMedias() {
       if (!pastPlaylist) return;
 
-      const filters: IQueryParams = { page: pageNumber };
+      let filters: IQueryParams = {
+        page: pageNumber,
+        primary_release_year: langAndYearFilter?.primary_release_year,
+        with_original_language: langAndYearFilter?.with_original_language,
+      };
+
+      // only discover url supports language filter
+      // if (langAndYearFilter && pastPlaylist.url.startsWith("/discover")) {
+      //   filters = {
+      //     ...filters,
+      //     with_original_language: langAndYearFilter.with_original_language,
+      //   };
+      // }
+
+      console.log(filters);
+
       setLoadingNewMedias(true);
       try {
         const playlistsToFetch =
@@ -104,13 +122,18 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     setShowGenresModal(false);
   };
 
-  const onCloseWithConfirmGenresModal = (playlists: IUrlObject[]) => {
+  const onCloseWithConfirmGenresModal = (
+    playlists: IUrlObject[],
+    langAndYearFilter: IQueryParams
+  ) => {
     if (playlists.length > 0) {
       setError(null);
       setUserSelectedPlaylists(playlists);
       setPageNumber(1);
       setMedias([]);
       setShowGenresModal(false);
+      // set the year and lang filter
+      setLangAndYearFilter(langAndYearFilter);
       // since we now have new set of Genres, we can unblock new loads
       setBlockNewLoads(false);
     }
@@ -192,13 +215,19 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
       {/* Genres selection modal for user */}
       {showGenresModal ? (
-        <GenereModal
+        <MediaWizardModal
           mediaListType={currentListType}
           isVisible={showGenresModal}
           onClose={onCloseGenresModal}
           closeWithConfirm={onCloseWithConfirmGenresModal}
         />
-      ) : null}
+      ) : // <GenereModal
+      //   mediaListType={currentListType}
+      //   isVisible={showGenresModal}
+      //   onClose={onCloseGenresModal}
+      //   closeWithConfirm={onCloseWithConfirmGenresModal}
+      // />
+      null}
 
       {/* Tiles */}
       <View className="flex-1 relative w-full px-2">

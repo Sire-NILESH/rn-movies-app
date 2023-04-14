@@ -40,6 +40,7 @@ const CountriesDropdown: React.FC<IProps> = ({
           // backgroundColor: "rgb(7, 38, 19)",
           borderRadius: 100,
           width: 150,
+          height: 45,
           borderWidth: 0,
           borderBottomColor: "red",
         }}

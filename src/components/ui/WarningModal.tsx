@@ -41,7 +41,7 @@ const WarningModal: React.FC<IProps> = (props) => {
       visible={props.isVisible}
       className="items-center justify-center"
     >
-      <View className="absolute mt-[55%] mx-[5%] h-[30%] w-[90%] bg-stone-800 rounded-xl pb-2  [elevation:10] px-4 py-4">
+      <View className="absolute mt-[55%] mx-[5%] h-[300] w-[90%] bg-stone-800 rounded-xl pb-2  [elevation:10] px-4 py-4">
         {/* header */}
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center space-x-2">

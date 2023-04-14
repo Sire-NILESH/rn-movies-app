@@ -1,6 +1,7 @@
 import {
   buildAiringTodayPlaylist,
   buildGenrePlaylist,
+  buildLanguagePlaylist,
   buildMoviePlaylist,
   buildNowPlayingPlaylist,
   buildPopularPlaylist,
@@ -165,6 +166,38 @@ import {
 //   },
 // };
 
+const bollywoodHindi = {
+  iso639_1: "hi",
+  iso639_2B: "hin",
+  iso639_2T: "hin",
+  name: "Hindi",
+  nativeName: "हिन्दी, हिंदी",
+};
+
+const bollywoodTamil = {
+  iso639_1: "ta",
+  iso639_2B: "tam",
+  iso639_2T: "tam",
+  name: "Tamil",
+  nativeName: "தமிழ்",
+};
+
+const bollywoodTelugu = {
+  iso639_1: "te",
+  iso639_2B: "tel",
+  iso639_2T: "tel",
+  name: "Telugu",
+  nativeName: "తెలుగు",
+};
+
+const bollywoodKannada = {
+  iso639_1: "kn",
+  iso639_2B: "kan",
+  iso639_2T: "kan",
+  name: "Kannada",
+  nativeName: "ಕನ್ನಡ",
+};
+
 const tvGenresPlaylists = tvGenresList.map((g) =>
   buildGenrePlaylist("movie", g)
 );
@@ -185,6 +218,10 @@ export const tvPlaylist = [
     buildTvPlaylist("Adult Swim Shows", "Adult Swim"),
     buildTvPlaylist("AMC", "AMC"),
     buildTvPlaylist("ABC", "ABC"),
+    buildLanguagePlaylist("Bollywood (Hindi)", "tv", bollywoodHindi),
+    buildLanguagePlaylist("Bollywood (Tamil)", "tv", bollywoodTamil),
+    buildLanguagePlaylist("Bollywood (Telugu)", "tv", bollywoodTelugu),
+    buildLanguagePlaylist("Bollywood (Kannada)", "tv", bollywoodKannada),
     buildTvPlaylist("Cartoon Network Shows", "Cartoon Network"),
     buildTvPlaylist("Nickelodeon Shows", "Nickelodeon"),
     buildTvPlaylist("Disney XD Shows", "Disney XD"),
@@ -215,6 +252,10 @@ export const moviePlaylist = [
     buildAiringTodayPlaylist("Airing Today", "movie"),
     buildNowPlayingPlaylist("Now Playing", "movie"),
     buildUpcomingPlaylist("New Releases", "movie"),
+    buildLanguagePlaylist("Bollywood (Hindi)", "movie", bollywoodHindi),
+    buildLanguagePlaylist("Bollywood (Tamil)", "movie", bollywoodTamil),
+    buildLanguagePlaylist("Bollywood (Telugu)", "movie", bollywoodTelugu),
+    buildLanguagePlaylist("Bollywood (Kannada)", "movie", bollywoodKannada),
     buildMoviePlaylist("Lucasfilm", "Lucasfilm"),
     buildMoviePlaylist("HBO Movies", "HBO"),
     buildMoviePlaylist("Warner Bros. Entertainment", "Warner Bros"),

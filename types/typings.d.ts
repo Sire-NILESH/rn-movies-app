@@ -410,6 +410,8 @@ export interface IQueryParams {
   with_networks?: string;
   with_cast?: string;
   with_people?: string;
+  with_original_language?: string;
+  primary_release_year?: string;
 }
 
 export interface IUrlObject {

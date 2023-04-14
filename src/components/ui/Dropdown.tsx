@@ -1,5 +1,5 @@
 // Dropdown
-import { View, Text, ColorValue } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { isISOLang } from "../../utils/helpers/helper";
@@ -28,21 +28,17 @@ export default function Dropdown<T extends TSupportedTypes>({
   };
 
   return (
-    <View
-      className=""
-      // style={{ backgroundColor: "rgb(4, 20, 10)" }}
-      style={{ backgroundColor: "rgb(4, 20, 10)" }}
-    >
+    <View className="">
       <SelectDropdown
         data={listData}
-        search={true}
-        searchInputStyle={{
-          backgroundColor: Colors.stone[800],
-          //  borderRadius: radiusForDropdown[borderRadius],
-          borderBottomColor: Colors.accentLighter,
-          paddingHorizontal: 16,
-        }}
-        searchInputTxtColor={Colors.text_primary}
+        // search={true}
+        // searchInputStyle={{
+        //   backgroundColor: Colors.stone[800],
+        //   //  borderRadius: radiusForDropdown[borderRadius],
+        //   borderBottomColor: Colors.accentLighter,
+        //   paddingHorizontal: 16,
+        // }}
+        // searchInputTxtColor={Colors.text_primary}
         //   searchPlaceHolder={"Search"}
         //   searchPlaceHolderColor={Colors.text_dark}
         renderDropdownIcon={(s) => (
@@ -61,6 +57,7 @@ export default function Dropdown<T extends TSupportedTypes>({
           // backgroundColor: "rgb(7, 38, 19)",
           borderRadius: radiusForDropdown[borderRadius],
           width: 150,
+          // height: 20,
           borderWidth: 0,
           borderBottomColor: "red",
         }}
@@ -82,16 +79,20 @@ export default function Dropdown<T extends TSupportedTypes>({
           // if data array is an array of objects then return selectedItem.property to render after item is selected
           return isISOLang(selectedItem)
             ? selectedItem.name
+            : selectedItem === 0
+            ? "All Years"
             : String(selectedItem);
         }}
         rowTextForSelection={(item: T, index) => {
           // text represented for each item in dropdown
           // if data array is an array of objects then return item.property to represent item in dropdown
-          return isISOLang(item) ? item.name : String(item);
+          return isISOLang(item)
+            ? item.name
+            : item === 0
+            ? "All Years"
+            : String(item);
         }}
       />
     </View>
   );
 }
-
-// export default Dropdown;

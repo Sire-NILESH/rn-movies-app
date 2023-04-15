@@ -4,29 +4,19 @@ import { Episode } from "../../types/typings";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
 import { dateFormatter } from "../utils/helpers/helper";
-import { LinearGradient } from "expo-linear-gradient";
 
 interface IProps {
   episode: Episode;
 }
 
-const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
+const EpisodeInfoCardV2: React.FC<IProps> = ({ episode }) => {
   return (
-    <LinearGradient
-      className="mt-5 mx-3 py-3 rounded-2xl border border-gray-800 justify-between"
-      colors={[
-        "rgba(28, 25, 23, 0.8)",
-        "rgba(41, 37, 36, 1)",
-        "rgba(41, 37, 36, 1)",
-        "rgba(28, 25, 23, 1)",
-        "rgba(28, 25, 23, 0.7)",
-        "rgba(0, 0, 0, 1)",
-      ]}
-      start={{ x: 0.1, y: 0.5 }}
-    >
+    <View className="border-y-[1px] border-stone-800 mt-3 mx-3 py-3 justify-between">
+      {/* <View className="mt-5 mx-3 flex-1 bg-red-500 max-h-[300]"> */}
       {/* TITLE AND EPISODE NUMBER */}
-      <View className="flex-row items-center mx-3 space-x-2 mb-3">
+      <View className="flex-row items-center space-x-2 mb-4">
         <View className="bg-white rounded-full h-8 w-8 items-center justify-center">
+          {/* <View className="bg-white rounded-full h-5 w-5 h-8 w-8 items-center justify-center"> */}
           <Text className="text-text_darkest font-bold">
             {episode.episode_number}
           </Text>
@@ -38,10 +28,8 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
 
       {/* IMAGE CARD */}
       <View
-        className="flex-1 "
+        className="flex-1 rounded-xl border border-gray-800 overflow-hidden"
         style={{ width: "100%", aspectRatio: 16 / 9 }}
-        //   className="flex-1 rounded-xl border border-gray-800 overflow-hidden mx-auto"
-        //   style={{ width: "93%", aspectRatio: 16 / 9 }}
       >
         <Image
           source={
@@ -51,11 +39,12 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
                 }
               : require("../../assets/images/placeholders/posterPlaceHolder.webp")
           }
+          // className="rounded-2xl rounded-b-none"
+          // style={{ width: "100%", height: 180, resizeMode: "cover" }}
           style={{ width: "100%", height: "100%", resizeMode: "cover" }}
         />
       </View>
-
-      <View className="flex-1 py-4 space-y-3 justify-center px-4">
+      <View className="flex-1  py-4 space-y-3 justify-center px-2">
         {/* STATS */}
         <View className="flex-row items-center space-x-5">
           <View>
@@ -76,17 +65,16 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
             </View>
           ) : null}
         </View>
-
         {/* OVERVIEW */}
         <Text className="text-text_highLight">
-          <Text className="text-text_tertiary text-xs">{episode.overview}</Text>
+          <Text className="text-text_dark text-xs">{episode.overview}</Text>
         </Text>
       </View>
-    </LinearGradient>
+    </View>
   );
 };
 
-export default EpisodeInfoCard;
+export default EpisodeInfoCardV2;
 
 function DataElement({
   text,
@@ -98,7 +86,7 @@ function DataElement({
   return (
     <View className="flex-row space-x-2 items-center">
       <Ionicons name={iconName} color={Colors.stone[400]} size={16} />
-      <Text className="text-text_primary text-xs">{text}</Text>
+      <Text className="text-text_highLight text-xs">{text}</Text>
     </View>
   );
 }

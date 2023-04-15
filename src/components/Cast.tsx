@@ -27,6 +27,7 @@ const Cast: React.FC<IProps> = (props) => {
       </Text>
       <FlatList
         horizontal
+        initialNumToRender={5}
         data={props.cast}
         className=" mx-2 rounded-lg"
         keyExtractor={(person) => String(person.id)}
@@ -67,7 +68,7 @@ const Cast: React.FC<IProps> = (props) => {
                         <RenderProfile
                           id={p.id}
                           name={p.name}
-                          imgPath={`https://image.tmdb.org/t/p/w500${p.profile_path}`}
+                          imgPath={`https://image.tmdb.org/t/p/w100${p.profile_path}`}
                         />
                       </View>
                       <View className="justify-start">

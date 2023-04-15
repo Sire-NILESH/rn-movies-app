@@ -196,6 +196,12 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                 </>
               }
               data={seasonDetails.episodes}
+              className=""
+              // ItemSeparatorComponent={() => {
+              //   return (
+              //     <View className="border-[1px] border-x-0 h-3  border-stone-800 my-5" />
+              //   );
+              // }}
               keyExtractor={(episode) => String(episode.id)}
               renderItem={(episodeObj) => (
                 <EpisodeInfoCard episode={episodeObj.item} />

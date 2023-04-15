@@ -24,10 +24,7 @@ import {
 } from "../../config/screenGenresConfig";
 import RowAsync from "../RowAsync";
 import useFetcher from "../../hooks/useFetcher";
-import {
-  getGenreMediasProps,
-  sendUrlObjApiRequest,
-} from "../../utils/requests";
+import { sendUrlObjApiRequest } from "../../utils/requests";
 import { useRoute } from "@react-navigation/native";
 
 interface IProps {

@@ -11,7 +11,7 @@ import { Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
 import { isMovie } from "./../utils/helpers/helper";
-import { getGenreMediasProps, sendUrlObjApiRequest } from "../utils/requests";
+import { sendUrlObjApiRequest } from "../utils/requests";
 import useFetcher from "../hooks/useFetcher";
 import React, { memo } from "react";
 import ThumbnailSkeleton from "./ThumbnailSkeleton";

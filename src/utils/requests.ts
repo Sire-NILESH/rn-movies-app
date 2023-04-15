@@ -210,6 +210,8 @@ export const sendUrlObjApiRequest = async (
 /**
  * Is used to load more Genre related media(Movie/Tv) on scroll list end in the Tiles list screen.
  *
+ * Currently unused
+ *
  * @param getTheseGenreMedias - An array of genres that is to be loaded.
  * @param mediaType - The type of media to be loaded.
  * @param pageNumber - The page number

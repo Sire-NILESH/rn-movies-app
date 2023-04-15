@@ -13,6 +13,8 @@ import { ScrollView } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import {
+  calculateProfitOrLoss,
+  formatCurrencyNumbers,
   isMovie,
   isMovieExtended,
   isTv,
@@ -28,6 +30,7 @@ import ProductionCompaines from "./ProductionCompaines";
 import MoreInfoFooterButton from "./ui/MoreInfoFooterButton";
 import WatchProviders from "./WatchProviders";
 import Cast from "./Cast";
+import RevenueStats from "./ui/RevenueStats";
 
 interface IProps {
   media: TvMediaExtended | MovieMediaExtended;
@@ -158,6 +161,10 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             {/* MEDIA IMAGE WITH STATS */}
             <NewMediaCardInfo media={media} />
 
+            {isMovieExtended(media) && media.budget ? (
+              <RevenueStats budget={media.budget} revenue={media.revenue} />
+            ) : null}
+
             {/* DESCRIPTION */}
             {media.overview ? (
               <View className="px-4 mt-5 space-y-2">
@@ -181,31 +188,12 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
                 } is expected to air on ${new Date(
                   media.next_episode_to_air.air_date
                 ).toDateString()}.`}</Text>
-                {/* <View className="px-4 mt-5 flex-row items-center justify-between space-x-2">
-             <View className="bg-accent px-4 py-2 rounded-md">
-               <Text className="text-text_secondary text-lg font-bold text-center">
-                 {media.next_episode_to_air.season_number}
-               </Text>
-               <Text className="text-text_dark text-center">Season</Text>
-             </View>
-
-             <View className="bg-accent px-4 py-2 rounded-md">
-               <Text className="text-text_secondary text-lg font-bold text-center">
-                 {media.next_episode_to_air.episode_number}
-               </Text>
-               <Text className="text-text_dark text-center">Episode</Text>
-             </View>
-
-             <View className="bg-accent px-4 py-2 rounded-md h-full">
-               <Text className="text-text_secondary text-lg font-bold text-center">
-                 {new Date(
-                   media.next_episode_to_air.air_date
-                 ).toDateString()}
-               </Text>
-             </View>
-           </View> */}
               </View>
             ) : null}
+
+            {/* {isMovieExtended(media) && media.budget ? (
+              <RevenueStats budget={media.budget} revenue={media.revenue} />
+            ) : null} */}
           </View>
 
           {/* BUTTONS CONTAINER */}
@@ -257,71 +245,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
                 <ProductionCompaines productions={media.production_companies} />
               )}
 
-            {/* Cast and Directors */}
-            {/* <ScrollView
-              horizontal
-              className="space-x-2 mx-2"
-              contentContainerStyle={{
-                justifyContent: "center",
-              }}
-            >
-              {directedBy.length > 0 ? (
-                <View className="h-[176] pb-6 mx-2 rounded-lg bg-accent">
-                  <Cast personList={directedBy} title="Director" />
-                </View>
-              ) : null}
-
-              {cast.length > 0 ? (
-                <View className="h-[176] pb-6 mx-2 rounded-lg bg-neutral-900/80">
-                  <Cast personList={cast} title="Cast" />
-                </View>
-              ) : null}
-            </ScrollView> */}
-
-            {/* <FlatList
-              className="space-x-2 mx-2"
-              // contentContainerStyle={{
-              //   justifyContent: "center",
-              // }}
-              data={[
-                // <View className="h-[176] pb-6 mx-2 rounded-lg bg-accent">
-                //   <Cast personList={directedBy} title="Director" />
-                // </View>,
-                <View className="h-[176] pb-6 mx-2 rounded-lg bg-neutral-900/80">
-                  <Cast personList={cast} title="Cast" />
-                </View>,
-              ]}
-              horizontal
-              keyExtractor={() => String(Math.random() * 2)}
-              // ListHeaderComponent={() => {
-              //   return (
-              //     <View className="h-[176] pb-6 mx-2 rounded-lg bg-accent">
-              //       <Cast personList={directedBy} title="Director" />
-              //     </View>
-              //   );
-              // }}
-              renderItem={(peopleObj) => {
-                // if (peopleObj.index === 0) {
-                //   return (
-                //     <View className="h-[176] pb-6 mx-2 rounded-lg bg-accent">
-                //       <Cast personList={peopleObj.item} title="Director" />
-                //     </View>
-                //   );
-                // }
-                // if (peopleObj.index === 1) {
-                //   return (
-                //     <View className="h-[176] pb-6 mx-2 rounded-lg bg-neutral-900/80">
-                //       <Cast personList={peopleObj.item} title="Cast" />
-                //     </View>
-                //   );
-                // }
-
-                return peopleObj.item;
-              }}
-            ></FlatList> */}
-
-            {/* <Persons cast={cast} directedBy={directedBy} /> */}
-
+            {/* Cast and Crew */}
             {cast.length > 0 || directedBy.length > 0 ? (
               <View className="mt-8 h-[195]">
                 <Cast cast={cast} directedBy={directedBy} title="Cast" />

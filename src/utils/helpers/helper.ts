@@ -51,6 +51,47 @@ export function isMovieExtended(
   );
 }
 
+export function formatCurrencyNumbers(num: number): string {
+  if (num >= 1000000000) {
+    return (
+      (num / 1000000000)
+        .toFixed(1)
+        // .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        .toLocaleString()
+        .replace(/\.0$/, "") + "B"
+    );
+  }
+  if (num >= 1000000) {
+    return (
+      (num / 1000000)
+        .toFixed(1)
+        // .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        .replace(/\.0$/, "") + "M"
+    );
+  }
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+  }
+  return String(num);
+}
+
+export function calculateProfitOrLoss(
+  costPrice: number,
+  sellingPrice: number
+): string {
+  let profit = sellingPrice - costPrice;
+  let percent = (profit / costPrice) * 100;
+  if (profit > 0) {
+    return `${percent.toFixed(1)}%`;
+  } else if (profit < 0) {
+    return `-${Math.abs(percent)
+      .toFixed(1)
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}%`;
+  } else {
+    return "";
+  }
+}
+
 // export function isTrailer(
 //   media: MovieMedia | TvMedia | null
 // ): media is MovieMedia {

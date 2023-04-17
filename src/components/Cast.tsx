@@ -177,7 +177,7 @@ const Cast: React.FC<IProps> = (props) => {
                   <RenderProfile
                     id={p.id}
                     name={p.name}
-                    imgPath={`https://image.tmdb.org/t/p/w500${p.profile_path}`}
+                    imgPath={`https://image.tmdb.org/t/p/w200${p.profile_path}`}
                   />
                 </View>
                 <View className="justify-start">

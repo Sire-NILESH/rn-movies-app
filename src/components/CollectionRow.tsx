@@ -88,7 +88,7 @@ function renderFlatList(medias: IReduxListMedia[]) {
             </View>
           )}
           keyExtractor={(media) => {
-            return String(media.mediaId) + String(Math.random() * 20);
+            return String(media.mediaId) + String(Math.random() * 1);
           }}
         />
       ) : null}

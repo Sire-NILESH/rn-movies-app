@@ -68,6 +68,10 @@ const ScreenBuilderV2: React.FC<IProps> = ({ screenType }) => {
 
   const { screenProps, loadingProps, errorLoadingProps } = useFetcherMemo();
 
+  // if (loadingProps || screenProps) {
+  //   return <Loader loading={loadingProps} />;
+  // }
+
   return (
     <View className="flex-1 bg-secondary">
       {/* Loader */}

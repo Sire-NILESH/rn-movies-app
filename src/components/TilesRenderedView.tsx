@@ -39,7 +39,9 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
       <View className="w-full justify-center my-2">
         <ActivityIndicator size="small" color="#aaa" />
       </View>
-    ) : null;
+    ) : (
+      <View className="h-6"></View>
+    );
   };
 
   console.log("rendered tiles renderer");
@@ -69,6 +71,7 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
                 orientation="portrait"
                 navigateTo={navigateTo}
                 windowWidth={windowWidth}
+                imgType="cached"
               />
               {/* <MemoisedThumbnail media={media.item} orientation="portrait" /> */}
             </View>

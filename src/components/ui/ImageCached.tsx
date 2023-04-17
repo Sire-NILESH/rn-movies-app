@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ImageResizeMode } from "react-native";
 import React from "react";
 // @ts-ignore, module isnt in TS and also couldnt find any type module for this online.
 import ExpoFastImage from "expo-fast-image";
@@ -6,6 +6,7 @@ import ExpoFastImage from "expo-fast-image";
 interface IProps {
   imageURL: string;
   cacheKey: string;
+  resizeType?: ImageResizeMode;
 }
 
 const ImageCached: React.FC<IProps> = (props) => {
@@ -13,7 +14,7 @@ const ImageCached: React.FC<IProps> = (props) => {
     <ExpoFastImage
       uri={props.imageURL}
       cacheKey={props.cacheKey}
-      resizeMode={"cover"}
+      resizeMode={props.resizeType != undefined ? props.resizeType : "cover"}
       style={styles.imageStyle}
     />
   );

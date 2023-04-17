@@ -74,18 +74,19 @@ function renderFlatList(
                 orientation="portrait"
                 navigateTo={navigateTo}
                 windowWidth={windowWidth}
+                imgType="cached"
                 // orientation="landscape"
               />
             </View>
           )}
           keyExtractor={(media) => {
-            return String(media.id) + String(Math.random() * 20);
+            return String(media.id) + String(Math.random() * 1);
           }}
           horizontal
         />
       ) : (
         <FlatList
-          initialNumToRender={20}
+          initialNumToRender={5}
           ListFooterComponent={renderFooterItemFunction(
             medias,
             title,
@@ -108,7 +109,7 @@ function renderFlatList(
             </View>
           )}
           keyExtractor={(media) => {
-            return String(media.id) + String(Math.random() * 20);
+            return String(media.id) + String(Math.random() * 1);
           }}
           horizontal
         />

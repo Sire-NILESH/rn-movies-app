@@ -105,12 +105,13 @@ function renderFlatList(
                 orientation="portrait"
                 navigateTo={navigateTo}
                 windowWidth={windowWidth}
+                imgType="regular"
                 // orientation="landscape"
               />
             </View>
           )}
           keyExtractor={(media) => {
-            return String(media.id) + String(Math.random() * 20);
+            return String(media.id) + String(Math.random() * 1);
           }}
           horizontal
         />
@@ -135,6 +136,7 @@ function renderFlatList(
                 orientation="portrait"
                 navigateTo={navigateTo}
                 windowWidth={windowWidth}
+                imgType="regular"
                 // orientation="landscape"
               />
             </View>

@@ -1,5 +1,8 @@
 import { StatusBar } from "expo-status-bar";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  TransitionPresets,
+  createStackNavigator,
+} from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,7 +17,6 @@ import { stackRoutes } from "./src/library/NavigationRoutes/StackRoutes";
 import Loader from "./src/components/ui/Loader";
 import NothingToShow from "./src/components/NothingToShow";
 import useDBInitialize from "./src/hooks/useDBInitialize";
-import LoaderShimmer from "./src/components/ui/LoaderShimmer";
 
 // Keep the splash screen visible while we fetch resources
 // SplashScreen.preventAutoHideAsync();
@@ -62,6 +64,15 @@ export default function App() {
                   headerStyle: {
                     backgroundColor: Colors.tertiary,
                   },
+                  // ...TransitionPresets.ScaleFromCenterAndroid,
+                  // ...TransitionPresets.SlideFromRightIOS,
+                  // ...TransitionPresets.BottomSheetAndroid,
+                  // ...TransitionPresets.ModalFadeTransition,
+                  // ...TransitionPresets.FadeFromBottomAndroid,
+                  // ...TransitionPresets.ModalPresentationIOS,
+                  // ...TransitionPresets.RevealFromBottomAndroid,
+                  // ...TransitionPresets.ModalTransition,
+                  // ...TransitionPresets.ModalSlideFromBottomIOS,
                 }}
               >
                 {/* List of all the routs for the Stack Screen is maintained in the 'routes' separately */}

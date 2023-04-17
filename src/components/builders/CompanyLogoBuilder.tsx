@@ -81,7 +81,7 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
                   <RenderLogo
                     id={c.id}
                     mediaType={props.mediaType}
-                    imgPath={`https://image.tmdb.org/t/p/w500${c.logo_path}`}
+                    imgPath={`https://image.tmdb.org/t/p/w300${c.logo_path}`}
                     companyName={c.name}
                   />
                 </View>

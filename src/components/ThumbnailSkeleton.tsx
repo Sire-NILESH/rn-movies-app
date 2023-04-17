@@ -12,7 +12,7 @@ const ThumbnailSkeleton = () => {
       {[1, 1, 1].map((n) => {
         return (
           <View
-            key={Math.random() * 3}
+            key={Math.random() * 1}
             className=" border border-stone-800 ml-1 rounded-md"
             style={{
               width: thumbnailSkeletonWidth,

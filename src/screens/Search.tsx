@@ -16,6 +16,7 @@ import {
 } from "./../utils/helpers/helper";
 import { StackNavigationProp } from "@react-navigation/stack";
 import NothingToShow from "../components/NothingToShow";
+import { Ionicons } from "@expo/vector-icons";
 
 interface ISearchResults {
   results: MovieMedia[] | TvMedia[];
@@ -175,7 +176,7 @@ function renderFlatList(
   return (
     <FlatList
       data={searchQueryResult as TvMedia[]}
-      keyExtractor={(item) => String(item.id) + String(Math.random() * 10)}
+      keyExtractor={(item) => String(item.id) + String(Math.random() * 1)}
       initialNumToRender={20}
       renderItem={(mediaObj) => {
         return (
@@ -190,7 +191,7 @@ function renderFlatList(
             }
           >
             <Pressable
-              className="flex-1 px-4 py-3"
+              className="flex-1 flex-row items-center space-x-2 px-4 py-3"
               android_ripple={{ color: "#eee" }}
               onPress={() => {
                 navigateTo(
@@ -201,6 +202,11 @@ function renderFlatList(
                 // navigateTo(mediaObj.item, "More Info", searchCategory);
               }}
             >
+              <Ionicons
+                size={18}
+                name={isMovie(mediaObj.item) ? "film-outline" : "tv-outline"}
+                color={Colors.stone[500]}
+              />
               <Text className="text-text_primary">
                 {isMovie(mediaObj.item)
                   ? mediaObj.item.title

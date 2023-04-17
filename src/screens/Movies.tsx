@@ -20,6 +20,7 @@ const MoviesScreen: React.FC<IDrawerScreenProps> = (props) => {
     });
   }, []);
 
+  // return <ScreenBuilderV3 screenType="movie" />;
   return <ScreenBuilderV2 screenType="movie" />;
   // return <ScreenBuilder screenType="movie" />;
 };

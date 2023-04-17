@@ -51,7 +51,13 @@ const PersonMediasScreenBuilder: React.FC<IProps> = ({
         );
         // if we received some data, then page exists.
         if (moreMedias.medias.length > 0) {
+          // console.log(moreMedias);
+          // const sorted = moreMedias.medias.sort(
+          //   (a, b) => b.episode_count - a.episode_count
+          // );
+          // episode_count
           setMedias((prev) => [...prev, ...moreMedias.medias]);
+          // const sorted = setMedias((prev) => [...prev, ...moreMedias.medias]);
           // we will immediately bolck further medias from loading as the api sends all the data at once without pagination in this case pf '/person/{person_id}/{mediaType}_credits'
           setBlockNewLoads(true);
         }

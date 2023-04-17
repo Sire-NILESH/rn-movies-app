@@ -69,14 +69,14 @@ export const homeScreenPlaylists: IPlaylist[] = [
   buildGenrePlaylist("movie", { id: 16, name: "Animation" }),
   // "Comedy"
   buildGenrePlaylist("movie", { id: 35, name: "Comedy" }),
-  // "Drama"
-  buildGenrePlaylist("tv", { id: 18, name: "Drama" }),
-  // "War"
-  buildGenrePlaylist("movie", { id: 10752, name: "War" }),
-  // "Documentary"
-  buildGenrePlaylist("tv", { id: 99, name: "Documentary" }),
-  // "Family"
-  buildGenrePlaylist("movie", { id: 10751, name: "Family" }),
+  // // "Drama"
+  // buildGenrePlaylist("tv", { id: 18, name: "Drama" }),
+  // // "War"
+  // buildGenrePlaylist("movie", { id: 10752, name: "War" }),
+  // // "Documentary"
+  // buildGenrePlaylist("tv", { id: 99, name: "Documentary" }),
+  // // "Family"
+  // buildGenrePlaylist("movie", { id: 10751, name: "Family" }),
 ];
 
 export const movieScreenPlaylists: IPlaylist[] = [
@@ -88,14 +88,14 @@ export const movieScreenPlaylists: IPlaylist[] = [
   buildGenrePlaylist("movie", { id: 18, name: "Drama" }),
   // "Action"
   buildGenrePlaylist("movie", { id: 28, name: "Action" }),
-  // "Animation"
-  buildGenrePlaylist("movie", { id: 16, name: "Animation" }),
-  // "Horror"
-  buildGenrePlaylist("movie", { id: 27, name: "Horror" }),
-  // "Science Fiction"
-  buildGenrePlaylist("movie", { id: 878, name: "Science Fiction" }),
-  // "Documentary"
-  buildGenrePlaylist("movie", { id: 99, name: "Documentary" }),
+  // // "Animation"
+  // buildGenrePlaylist("movie", { id: 16, name: "Animation" }),
+  // // "Horror"
+  // buildGenrePlaylist("movie", { id: 27, name: "Horror" }),
+  // // "Science Fiction"
+  // buildGenrePlaylist("movie", { id: 878, name: "Science Fiction" }),
+  // // "Documentary"
+  // buildGenrePlaylist("movie", { id: 99, name: "Documentary" }),
 ];
 
 export const tvScreenPlaylists: IPlaylist[] = [
@@ -107,12 +107,12 @@ export const tvScreenPlaylists: IPlaylist[] = [
   buildGenrePlaylist("tv", { id: 35, name: "Comedy" }),
   // "Talk"
   buildGenrePlaylist("tv", { id: 10767, name: "Talk" }),
-  // "Animation"
-  buildGenrePlaylist("tv", { id: 16, name: "Animation" }),
-  // "Family"
-  buildGenrePlaylist("tv", { id: 10751, name: "Family" }),
-  // "Drama"
-  buildGenrePlaylist("tv", { id: 18, name: "Drama" }),
-  // "Documentary"
-  buildGenrePlaylist("tv", { id: 99, name: "Documentary" }),
+  // // "Animation"
+  // buildGenrePlaylist("tv", { id: 16, name: "Animation" }),
+  // // "Family"
+  // buildGenrePlaylist("tv", { id: 10751, name: "Family" }),
+  // // "Drama"
+  // buildGenrePlaylist("tv", { id: 18, name: "Drama" }),
+  // // "Documentary"
+  // buildGenrePlaylist("tv", { id: 99, name: "Documentary" }),
 ];

@@ -45,6 +45,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
           <ImageCached
             imageURL={imageUrl}
             cacheKey={`${media.id}-${isMovie(media) ? "movie" : "tv"}-backdrop`}
+            resizeType="cover"
           />
         ) : (
           <ImagePlaceholder />

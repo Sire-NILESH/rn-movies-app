@@ -1,4 +1,4 @@
-import { MovieMedia, TvMedia } from "../../types/typings";
+import { MediaTypes, MovieMedia, TvMedia } from "../../types/typings";
 import {
   View,
   Pressable,
@@ -6,6 +6,7 @@ import {
   StyleProp,
   ViewStyle,
   ImageStyle,
+  Image,
 } from "react-native";
 import { isMovie } from "../utils/helpers/helper";
 import { LinearGradient } from "expo-linear-gradient";
@@ -16,6 +17,7 @@ export interface IThumbnailProps {
   media: MovieMedia | TvMedia;
   orientation: "portrait" | "landscape";
   windowWidth: number;
+  imgType?: "cached" | "regular";
   navigateTo: (screen: string, paramOption: Object) => void;
 }
 
@@ -23,6 +25,7 @@ function Thumbnail({
   media,
   orientation,
   windowWidth,
+  imgType,
   navigateTo,
 }: IThumbnailProps) {
   const thumbnailDimensions = {
@@ -85,6 +88,32 @@ function Thumbnail({
       >
         {/* https://github.com/dcodeteam/react-native-fast-image-expo */}
 
+        {imgType && imgType === "cached" ? (
+          imageURL ? (
+            <ImageCached
+              imageURL={imageURL}
+              cacheKey={
+                orientation === "portrait"
+                  ? `${media.id}-${isMovie(media) ? "movie" : "tv"}-poster`
+                  : `${media.id}-${isMovie(media) ? "movie" : "tv"}-backdrop`
+              }
+            />
+          ) : (
+            <ImagePlaceholder />
+          )
+        ) : imageURL ? (
+          <ImageView
+            imageURL={imageURL}
+            imgType="regular"
+            mediaId={media.id}
+            orientation={orientation}
+            mediaType={isMovie(media) ? "movie" : "tv"}
+          ></ImageView>
+        ) : (
+          <ImagePlaceholder />
+        )}
+
+        {/* 
         {imageURL ? (
           <ImageCached
             imageURL={imageURL}
@@ -96,7 +125,7 @@ function Thumbnail({
           />
         ) : (
           <ImagePlaceholder />
-        )}
+        )} */}
 
         {/* Movie Title and date box */}
         <LinearGradient
@@ -149,3 +178,40 @@ function Thumbnail({
 }
 
 export default Thumbnail;
+
+interface IImageView {
+  imgType: "cached" | "regular";
+  imageURL: string;
+  mediaId: number;
+  mediaType: MediaTypes;
+  orientation: "portrait" | "landscape";
+}
+
+function ImageView({
+  imgType,
+  imageURL,
+  mediaId,
+  mediaType,
+  orientation,
+}: IImageView) {
+  return (
+    <>
+      {imgType === "cached" ? (
+        <ImageCached
+          imageURL={imageURL}
+          cacheKey={
+            orientation === "portrait"
+              ? `${mediaId}-${mediaType === "movie" ? "movie" : "tv"}-poster`
+              : `${mediaId}-${mediaType === "tv" ? "movie" : "tv"}-backdrop`
+          }
+        />
+      ) : (
+        <Image
+          source={{ uri: imageURL }}
+          className="h-full w-full"
+          resizeMode="cover"
+        />
+      )}
+    </>
+  );
+}

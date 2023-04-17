@@ -145,7 +145,7 @@ export const getScreenProps = async (
 };
 
 /**
- * Common function that calls the API and returns screen props for Tile list screens.
+ * Common function that calls the API and returns screen props for Tile list screens and Person medias screen.
  * Requires a list of IUrlObject to be fetched.
  *
  *
@@ -167,10 +167,31 @@ export const getTileListScreenMedias = async (
     ]);
 
     if (urlObjects[0].url.startsWith("/person/")) {
+      const medias = [...data[0].data.cast, ...data[0].data.crew];
+
+      // some people are credited for cast as well as crew members in some media(same), and since we collect both the cast and crew and crew we have possibility(proven) of having same media multiple times.
+      const withoutDuplicates = Object.values(
+        medias.reduce((acc, obj) => {
+          acc[obj.id] = obj;
+          return acc;
+        }, {})
+      );
+
+      // it would be better to sort the TV medias of a person based upon the episode-count/appearance count of that person for that show.
+      if (urlObjects[0].url.includes("/tv_credits")) {
+        withoutDuplicates.sort(
+          (a: any, b: any) => Number(b.episode_count) - Number(a.episode_count)
+        );
+      }
+
       return {
-        medias: [...data[0].data.cast, ...data[0].data.crew],
+        medias: withoutDuplicates,
         totalPages: data[0].data.total_pages,
       };
+      // return {
+      //   medias: [...data[0].data.cast, ...data[0].data.crew],
+      //   totalPages: data[0].data.total_pages,
+      // };
     }
 
     return {

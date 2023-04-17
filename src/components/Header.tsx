@@ -51,7 +51,7 @@ function Header() {
   function renderHeaderLink(props: { name: string; navigateTo: () => void }) {
     return (
       <View
-        key={props.name + String(Math.random() * 10)}
+        key={props.name + String(Math.random() * 1)}
         className="rounded-full overflow-hidden"
       >
         <Pressable

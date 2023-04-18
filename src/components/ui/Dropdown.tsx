@@ -1,12 +1,16 @@
 import { View } from "react-native";
 import React from "react";
 import SelectDropdown from "react-native-select-dropdown";
-import { isISOLang } from "../../utils/helpers/helper";
+import { isIImageQuality, isISOLang } from "../../utils/helpers/helper";
 import { MaterialIcons } from "@expo/vector-icons";
-import { IDropdownYearsObj, ISOLang } from "../../../types/typings";
+import {
+  IDropdownYearsObj,
+  IImageQuality,
+  ISOLang,
+} from "../../../types/typings";
 import { Colors } from "../../utils/Colors";
 
-type TSupportedTypes = ISOLang | IDropdownYearsObj;
+type TSupportedTypes = ISOLang | IDropdownYearsObj | IImageQuality;
 
 interface IProps<T extends TSupportedTypes> {
   listData: T[];
@@ -71,6 +75,8 @@ export default function Dropdown<T extends TSupportedTypes>({
         defaultButtonText={
           isISOLang(currentSelected)
             ? currentSelected.name
+            : isIImageQuality(currentSelected)
+            ? currentSelected.quality
             : currentSelected.value
         }
         buttonTextAfterSelection={(selectedItem: T, index) => {
@@ -78,12 +84,18 @@ export default function Dropdown<T extends TSupportedTypes>({
           // if data array is an array of objects then return selectedItem.property to render after item is selected
           return isISOLang(selectedItem)
             ? selectedItem.name
+            : isIImageQuality(selectedItem)
+            ? selectedItem.quality
             : selectedItem.value;
         }}
         rowTextForSelection={(item: T, index) => {
           // text represented for each item in dropdown
           // if data array is an array of objects then return item.property to represent item in dropdown
-          return isISOLang(item) ? item.name : item.value;
+          return isISOLang(item)
+            ? item.name
+            : isIImageQuality(item)
+            ? item.quality
+            : item.value;
         }}
       />
     </View>

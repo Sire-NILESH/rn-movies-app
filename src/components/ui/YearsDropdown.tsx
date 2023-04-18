@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Dropdown from "./Dropdown";
 import { useDefaultYearHooks } from "../../hooks/reduxHooks";
 import { IDropdownYearsObj } from "../../../types/typings";

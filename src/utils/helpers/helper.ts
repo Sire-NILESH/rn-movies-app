@@ -1,6 +1,7 @@
 import {
   Genre,
   ICountry,
+  IImageQuality,
   INetworkIds,
   IProductionComapnyIds,
   IReduxListMedia,
@@ -186,6 +187,14 @@ export function isISOLang(obj: Object): obj is ISOLang {
     (obj as ISOLang).iso639_1 !== undefined &&
     (obj as ISOLang).iso639_2T !== undefined &&
     (obj as ISOLang).iso639_2B !== undefined
+  );
+}
+
+export function isIImageQuality(obj: Object): obj is IImageQuality {
+  return (
+    obj !== null &&
+    (obj as IImageQuality).quality !== undefined &&
+    (obj as IImageQuality).value !== undefined
   );
 }
 

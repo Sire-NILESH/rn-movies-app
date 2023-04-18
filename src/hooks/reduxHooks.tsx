@@ -4,6 +4,7 @@ import type { RootState, AppDispatch } from "../store/store";
 import {
   ICountry,
   IDropdownYearsObj,
+  IImageQuality,
   IReduxListMedia,
   ISOLang,
 } from "../../types/typings";
@@ -22,6 +23,7 @@ import {
 import { setDefaultRegion } from "../store/defaultRegionSlice";
 import { setDefaultLanguageForMedias } from "../store/languageForMediasSlice";
 import { setDefaultYearFilterForMedias } from "../store/yearFIlterForMediasSlice";
+import { setDefaultImageQuality } from "../store/imageQualitySlice";
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch: () => AppDispatch = useDispatch;
@@ -149,5 +151,20 @@ export const useDefaultYearHooks = () => {
   return {
     setDefaultYearHandler,
     defaultYear,
+  };
+};
+
+export const useDefaultImageQualityHooks = () => {
+  // REDUX TOOLKIT HOOKS
+  const defaultImgQuality = useAppSelector((state) => state.imageQuality);
+  const dispatch = useAppDispatch();
+
+  const setDefaultImgQualityHandler = (imgQuality: IImageQuality) => {
+    dispatch(setDefaultImageQuality(imgQuality));
+  };
+
+  return {
+    setDefaultImgQualityHandler,
+    defaultImgQuality,
   };
 };

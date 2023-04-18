@@ -17,6 +17,7 @@ import LanguageDropdown from "../components/ui/LanguageDropdown";
 import YearsDropdown from "../components/ui/YearsDropdown";
 import DefaultRegionSettings from "../components/settings/DefaultRegionSettings";
 import { useDefaultRegionHooks } from "../hooks/reduxHooks";
+import ImageQualityDropdown from "../components/ui/ImageQualityDropdown";
 
 const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   // const { navigation, route } = props;
@@ -96,6 +97,21 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
           >
             <Text className="text-text_tertiary mx-4">Select a Year </Text>
             <YearsDropdown saveMode="applicationWide" />
+          </View>
+        </RenderSettingCard>
+
+        {/* Set Default Image Quality */}
+        <RenderSettingCard
+          iconName="image-outline"
+          title="Default Image Quality"
+          subtitle={`Set a lower image quality for faster loading and reduced cache storage.`}
+        >
+          <View
+            className="flex-row items-center justify-between px-2 mt-2 mx-2 bg-accent rounded-xl"
+            style={{ backgroundColor: "rgb(4, 20, 10)" }}
+          >
+            <Text className="text-text_tertiary mx-4">Select a quality </Text>
+            <ImageQualityDropdown />
           </View>
         </RenderSettingCard>
 

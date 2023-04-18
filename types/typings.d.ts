@@ -427,6 +427,11 @@ export interface IDropdownYearsObj {
   value: string;
 }
 
+export interface IImageQuality {
+  quality: "Low" | "Medium" | "High" | "Very high";
+  value: "200" | "300" | "400" | "500";
+}
+
 // export type TDropdownYearsArrayObj =
 //   | {
 //       year: 0;

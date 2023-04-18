@@ -3,19 +3,30 @@ import React from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { isISOLang } from "../../utils/helpers/helper";
 import { MaterialIcons } from "@expo/vector-icons";
-import { IDropdownYearsObj, ISOLang } from "../../../types/typings";
+import { ISOLang, TDropdownYearsArrayObj } from "../../../types/typings";
 import { Colors } from "../../utils/Colors";
 
-type TSupportedTypes = ISOLang | IDropdownYearsObj;
+type TSupportedTypes = ISOLang | TDropdownYearsArrayObj;
 
-interface IProps<T extends TSupportedTypes> {
-  listData: T[];
-  currentSelected: T;
+interface IDropdownObj<T> {
+  [key: string]: T;
+}
+
+interface IProps<T> {
+  listData: IDropdownObj<T>[];
+  currentSelected: IDropdownObj<T>;
   setSelected: (item: T) => void;
   borderRadius: "medium" | "full";
 }
 
-export default function Dropdown<T extends TSupportedTypes>({
+// interface IProps2<T extends TSupportedTypes> {
+//   listData: T[];
+//   currentSelected: T;
+//   setSelected: (item: T) => void;
+//   borderRadius: "medium" | "full";
+// }
+
+export default function DropdownV2<T>({
   listData,
   currentSelected,
   borderRadius,

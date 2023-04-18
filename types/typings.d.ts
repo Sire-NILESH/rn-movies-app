@@ -427,9 +427,9 @@ export interface IDropdownYearsObj {
   value: string;
 }
 
-export type TDropdownYearsArrayObj =
-  | {
-      year: 0;
-      value: "All Years";
-    }
-  | IDropdownYearsObj;
+// export type TDropdownYearsArrayObj =
+//   | {
+//       year: 0;
+//       value: "All Years";
+//     }
+//   | IDropdownYearsObj;

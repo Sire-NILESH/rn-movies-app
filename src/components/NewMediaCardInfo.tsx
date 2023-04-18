@@ -24,11 +24,11 @@ interface IProps {
 }
 
 const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
-  const {
-    addMediaToFavouriteHandler,
-    removeMediaFromFavouriteHandler,
-    isMediaFavourite,
-  } = useFavouriteMediaListHooks();
+  // const {
+  //   addMediaToFavouriteHandler,
+  //   removeMediaFromFavouriteHandler,
+  //   isMediaFavourite,
+  // } = useFavouriteMediaListHooks();
 
   const imageUrl = media.backdrop_path
     ? `https://image.tmdb.org/t/p/w500${media.backdrop_path}`

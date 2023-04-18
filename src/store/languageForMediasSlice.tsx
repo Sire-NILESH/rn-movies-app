@@ -18,13 +18,20 @@ const defaultLanguageForMediasSlice = createSlice({
   reducers: {
     setDefaultLanguageForMedias: (state, action: PayloadAction<ISOLang>) => {
       //   set a default language of the type 'ISOLang' directly on the state object
-      state = Object.assign(state, {
-        name: action.payload.name,
-        nativeName: action.payload.nativeName,
-        iso639_1: action.payload.iso639_1,
-        iso639_2T: action.payload.iso639_2T,
-        iso639_2B: action.payload.iso639_2T,
-      });
+
+      state.name = action.payload.name;
+      state.nativeName = action.payload.nativeName;
+      state.iso639_1 = action.payload.iso639_1;
+      state.iso639_2T = action.payload.iso639_2T;
+      state.iso639_2B = action.payload.iso639_2T;
+
+      // state = Object.assign(state, {
+      //   name: action.payload.name,
+      //   nativeName: action.payload.nativeName,
+      //   iso639_1: action.payload.iso639_1,
+      //   iso639_2T: action.payload.iso639_2T,
+      //   iso639_2B: action.payload.iso639_2T,
+      // });
     },
   },
 });

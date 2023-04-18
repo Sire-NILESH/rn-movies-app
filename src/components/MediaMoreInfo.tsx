@@ -13,8 +13,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import {
-  calculateProfitOrLoss,
-  formatCurrencyNumbers,
   isMovie,
   isMovieExtended,
   isTv,

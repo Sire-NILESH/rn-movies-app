@@ -3,24 +3,29 @@ import React, { useState, useEffect } from "react";
 import { ICountry } from "../../../types/typings";
 import { addRegion, getdataFromACollection } from "../../database/database";
 import CountriesDropdown from "../ui/CountriesDropdown";
+import { useDefaultRegionHooks } from "../../hooks/reduxHooks";
 
 const DefaultRegionSettings = () => {
-  const [defaultRegion, setDefaultRegion] = useState<ICountry>({
-    code: "",
-    name: "",
-  });
+  const { setDefaultRegionHandler, defaultRegion } = useDefaultRegionHooks();
+  const [currentDefaultRegion, setDefaultRegion] =
+    useState<ICountry>(defaultRegion);
 
-  useEffect(() => {
-    async function getDefaultRegion() {
-      const region = await getdataFromACollection("current_region");
-      setDefaultRegion(region.rows._array[0]);
-    }
-    getDefaultRegion();
-  }, []);
+  // useEffect(() => {
+  //   async function getDefaultRegion() {
+  //     const region = await getdataFromACollection("current_region");
+  //     setDefaultRegion(region.rows._array[0]);
+  //   }
+  //   getDefaultRegion();
+  // }, []);
 
-  async function setDefaultRegionHandler(country: ICountry) {
-    await addRegion(country);
+  function onSetDefaultRegion(country: ICountry) {
+    setDefaultRegionHandler(country);
   }
+
+  // DB method
+  // async function setDefaultRegionHandler(country: ICountry) {
+  //   await addRegion(country);
+  // }
 
   return (
     <View
@@ -30,8 +35,8 @@ const DefaultRegionSettings = () => {
       <Text className="text-text_tertiary mx-4">Select a country </Text>
 
       <CountriesDropdown
-        currentCountry={defaultRegion}
-        setCountryHandler={setDefaultRegionHandler}
+        currentCountry={currentDefaultRegion}
+        setCountryHandler={onSetDefaultRegion}
       />
     </View>
   );

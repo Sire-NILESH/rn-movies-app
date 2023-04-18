@@ -5,6 +5,7 @@ import {
   IProductionComapnyIds,
   IReduxListMedia,
   ISOLang,
+  IUrlObject,
   Media,
   MediaTypes,
   MovieMedia,
@@ -34,11 +35,11 @@ export function isTvExtended(
 /**
  * Is an `Object` that maps a TopTab screen's collection type to corresponding Redux collection.
  */
-export const collectionTypeToReduxCollection: TCollectionToTReduxCollection = {
-  watchlist: "watchlistMedias",
-  favourites: "favouriteMedias",
-  watched: "watchedMedias",
-};
+// export const collectionTypeToReduxCollection: TCollectionToTReduxCollection = {
+//   watchlist: "watchlistMedias",
+//   favourites: "favouriteMedias",
+//   watched: "watchedMedias",
+// };
 
 // Movie MediaExtended will always have a 'title' alongside 'production_companies'
 export function isMovieExtended(
@@ -272,12 +273,15 @@ export const productionComapnyIds = {
   // ],
 };
 
-export function buildTvPlaylist(name: string, networkId: keyof INetworkIds) {
+export function buildTvPlaylist(
+  name: string,
+  networkId: keyof INetworkIds
+): IUrlObject {
   return {
     name: name,
     url: `/discover/tv`,
     queryParams: {
-      with_networks: networkIds[networkId],
+      with_networks: String(networkIds[networkId]),
       include_null_first_air_dates: true,
       language: "en-US",
     },
@@ -286,19 +290,22 @@ export function buildTvPlaylist(name: string, networkId: keyof INetworkIds) {
 export function buildMoviePlaylist(
   name: string,
   productionCompanyId: keyof IProductionComapnyIds
-) {
+): IUrlObject {
   return {
     name: name,
     url: `/discover/movie`,
     queryParams: {
-      with_companies: productionComapnyIds[productionCompanyId],
+      with_companies: String(productionComapnyIds[productionCompanyId]),
       include_null_first_air_dates: true,
       language: "en-US",
     },
   };
 }
 
-export function buildTrendingPlaylist(name: string, mediaType: MediaTypes) {
+export function buildTrendingPlaylist(
+  name: string,
+  mediaType: MediaTypes
+): IUrlObject {
   return {
     name: name,
     url: `/trending/${mediaType}/day`,
@@ -308,7 +315,10 @@ export function buildTrendingPlaylist(name: string, mediaType: MediaTypes) {
   };
 }
 
-export function buildPopularPlaylist(name: string, mediaType: MediaTypes) {
+export function buildPopularPlaylist(
+  name: string,
+  mediaType: MediaTypes
+): IUrlObject {
   return {
     name: name,
     url: `/${mediaType}/popular`,
@@ -318,7 +328,10 @@ export function buildPopularPlaylist(name: string, mediaType: MediaTypes) {
   };
 }
 
-export function buildTopRatedPlaylist(name: string, mediaType: MediaTypes) {
+export function buildTopRatedPlaylist(
+  name: string,
+  mediaType: MediaTypes
+): IUrlObject {
   return {
     name: name,
     url: `/${mediaType}/top_rated`,
@@ -328,7 +341,10 @@ export function buildTopRatedPlaylist(name: string, mediaType: MediaTypes) {
   };
 }
 
-export function buildAiringTodayPlaylist(name: string, mediaType: MediaTypes) {
+export function buildAiringTodayPlaylist(
+  name: string,
+  mediaType: MediaTypes
+): IUrlObject {
   return {
     name: name,
     url: `/${mediaType}/airing_today`,
@@ -338,7 +354,10 @@ export function buildAiringTodayPlaylist(name: string, mediaType: MediaTypes) {
   };
 }
 
-export function buildNowPlayingPlaylist(name: string, mediaType: MediaTypes) {
+export function buildNowPlayingPlaylist(
+  name: string,
+  mediaType: MediaTypes
+): IUrlObject {
   return {
     name: name,
     url: `/${mediaType}/now_playing`,
@@ -348,18 +367,24 @@ export function buildNowPlayingPlaylist(name: string, mediaType: MediaTypes) {
   };
 }
 
-export function buildUpcomingPlaylist(name: string, mediaType: MediaTypes) {
+export function buildUpcomingPlaylist(
+  name: string,
+  mediaType: MediaTypes
+): IUrlObject {
   return {
     name: name,
     url: `/${mediaType}/upcoming`,
     queryParams: {
       language: "en-US",
-      primary_release_year: new Date(new Date()).getFullYear(),
+      primary_release_year: String(new Date(new Date()).getFullYear()),
     },
   };
 }
 
-export function buildGenrePlaylist(mediaType: MediaTypes, genre: Genre) {
+export function buildGenrePlaylist(
+  mediaType: MediaTypes,
+  genre: Genre
+): IUrlObject {
   return {
     name: genre.name,
     url: `/discover/${mediaType}`,
@@ -373,14 +398,18 @@ export function buildGenrePlaylist(mediaType: MediaTypes, genre: Genre) {
 export function buildLanguagePlaylist(
   name: string,
   mediaType: MediaTypes,
-  language: ISOLang
-) {
+  language: ISOLang,
+  releaseYear?: number
+): IUrlObject {
   return {
     name: name,
     url: `/discover/${mediaType}`,
     queryParams: {
       with_original_language: language.iso639_1,
-      primary_release_year: String(new Date(Date.now()).getFullYear()),
+      primary_release_year:
+        releaseYear !== undefined
+          ? String(releaseYear)
+          : String(new Date(Date.now()).getFullYear()),
     },
   };
 }
@@ -578,7 +607,7 @@ export const countries: ICountry[] = [
   { name: "France", code: "FR" },
   { name: "Germany", code: "DE" },
   { name: "Italy", code: "IT" },
-  { name: "Korea, Republic of", code: "KR" },
+  { name: "South Korea, Republic of Korea", code: "KR" },
   { name: "Latvia", code: "LV" },
   { name: "Malaysia", code: "MY" },
   { name: "Mexico", code: "MX" },

@@ -8,6 +8,11 @@ import { moviePlaylist, tvPlaylist } from "../config/genresWithRoutes";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import LanguageDropdown from "./ui/LanguageDropdown";
 import YearsDropdown from "./ui/YearsDropdown";
+import {
+  useDefaultLanguageHooks,
+  useDefaultRegionHooks,
+  useDefaultYearHooks,
+} from "../hooks/reduxHooks";
 
 interface IProps {
   isVisible: boolean;
@@ -22,9 +27,14 @@ const MediaWizardModal: React.FC<IProps> = ({
   mediaListType,
   closeWithConfirm,
 }) => {
+  const { defaultYear } = useDefaultYearHooks();
+  const { setDefaultLanguageHandler, defaultLanguage } =
+    useDefaultLanguageHooks();
   const [selectedPlaylists, setSelectedPlaylists] = useState<IUrlObject[]>([]);
-  const [currentYear, setCurrentYear] = useState<number>(0);
-  const [currentLang, setCurrentLang] = useState<string>("en");
+  const [currentYear, setCurrentYear] = useState<number>(defaultYear.year);
+  const [currentLang, setCurrentLang] = useState<string>(
+    defaultLanguage.iso639_1
+  );
 
   const setCurrentYearHandler = (year: number) => {
     setCurrentYear(year);

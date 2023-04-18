@@ -16,10 +16,20 @@ const defaultRegionSlice = createSlice({
   reducers: {
     setDefaultRegion: (state, action: PayloadAction<ICountry>) => {
       //   set a default region of the type 'ICountry' directly on the state object
-      state = Object.assign(state, {
-        name: action.payload.name,
-        code: action.payload.code,
-      });
+      state.name = action.payload.name;
+      state.code = action.payload.code;
+
+      // state = {
+      //   ...{
+      //     name: action.payload.name,
+      //     code: action.payload.code,
+      //   },
+      // };
+
+      // state = Object.assign(state, {
+      //   name: action.payload.name,
+      //   code: action.payload.code,
+      // });
     },
   },
 });

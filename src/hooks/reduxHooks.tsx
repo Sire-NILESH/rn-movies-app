@@ -1,19 +1,24 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
 import type { RootState, AppDispatch } from "../store/store";
-import { ICountry, IReduxListMedia, ISOLang } from "../../types/typings";
 import {
-  addMediaToWatchlist,
-  removeMediaFromWatchlist,
-} from "../store/watchlistSlice";
-import {
-  addMediaToWatchedMediaList,
-  removeMediaFromWatchedMediaList,
-} from "../store/watchedMediaListSlice";
-import {
-  addMediaToFavouriteList,
-  removeMediaFromFavouriteList,
-} from "../store/favouritesSlice";
+  ICountry,
+  IDropdownYearsObj,
+  IReduxListMedia,
+  ISOLang,
+} from "../../types/typings";
+// import {
+//   addMediaToWatchlist,
+//   removeMediaFromWatchlist,
+// } from "../store/watchlistSlice";
+// import {
+//   addMediaToWatchedMediaList,
+//   removeMediaFromWatchedMediaList,
+// } from "../store/watchedMediaListSlice";
+// import {
+//   addMediaToFavouriteList,
+//   removeMediaFromFavouriteList,
+// } from "../store/favouritesSlice";
 import { setDefaultRegion } from "../store/defaultRegionSlice";
 import { setDefaultLanguageForMedias } from "../store/languageForMediasSlice";
 import { setDefaultYearFilterForMedias } from "../store/yearFIlterForMediasSlice";
@@ -22,81 +27,81 @@ import { setDefaultYearFilterForMedias } from "../store/yearFIlterForMediasSlice
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-export const useWatchlistHooks = () => {
-  // REDUX TOOLKIT HOOKS
-  const watchlistMedias = useAppSelector((state) => state.watchlistMedias);
-  const dispatch = useAppDispatch();
+// export const useWatchlistHooks = () => {
+//   // REDUX TOOLKIT HOOKS
+//   const watchlistMedias = useAppSelector((state) => state.watchlistMedias);
+//   const dispatch = useAppDispatch();
 
-  const isMediaWatchlisted = (mediaId: number) => {
-    return watchlistMedias[mediaId] !== undefined;
-  };
+//   const isMediaWatchlisted = (mediaId: number) => {
+//     return watchlistMedias[mediaId] !== undefined;
+//   };
 
-  const addMediaToWatchlistHandler = (mediaForWatchlist: IReduxListMedia) => {
-    dispatch(addMediaToWatchlist(mediaForWatchlist));
-  };
+//   const addMediaToWatchlistHandler = (mediaForWatchlist: IReduxListMedia) => {
+//     dispatch(addMediaToWatchlist(mediaForWatchlist));
+//   };
 
-  const removeMediaFromWatchlistHandler = (mediaId: number) => {
-    dispatch(removeMediaFromWatchlist({ mediaId }));
-  };
+//   const removeMediaFromWatchlistHandler = (mediaId: number) => {
+//     dispatch(removeMediaFromWatchlist({ mediaId }));
+//   };
 
-  return {
-    addMediaToWatchlistHandler,
-    removeMediaFromWatchlistHandler,
-    isMediaWatchlisted,
-  };
-};
+//   return {
+//     addMediaToWatchlistHandler,
+//     removeMediaFromWatchlistHandler,
+//     isMediaWatchlisted,
+//   };
+// };
 
-export const useWatchedMediaListHooks = () => {
-  // REDUX TOOLKIT HOOKS
-  const watchedMedias = useAppSelector((state) => state.watchedMedias);
-  const dispatch = useAppDispatch();
+// export const useWatchedMediaListHooks = () => {
+//   // REDUX TOOLKIT HOOKS
+//   const watchedMedias = useAppSelector((state) => state.watchedMedias);
+//   const dispatch = useAppDispatch();
 
-  const isMediaWatched = (mediaId: number) => {
-    return watchedMedias[mediaId] !== undefined;
-  };
+//   const isMediaWatched = (mediaId: number) => {
+//     return watchedMedias[mediaId] !== undefined;
+//   };
 
-  const addMediaToWatchedHandler = (
-    mediaForWatchedMediasList: IReduxListMedia
-  ) => {
-    dispatch(addMediaToWatchedMediaList(mediaForWatchedMediasList));
-  };
+//   const addMediaToWatchedHandler = (
+//     mediaForWatchedMediasList: IReduxListMedia
+//   ) => {
+//     dispatch(addMediaToWatchedMediaList(mediaForWatchedMediasList));
+//   };
 
-  const removeMediaFromWatchedHandler = (mediaId: number) => {
-    dispatch(removeMediaFromWatchedMediaList({ mediaId }));
-  };
+//   const removeMediaFromWatchedHandler = (mediaId: number) => {
+//     dispatch(removeMediaFromWatchedMediaList({ mediaId }));
+//   };
 
-  return {
-    addMediaToWatchedHandler,
-    removeMediaFromWatchedHandler,
-    isMediaWatched,
-  };
-};
+//   return {
+//     addMediaToWatchedHandler,
+//     removeMediaFromWatchedHandler,
+//     isMediaWatched,
+//   };
+// };
 
-export const useFavouriteMediaListHooks = () => {
-  // REDUX TOOLKIT HOOKS
-  const favouriteMedias = useAppSelector((state) => state.favouriteMedias);
-  const dispatch = useAppDispatch();
+// export const useFavouriteMediaListHooks = () => {
+//   // REDUX TOOLKIT HOOKS
+//   const favouriteMedias = useAppSelector((state) => state.favouriteMedias);
+//   const dispatch = useAppDispatch();
 
-  const isMediaFavourite = (mediaId: number) => {
-    return favouriteMedias[mediaId] !== undefined;
-  };
+//   const isMediaFavourite = (mediaId: number) => {
+//     return favouriteMedias[mediaId] !== undefined;
+//   };
 
-  const addMediaToFavouriteHandler = (
-    mediaForWatchedMediasList: IReduxListMedia
-  ) => {
-    dispatch(addMediaToFavouriteList(mediaForWatchedMediasList));
-  };
+//   const addMediaToFavouriteHandler = (
+//     mediaForWatchedMediasList: IReduxListMedia
+//   ) => {
+//     dispatch(addMediaToFavouriteList(mediaForWatchedMediasList));
+//   };
 
-  const removeMediaFromFavouriteHandler = (mediaId: number) => {
-    dispatch(removeMediaFromFavouriteList({ mediaId }));
-  };
+//   const removeMediaFromFavouriteHandler = (mediaId: number) => {
+//     dispatch(removeMediaFromFavouriteList({ mediaId }));
+//   };
 
-  return {
-    addMediaToFavouriteHandler,
-    removeMediaFromFavouriteHandler,
-    isMediaFavourite,
-  };
-};
+//   return {
+//     addMediaToFavouriteHandler,
+//     removeMediaFromFavouriteHandler,
+//     isMediaFavourite,
+//   };
+// };
 
 export const useDefaultRegionHooks = () => {
   // REDUX TOOLKIT HOOKS
@@ -137,12 +142,12 @@ export const useDefaultYearHooks = () => {
   );
   const dispatch = useAppDispatch();
 
-  const setDefaultLanguageHandler = (year: number) => {
-    dispatch(setDefaultYearFilterForMedias(year));
+  const setDefaultYearHandler = (yearObj: IDropdownYearsObj) => {
+    dispatch(setDefaultYearFilterForMedias(yearObj));
   };
 
   return {
-    setDefaultLanguageHandler,
+    setDefaultYearHandler,
     defaultYear,
   };
 };

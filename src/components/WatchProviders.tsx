@@ -29,10 +29,9 @@ const WatchProviders: React.FC<IProps> = ({ mediaId, mediaType }) => {
     errorLoadingProps: Error | null;
   } = useFetcher(getWatchProviders, [mediaId, mediaType]);
 
-  const { setDefaultRegionHandler, defaultRegion } = useDefaultRegionHooks();
+  const { defaultRegion } = useDefaultRegionHooks();
 
   const [currentCountry, setCurrentCountry] = useState<ICountry>(defaultRegion);
-
   const setCountryHandler = (country: ICountry) => {
     setCurrentCountry(country);
   };

@@ -1,3 +1,4 @@
+import { IUrlObject } from "../../types/typings";
 import {
   buildAiringTodayPlaylist,
   buildGenrePlaylist,
@@ -89,18 +90,34 @@ const moviGenresPlaylists = movieGenresList.map((g) =>
   buildGenrePlaylist("movie", g)
 );
 
+// : [IUrlObject[],IUrlObject[]]
+
 export const moviePlaylist = [
   [
     buildTrendingPlaylist("Trending", "movie"),
     buildPopularPlaylist("Popular", "movie"),
     buildTopRatedPlaylist("Top Rated", "movie"),
-    buildAiringTodayPlaylist("Airing Today", "movie"),
-    buildNowPlayingPlaylist("Now Playing", "movie"),
+    // buildAiringTodayPlaylist("Airing Today", "movie"),
+    buildNowPlayingPlaylist("Playing in Theatres", "movie"),
     buildUpcomingPlaylist("New Releases", "movie"),
-    buildLanguagePlaylist("Bollywood (Hindi)", "movie", bollywoodHindi),
-    buildLanguagePlaylist("Bollywood (Tamil)", "movie", bollywoodTamil),
-    buildLanguagePlaylist("Bollywood (Telugu)", "movie", bollywoodTelugu),
-    buildLanguagePlaylist("Bollywood (Kannada)", "movie", bollywoodKannada),
+    buildLanguagePlaylist(
+      "All time Bollywood (Hindi)",
+      "movie",
+      bollywoodHindi,
+      0
+    ),
+    buildLanguagePlaylist("New in Bollywood (Hindi)", "movie", bollywoodHindi),
+    buildLanguagePlaylist("New in Bollywood (Tamil)", "movie", bollywoodTamil),
+    buildLanguagePlaylist(
+      "New in Bollywood (Telugu)",
+      "movie",
+      bollywoodTelugu
+    ),
+    buildLanguagePlaylist(
+      "New in Bollywood (Kannada)",
+      "movie",
+      bollywoodKannada
+    ),
     buildMoviePlaylist("Lucasfilm", "Lucasfilm"),
     buildMoviePlaylist("HBO Movies", "HBO"),
     buildMoviePlaylist("Warner Bros. Entertainment", "Warner Bros"),

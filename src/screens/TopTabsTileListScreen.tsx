@@ -6,7 +6,7 @@ import { getDeviceDimensions } from "../utils/helpers/helper";
 import { FlatList } from "react-native-gesture-handler";
 import CollectionThumbnail from "../components/CollectionThumbnail";
 import { IDBCollectionMedia } from "../../types/typings";
-import { getMediasFromCollection } from "../database/database";
+import { getMediasFromCollection } from "../storage/database";
 
 const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
   const { navigation, route, collectionType, screenMediaType } = props;

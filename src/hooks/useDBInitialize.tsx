@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { initDB } from "../database/database";
+import { initDB } from "../storage/database";
 
 /**
  * A custom hook to initialize the database for the application

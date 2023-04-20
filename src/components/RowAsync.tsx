@@ -1,5 +1,6 @@
 import {
   IGenresToShowHomeScreen,
+  IImageQuality,
   IPlaylist,
   MovieMedia,
   TvMedia,
@@ -13,10 +14,11 @@ import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
 import { isMovie } from "./../utils/helpers/helper";
 import { sendUrlObjApiRequest } from "../utils/requests";
 import useFetcher from "../hooks/useFetcher";
-import React, { memo } from "react";
+import React, { useState, useEffect, memo } from "react";
 import ThumbnailSkeleton from "./ThumbnailSkeleton";
 import ThumbnailMemoised from "./ThumbnailMemoised";
 import Thumbnail from "./Thumbnail";
+import { useDefaultImageQualityHooks } from "../hooks/reduxHooks";
 
 interface Props {
   title: string;
@@ -26,6 +28,8 @@ interface Props {
 
 function RowAsync({ title, playlist }: Props) {
   const params = [[playlist]];
+  const { defaultImgQuality } = useDefaultImageQualityHooks();
+
   // const params = [[mediaGenre.id], mediaGenre.mediaType, 1];
   const useFetcherMemo = React.useCallback(() => {
     return useFetcher(sendUrlObjApiRequest, [...params]);
@@ -52,9 +56,14 @@ function RowAsync({ title, playlist }: Props) {
         // null
         <ThumbnailSkeleton />
       ) : isMovieArray(medias) ? (
-        renderFlatList(medias as MovieMedia[], title, playlist)
+        renderFlatList(
+          medias as MovieMedia[],
+          title,
+          playlist,
+          defaultImgQuality
+        )
       ) : (
-        renderFlatList(medias as TvMedia[], title, playlist)
+        renderFlatList(medias as TvMedia[], title, playlist, defaultImgQuality)
       )}
     </View>
   );
@@ -68,7 +77,8 @@ export default memo(RowAsync);
 function renderFlatList(
   medias: MovieMedia[] | TvMedia[],
   title: string,
-  playlist: IPlaylist
+  playlist: IPlaylist,
+  defaultImgQuality?: IImageQuality
 ) {
   const navigation = useNavigation();
 
@@ -106,6 +116,7 @@ function renderFlatList(
                 navigateTo={navigateTo}
                 windowWidth={windowWidth}
                 imgType="regular"
+                quality={defaultImgQuality?.value}
                 // orientation="landscape"
               />
             </View>
@@ -137,6 +148,7 @@ function renderFlatList(
                 navigateTo={navigateTo}
                 windowWidth={windowWidth}
                 imgType="regular"
+                quality={defaultImgQuality?.value}
                 // orientation="landscape"
               />
             </View>

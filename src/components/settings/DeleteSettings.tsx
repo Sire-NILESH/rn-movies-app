@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React, { useState } from "react";
 import CustomButton from "../ui/CustomButton";
-import { deleteCollection } from "../../database/database";
+import { deleteCollection } from "../../storage/database";
 import { Ionicons } from "@expo/vector-icons";
 import { TDbCollectionType } from "../../../types/typings";
 import { Colors } from "../../utils/Colors";

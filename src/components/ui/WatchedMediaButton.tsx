@@ -16,7 +16,7 @@ import {
   insertMediaToCollection,
   mediaExistsInCollection,
   removeMediaFromCollection,
-} from "../../database/database";
+} from "../../storage/database";
 
 interface IProps {
   media: MovieMediaExtended | TvMediaExtended | MovieMedia | TvMedia;

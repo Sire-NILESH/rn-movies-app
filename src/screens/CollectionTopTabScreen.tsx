@@ -6,7 +6,7 @@ import { ITopTabScreenProps } from "../library/NavigatorScreenProps/TopTabScreen
 import { IDBCollectionMedia } from "../../types/typings";
 import CollectionRow from "../components/CollectionRow";
 import { FlatList } from "react-native-gesture-handler";
-import { getMediasFromCollection } from "./../database/database";
+import { getMediasFromCollection } from "../storage/database";
 
 const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   const { navigation, route, collectionType, screenMediaType } = props;

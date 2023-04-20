@@ -1,4 +1,10 @@
-import { IPlaylist, MovieMedia, TvMedia } from "../../types/typings";
+import React, { useState, useEffect } from "react";
+import {
+  IImageQuality,
+  IPlaylist,
+  MovieMedia,
+  TvMedia,
+} from "../../types/typings";
 import Thumbnail from "./Thumbnail";
 import { Text, View, FlatList } from "react-native";
 import IconButton from "./ui/IconButton";
@@ -8,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
 import { isMovie } from "./../utils/helpers/helper";
 import { getTileListScreenMedias } from "../utils/requests";
-import { useEffect } from "react";
+import { useDefaultImageQualityHooks } from "../hooks/reduxHooks";
 
 interface Props {
   title: string;
@@ -40,6 +46,7 @@ function renderFlatList(
   playlist: IPlaylist
 ) {
   const navigation = useNavigation();
+  const { defaultImgQuality } = useDefaultImageQualityHooks();
 
   // Navigation handler for child components like thumbnail and jumpTo button.
   // So every one of them wont have to calculate them separately.
@@ -75,6 +82,7 @@ function renderFlatList(
                 navigateTo={navigateTo}
                 windowWidth={windowWidth}
                 imgType="cached"
+                quality={defaultImgQuality?.value}
                 // orientation="landscape"
               />
             </View>
@@ -104,6 +112,7 @@ function renderFlatList(
                 orientation="portrait"
                 navigateTo={navigateTo}
                 windowWidth={windowWidth}
+                quality={defaultImgQuality?.value}
                 // orientation="landscape"
               />
             </View>

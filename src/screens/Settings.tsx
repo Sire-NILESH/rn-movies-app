@@ -10,14 +10,15 @@ import {
   getAllFromCollection,
   getdataFromACollection,
   showAllTablesInDb,
-} from "../database/database";
-import { initDB } from "./../database/database";
+} from "../storage/database";
+import { initDB } from "../storage/database";
 import DeleteSettings from "../components/settings/DeleteSettings";
 import LanguageDropdown from "../components/ui/LanguageDropdown";
 import YearsDropdown from "../components/ui/YearsDropdown";
 import DefaultRegionSettings from "../components/settings/DefaultRegionSettings";
 import { useDefaultRegionHooks } from "../hooks/reduxHooks";
 import ImageQualityDropdown from "../components/ui/ImageQualityDropdown";
+import Loader from "../components/ui/Loader";
 
 const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   // const { navigation, route } = props;
@@ -53,7 +54,7 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   }
 
   return (
-    <View className="bg-secondary flex-1">
+    <View className=" bg-secondary flex-1">
       <ScrollView
         className="bg-secondary px-3 space-y-10"
         contentContainerStyle={{
@@ -110,7 +111,30 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
             className="flex-row items-center justify-between px-2 mt-2 mx-2 bg-accent rounded-xl"
             style={{ backgroundColor: "rgb(4, 20, 10)" }}
           >
-            <Text className="text-text_tertiary mx-4">Select a quality </Text>
+            <Text className="text-text_tertiary mx-4">Thumbnail </Text>
+            <ImageQualityDropdown />
+          </View>
+          <View
+            className="flex-row items-center justify-between px-2 mt-2 mx-2 bg-accent rounded-xl"
+            style={{ backgroundColor: "rgb(4, 20, 10)" }}
+          >
+            <Text className="text-text_tertiary mx-4">Banner </Text>
+            <ImageQualityDropdown />
+          </View>
+          <View
+            className="flex-row items-center justify-between px-2 mt-2 mx-2 bg-accent rounded-xl"
+            style={{ backgroundColor: "rgb(4, 20, 10)" }}
+          >
+            <Text className="text-text_tertiary mx-4">Watch providers </Text>
+            <ImageQualityDropdown />
+          </View>
+          <View
+            className="flex-row items-center justify-between px-2 mt-2 mx-2 bg-accent rounded-xl"
+            style={{ backgroundColor: "rgb(4, 20, 10)" }}
+          >
+            <Text className="text-text_tertiary mx-4">
+              Tv Networks/Producers{" "}
+            </Text>
             <ImageQualityDropdown />
           </View>
         </RenderSettingCard>

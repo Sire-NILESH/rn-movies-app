@@ -16,7 +16,7 @@ import {
   insertMediaToCollection,
   mediaExistsInCollection,
   removeMediaFromCollection,
-} from "../../database/database";
+} from "../../storage/database";
 import { LinearGradient } from "expo-linear-gradient";
 
 interface IProps {

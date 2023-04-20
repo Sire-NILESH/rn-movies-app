@@ -67,6 +67,13 @@ export interface WatchProviderForCountry {
   ads?: WatchProvider[];
 }
 
+export interface IProductionCompany {
+  id: number;
+  logo_path: null | string;
+  name: string;
+  origin_country: string;
+}
+
 export interface NextEpisodeToAir {
   air_date: string;
   episode_number: number;
@@ -159,12 +166,7 @@ export interface TvMediaExtended extends TvMedia {
   next_episode_to_air: null | NextEpisodeToAir;
   number_of_episodes: number;
   number_of_seasons: number;
-  production_companies: {
-    id: number;
-    logo_path: string | null;
-    name: string;
-    origin_country: string | undefined;
-  }[];
+  production_companies: IProductionCompany[];
   production_countries: {
     iso_3166_1: string;
     name: string;
@@ -212,13 +214,6 @@ export interface SeasonDetails {
   id: number;
   poster_path: string;
   season_number: number;
-}
-
-export interface IProductionCompany {
-  id: number;
-  logo_path: null | string;
-  name: string;
-  origin_country: string;
 }
 
 export interface IProductionCountry {
@@ -427,9 +422,13 @@ export interface IDropdownYearsObj {
   value: string;
 }
 
+export type TImgQualities = "Low" | "Medium" | "High" | "Very high";
+
+export type TImgQualityValues = "200" | "300" | "400" | "500";
+
 export interface IImageQuality {
-  quality: "Low" | "Medium" | "High" | "Very high";
-  value: "200" | "300" | "400" | "500";
+  quality: TImgQualities;
+  value: TImgQualityValues;
 }
 
 // export type TDropdownYearsArrayObj =

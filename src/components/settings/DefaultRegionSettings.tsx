@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React, { useState, useEffect } from "react";
 import { ICountry } from "../../../types/typings";
-import { addRegion, getdataFromACollection } from "../../database/database";
+import { addRegion, getdataFromACollection } from "../../storage/database";
 import CountriesDropdown from "../ui/CountriesDropdown";
 import { useDefaultRegionHooks } from "../../hooks/reduxHooks";
 

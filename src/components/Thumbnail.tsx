@@ -1,4 +1,9 @@
-import { MediaTypes, MovieMedia, TvMedia } from "../../types/typings";
+import {
+  MediaTypes,
+  MovieMedia,
+  TImgQualityValues,
+  TvMedia,
+} from "../../types/typings";
 import {
   View,
   Pressable,
@@ -18,6 +23,7 @@ export interface IThumbnailProps {
   orientation: "portrait" | "landscape";
   windowWidth: number;
   imgType?: "cached" | "regular";
+  quality?: TImgQualityValues;
   navigateTo: (screen: string, paramOption: Object) => void;
 }
 
@@ -26,6 +32,7 @@ function Thumbnail({
   orientation,
   windowWidth,
   imgType,
+  quality,
   navigateTo,
 }: IThumbnailProps) {
   const thumbnailDimensions = {
@@ -64,11 +71,15 @@ function Thumbnail({
     },
   };
 
+  const imageQuality = quality ? quality : "500";
+
   const imageURL =
     (media.backdrop_path || media.poster_path) &&
-    `https://image.tmdb.org/t/p/w500${
+    `https://image.tmdb.org/t/p/w${imageQuality}${
       orientation === "landscape" ? media.backdrop_path : media.poster_path
     }`;
+
+  console.log(imageURL, imageQuality);
 
   return (
     <View

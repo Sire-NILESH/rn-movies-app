@@ -31,7 +31,7 @@ export default function Dropdown<T extends TSupportedTypes>({
   };
 
   return (
-    <View className="">
+    <>
       <SelectDropdown
         data={listData}
         // search={true}
@@ -51,7 +51,7 @@ export default function Dropdown<T extends TSupportedTypes>({
             color={Colors.text_secondary}
           />
         )}
-        onSelect={(selectedItem: T, index) => {
+        onSelect={(selectedItem: T, _index) => {
           setSelected(selectedItem);
         }}
         buttonStyle={{
@@ -98,6 +98,6 @@ export default function Dropdown<T extends TSupportedTypes>({
             : item.value;
         }}
       />
-    </View>
+    </>
   );
 }

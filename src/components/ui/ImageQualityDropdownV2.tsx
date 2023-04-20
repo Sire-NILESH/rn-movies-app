@@ -18,14 +18,14 @@ const imgQualities: IImageQuality[] = [
 /**
  * A React component that displays a dropdown for selecting Image Qualities.
 
- * @returns A Dropdown instance for selecting Image qualities.
+ * @returns A Dropdown instance for selecting Years
  */
-const ImageQualityDropdown: React.FC<IProps> = (props) => {
+const ImageQualityDropdownV2: React.FC<IProps> = (props) => {
   const { setDefaultImgQualityHandler, defaultImgQuality } =
     useDefaultImageQualityHooks();
 
   const setDefaultImgQualityOfHook = (item: IImageQuality) => {
-    setDefaultImgQualityHandler(item);
+    //  setDefaultImgQualityHandler(item);
   };
 
   //   console.log(defaultImgQuality);
@@ -40,4 +40,4 @@ const ImageQualityDropdown: React.FC<IProps> = (props) => {
   );
 };
 
-export default ImageQualityDropdown;
+export default ImageQualityDropdownV2;

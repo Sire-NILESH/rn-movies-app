@@ -50,7 +50,7 @@ interface IGenreProps {
   genreName?: IUrlObject;
   genreId?: number;
 }
-
+// bg-neutral-700/60 bg-black/40
 function GerneTag(props: IGenreProps) {
   return (
     <View className="flex-1 mx-2 bg-black/40 border border-stone-700 px-4 h-8 rounded-xl items-center justify-center">

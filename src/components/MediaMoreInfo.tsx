@@ -173,6 +173,28 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
               </View>
             ) : null}
 
+            {/* PRODUCED IN */}
+            {/* {(isTvExtended(media) || isMovieExtended(media)) &&
+            media.production_countries ? (
+              <View className="px-4 mt-5 space-y-2">
+                <Text className="font-semibold text-text_tertiary">
+                  Produced in
+                </Text>
+                <View className="flex-row items-center ">
+                  {media.production_countries.map((c, i) => {
+                    return (
+                      <View className="flex-row items-center flex-wrap">
+                        <Text className="text-text_dark">{c.name}</Text>
+                        {i !== media.production_countries.length - 1 && (
+                          <Text className="text-text_dark"> • </Text>
+                        )}
+                      </View>
+                    );
+                  })}
+                </View>
+              </View>
+            ) : null} */}
+
             {/* Other Info */}
             {isTvExtended(media) && media.next_episode_to_air ? (
               <View className="px-4 space-y-2 mt-8">
@@ -188,10 +210,6 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
                 ).toDateString()}.`}</Text>
               </View>
             ) : null}
-
-            {/* {isMovieExtended(media) && media.budget ? (
-              <RevenueStats budget={media.budget} revenue={media.revenue} />
-            ) : null} */}
           </View>
 
           {/* BUTTONS CONTAINER */}

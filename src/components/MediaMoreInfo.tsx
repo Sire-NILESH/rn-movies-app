@@ -29,6 +29,7 @@ import MoreInfoFooterButton from "./ui/MoreInfoFooterButton";
 import WatchProviders from "./WatchProviders";
 import Cast from "./Cast";
 import RevenueStats from "./ui/RevenueStats";
+import { getdataFromACollection } from "../storage/database";
 
 interface IProps {
   media: TvMediaExtended | MovieMediaExtended;
@@ -69,6 +70,16 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
     if (media && "title" in media) return media.title;
     return media && media.name;
   }
+
+  React.useEffect(() => {
+    async function getImgSettings() {
+      try {
+        const settings = await getdataFromACollection("image_qualities");
+        console.log("IIMMMAAAGGGEEE settings : ", settings.rows._array);
+      } catch (err) {}
+    }
+    getImgSettings();
+  }, []);
 
   return (
     <View className="flex-1 bg-secondary">

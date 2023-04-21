@@ -1,16 +1,4 @@
 import { useEffect, useState } from "react";
-import { MediaTypes, MovieMedia, TvMedia } from "../../types/typings";
-import { showErrorAlert } from "../utils/helpers/helper";
-
-interface IProps {
-  mediaType: MediaTypes;
-}
-
-interface IScreenProps {
-  genreId: number;
-  genreName: string;
-  genreMedias: TvMedia[] | MovieMedia[];
-}
 
 const useFetcher = (fetcher: any, params: any[]) => {
   const [screenProps, setScreenProps] = useState<any | null>(null);

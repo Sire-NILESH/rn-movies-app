@@ -12,20 +12,9 @@ import {
 import useFetcher from "../hooks/useFetcher";
 import { getMediaInfo } from "../utils/requests";
 import FavouriteMediaButton from "../components/ui/FavouriteMediaButton";
-
-import {
-  useDefaultLanguageHooks,
-  useDefaultYearHooks,
-} from "../hooks/reduxHooks";
 import MediaMoreInfo from "../components/MediaMoreInfo";
 
 const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
-  const { defaultLanguage } = useDefaultLanguageHooks();
-  console.log("LANGUAGE SET RIGHT NOW IS", defaultLanguage);
-
-  const { defaultYear } = useDefaultYearHooks();
-  console.log("DEFAULT YEAR SET RIGHT NOW IS", defaultYear);
-
   const { navigation, route } = props;
   let prevMedia: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended =
     // @ts-ignore

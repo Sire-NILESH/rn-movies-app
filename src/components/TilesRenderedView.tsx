@@ -3,7 +3,6 @@ import ThumbnailMemoised from "./ThumbnailMemoised";
 import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
 import { useNavigation } from "@react-navigation/native";
 import { memo, useCallback, useMemo } from "react";
-import { useDefaultImageQualityHooks } from "../hooks/reduxHooks";
 
 interface IProps {
   medias: any[];
@@ -14,7 +13,7 @@ interface IProps {
 
 const TilesRenderedView: React.FC<IProps> = (props) => {
   const navigation = useNavigation();
-  const { defaultImgQuality } = useDefaultImageQualityHooks();
+  // const { defaultImgQuality } = useDefaultImageQualityHooks();
 
   const loadMoreItem = () => {
     // Increase the page number by one only if the load new medias is enabled
@@ -74,7 +73,7 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
                 navigateTo={navigateTo}
                 windowWidth={windowWidth}
                 imgType="cached"
-                quality={defaultImgQuality.value}
+                // quality={defaultImgQuality.value}
               />
               {/* <MemoisedThumbnail media={media.item} orientation="portrait" /> */}
             </View>

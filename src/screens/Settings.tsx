@@ -40,7 +40,7 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
             color={Colors.text_dark}
             size={24}
           ></Ionicons>
-          <View>
+          <View className="w-[92%]">
             <Text className="text-text_highLight font-semibold mb-1">
               {props.title}
             </Text>
@@ -112,21 +112,21 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
             style={{ backgroundColor: "rgb(4, 20, 10)" }}
           >
             <Text className="text-text_tertiary mx-4">Thumbnail </Text>
-            <ImageQualityDropdown />
+            <ImageQualityDropdown imageItem="thumbnail" />
           </View>
           <View
             className="flex-row items-center justify-between px-2 mt-2 mx-2 bg-accent rounded-xl"
             style={{ backgroundColor: "rgb(4, 20, 10)" }}
           >
             <Text className="text-text_tertiary mx-4">Banner </Text>
-            <ImageQualityDropdown />
+            <ImageQualityDropdown imageItem="banner" />
           </View>
           <View
             className="flex-row items-center justify-between px-2 mt-2 mx-2 bg-accent rounded-xl"
             style={{ backgroundColor: "rgb(4, 20, 10)" }}
           >
             <Text className="text-text_tertiary mx-4">Watch providers </Text>
-            <ImageQualityDropdown />
+            <ImageQualityDropdown imageItem="watchProviders" />
           </View>
           <View
             className="flex-row items-center justify-between px-2 mt-2 mx-2 bg-accent rounded-xl"
@@ -135,7 +135,7 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
             <Text className="text-text_tertiary mx-4">
               Tv Networks/Producers{" "}
             </Text>
-            <ImageQualityDropdown />
+            <ImageQualityDropdown imageItem="companies" />
           </View>
         </RenderSettingCard>
 

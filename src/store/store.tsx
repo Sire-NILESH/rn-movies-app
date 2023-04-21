@@ -16,7 +16,7 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import persistStore from "redux-persist/es/persistStore";
-import imageQualityReducer from "./imageQualitySlice";
+import imageItemQualityReducer from "./imageItemQualitySlice";
 
 const persistConfig = {
   key: "root",
@@ -32,7 +32,7 @@ const rootReducer = combineReducers({
   defaultRegion: defaultRegionSliceReducer,
   defaultLanguageForMedias: defaultLanguageForMediasReducer,
   defaultYearFilterForMedias: defaultYearFilterForMediasReducer,
-  imageQuality: imageQualityReducer,
+  // imageItemQualities: imageItemQualityReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

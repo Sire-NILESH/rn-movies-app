@@ -30,6 +30,10 @@ export default function Dropdown<T extends TSupportedTypes>({
     full: 1000,
   };
 
+  // if (isIImageQuality(currentSelected)) {
+  //   console.log(listData);
+  // }
+
   return (
     <>
       <SelectDropdown

@@ -431,6 +431,28 @@ export interface IImageQuality {
   value: TImgQualityValues;
 }
 
+export type ImageItemTypes =
+  | "thumbnail"
+  | "watchProviders"
+  | "banner"
+  | "companies";
+
+export interface IImageItemSettingsValue {
+  //   name: string;
+  key: ImageItemTypes;
+  imgQuality: IImageQuality;
+}
+
+export interface IImgItemSettingsDB extends IImageQuality {
+  name: ImageItemTypes;
+}
+
+export type TAllImgSettingsDB = IImgItemSettingsDB[];
+
+export type IImageItemQualitySetting = {
+  [key in ImageItemTypes]: IImageItemSettingsValue;
+};
+
 // export type TDropdownYearsArrayObj =
 //   | {
 //       year: 0;

@@ -1,6 +1,7 @@
 import {
   Genre,
   ICountry,
+  ICreditPerson,
   IImageQuality,
   INetworkIds,
   IProductionComapnyIds,
@@ -31,6 +32,14 @@ export function isTvExtended(
   media: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended
 ): media is TvMediaExtended {
   return media !== null && (media as TvMediaExtended).seasons !== undefined;
+}
+
+export function isPerson(obj: any): obj is ICreditPerson {
+  return (
+    obj !== null &&
+    (obj as ICreditPerson).known_for_department !== undefined &&
+    (obj as ICreditPerson).name !== undefined
+  );
 }
 
 /**

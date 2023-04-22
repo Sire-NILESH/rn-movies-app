@@ -8,6 +8,7 @@ import CollectionRow from "../components/CollectionRow";
 import { FlatList } from "react-native-gesture-handler";
 import { getMediasFromCollection } from "../storage/database";
 import NothingToShow from "../components/NothingToShow";
+import useImageItemSetting from "../hooks/useImageItemSetting";
 
 const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   const { navigation, route, collectionType, screenMediaType } = props;
@@ -26,6 +27,10 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   const yesterday = new Date(
     currentDate.setDate(currentDate.getDate() - 1)
   ).toDateString();
+
+  // thumbnail images quality
+  const { imgItemsSetting: thumbnailQuality } =
+    useImageItemSetting("thumbnail");
 
   // Check if the screen is in focus/in-front-of-the-user, and then accordingly change the state to whether refresh(re-exe) the screen or not.
   useEffect(() => {
@@ -87,7 +92,9 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   return (
     <View className="flex-1 bg-secondary">
       <View className="flex-1">
-        {dateCollection && medias.length > 0 ? (
+        {dateCollection &&
+        medias.length > 0 &&
+        thumbnailQuality !== undefined ? (
           <FlatList
             className=""
             data={Object.keys(dateCollection)}
@@ -103,6 +110,7 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
                     currentYear={currentYear}
                     today={today}
                     yesterday={yesterday}
+                    thumbnailQuality={thumbnailQuality}
                   />
                 );
               } else return null;

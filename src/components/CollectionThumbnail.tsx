@@ -1,4 +1,4 @@
-import { IReduxListMedia } from "../../types/typings";
+import { IReduxListMedia, TImgQualityValues } from "../../types/typings";
 import {
   View,
   Pressable,
@@ -18,6 +18,7 @@ export interface ICollectionThumbnailProps {
   orientation: "portrait" | "landscape";
   windowWidth: number;
   navigateTo: (screen: string, paramOption: Object) => void;
+  quality?: TImgQualityValues;
 }
 
 function CollectionThumbnail({
@@ -25,6 +26,7 @@ function CollectionThumbnail({
   orientation,
   windowWidth,
   navigateTo,
+  quality,
 }: ICollectionThumbnailProps) {
   const thumbnailDimensions = {
     landscape: {
@@ -62,11 +64,15 @@ function CollectionThumbnail({
     },
   };
 
+  const imageQuality = quality ? quality : "500";
+
   const imageURL =
     (media.backdrop_path || media.poster_path) &&
-    `https://image.tmdb.org/t/p/w500${
+    `https://image.tmdb.org/t/p/w${imageQuality}${
       orientation === "landscape" ? media.backdrop_path : media.poster_path
     }`;
+
+  console.log(imageURL, imageQuality, quality);
 
   return (
     <View

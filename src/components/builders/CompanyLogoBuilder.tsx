@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, Pressable } from "react-native";
-
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 // @ts-ignore
 import ExpoFastImage from "expo-fast-image";
 
-import { useNavigation } from "@react-navigation/native";
 import {
   IProductionCompany,
   MediaTypes,
   Network,
 } from "../../../types/typings";
+import { Colors } from "../../utils/Colors";
 
 interface IProps {
   company: IProductionCompany[] | Network[];
@@ -136,8 +137,8 @@ function RenderLogo({
         }}
       />
       {fallbackImage && (
-        <View className="absolute h-full w-full justify-center">
-          <Text
+        <View className="absolute h-full w-full justify-center items-center">
+          {/* <Text
             className="text-center text-[36px] font-bold text-text_darkest w-full px-2"
             numberOfLines={1}
           >
@@ -145,7 +146,13 @@ function RenderLogo({
               .split(" ")
               .map((c) => c[0].toUpperCase())
               .join(".")}
-          </Text>
+          </Text> */}
+
+          {mediaType === "movie" ? (
+            <Ionicons name="film-outline" color={Colors.green[900]} size={54} />
+          ) : (
+            <Ionicons name="tv-outline" color={Colors.green[900]} size={54} />
+          )}
         </View>
       )}
     </>

@@ -4,6 +4,8 @@ import { View, Text, FlatList, Pressable } from "react-native";
 import ExpoFastImage from "expo-fast-image";
 import { useNavigation } from "@react-navigation/native";
 import { ICast, ICreditPerson, ICredits, ICrew } from "../../types/typings";
+import { Ionicons } from "@expo/vector-icons";
+import { Colors } from "../utils/Colors";
 
 interface IProps {
   cast: ICast[];
@@ -242,13 +244,8 @@ function RenderProfile({
         }}
       />
       {fallbackImage && (
-        <View className="absolute h-full w-full justify-center">
-          <Text
-            className="text-center text-[36px] font-bold text-text_darkest w-full px-2"
-            numberOfLines={1}
-          >
-            {name}
-          </Text>
+        <View className="absolute h-full w-full justify-center items-center">
+          <Ionicons name="person" color={Colors.green[900]} size={54} />
         </View>
       )}
     </View>

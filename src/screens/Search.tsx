@@ -6,12 +6,18 @@ import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenPr
 import { Colors } from "./../utils/Colors";
 import { FlatList } from "react-native-gesture-handler";
 import { searchRequest } from "../utils/requests";
-import { MediaTypes, MovieMedia, TvMedia } from "../../types/typings";
+import {
+  ICreditPerson,
+  MediaTypes,
+  MovieMedia,
+  TvMedia,
+} from "../../types/typings";
 import HeaderSearchButton from "./../components/ui/HeaderSearchButton";
 import {
-  dateFormatter,
   isMovie,
   isMovieArray,
+  isPerson,
+  isTv,
   isTvArray,
 } from "./../utils/helpers/helper";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -193,17 +199,56 @@ function renderFlatList(
               className="flex-1 flex-row items-center space-x-2 px-4 py-3"
               android_ripple={{ color: "#eee" }}
               onPress={() => {
-                navigateTo(
-                  mediaObj.item,
-                  "More Info",
-                  isMovie(mediaObj.item) ? "movie" : "tv"
-                );
-                // navigateTo(mediaObj.item, "More Info", searchCategory);
+                // when the search result is of a movie media
+                if (isMovie(mediaObj.item)) {
+                  navigateTo(
+                    mediaObj.item,
+                    "More Info",
+                    isMovie(mediaObj.item) ? "movie" : "tv"
+                  );
+                }
+
+                // when the search result is of a person media
+                else if (isPerson(mediaObj.item)) {
+                  const p = mediaObj.item as ICreditPerson;
+                  navigation.push("Person Medias", {
+                    title: p.name,
+                    urlObject: {
+                      name: p.name,
+                      url: `/person/${p.id}`,
+                      queryParams: {
+                        language: "en-US",
+                      },
+                    },
+                    currentMediaType: "movie",
+                  });
+                }
+
+                // when the search result is of a tv media
+                /**
+                 * the isTv() checks for "name" prop in the object to figure out if the obj was a movie or a tv.
+                 * But ICreditPerson objects also has name and orignal name properties so those objects will be checked as valid tv objects by isTv() which is not desirable.
+                 * We decided to change to check for more props for tv but could'nt find any distinguished props between movie and tv objects.
+                 * So a work around for cases like this where we have movie,tv,person objects together it will be better to check for isPerson() before checking for isTv().
+                 * */
+                else if (isTv(mediaObj.item)) {
+                  navigateTo(
+                    mediaObj.item,
+                    "More Info",
+                    isMovie(mediaObj.item) ? "movie" : "tv"
+                  );
+                }
               }}
             >
               <Ionicons
                 size={18}
-                name={isMovie(mediaObj.item) ? "film-outline" : "tv-outline"}
+                name={
+                  isMovie(mediaObj.item)
+                    ? "film-outline"
+                    : isPerson(mediaObj.item)
+                    ? "person"
+                    : "tv-outline"
+                }
                 color={Colors.stone[500]}
               />
               <Text className="text-text_primary">

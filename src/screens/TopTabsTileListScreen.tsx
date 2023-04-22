@@ -8,12 +8,17 @@ import CollectionThumbnail from "../components/CollectionThumbnail";
 import { IDBCollectionMedia } from "../../types/typings";
 import { getMediasFromCollection } from "../storage/database";
 import NothingToShow from "../components/NothingToShow";
+import useImageItemSetting from "../hooks/useImageItemSetting";
 
 const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
   const { navigation, route, collectionType, screenMediaType } = props;
 
   const [medias, setMedias] = useState<IDBCollectionMedia[]>([]);
   const [refresh, setRefresh] = useState(false);
+
+  // thumbnail images quality
+  const { imgItemsSetting: thumbnailQuality } =
+    useImageItemSetting("thumbnail");
 
   // Navigation handler for child components like thumbnail and jumpTo button. So every one of them wont have to calculate them separately.
   const navigateTo = (screen: string, paramOption: Object) => {
@@ -56,7 +61,7 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
   return (
     <View className="flex-1 bg-secondary">
       <View className="flex-1 items-center">
-        {medias?.length > 0 ? (
+        {medias?.length > 0 && thumbnailQuality ? (
           <FlatList
             bounces
             data={medias}
@@ -73,6 +78,7 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
                     orientation="portrait"
                     navigateTo={navigateTo}
                     windowWidth={windowWidth}
+                    quality={thumbnailQuality?.value}
                   />
                 </View>
               );

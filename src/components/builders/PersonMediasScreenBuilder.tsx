@@ -10,6 +10,7 @@ import {
 import { getTileListScreenMedias } from "../../utils/requests";
 import TilesRenderedView from "../TilesRenderedView";
 import NothingToShow from "../NothingToShow";
+import useImageItemSetting from "../../hooks/useImageItemSetting";
 
 interface IProps {
   screenMediaType: MediaTypes;
@@ -29,15 +30,14 @@ const PersonMediasScreenBuilder: React.FC<IProps> = ({
   const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>([]);
   const [loadingNewMedias, setLoadingNewMedias] = useState<boolean>(false);
   const [blockNewLoads, setBlockNewLoads] = useState<boolean>(false);
-  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [_pageNumber, setPageNumber] = useState<number>(1);
   const [error, setError] = useState<Error | null>(null);
 
   console.log(urlObjectLocal);
 
-  // useEffect(() => {
-  //   const url = urlObject.url + `/${screenMediaType}_credits`;
-  //   urlObject.url = url;
-  // }, []);
+  // thumbnail images quality
+  const { imgItemsSetting: thumbnailQuality } =
+    useImageItemSetting("thumbnail");
 
   // Loading Data
   useEffect(() => {
@@ -86,6 +86,7 @@ const PersonMediasScreenBuilder: React.FC<IProps> = ({
               loadingNewMedias={loadingNewMedias}
               setPageNumber={setPageNumber}
               blockNewLoads={blockNewLoads}
+              thumbnailQuality={thumbnailQuality}
             />
             {/* <RenderLoader /> */}
           </>

@@ -79,7 +79,7 @@ function Thumbnail({
       orientation === "landscape" ? media.backdrop_path : media.poster_path
     }`;
 
-  // console.log(imageURL, imageQuality);
+  console.log(imageURL, imageQuality);
 
   return (
     <View

@@ -7,6 +7,7 @@ import { FlatList } from "react-native-gesture-handler";
 import CollectionThumbnail from "../components/CollectionThumbnail";
 import { IDBCollectionMedia } from "../../types/typings";
 import { getMediasFromCollection } from "../storage/database";
+import NothingToShow from "../components/NothingToShow";
 
 const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
   const { navigation, route, collectionType, screenMediaType } = props;
@@ -81,7 +82,9 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
             }}
             numColumns={3}
           />
-        ) : null}
+        ) : (
+          <NothingToShow problemType="nothing" />
+        )}
       </View>
     </View>
   );

@@ -11,6 +11,7 @@ import {
 import { storeObjectData } from "../../storage/asyncStorage";
 import { showErrorAlert } from "../../utils/helpers/helper";
 import useImgSettings from "../../hooks/useImgSettings";
+import useImageItemSetting from "../../hooks/useImageItemSetting";
 
 interface IProps {
   imageItem: ImageItemTypes;
@@ -34,36 +35,25 @@ const ImageQualityDropdown: React.FC<IProps> = (props) => {
   // const { setDefaultImgQualityHandler, defaultImgItemQualities } =
   //   useDefaultImageQualityHooks();
 
-  const { allImgItemsSettings, errorImgSettings, setImgItemQualitySettings } =
-    useImgSettings();
+  const { imgItemsSetting, errorImgSettings, setImgItemQualitySettings } =
+    useImageItemSetting(props.imageItem);
 
   const [currentSelectedImageQuality, setCurrentSelectedImageQuality] =
     useState<IImageQuality>();
 
   useEffect(() => {
-    if (allImgItemsSettings.length > 0) {
-      const temp = allImgItemsSettings.find(
-        (item) => item.name === props.imageItem
-      );
-
-      if (temp) {
-        const imgSettingsTemp = {
-          quality: temp.quality,
-          value: temp.value,
-        };
-        setCurrentSelectedImageQuality(imgSettingsTemp);
-      }
+    if (imgItemsSetting !== undefined) {
+      const imgSettingsTemp: IImageQuality = {
+        quality: imgItemsSetting.quality,
+        value: imgItemsSetting.value,
+      };
+      setCurrentSelectedImageQuality(imgSettingsTemp);
     }
-  }, [allImgItemsSettings]);
+  }, [imgItemsSetting]);
 
-  useEffect(() => {
-    if (errorImgSettings) {
-      showErrorAlert(
-        "Failed",
-        "Failed to set image quality. Please try again."
-      );
-    }
-  }, []);
+  if (errorImgSettings) {
+    showErrorAlert("Failed", "Failed to set image quality. Please try again.");
+  }
 
   const setDefaultImgQualityOfDB = (item: IImageQuality) => {
     const newCurrSelectedImgSetting: IImageItemSettingsValue = {

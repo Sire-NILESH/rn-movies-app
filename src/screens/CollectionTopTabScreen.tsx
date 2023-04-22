@@ -7,6 +7,7 @@ import { IDBCollectionMedia } from "../../types/typings";
 import CollectionRow from "../components/CollectionRow";
 import { FlatList } from "react-native-gesture-handler";
 import { getMediasFromCollection } from "../storage/database";
+import NothingToShow from "../components/NothingToShow";
 
 const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   const { navigation, route, collectionType, screenMediaType } = props;
@@ -86,7 +87,7 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   return (
     <View className="flex-1 bg-secondary">
       <View className="flex-1">
-        {dateCollection && medias ? (
+        {dateCollection && medias.length > 0 ? (
           <FlatList
             className=""
             data={Object.keys(dateCollection)}
@@ -107,7 +108,9 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
               } else return null;
             }}
           />
-        ) : null}
+        ) : (
+          <NothingToShow problemType="nothing" />
+        )}
       </View>
     </View>
   );

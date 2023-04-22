@@ -1,6 +1,7 @@
 import {
   IGenresToShowHomeScreen,
   IImageQuality,
+  IImgItemSettingsDB,
   IPlaylist,
   MovieMedia,
   TvMedia,
@@ -19,16 +20,19 @@ import ThumbnailSkeleton from "./ThumbnailSkeleton";
 import ThumbnailMemoised from "./ThumbnailMemoised";
 import Thumbnail from "./Thumbnail";
 import { useDefaultImageQualityHooks } from "../hooks/reduxHooks";
+import useImageItemSetting from "../hooks/useImageItemSetting";
 
 interface Props {
   title: string;
   // mediaGenre: IGenresToShowHomeScreen;
   playlist: IPlaylist;
+  thumbnailQualitySettings?: IImgItemSettingsDB;
 }
 
-function RowAsync({ title, playlist }: Props) {
+function RowAsync({ title, playlist, thumbnailQualitySettings }: Props) {
   const params = [[playlist]];
-  const { defaultImgQuality } = useDefaultImageQualityHooks();
+  // const { defaultImgQuality } = useDefaultImageQualityHooks();
+  // const { imgItemsSetting } = useImageItemSetting("thumbnail");
 
   // const params = [[mediaGenre.id], mediaGenre.mediaType, 1];
   const useFetcherMemo = React.useCallback(() => {
@@ -60,10 +64,17 @@ function RowAsync({ title, playlist }: Props) {
           medias as MovieMedia[],
           title,
           playlist,
-          defaultImgQuality
+          // loadingProps,
+          thumbnailQualitySettings
         )
       ) : (
-        renderFlatList(medias as TvMedia[], title, playlist, defaultImgQuality)
+        renderFlatList(
+          medias as TvMedia[],
+          title,
+          playlist,
+          // loadingProps,
+          thumbnailQualitySettings
+        )
       )}
     </View>
   );
@@ -78,7 +89,8 @@ function renderFlatList(
   medias: MovieMedia[] | TvMedia[],
   title: string,
   playlist: IPlaylist,
-  defaultImgQuality?: IImageQuality
+  // isLoading: boolean,
+  defaultImgQuality?: IImgItemSettingsDB
 ) {
   const navigation = useNavigation();
 
@@ -92,6 +104,10 @@ function renderFlatList(
   // Calculate and pass the dimensioins from the parent(here) to the thumbnails.
   // So every thumbnail wont have to calculate them separately.
   const windowWidth = getDeviceDimensions("window").width;
+
+  // if (!defaultImgQuality || isLoading) {
+  //   return null;
+  // }
 
   return (
     <>

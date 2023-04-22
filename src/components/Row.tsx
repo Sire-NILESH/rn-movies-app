@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   IImageQuality,
+  IImgItemSettingsDB,
   IPlaylist,
   MovieMedia,
   TvMedia,
@@ -15,14 +16,16 @@ import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
 import { isMovie } from "./../utils/helpers/helper";
 import { getTileListScreenMedias } from "../utils/requests";
 import { useDefaultImageQualityHooks } from "../hooks/reduxHooks";
+import useImageItemSetting from "../hooks/useImageItemSetting";
 
 interface Props {
   title: string;
   medias: TvMedia[] | MovieMedia[];
   playlist: IPlaylist;
+  thumbnailQualitySettings?: IImgItemSettingsDB;
 }
 
-function Row({ title, medias, playlist }: Props) {
+function Row({ title, medias, playlist, thumbnailQualitySettings }: Props) {
   return (
     <View className="space-y-1 mb-5">
       <View className="flex-row space-x-4 mb-1">
@@ -32,8 +35,18 @@ function Row({ title, medias, playlist }: Props) {
       </View>
 
       {isMovieArray(medias)
-        ? renderFlatList(medias as MovieMedia[], title, playlist)
-        : renderFlatList(medias as TvMedia[], title, playlist)}
+        ? renderFlatList(
+            medias as MovieMedia[],
+            title,
+            playlist,
+            thumbnailQualitySettings
+          )
+        : renderFlatList(
+            medias as TvMedia[],
+            title,
+            playlist,
+            thumbnailQualitySettings
+          )}
     </View>
   );
 }
@@ -43,10 +56,13 @@ export default Row;
 function renderFlatList(
   medias: MovieMedia[] | TvMedia[],
   title: string,
-  playlist: IPlaylist
+  playlist: IPlaylist,
+  thumbnailQualitySettings?: IImgItemSettingsDB
 ) {
   const navigation = useNavigation();
-  const { defaultImgQuality } = useDefaultImageQualityHooks();
+  // const { defaultImgQuality } = useDefaultImageQualityHooks();
+
+  // const { imgItemsSetting } = useImageItemSetting("thumbnail");
 
   // Navigation handler for child components like thumbnail and jumpTo button.
   // So every one of them wont have to calculate them separately.
@@ -58,6 +74,10 @@ function renderFlatList(
   // Calculate and pass the dimensioins from the parent(here) to the thumbnails.
   // So every thumbnail wont have to calculate them separately.
   const windowWidth = getDeviceDimensions("window").width;
+
+  // if (!imgItemsSetting) {
+  //   return null;
+  // }
 
   return (
     <>
@@ -82,7 +102,7 @@ function renderFlatList(
                 navigateTo={navigateTo}
                 windowWidth={windowWidth}
                 imgType="cached"
-                quality={defaultImgQuality?.value}
+                quality={thumbnailQualitySettings?.value}
                 // orientation="landscape"
               />
             </View>
@@ -112,7 +132,7 @@ function renderFlatList(
                 orientation="portrait"
                 navigateTo={navigateTo}
                 windowWidth={windowWidth}
-                quality={defaultImgQuality?.value}
+                quality={thumbnailQualitySettings?.value}
                 // orientation="landscape"
               />
             </View>

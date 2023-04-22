@@ -15,7 +15,6 @@ import {
   isTvArray,
 } from "./../utils/helpers/helper";
 import { StackNavigationProp } from "@react-navigation/stack";
-import NothingToShow from "../components/NothingToShow";
 import { Ionicons } from "@expo/vector-icons";
 
 interface ISearchResults {

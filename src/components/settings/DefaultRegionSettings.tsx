@@ -1,9 +1,9 @@
-import { View, Text } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ICountry } from "../../../types/typings";
-import { addRegion, getdataFromACollection } from "../../storage/database";
 import CountriesDropdown from "../ui/CountriesDropdown";
 import { useDefaultRegionHooks } from "../../hooks/reduxHooks";
+import SettingsCardWrapper from "./SettingsCardWrapper";
+import CardRow from "./CardRow";
 
 const DefaultRegionSettings = () => {
   const { setDefaultRegionHandler, defaultRegion } = useDefaultRegionHooks();
@@ -28,17 +28,18 @@ const DefaultRegionSettings = () => {
   // }
 
   return (
-    <View
-      className="flex-row items-center justify-between px-2 mt-2 mx-2 bg-accent rounded-xl"
-      style={{ backgroundColor: "rgb(4, 20, 10)" }}
+    <SettingsCardWrapper
+      iconName="location-outline"
+      title="Default region"
+      subtitle={`A default region for the watch providers.`}
     >
-      <Text className="text-text_tertiary mx-4">Select a country </Text>
-
-      <CountriesDropdown
-        currentCountry={currentDefaultRegion}
-        setCountryHandler={onSetDefaultRegion}
-      />
-    </View>
+      <CardRow rowTitle="Select a Language">
+        <CountriesDropdown
+          currentCountry={currentDefaultRegion}
+          setCountryHandler={onSetDefaultRegion}
+        />
+      </CardRow>
+    </SettingsCardWrapper>
   );
 };
 

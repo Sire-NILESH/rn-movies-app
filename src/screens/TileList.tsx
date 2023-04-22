@@ -17,6 +17,7 @@ import GenreTags from "../components/GenreTags";
 import TilesRenderedView from "../components/TilesRenderedView";
 import NothingToShow from "../components/NothingToShow";
 import MediaWizardModal from "../components/MediaWizardModal";
+import useImageItemSetting from "../hooks/useImageItemSetting";
 
 const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [showGenresModal, setShowGenresModal] = useState<boolean>(false);
@@ -52,6 +53,10 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     : isMovieArray(mediaList)
     ? "movie"
     : "tv";
+
+  // thumbnail images quality
+  const { imgItemsSetting: thumbnailQuality } =
+    useImageItemSetting("thumbnail");
 
   // Loading Data
   useEffect(() => {
@@ -222,6 +227,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               loadingNewMedias={loadingNewMedias}
               setPageNumber={setPageNumber}
               blockNewLoads={blockNewLoads}
+              thumbnailQuality={thumbnailQuality}
             />
             {/* <RenderLoader /> */}
           </>

@@ -3,12 +3,14 @@ import ThumbnailMemoised from "./ThumbnailMemoised";
 import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
 import { useNavigation } from "@react-navigation/native";
 import { memo, useCallback, useMemo } from "react";
+import { IImgItemSettingsDB } from "../../types/typings";
 
 interface IProps {
   medias: any[];
   loadingNewMedias: boolean;
   blockNewLoads: boolean;
   setPageNumber: React.Dispatch<React.SetStateAction<number>>;
+  thumbnailQuality?: IImgItemSettingsDB;
 }
 
 const TilesRenderedView: React.FC<IProps> = (props) => {
@@ -73,6 +75,7 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
                 navigateTo={navigateTo}
                 windowWidth={windowWidth}
                 imgType="cached"
+                quality={props.thumbnailQuality?.value}
                 // quality={defaultImgQuality.value}
               />
               {/* <MemoisedThumbnail media={media.item} orientation="portrait" /> */}

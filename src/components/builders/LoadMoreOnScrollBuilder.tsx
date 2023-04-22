@@ -5,6 +5,7 @@ import { getRelatedMediasProps, searchRequest } from "../../utils/requests";
 import TilesRenderedView from "../TilesRenderedView";
 import NothingToShow from "../NothingToShow";
 import { showErrorAlert } from "../../utils/helpers/helper";
+import useImageItemSetting from "../../hooks/useImageItemSetting";
 
 interface IProps {
   screenType: "Search" | "Related";
@@ -25,6 +26,10 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
   const [blockNewLoads, setBlockNewLoads] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [error, setError] = useState<Error | null>(null);
+
+  // thumbnail images quality
+  const { imgItemsSetting: thumbnailQuality } =
+    useImageItemSetting("thumbnail");
 
   // Loading Data
   useEffect(() => {
@@ -103,6 +108,7 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
               loadingNewMedias={loadingNewMedias}
               setPageNumber={setPageNumber}
               blockNewLoads={blockNewLoads}
+              thumbnailQuality={thumbnailQuality}
             />
           ) : (
             !loadingNewMedias && <NothingToShow problemType="nothing" />

@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React, { useState } from "react";
 import CustomButton from "../ui/CustomButton";
 import { deleteCollection } from "../../storage/database";
@@ -6,10 +6,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { TDbCollectionType } from "../../../types/typings";
 import { Colors } from "../../utils/Colors";
 import WarningModal from "../ui/WarningModal";
+import SettingsCardWrapper from "./SettingsCardWrapper";
+import IconCardRow from "./IconCardRow";
 
 const DeleteSettings = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
   const [deletingItem, setDeletingItem] =
     useState<TDbCollectionType>("watched");
 
@@ -21,22 +22,16 @@ const DeleteSettings = () => {
     setIsModalOpen(state);
   }
 
-  function confirmDeleteHandler(state: boolean) {
-    setConfirmDelete(state);
+  function confirmDeleteHandler() {
     //  and only on confirmation
-
     deleteCollection(deletingItem)
       .then(() => {
         console.log(`Deleted ${deletingItem} 💥`);
-        //   when done, reset the confirmation state back to false
-        setConfirmDelete(false);
       })
       .catch((err) => {
         console.log(err);
       });
   }
-
-  // useEffect();
 
   function RenderDeleteRow(props: {
     rowTitle: string;
@@ -44,19 +39,7 @@ const DeleteSettings = () => {
     toDelete: TDbCollectionType;
   }) {
     return (
-      <View
-        className="flex-row items-center justify-between px-2 mt-2 mx-2 bg-accent rounded-xl"
-        style={{ backgroundColor: "rgb(4, 20, 10)" }}
-      >
-        <View className="flex-row space-x-2 items-center mx-4">
-          <Ionicons
-            name={props.rowIcon}
-            size={18}
-            color={Colors.text_primary}
-          />
-          <Text className="text-text_tertiary mx-4">{props.rowTitle}</Text>
-        </View>
-
+      <IconCardRow rowTitle={props.rowTitle} rowIcon={props.rowIcon}>
         <CustomButton
           height={50}
           width={50}
@@ -66,19 +49,6 @@ const DeleteSettings = () => {
             //  Open the modal for confirmation
             deletingItemHandler(props.toDelete);
             modalHandler(true);
-
-            //  and only on confirmation
-            // if (confirmDelete) {
-            //   deleteCollection(props.toDelete)
-            //     .then(() => {
-            //       console.log(`Deleted ${props.toDelete} 💥`);
-            //       //   when done, reset the confirmation state back to false
-            //       confirmDeleteHandler(false);
-            //     })
-            //     .catch((err) => {
-            //       console.log(err);
-            //     });
-            // }
           }}
         >
           <View className="flex-row space-x-2 items-center">
@@ -89,18 +59,22 @@ const DeleteSettings = () => {
             />
           </View>
         </CustomButton>
-      </View>
+      </IconCardRow>
     );
   }
 
   return (
-    <>
+    <SettingsCardWrapper
+      iconName="trash-outline"
+      title="Delete"
+      subtitle={`You can delete your collections here.`}
+    >
       {/* Warning modal */}
       <WarningModal
         isVisible={isModalOpen}
         closeModal={() => modalHandler(false)}
         deletingItem={deletingItem}
-        confirmModal={() => confirmDeleteHandler(true)}
+        confirmModal={confirmDeleteHandler}
       />
 
       <RenderDeleteRow
@@ -118,7 +92,7 @@ const DeleteSettings = () => {
         rowTitle="Watched"
         toDelete={"watched"}
       />
-    </>
+    </SettingsCardWrapper>
   );
 };
 

@@ -26,6 +26,7 @@ import RowAsync from "../RowAsync";
 import useFetcher from "../../hooks/useFetcher";
 import { sendUrlObjApiRequest } from "../../utils/requests";
 import { useRoute } from "@react-navigation/native";
+import useImageItemSetting from "../../hooks/useImageItemSetting";
 
 interface IProps {
   screenType: ScreenTypes;
@@ -60,6 +61,8 @@ const ScreenBuilderV2: React.FC<IProps> = ({ screenType }) => {
     return result;
   }, []);
 
+  const { imgItemsSetting } = useImageItemSetting("thumbnail");
+
   const params = [playlistsToFetch, {}];
   // const params = [[playlistsToFetch[0].id], playlistsToFetch[0].mediaType, 1];
   const useFetcherMemo = React.useCallback(() => {
@@ -83,7 +86,7 @@ const ScreenBuilderV2: React.FC<IProps> = ({ screenType }) => {
           title={"Something went wrong while loading content"}
           problemType="error"
         />
-      ) : !errorLoadingProps && screenProps ? (
+      ) : !errorLoadingProps && screenProps && imgItemsSetting ? (
         //   when no error and props
         <View className="flex-1">
           {screenProps ? (
@@ -102,11 +105,17 @@ const ScreenBuilderV2: React.FC<IProps> = ({ screenType }) => {
                         title={p.name}
                         medias={screenProps}
                         playlist={p}
+                        thumbnailQualitySettings={imgItemsSetting}
                       />
                     );
                   } else {
                     return (
-                      <RowAsync key={p.name} title={p.name} playlist={p} />
+                      <RowAsync
+                        key={p.name}
+                        title={p.name}
+                        playlist={p}
+                        thumbnailQualitySettings={imgItemsSetting}
+                      />
                     );
                   }
                 })}

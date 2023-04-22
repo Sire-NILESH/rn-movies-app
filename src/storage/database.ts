@@ -326,7 +326,7 @@ export async function initDB() {
   }
 }
 
-export async function addRegion(country: ICountry) {
+export async function addRegionV2(country: ICountry) {
   const sqlStatements: ISQLQuery[] = [
     // DELETE PRIOR DATA FROM CURRENT REGION TABLE
     {
@@ -344,6 +344,26 @@ export async function addRegion(country: ICountry) {
         name,
         code
         ) VALUES (?, ?);`,
+      arguments: [country.name, country.code],
+      successMessage: "...attempt to add data into current_region table",
+      rowsAffectedSuccess:
+        "SUCCESS, new region data added to current_region table",
+      errorMessage: "Error adding new region data to current_region table",
+    },
+  ];
+
+  await executeMultipleQueries(sqlStatements, "added new default region");
+}
+export async function addRegion(country: ICountry) {
+  const sqlStatements: ISQLQuery[] = [
+    // DELETE PRIOR DATA FROM CURRENT REGION TABLE
+    {
+      query: `
+      UPDATE current_region
+      SET name = ?, 
+      code = ? 
+      WHERE EXISTS (SELECT 1 FROM current_region)
+      ;`,
       arguments: [country.name, country.code],
       successMessage: "...attempt to add data into current_region table",
       rowsAffectedSuccess:
@@ -378,6 +398,34 @@ export async function addImgItemSetting(
   ];
 
   await executeMultipleQueries(sqlStatements, "added new img settings region");
+}
+
+export function getImgItemSetting(imgItem: ImageItemTypes) {
+  const promise = new Promise<SQlite.SQLResultSet>((resolve, reject) => {
+    database.transaction((tx) => {
+      tx.executeSql(
+        `SELECT * 
+        FROM image_qualities
+        WHERE name = ?
+        `,
+        [imgItem],
+        (_, results) => {
+          console.log("Got data from table");
+          resolve(results);
+        },
+        (_, err) => {
+          console.log(
+            "error retrieveing data from table, from database.js\n",
+            err
+          );
+          reject(err);
+          return true;
+        }
+      );
+    });
+  });
+
+  return promise;
 }
 
 // export async function getImgItemSetting(imgItem: ImageItemTypes) {

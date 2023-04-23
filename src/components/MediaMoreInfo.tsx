@@ -60,18 +60,19 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
   // img setttings state
   const { allImgItemsSettings } = useImgSettings();
 
-  const allImgQualitiesObject = React.useMemo(
-    function () {
-      if (allImgItemsSettings) {
-        let temp: TTempImgSettingsObj = {} as TTempImgSettingsObj;
-        allImgItemsSettings.forEach(function (item) {
-          temp[item.name] = item;
-        });
-        return temp;
-      }
-    },
-    [allImgItemsSettings]
-  );
+  // const allImgQualitiesObject = React.useMemo(
+  //   function () {
+  //     if (allImgItemsSettings) {
+  //       let temp: TTempImgSettingsObj = {} as TTempImgSettingsObj;
+  //       allImgItemsSettings.forEach(function (item) {
+  //         temp[item.name] = item;
+  //       });
+  //       return temp;
+  //     }
+  //   },
+  //   // []
+  //   [allImgItemsSettings]
+  // );
 
   const cast = credits?.cast;
   const directedBy = credits?.crew.filter((c) => {
@@ -100,82 +101,85 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
         <NothingToShow title={"Something went wrong"} problemType="error" />
       ) : null}
 
-      {media && credits && extendedMedia && allImgItemsSettings && (
-        <ScrollView className="flex-1 pb-24">
-          {/* BackDrop Image */}
-          <MoreInfoBackdrop
-            mediaPosterPath={mediaPosterPath}
-            imgQuality={allImgQualitiesObject?.banner?.value}
-            // allImgQualities={allImgItemsSettings}
-          />
-
-          {/* Content Title/name and original title/name  */}
-          <View className="mt-64 flex-1 pt-6">
-            {/* Title */}
-            <View className="px-4">
-              <Text className="text-3xl font-semibold text-text_highLight object-cover">
-                {getTitle()}
-              </Text>
-
-              {isMovie(media) && media.original_title !== media.title ? (
-                <Text className="text-sm text-text_tertiary pt-2">
-                  Original Title:{"  "}
-                  <Text className="text-text_primary">
-                    {media.original_title}
-                  </Text>
-                </Text>
-              ) : isTv(media) && media.original_name !== media.name ? (
-                <Text className="text-sm text-text_tertiary pt-2">
-                  Original Title:{"  "}
-                  <Text className="text-text_primary">
-                    {media.original_name}
-                  </Text>
-                </Text>
-              ) : (isTvExtended(media) || isMovieExtended(media)) &&
-                media.tagline ? (
-                <Text className="text-sm text-text_tertiary pt-2">
-                  <Text className="text-text_tertiary">
-                    {(isTvExtended(media) || isMovieExtended(media)) &&
-                      media.tagline}
-                  </Text>
-                </Text>
-              ) : null}
-            </View>
-
-            {/* Genre Tags Row */}
-
-            {media.genres.length > 0 ? (
-              <View className="w-full h-10 justify-center items-center mt-5">
-                <GenreTags
-                  genreIdList={media.genres.map((genre) => genre.id)}
-                  // genreIdList={media.genre_ids}
-                  backgroundType="transparent"
-                />
-              </View>
-            ) : null}
-
-            {/* MEDIA IMAGE WITH STATS */}
-            <NewMediaCardInfo
-              media={media}
-              imgQuality={allImgQualitiesObject?.banner?.value}
+      {media &&
+        credits &&
+        extendedMedia &&
+        allImgItemsSettings !== undefined && (
+          <ScrollView className="flex-1 pb-24">
+            {/* BackDrop Image */}
+            <MoreInfoBackdrop
+              mediaPosterPath={mediaPosterPath}
+              imgQuality={allImgItemsSettings?.banner?.value}
+              // allImgQualities={allImgItemsSettings}
             />
 
-            {isMovieExtended(media) && media.budget ? (
-              <RevenueStats budget={media.budget} revenue={media.revenue} />
-            ) : null}
-
-            {/* DESCRIPTION */}
-            {media.overview ? (
-              <View className="px-4 mt-5 space-y-2">
-                <Text className="text-xs text-text_highLight uppercase tracking-[3px]">
-                  Overview
+            {/* Content Title/name and original title/name  */}
+            <View className="mt-64 flex-1 pt-6">
+              {/* Title */}
+              <View className="px-4">
+                <Text className="text-3xl font-semibold text-text_highLight object-cover">
+                  {getTitle()}
                 </Text>
-                <Text className="text-text_dark">{media.overview}</Text>
-              </View>
-            ) : null}
 
-            {/* PRODUCED IN */}
-            {/* {(isTvExtended(media) || isMovieExtended(media)) &&
+                {isMovie(media) && media.original_title !== media.title ? (
+                  <Text className="text-sm text-text_tertiary pt-2">
+                    Original Title:{"  "}
+                    <Text className="text-text_primary">
+                      {media.original_title}
+                    </Text>
+                  </Text>
+                ) : isTv(media) && media.original_name !== media.name ? (
+                  <Text className="text-sm text-text_tertiary pt-2">
+                    Original Title:{"  "}
+                    <Text className="text-text_primary">
+                      {media.original_name}
+                    </Text>
+                  </Text>
+                ) : (isTvExtended(media) || isMovieExtended(media)) &&
+                  media.tagline ? (
+                  <Text className="text-sm text-text_tertiary pt-2">
+                    <Text className="text-text_tertiary">
+                      {(isTvExtended(media) || isMovieExtended(media)) &&
+                        media.tagline}
+                    </Text>
+                  </Text>
+                ) : null}
+              </View>
+
+              {/* Genre Tags Row */}
+
+              {media.genres.length > 0 ? (
+                <View className="w-full h-10 justify-center items-center mt-5">
+                  <GenreTags
+                    genreIdList={media.genres.map((genre) => genre.id)}
+                    // genreIdList={media.genre_ids}
+                    backgroundType="transparent"
+                  />
+                </View>
+              ) : null}
+
+              {/* MEDIA IMAGE WITH STATS */}
+              <NewMediaCardInfo
+                media={media}
+                imgQuality={allImgItemsSettings?.banner?.value}
+              />
+
+              {isMovieExtended(media) && media.budget ? (
+                <RevenueStats budget={media.budget} revenue={media.revenue} />
+              ) : null}
+
+              {/* DESCRIPTION */}
+              {media.overview ? (
+                <View className="px-4 mt-5 space-y-2">
+                  <Text className="text-xs text-text_highLight uppercase tracking-[3px]">
+                    Overview
+                  </Text>
+                  <Text className="text-text_dark">{media.overview}</Text>
+                </View>
+              ) : null}
+
+              {/* PRODUCED IN */}
+              {/* {(isTvExtended(media) || isMovieExtended(media)) &&
             media.production_countries ? (
               <View className="px-4 mt-5 space-y-2">
                 <Text className="font-semibold text-text_tertiary">
@@ -196,44 +200,44 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
               </View>
             ) : null} */}
 
-            {/* Other Info */}
-            {isTvExtended(media) && media.next_episode_to_air ? (
-              <View className="px-4 space-y-2 mt-8">
-                <Text className="text-xs text-text_highLight uppercase tracking-[3px]">
-                  Latest
-                </Text>
-                <Text className="text-text_dark">{`Episode S${
-                  media.next_episode_to_air.season_number
-                }E${
-                  media.next_episode_to_air.episode_number
-                } is expected to air on ${new Date(
-                  media.next_episode_to_air.air_date
-                ).toDateString()}.`}</Text>
+              {/* Other Info */}
+              {isTvExtended(media) && media.next_episode_to_air ? (
+                <View className="px-4 space-y-2 mt-8">
+                  <Text className="text-xs text-text_highLight uppercase tracking-[3px]">
+                    Latest
+                  </Text>
+                  <Text className="text-text_dark">{`Episode S${
+                    media.next_episode_to_air.season_number
+                  }E${
+                    media.next_episode_to_air.episode_number
+                  } is expected to air on ${new Date(
+                    media.next_episode_to_air.air_date
+                  ).toDateString()}.`}</Text>
+                </View>
+              ) : null}
+            </View>
+
+            {/* BUTTONS CONTAINER */}
+            <View className="w-full flex-row space-between gap-3 pl-4 mt-10">
+              {/* TRAILER BUTTON */}
+              <View className="flex-1">
+                <TrailerButton mediaType={mediaType} mediaId={media.id} />
               </View>
-            ) : null}
-          </View>
 
-          {/* BUTTONS CONTAINER */}
-          <View className="w-full flex-row space-between gap-3 pl-4 mt-10">
-            {/* TRAILER BUTTON */}
-            <View className="flex-1">
-              <TrailerButton mediaType={mediaType} mediaId={media.id} />
+              {/* WATCHLIST BUTTON */}
+              <View className="flex-1">
+                <WatchlistButton media={media} mediaType={mediaType} />
+              </View>
+
+              {/* WATCHED BUTTON */}
+              <View className="flex-1">
+                <WatchedMediaButton media={media} mediaType={mediaType} />
+              </View>
             </View>
 
-            {/* WATCHLIST BUTTON */}
-            <View className="flex-1">
-              <WatchlistButton media={media} mediaType={mediaType} />
-            </View>
+            {/* Network List and Watch Provider row */}
 
-            {/* WATCHED BUTTON */}
-            <View className="flex-1">
-              <WatchedMediaButton media={media} mediaType={mediaType} />
-            </View>
-          </View>
-
-          {/* Network List and Watch Provider row */}
-
-          {/* <View className="mb-10 space-y-6">
+            {/* <View className="mb-10 space-y-6">
             {cast ? (
               <View className="bg-neutral-900/60 pb-6 mx-2 rounded-lg">
                 <Cast personList={credits.cast} title="Cast" />
@@ -249,81 +253,81 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             </View>
           </View> */}
 
-          {/* Network List and Watch Provider row */}
-          <View className="mt-10 space-y-12">
-            {/* Networks available on */}
-            {isTvExtended(media) && media.networks.length > 0 && (
-              <NetworkList
-                networks={media.networks}
-                imgQuality={allImgQualitiesObject?.companies?.value}
-              />
-            )}
-
-            {/* Movie Production companies */}
-            {isMovieExtended(media) &&
-              media.production_companies.length > 0 && (
-                <ProductionCompaines
-                  productions={media.production_companies}
-                  imgQuality={allImgQualitiesObject?.companies?.value}
+            {/* Network List and Watch Provider row */}
+            <View className="mt-10 space-y-12">
+              {/* Networks available on */}
+              {isTvExtended(media) && media.networks.length > 0 && (
+                <NetworkList
+                  networks={media.networks}
+                  imgQuality={allImgItemsSettings?.companies?.value}
                 />
               )}
 
-            {/* Cast and Crew */}
-            {cast.length > 0 || directedBy.length > 0 ? (
-              <View className="mt-8 h-[195]">
-                <Cast cast={cast} directedBy={directedBy} title="Cast" />
-              </View>
-            ) : null}
+              {/* Movie Production companies */}
+              {isMovieExtended(media) &&
+                media.production_companies.length > 0 && (
+                  <ProductionCompaines
+                    productions={media.production_companies}
+                    imgQuality={allImgItemsSettings?.companies?.value}
+                  />
+                )}
 
-            {/* Platforms available on */}
-            <WatchProviders mediaId={media.id} mediaType={mediaType} />
-          </View>
+              {/* Cast and Crew */}
+              {cast.length > 0 || directedBy.length > 0 ? (
+                <View className="mt-8 h-[195]">
+                  <Cast cast={cast} directedBy={directedBy} title="Cast" />
+                </View>
+              ) : null}
 
-          {/* Footer, contains 'Similar' and 'Seasons and episodes' bttons */}
-          <View className="mt-12 flex-row items-center space-x-5 w-full px-4">
-            {/* Realated/Similar Button */}
-            <View className="max-w-xl">
-              <MoreInfoFooterButton
-                title={"Similar"}
-                subtitle={"Show more like this"}
-                onPressHandler={() => {
-                  //  @ts-ignore
-                  navigation.push("Related", {
-                    relatedToMediaId: media.id,
-                    mediaType: mediaType,
-                  });
-                }}
-              />
+              {/* Platforms available on */}
+              <WatchProviders mediaId={media.id} mediaType={mediaType} />
             </View>
-            {/* TV seasons and episodes,for TVs only */}
-            {isTv(media) ? (
-              <View className="flex-1">
+
+            {/* Footer, contains 'Similar' and 'Seasons and episodes' bttons */}
+            <View className="mt-12 flex-row items-center space-x-5 w-full px-4">
+              {/* Realated/Similar Button */}
+              <View className="max-w-xl">
                 <MoreInfoFooterButton
-                  title={"Seasons"}
-                  subtitle={`Show ${
-                    isTvExtended(extendedMedia) &&
-                    extendedMedia?.number_of_seasons
-                  } seasons and ${
-                    isTvExtended(extendedMedia) &&
-                    extendedMedia?.number_of_episodes
-                  } episodes`}
+                  title={"Similar"}
+                  subtitle={"Show more like this"}
                   onPressHandler={() => {
-                    // @ts-ignore
-                    navigation.push("Season and Episodes", {
-                      tvMediaId: isTvExtended(media) && media.id,
-                      tvMediaSeasons: isTvExtended(media) && media.seasons,
-                      tvMediaPosterPath: mediaPosterPath,
-                      tvMediaName:
-                        (isTvExtended(media) && media.name) ||
-                        (isTvExtended(media) && media.original_name),
+                    //  @ts-ignore
+                    navigation.push("Related", {
+                      relatedToMediaId: media.id,
+                      mediaType: mediaType,
                     });
                   }}
                 />
               </View>
-            ) : null}
-          </View>
-        </ScrollView>
-      )}
+              {/* TV seasons and episodes,for TVs only */}
+              {isTv(media) ? (
+                <View className="flex-1">
+                  <MoreInfoFooterButton
+                    title={"Seasons"}
+                    subtitle={`Show ${
+                      isTvExtended(extendedMedia) &&
+                      extendedMedia?.number_of_seasons
+                    } seasons and ${
+                      isTvExtended(extendedMedia) &&
+                      extendedMedia?.number_of_episodes
+                    } episodes`}
+                    onPressHandler={() => {
+                      // @ts-ignore
+                      navigation.push("Season and Episodes", {
+                        tvMediaId: isTvExtended(media) && media.id,
+                        tvMediaSeasons: isTvExtended(media) && media.seasons,
+                        tvMediaPosterPath: mediaPosterPath,
+                        tvMediaName:
+                          (isTvExtended(media) && media.name) ||
+                          (isTvExtended(media) && media.original_name),
+                      });
+                    }}
+                  />
+                </View>
+              ) : null}
+            </View>
+          </ScrollView>
+        )}
     </View>
   );
 };

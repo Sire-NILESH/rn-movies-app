@@ -32,7 +32,7 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
 
   const baseImgUrl = `https://image.tmdb.org/t/p/w${logoImgQuality}`;
 
-  // console.log("logo quality", logoImgQuality);
+  console.log("logo quality", baseImgUrl);
 
   return (
     <View className="flex-1 space-y-4 mt-3">

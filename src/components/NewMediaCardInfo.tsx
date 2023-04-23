@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import React from "react";
 import {
   MovieMedia,
@@ -32,18 +32,24 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
     ? `https://image.tmdb.org/t/p/w${posterImgQuality}${media.backdrop_path}`
     : `https://image.tmdb.org/t/p/w${posterImgQuality}${media.poster_path}`;
 
-  console.log(imageUrl);
+  console.log("new media card image ", imageUrl);
   return (
     <View className="mt-5 mx-3 justify-between border border-stone-800 rounded-2xl overflow-hidden">
       <View
-        className="relative flex-1 rounded-2xl overflow-hidden"
+        className="relative flex-1 overflow-hidden"
         style={{ width: "100%", aspectRatio: 16 / 9 }}
       >
         {imageUrl ? (
-          <ImageCached
-            imageURL={imageUrl}
-            cacheKey={`${media.id}-${isMovie(media) ? "movie" : "tv"}-backdrop`}
-            resizeType="cover"
+          // <ImageCached
+          //   imageURL={imageUrl}
+          //   cacheKey={`${media.id}-${isMovie(media) ? "movie" : "tv"}-backdrop`}
+          //   resizeType="stretch"
+          // />
+
+          <Image
+            source={{ uri: imageUrl }}
+            resizeMode="cover"
+            className="h-full w-full"
           />
         ) : (
           <ImagePlaceholder />
@@ -52,11 +58,9 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
 
       <LinearGradient
         colors={[
-          "rgba(15, 15, 15, 0.9)",
-          "rgba(15, 15, 15, 0.7)",
           "rgba(15, 15, 15, 0.6)",
-          "rgba(15, 15, 15, 0.4)",
-          "rgba(0,0,0,0)",
+          "rgba(15, 15, 15, 0.6)",
+          "rgba(15, 15, 15, 0.1)",
         ]}
         start={{ x: 0.0, y: 1 }}
         style={{ width: "100%", aspectRatio: 16 / 9 }}
@@ -89,9 +93,6 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
             />
             <Text className="text-text_highLight">
               {isMovie(media) ? "Movie" : "TV"}
-              {/* {`${isMovie(media) ? "Movie" : "TV"} ${
-                isTv(media) ? `, ${tvMediaType(media.type)}` : ""
-              }`} */}
             </Text>
           </View>
 
@@ -135,7 +136,6 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
               <Text className="text-text_highLight">
                 <Text className="text-text_highLight">
                   {toHoursAndMinutes(media.runtime)}
-                  {/* { toHoursAndMinutes(media.runtime)} minutes */}
                 </Text>
               </Text>
             </View>

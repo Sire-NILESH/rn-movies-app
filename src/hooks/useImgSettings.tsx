@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import {
   IImageItemSettingsValue,
+  IImgItemSettingsDB,
+  ImageItemTypes,
   TAllImgSettingsDB,
 } from "../../types/typings";
 import { addImgItemSetting, getdataFromACollection } from "../storage/database";
+
+type TTempImgSettingsObj = {
+  [key in ImageItemTypes]: IImgItemSettingsDB;
+};
 
 /**A Hook to get all the Stored Image quality settings data from the DB
  *
@@ -11,7 +17,7 @@ import { addImgItemSetting, getdataFromACollection } from "../storage/database";
  */
 const useImgSettings = () => {
   const [allImgItemsSettings, setAllImageItemsSettings] =
-    useState<TAllImgSettingsDB>([]);
+    useState<TTempImgSettingsObj>();
   const [errorImgSettings, setErrorImgSettings] = useState<Error | null>(null);
 
   useEffect(() => {
@@ -20,7 +26,14 @@ const useImgSettings = () => {
         setErrorImgSettings(null);
         const imgSettings = await getdataFromACollection("image_qualities");
         if (imgSettings.rows.length > 0) {
-          setAllImageItemsSettings(imgSettings.rows._array);
+          const result = imgSettings.rows._array;
+          let temp: TTempImgSettingsObj = {} as TTempImgSettingsObj;
+          result.forEach(function (item: IImgItemSettingsDB) {
+            temp[item.name] = item;
+          });
+          setAllImageItemsSettings(temp);
+
+          // setAllImageItemsSettings(imgSettings.rows._array);
         }
       } catch (err) {
         setErrorImgSettings(err as Error);

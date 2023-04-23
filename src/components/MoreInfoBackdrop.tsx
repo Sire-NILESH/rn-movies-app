@@ -20,6 +20,8 @@ const MoreInfoBackdrop: React.FC<IProps> = ({
 
   const imgUrl = `https://image.tmdb.org/t/p/w${posterImgQuality}${mediaPosterPath}`;
 
+  console.log("media info banner", imgUrl);
+
   return (
     <View
       className="absolute top-0 left-0 w-[100%] flex-1 h-full"

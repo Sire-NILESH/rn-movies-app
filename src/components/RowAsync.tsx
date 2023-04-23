@@ -15,12 +15,10 @@ import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
 import { isMovie } from "./../utils/helpers/helper";
 import { sendUrlObjApiRequest } from "../utils/requests";
 import useFetcher from "../hooks/useFetcher";
-import React, { useState, useEffect, memo } from "react";
+import React, { memo } from "react";
 import ThumbnailSkeleton from "./ThumbnailSkeleton";
 import ThumbnailMemoised from "./ThumbnailMemoised";
 import Thumbnail from "./Thumbnail";
-import { useDefaultImageQualityHooks } from "../hooks/reduxHooks";
-import useImageItemSetting from "../hooks/useImageItemSetting";
 
 interface Props {
   title: string;
@@ -113,7 +111,8 @@ function renderFlatList(
     <>
       {medias && isMovieArray(medias) ? (
         <FlatList
-          initialNumToRender={5}
+          maxToRenderPerBatch={4}
+          initialNumToRender={4}
           ListFooterComponent={renderFooterItemFunction(
             medias,
             title,
@@ -144,7 +143,8 @@ function renderFlatList(
         />
       ) : (
         <FlatList
-          initialNumToRender={5}
+          maxToRenderPerBatch={4}
+          initialNumToRender={4}
           ListFooterComponent={renderFooterItemFunction(
             medias,
             title,

@@ -71,7 +71,7 @@ function Thumbnail({
     },
   };
 
-  const imageQuality = quality ? quality : "500";
+  const imageQuality = quality ? quality : "300";
 
   const imageURL =
     (media.backdrop_path || media.poster_path) &&
@@ -79,7 +79,7 @@ function Thumbnail({
       orientation === "landscape" ? media.backdrop_path : media.poster_path
     }`;
 
-  console.log(imageURL, imageQuality);
+  // console.log(imageURL, imageQuality);
 
   return (
     <View

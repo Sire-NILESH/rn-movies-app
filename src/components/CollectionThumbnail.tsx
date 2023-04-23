@@ -64,7 +64,7 @@ function CollectionThumbnail({
     },
   };
 
-  const imageQuality = quality ? quality : "500";
+  const imageQuality = quality ? quality : "300";
 
   const imageURL =
     (media.backdrop_path || media.poster_path) &&

@@ -97,6 +97,8 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
         thumbnailQuality !== undefined ? (
           <FlatList
             className=""
+            maxToRenderPerBatch={4}
+            initialNumToRender={4}
             data={Object.keys(dateCollection)}
             keyExtractor={(dateKey) => dateKey}
             renderItem={(dateKeyObj) => {

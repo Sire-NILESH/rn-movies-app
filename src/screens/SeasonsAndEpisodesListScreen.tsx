@@ -203,6 +203,8 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
               //   );
               // }}
               keyExtractor={(episode) => String(episode.id)}
+              maxToRenderPerBatch={4}
+              initialNumToRender={4}
               renderItem={(episodeObj) => (
                 <EpisodeInfoCard episode={episodeObj.item} />
               )}

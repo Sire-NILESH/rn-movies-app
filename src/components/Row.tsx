@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
-  IImageQuality,
   IImgItemSettingsDB,
   IPlaylist,
   MovieMedia,
@@ -14,9 +13,6 @@ import { Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
 import { isMovie } from "./../utils/helpers/helper";
-import { getTileListScreenMedias } from "../utils/requests";
-import { useDefaultImageQualityHooks } from "../hooks/reduxHooks";
-import useImageItemSetting from "../hooks/useImageItemSetting";
 
 interface Props {
   title: string;
@@ -83,7 +79,8 @@ function renderFlatList(
     <>
       {medias && isMovieArray(medias) ? (
         <FlatList
-          initialNumToRender={5}
+          maxToRenderPerBatch={4}
+          initialNumToRender={4}
           ListFooterComponent={renderFooterItemFunction(
             medias,
             title,
@@ -114,7 +111,8 @@ function renderFlatList(
         />
       ) : (
         <FlatList
-          initialNumToRender={5}
+          maxToRenderPerBatch={4}
+          initialNumToRender={4}
           ListFooterComponent={renderFooterItemFunction(
             medias,
             title,

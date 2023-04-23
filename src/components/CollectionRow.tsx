@@ -75,6 +75,8 @@ function renderFlatList(
           numColumns={3}
           bounces
           className="pl-2 py-1"
+          maxToRenderPerBatch={4}
+          initialNumToRender={4}
           ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
           contentContainerStyle={{
             width: "100%",

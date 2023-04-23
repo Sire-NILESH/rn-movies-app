@@ -2,16 +2,16 @@ import { View, Text, ImageBackground, Dimensions } from "react-native";
 import React from "react";
 import {
   ICredits,
+  IImgItemSettingsDB,
+  ImageItemTypes,
   MediaTypes,
   MovieMediaExtended,
   TvMediaExtended,
 } from "../../types/typings";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import Loader from "./ui/Loader";
 import NothingToShow from "./NothingToShow";
 import { ScrollView } from "react-native-gesture-handler";
-import { LinearGradient } from "expo-linear-gradient";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import {
   isMovie,
   isMovieExtended,
@@ -29,7 +29,8 @@ import MoreInfoFooterButton from "./ui/MoreInfoFooterButton";
 import WatchProviders from "./WatchProviders";
 import Cast from "./Cast";
 import RevenueStats from "./ui/RevenueStats";
-import { getdataFromACollection } from "../storage/database";
+import useImgSettings from "../hooks/useImgSettings";
+import MoreInfoBackdrop from "./MoreInfoBackdrop";
 
 interface IProps {
   media: TvMediaExtended | MovieMediaExtended;
@@ -40,7 +41,9 @@ interface IProps {
   errorLoadingProps: Error | null;
 }
 
-const screenDimensions = Dimensions.get("screen");
+type TTempImgSettingsObj = {
+  [key in ImageItemTypes]: IImgItemSettingsDB;
+};
 
 const MediaMoreInfo: React.FC<IProps> = (props) => {
   const {
@@ -53,6 +56,22 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
   } = props;
   const navigation = useNavigation();
   const mediaPosterPath = media?.poster_path || media?.backdrop_path;
+
+  // img setttings state
+  const { allImgItemsSettings } = useImgSettings();
+
+  const allImgQualitiesObject = React.useMemo(
+    function () {
+      if (allImgItemsSettings) {
+        let temp: TTempImgSettingsObj = {} as TTempImgSettingsObj;
+        allImgItemsSettings.forEach(function (item) {
+          temp[item.name] = item;
+        });
+        return temp;
+      }
+    },
+    [allImgItemsSettings]
+  );
 
   const cast = credits?.cast;
   const directedBy = credits?.crew.filter((c) => {
@@ -71,16 +90,6 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
     return media && media.name;
   }
 
-  React.useEffect(() => {
-    async function getImgSettings() {
-      try {
-        const settings = await getdataFromACollection("image_qualities");
-        console.log("IIMMMAAAGGGEEE settings : ", settings.rows._array);
-      } catch (err) {}
-    }
-    getImgSettings();
-  }, []);
-
   return (
     <View className="flex-1 bg-secondary">
       {/* Loader */}
@@ -91,36 +100,14 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
         <NothingToShow title={"Something went wrong"} problemType="error" />
       ) : null}
 
-      {media && credits && extendedMedia && (
+      {media && credits && extendedMedia && allImgItemsSettings && (
         <ScrollView className="flex-1 pb-24">
           {/* BackDrop Image */}
-          <View
-            className="absolute top-0 left-0 w-[100%] flex-1 h-full"
-            style={{
-              width: screenDimensions.width,
-              height: undefined,
-              aspectRatio: 2 / 3,
-            }}
-          >
-            <LinearGradient
-              colors={[
-                "rgba(0,0,0,0)",
-                "rgba(28, 25, 23, 0.4)",
-                "rgba(28, 25, 23, 0.8)",
-                Colors.black,
-              ]}
-              className="flex-1"
-            >
-              <ImageBackground //wrapping the main entry screen with this <ImageBackground> component
-                source={{
-                  uri: `https://image.tmdb.org/t/p/w500${mediaPosterPath}`,
-                }}
-                resizeMode="cover" //similar to web, "cover", "contain", etc.
-                style={{ flex: 1 }} //for View dimensions internally
-                imageStyle={{ zIndex: -100 }} //for Image styles internally.
-              ></ImageBackground>
-            </LinearGradient>
-          </View>
+          <MoreInfoBackdrop
+            mediaPosterPath={mediaPosterPath}
+            imgQuality={allImgQualitiesObject?.banner?.value}
+            // allImgQualities={allImgItemsSettings}
+          />
 
           {/* Content Title/name and original title/name  */}
           <View className="mt-64 flex-1 pt-6">
@@ -168,7 +155,10 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             ) : null}
 
             {/* MEDIA IMAGE WITH STATS */}
-            <NewMediaCardInfo media={media} />
+            <NewMediaCardInfo
+              media={media}
+              imgQuality={allImgQualitiesObject?.banner?.value}
+            />
 
             {isMovieExtended(media) && media.budget ? (
               <RevenueStats budget={media.budget} revenue={media.revenue} />
@@ -263,13 +253,19 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
           <View className="mt-10 space-y-12">
             {/* Networks available on */}
             {isTvExtended(media) && media.networks.length > 0 && (
-              <NetworkList networks={media.networks} />
+              <NetworkList
+                networks={media.networks}
+                imgQuality={allImgQualitiesObject?.companies?.value}
+              />
             )}
 
             {/* Movie Production companies */}
             {isMovieExtended(media) &&
               media.production_companies.length > 0 && (
-                <ProductionCompaines productions={media.production_companies} />
+                <ProductionCompaines
+                  productions={media.production_companies}
+                  imgQuality={allImgQualitiesObject?.companies?.value}
+                />
               )}
 
             {/* Cast and Crew */}

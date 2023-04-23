@@ -4,12 +4,17 @@ import CompanyLogoBuilder from "./builders/CompanyLogoBuilder";
 
 interface IProps {
   networks: Network[];
+  imgQuality?: string;
 }
 
 const NetworkList: React.FC<IProps> = (props) => {
   return (
     <>
-      <CompanyLogoBuilder company={props.networks} mediaType="tv" />
+      <CompanyLogoBuilder
+        company={props.networks}
+        mediaType="tv"
+        imgQuality={props.imgQuality}
+      />
     </>
   );
 };

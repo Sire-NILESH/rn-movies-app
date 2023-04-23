@@ -49,6 +49,13 @@ function Row({ title, medias, playlist, thumbnailQualitySettings }: Props) {
 
 export default Row;
 
+// Calculate and pass the dimensioins from the parent(here) to the thumbnails.
+// So every thumbnail wont have to calculate them separately.
+const windowWidth = getDeviceDimensions("window").width;
+
+const rowItemWidth = windowWidth * 31 + 4;
+// const rowItemHeight = ((windowWidth * 31 + 4) * 3) / 3;
+
 function renderFlatList(
   medias: MovieMedia[] | TvMedia[],
   title: string,
@@ -67,14 +74,6 @@ function renderFlatList(
     navigation.push(screen, paramOption);
   };
 
-  // Calculate and pass the dimensioins from the parent(here) to the thumbnails.
-  // So every thumbnail wont have to calculate them separately.
-  const windowWidth = getDeviceDimensions("window").width;
-
-  // if (!imgItemsSetting) {
-  //   return null;
-  // }
-
   return (
     <>
       {medias && isMovieArray(medias) ? (
@@ -91,6 +90,13 @@ function renderFlatList(
           className="pl-2 py-1"
           // className="ml-2 h-32"
           data={medias}
+          getItemLayout={(_data, index) => {
+            return {
+              index: index,
+              length: rowItemWidth,
+              offset: rowItemWidth + index,
+            };
+          }}
           renderItem={(media) => (
             <View className="ml-1 bg-tertiary rounded-md">
               <Thumbnail
@@ -123,6 +129,13 @@ function renderFlatList(
           className="px-2 py-1"
           // className="ml-2 h-32"
           data={medias}
+          getItemLayout={(_data, index) => {
+            return {
+              index: index,
+              length: rowItemWidth,
+              offset: rowItemWidth + index,
+            };
+          }}
           renderItem={(media) => (
             <View className="ml-1 bg-tertiary rounded-md">
               <Thumbnail

@@ -16,6 +16,7 @@ interface IProps {
   company: IProductionCompany[] | Network[];
   //   navigateTo: (screen: string, paramOption: Object) => void;
   mediaType: MediaTypes;
+  imgQuality?: string;
 }
 
 const CompanyLogoBuilder: React.FC<IProps> = (props) => {
@@ -26,6 +27,12 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
     // @ts-ignore
     navigation.push(screen, paramOption);
   };
+
+  const logoImgQuality = props.imgQuality ? props.imgQuality : "300";
+
+  const baseImgUrl = `https://image.tmdb.org/t/p/w${logoImgQuality}`;
+
+  // console.log("logo quality", logoImgQuality);
 
   return (
     <View className="flex-1 space-y-4 mt-3">
@@ -82,7 +89,7 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
                   <RenderLogo
                     id={c.id}
                     mediaType={props.mediaType}
-                    imgPath={`https://image.tmdb.org/t/p/w300${c.logo_path}`}
+                    imgPath={baseImgUrl + c.logo_path}
                     companyName={c.name}
                   />
                 </View>

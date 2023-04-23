@@ -1,22 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   IImageItemSettingsValue,
-  ImageItemTypes,
   TAllImgSettingsDB,
 } from "../../types/typings";
-import {
-  addImgItemSetting,
-  // getImgItemSetting,
-  getdataFromACollection,
-} from "../storage/database";
-
-interface IReturnType {
-  allImgItemsSettings: TAllImgSettingsDB;
-  setErrorImgSettings: Error | null;
-  setImgItemQualitySettings: (
-    newImgSetting: IImageItemSettingsValue
-  ) => Promise<void>;
-}
+import { addImgItemSetting, getdataFromACollection } from "../storage/database";
 
 /**A Hook to get all the Stored Image quality settings data from the DB
  *

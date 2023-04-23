@@ -1,40 +1,38 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { MovieMedia, TvMedia, TvMediaExtended } from "../../types/typings";
+import {
+  MovieMedia,
+  TAllImgSettingsDB,
+  TvMedia,
+  TvMediaExtended,
+} from "../../types/typings";
 import {
   dateFormatter,
   isMovie,
   isMovieExtended,
-  isTv,
   isTvExtended,
   toHoursAndMinutes,
-  tvMediaType,
 } from "../utils/helpers/helper";
-import { isoLangs } from "../utils/helpers/isoLangs";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "./../utils/Colors";
 import ImagePlaceholder from "./ui/ImagePlaceholder";
 import ImageCached from "./ui/ImageCached";
-import { useFavouriteMediaListHooks } from "../hooks/reduxHooks";
 import { by639_1 } from "iso-language-codes";
 
 interface IProps {
   media: MovieMedia | TvMedia | TvMediaExtended;
+  imgQuality?: string;
 }
 
-const NewMediaCardInfo: React.FC<IProps> = ({ media }) => {
-  // const {
-  //   addMediaToFavouriteHandler,
-  //   removeMediaFromFavouriteHandler,
-  //   isMediaFavourite,
-  // } = useFavouriteMediaListHooks();
+const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
+  const posterImgQuality = imgQuality ? imgQuality : 400;
 
   const imageUrl = media.backdrop_path
-    ? `https://image.tmdb.org/t/p/w500${media.backdrop_path}`
-    : `https://image.tmdb.org/t/p/w500${media.poster_path}`;
+    ? `https://image.tmdb.org/t/p/w${posterImgQuality}${media.backdrop_path}`
+    : `https://image.tmdb.org/t/p/w${posterImgQuality}${media.poster_path}`;
 
-  // h-[200px]
+  console.log(imageUrl);
   return (
     <View className="mt-5 mx-3 justify-between border border-stone-800 rounded-2xl overflow-hidden">
       <View

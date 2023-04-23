@@ -26,10 +26,6 @@ const ImgQualitySettings = () => {
       <CardRow rowTitle="Tv Networks/Producers">
         <ImageQualityDropdown imageItem="companies" />
       </CardRow>
-
-      <CardRow rowTitle="Tv Networks/Producers">
-        <ImageQualityDropdown imageItem="companies" />
-      </CardRow>
     </SettingsCardWrapper>
   );
 };

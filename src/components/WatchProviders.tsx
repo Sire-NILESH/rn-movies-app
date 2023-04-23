@@ -15,9 +15,14 @@ import { useDefaultRegionHooks } from "../hooks/reduxHooks";
 interface IProps {
   mediaId: number;
   mediaType: MediaTypes;
+  imgQuality?: string;
 }
 
-const WatchProviders: React.FC<IProps> = ({ mediaId, mediaType }) => {
+const WatchProviders: React.FC<IProps> = ({
+  mediaId,
+  mediaType,
+  imgQuality,
+}) => {
   const {
     screenProps,
     loadingProps,
@@ -40,6 +45,8 @@ const WatchProviders: React.FC<IProps> = ({ mediaId, mediaType }) => {
     // @ts-ignore
     screenProps && screenProps[currentCountry.code];
 
+  const providerImgQuality = imgQuality ? imgQuality : "200";
+
   return (
     <View className="flex-1 mt-10 space-y-5">
       <View
@@ -58,23 +65,41 @@ const WatchProviders: React.FC<IProps> = ({ mediaId, mediaType }) => {
       </View>
 
       {watchProviders?.flatrate ? (
-        <View>{renderFlatlist(watchProviders.flatrate, "Subscription")}</View>
+        <View>
+          {renderFlatlist(
+            watchProviders.flatrate,
+            "Subscription",
+            providerImgQuality
+          )}
+        </View>
       ) : null}
 
       {watchProviders?.rent ? (
-        <View>{renderFlatlist(watchProviders.rent, "Rent")}</View>
+        <View>
+          {renderFlatlist(watchProviders.rent, "Rent", providerImgQuality)}
+        </View>
       ) : null}
 
       {watchProviders?.buy ? (
-        <View>{renderFlatlist(watchProviders.buy, "Buy")}</View>
+        <View>
+          {renderFlatlist(watchProviders.buy, "Buy", providerImgQuality)}
+        </View>
       ) : null}
 
       {watchProviders?.ads ? (
-        <View>{renderFlatlist(watchProviders.ads, "With Adverts")}</View>
+        <View>
+          {renderFlatlist(
+            watchProviders.ads,
+            "With Adverts",
+            providerImgQuality
+          )}
+        </View>
       ) : null}
 
       {watchProviders?.free ? (
-        <View>{renderFlatlist(watchProviders.free, "Free")}</View>
+        <View>
+          {renderFlatlist(watchProviders.free, "Free", providerImgQuality)}
+        </View>
       ) : null}
 
       {errorLoadingProps && (
@@ -100,8 +125,11 @@ export default WatchProviders;
 
 function renderFlatlist(
   providerType: WatchProvider[],
-  availableType: "Subscription" | "Rent" | "Free" | "Buy" | "With Adverts"
+  availableType: "Subscription" | "Rent" | "Free" | "Buy" | "With Adverts",
+  providerImgQuality: string
 ) {
+  const baseImgUrl = `https://image.tmdb.org/t/p/w${providerImgQuality}`;
+
   return (
     <View className="space-y-3 py-4 mx-2 rounded-xl border-2 bg-accent">
       <Text className="text-text_highLight uppercase tracking-[3px] ml-4">
@@ -128,7 +156,7 @@ function renderFlatlist(
                 }}
               >
                 <ImageCached
-                  imageURL={`https://image.tmdb.org/t/p/w500${p.logo_path}`}
+                  imageURL={baseImgUrl + p.logo_path}
                   cacheKey={p.provider_id + "watchProvider"}
                 />
               </View>

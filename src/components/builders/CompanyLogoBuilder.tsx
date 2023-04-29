@@ -73,6 +73,7 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
                       queryParams: {
                         [companyType.queryParam]: companyType.queryParamValue,
                         language: "en-US",
+                        adult: true,
                       },
                     },
                     currentMediaType: props.mediaType,

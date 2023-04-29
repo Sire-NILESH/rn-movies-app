@@ -74,7 +74,7 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
                 orientation="portrait"
                 navigateTo={navigateTo}
                 windowWidth={windowWidth}
-                imgType="cached"
+                imgType="regular"
                 quality={props.thumbnailQuality?.value}
                 // quality={defaultImgQuality.value}
               />

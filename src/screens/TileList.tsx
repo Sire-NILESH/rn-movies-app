@@ -144,18 +144,22 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     navigation.setOptions({
       headerTitle: (props) => {
         return (
-          <Text
-            className="text-xl"
-            style={{ color: props.tintColor }}
-            ellipsizeMode="tail"
-            numberOfLines={1}
-          >
-            {userSelectedPlaylists.length === 1
-              ? userSelectedPlaylists[0].name
-              : userSelectedPlaylists.length > 1
-              ? "Custom Genres"
-              : title}
-          </Text>
+          <View className="w-full max-w-[225]">
+            <Text
+              className="text-xl"
+              style={{
+                color: props.tintColor,
+              }}
+              ellipsizeMode="tail"
+              numberOfLines={1}
+            >
+              {userSelectedPlaylists.length === 1
+                ? userSelectedPlaylists[0].name
+                : userSelectedPlaylists.length > 1
+                ? "Custom Genres"
+                : title}
+            </Text>
+          </View>
         );
       },
       headerRight: (props) => (

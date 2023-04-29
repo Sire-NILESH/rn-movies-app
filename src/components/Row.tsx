@@ -21,6 +21,16 @@ interface Props {
   thumbnailQualitySettings?: IImgItemSettingsDB;
 }
 
+// Calculate and pass the dimensioins from the parent(here) to the thumbnails.
+// So every thumbnail wont have to calculate them separately.
+const windowWidth = getDeviceDimensions("window").width;
+// const windowDimensions = getDeviceDimensions("window");
+
+const rowItemWidth = windowWidth * 31 + 8;
+// const rowItemHeight = ((windowWidth * 0.31 + 4) * 3) / 3 + 44;
+
+// 44
+
 function Row({ title, medias, playlist, thumbnailQualitySettings }: Props) {
   return (
     <View className="space-y-1 mb-5">
@@ -48,13 +58,6 @@ function Row({ title, medias, playlist, thumbnailQualitySettings }: Props) {
 }
 
 export default Row;
-
-// Calculate and pass the dimensioins from the parent(here) to the thumbnails.
-// So every thumbnail wont have to calculate them separately.
-const windowWidth = getDeviceDimensions("window").width;
-
-const rowItemWidth = windowWidth * 31 + 4;
-// const rowItemHeight = ((windowWidth * 31 + 4) * 3) / 3;
 
 function renderFlatList(
   medias: MovieMedia[] | TvMedia[],
@@ -104,7 +107,7 @@ function renderFlatList(
                 orientation="portrait"
                 navigateTo={navigateTo}
                 windowWidth={windowWidth}
-                imgType="cached"
+                imgType="regular"
                 quality={thumbnailQualitySettings?.value}
                 // orientation="landscape"
               />
@@ -144,6 +147,7 @@ function renderFlatList(
                 navigateTo={navigateTo}
                 windowWidth={windowWidth}
                 quality={thumbnailQualitySettings?.value}
+                imgType="regular"
                 // orientation="landscape"
               />
             </View>

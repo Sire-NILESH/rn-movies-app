@@ -22,6 +22,7 @@ import {
 } from "./../utils/helpers/helper";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
+import { useAllowNsfwContentHooks } from "../hooks/reduxHooks";
 
 interface ISearchResults {
   results: MovieMedia[] | TvMedia[];
@@ -58,6 +59,8 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [searchQueryResult, setSearchQueryResult] =
     useState<ISearchResults | null>(null);
 
+  const { allowNsfwContent } = useAllowNsfwContentHooks();
+
   function setSearchQueryHandler(text: string): void {
     if (text.trim().length > 0) {
       setSearchQuery(text);
@@ -73,6 +76,7 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         "multi",
         // searchCategory ? searchCategory : "multi",
         1,
+        allowNsfwContent.nsfw,
         abortController
       );
       data && setSearchQueryResult(data);

@@ -6,6 +6,7 @@ import TilesRenderedView from "../TilesRenderedView";
 import NothingToShow from "../NothingToShow";
 import { showErrorAlert } from "../../utils/helpers/helper";
 import useImageItemSetting from "../../hooks/useImageItemSetting";
+import { useAllowNsfwContentHooks } from "../../hooks/reduxHooks";
 
 interface IProps {
   screenType: "Search" | "Related";
@@ -27,6 +28,8 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [error, setError] = useState<Error | null>(null);
 
+  const { allowNsfwContent } = useAllowNsfwContentHooks();
+
   // thumbnail images quality
   const { imgItemsSetting: thumbnailQuality } =
     useImageItemSetting("thumbnail");
@@ -44,6 +47,7 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
           moreMedias = await getRelatedMediasProps(
             props.relatedScreenOptions.relatedToMediaId,
             props.relatedScreenOptions.mediaType,
+            allowNsfwContent.nsfw,
             pageNumber
           );
         }
@@ -58,7 +62,8 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
             props.searchScreenOptions.searchCategory
               ? props.searchScreenOptions.searchCategory
               : "multi",
-            pageNumber
+            pageNumber,
+            allowNsfwContent.nsfw
             // props.searchScreenOptions.abortController
           );
           moreMedias = searchResults;

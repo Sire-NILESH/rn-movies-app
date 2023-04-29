@@ -59,10 +59,25 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
         {/* STATS */}
         <View className="flex-row items-center space-x-5">
           <View>
-            <DataElement
+            <View className="flex-row space-x-2 items-center">
+              <Ionicons name={"star"} color={Colors.yellow[400]} size={16} />
+              <Text
+                className="text-green-500 text-xs"
+                style={{
+                  color:
+                    Number(episode.vote_average.toFixed(2)) > 4
+                      ? Colors.green[500]
+                      : Colors.red[400],
+                }}
+              >
+                {`${episode.vote_average.toFixed(2)}`}
+                <Text className="text-text_primary">/10</Text>
+              </Text>
+            </View>
+            {/* <DataElement
               text={`${episode.vote_average.toFixed(2)}/10`}
               iconName="star"
-            />
+            /> */}
           </View>
           <View>
             <DataElement

@@ -66,53 +66,53 @@ export const homeScreenPlaylists: IPlaylist[] = [
   // "Popular Movies"
   buildPopularPlaylist("Popular Movies", "movie"),
   // "Animation"
-  buildGenrePlaylist("movie", { id: 16, name: "Animation" }),
+  buildGenrePlaylist("movie", { id: 16, name: "Animated Delights" }),
   // "Comedy"
-  buildGenrePlaylist("movie", { id: 35, name: "Comedy" }),
-  // // "Drama"
-  // buildGenrePlaylist("tv", { id: 18, name: "Drama" }),
-  // // "War"
-  // buildGenrePlaylist("movie", { id: 10752, name: "War" }),
-  // // "Documentary"
-  // buildGenrePlaylist("tv", { id: 99, name: "Documentary" }),
-  // // "Family"
-  // buildGenrePlaylist("movie", { id: 10751, name: "Family" }),
+  buildGenrePlaylist("movie", { id: 35, name: "Comedy Corner" }),
+  // "Drama"
+  buildGenrePlaylist("tv", { id: 18, name: "Drama Central" }),
+  // "War"
+  buildGenrePlaylist("movie", { id: 10752, name: "War Stories" }),
+  // "Documentary"
+  buildGenrePlaylist("tv", { id: 99, name: "Documentary" }),
+  // "Family"
+  buildGenrePlaylist("movie", { id: 10751, name: "Family Favorites" }),
 ];
 
 export const movieScreenPlaylists: IPlaylist[] = [
   // "Comedy"
-  buildGenrePlaylist("movie", { id: 35, name: "Comedy" }),
+  buildGenrePlaylist("movie", { id: 35, name: "Comedy Corner" }),
   // "Adventure"
   buildGenrePlaylist("movie", { id: 12, name: "Adventure" }),
   // "Drama"
-  buildGenrePlaylist("movie", { id: 18, name: "Drama" }),
+  buildGenrePlaylist("movie", { id: 18, name: "Drama Central" }),
   // "Action"
-  buildGenrePlaylist("movie", { id: 28, name: "Action" }),
-  // // "Animation"
-  // buildGenrePlaylist("movie", { id: 16, name: "Animation" }),
-  // // "Horror"
-  // buildGenrePlaylist("movie", { id: 27, name: "Horror" }),
-  // // "Science Fiction"
-  // buildGenrePlaylist("movie", { id: 878, name: "Science Fiction" }),
-  // // "Documentary"
-  // buildGenrePlaylist("movie", { id: 99, name: "Documentary" }),
+  buildGenrePlaylist("movie", { id: 28, name: "Action Busters" }),
+  // "Animation"
+  buildGenrePlaylist("movie", { id: 16, name: "Animated Delights" }),
+  // "Horror"
+  buildGenrePlaylist("movie", { id: 27, name: "Horrors & Nightmares" }),
+  // "Science Fiction"
+  buildGenrePlaylist("movie", { id: 878, name: "Science Fiction" }),
+  // "Documentary"
+  buildGenrePlaylist("movie", { id: 99, name: "Documentary" }),
 ];
 
 export const tvScreenPlaylists: IPlaylist[] = [
   // "Sci-Fi & Fantasy"
   buildGenrePlaylist("tv", { id: 10765, name: "Sci-Fi & Fantasy" }),
   // "Crime"
-  buildGenrePlaylist("tv", { id: 80, name: "Crime" }),
+  buildGenrePlaylist("tv", { id: 80, name: "Criminal Minds" }),
   // "Comedy"
-  buildGenrePlaylist("tv", { id: 35, name: "Comedy" }),
+  buildGenrePlaylist("tv", { id: 35, name: "Laugh Track" }),
   // "Talk"
-  buildGenrePlaylist("tv", { id: 10767, name: "Talk" }),
-  // // "Animation"
-  // buildGenrePlaylist("tv", { id: 16, name: "Animation" }),
-  // // "Family"
-  // buildGenrePlaylist("tv", { id: 10751, name: "Family" }),
-  // // "Drama"
-  // buildGenrePlaylist("tv", { id: 18, name: "Drama" }),
-  // // "Documentary"
-  // buildGenrePlaylist("tv", { id: 99, name: "Documentary" }),
+  buildGenrePlaylist("tv", { id: 10767, name: "Talk It Out" }),
+  // "Animation"
+  buildGenrePlaylist("tv", { id: 16, name: "Animated Amusements" }),
+  // "Family"
+  buildGenrePlaylist("tv", { id: 10751, name: "Family Time" }),
+  // "Drama"
+  buildGenrePlaylist("tv", { id: 18, name: "Emotional Rollercoaster" }),
+  // "Documentary"
+  buildGenrePlaylist("tv", { id: 99, name: "Real Life Chronicles" }),
 ];

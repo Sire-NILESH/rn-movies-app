@@ -10,7 +10,7 @@ export default function SettingsCardWrapper(props: {
   // children?: string | JSX.Element | JSX.Element[] | (() => JSX.Element);
 }) {
   return (
-    <View className="w-full mt-6 bg-neutral-900 py-4 px-2 rounded-xl">
+    <View className="w-full bg-neutral-900 py-4 px-2 rounded-xl">
       <View className="flex-row space-x-2 items-center mb-2 mx-2">
         <Ionicons
           name={props.iconName}

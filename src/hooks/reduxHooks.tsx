@@ -25,6 +25,7 @@ import { setDefaultRegion } from "../store/defaultRegionSlice";
 import { setDefaultLanguageForMedias } from "../store/languageForMediasSlice";
 import { setDefaultYearFilterForMedias } from "../store/yearFIlterForMediasSlice";
 import { setDefaultImageQuality } from "../store/imageItemQualitySlice";
+import { toggleAllowNsfwContent } from "../store/allowNsfwContentSlice";
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch: () => AppDispatch = useDispatch;
@@ -155,21 +156,36 @@ export const useDefaultYearHooks = () => {
   };
 };
 
-export const useDefaultImageQualityHooks = () => {
+export const useAllowNsfwContentHooks = () => {
   // REDUX TOOLKIT HOOKS
-  const defaultImgItemQualities = useAppSelector(
-    (state) => state.imageItemQualities
-  );
+  const allowNsfwContent = useAppSelector((state) => state.allowNsfwContent);
   const dispatch = useAppDispatch();
 
-  const setDefaultImgQualityHandler = (
-    imgItemQuality: IImageItemQualitySetting
-  ) => {
-    dispatch(setDefaultImageQuality(imgItemQuality));
+  const toggleAllowNsfwContentHandler = () => {
+    dispatch(toggleAllowNsfwContent());
   };
 
   return {
-    setDefaultImgQualityHandler,
-    defaultImgItemQualities,
+    toggleAllowNsfwContentHandler,
+    allowNsfwContent,
   };
 };
+
+// export const useDefaultImageQualityHooks = () => {
+//   // REDUX TOOLKIT HOOKS
+//   const defaultImgItemQualities = useAppSelector(
+//     (state) => state.imageItemQualities
+//   );
+//   const dispatch = useAppDispatch();
+
+//   const setDefaultImgQualityHandler = (
+//     imgItemQuality: IImageItemQualitySetting
+//   ) => {
+//     dispatch(setDefaultImageQuality(imgItemQuality));
+//   };
+
+//   return {
+//     setDefaultImgQualityHandler,
+//     defaultImgItemQualities,
+//   };
+// };

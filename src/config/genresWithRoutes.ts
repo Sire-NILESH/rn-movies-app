@@ -14,6 +14,8 @@ import {
   tvGenresList,
 } from "../utils/helpers/helper";
 
+const currentYear = new Date(Date.now()).getFullYear();
+
 const bollywoodHindi = {
   iso639_1: "hi",
   iso639_2B: "hin",
@@ -64,10 +66,26 @@ export const tvPlaylist = [
     buildTvPlaylist("Adult Swim Shows", "Adult Swim"),
     buildTvPlaylist("AMC", "AMC"),
     buildTvPlaylist("ABC", "ABC"),
-    buildLanguagePlaylist("Bollywood (Hindi)", "tv", bollywoodHindi),
-    buildLanguagePlaylist("Bollywood (Tamil)", "tv", bollywoodTamil),
-    buildLanguagePlaylist("Bollywood (Telugu)", "tv", bollywoodTelugu),
-    buildLanguagePlaylist("Bollywood (Kannada)", "tv", bollywoodKannada),
+    buildLanguagePlaylist(
+      `Bollywood (Hindi, ${currentYear})`,
+      "tv",
+      bollywoodHindi
+    ),
+    buildLanguagePlaylist(
+      `Bollywood (Tamil, ${currentYear})`,
+      "tv",
+      bollywoodTamil
+    ),
+    buildLanguagePlaylist(
+      `Bollywood (Telugu, ${currentYear})`,
+      "tv",
+      bollywoodTelugu
+    ),
+    buildLanguagePlaylist(
+      `Bollywood (Kannada, ${currentYear})`,
+      "tv",
+      bollywoodKannada
+    ),
     buildTvPlaylist("Cartoon Network Shows", "Cartoon Network"),
     buildTvPlaylist("Nickelodeon Shows", "Nickelodeon"),
     buildTvPlaylist("Disney XD Shows", "Disney XD"),
@@ -106,15 +124,23 @@ export const moviePlaylist = [
       bollywoodHindi,
       0
     ),
-    buildLanguagePlaylist("New in Bollywood (Hindi)", "movie", bollywoodHindi),
-    buildLanguagePlaylist("New in Bollywood (Tamil)", "movie", bollywoodTamil),
     buildLanguagePlaylist(
-      "New in Bollywood (Telugu)",
+      `Bollywood (Hindi, ${currentYear})`,
+      "movie",
+      bollywoodHindi
+    ),
+    buildLanguagePlaylist(
+      `Bollywood (Tamil, ${currentYear})`,
+      "movie",
+      bollywoodTamil
+    ),
+    buildLanguagePlaylist(
+      `Bollywood (Telugu, ${currentYear})`,
       "movie",
       bollywoodTelugu
     ),
     buildLanguagePlaylist(
-      "New in Bollywood (Kannada)",
+      `Bollywood (Kannada, ${currentYear})`,
       "movie",
       bollywoodKannada
     ),

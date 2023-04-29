@@ -8,9 +8,9 @@ import { Colors } from "../../utils/Colors";
 const ImportExportSettings = () => {
   return (
     <SettingsCardWrapper
-      iconName="trash-outline"
-      title="Delete"
-      subtitle={`You can delete your collections here.`}
+      iconName="document-outline"
+      title="Import/Export File"
+      subtitle={`You can import/export your file here.`}
     >
       <RenderRow
         rowIconNode={

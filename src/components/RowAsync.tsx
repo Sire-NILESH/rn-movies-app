@@ -27,6 +27,13 @@ interface Props {
   thumbnailQualitySettings?: IImgItemSettingsDB;
 }
 
+// Calculate and pass the dimensioins from the parent(here) to the thumbnails.
+// So every thumbnail wont have to calculate them separately.
+const windowWidth = getDeviceDimensions("window").width;
+
+const rowItemWidth = windowWidth * 0.31 + 4;
+const rowItemHeight = ((windowWidth * 0.31 + 4) * 3) / 2;
+
 function RowAsync({ title, playlist, thumbnailQualitySettings }: Props) {
   const params = [[playlist]];
   // const { defaultImgQuality } = useDefaultImageQualityHooks();
@@ -43,37 +50,44 @@ function RowAsync({ title, playlist, thumbnailQualitySettings }: Props) {
     errorLoadingProps,
   } = useFetcherMemo();
 
+  if (loadingProps || errorLoadingProps) {
+    return (
+      <View
+        className=""
+        style={{
+          height: rowItemHeight + 28,
+        }}
+      />
+    );
+  }
+
   return (
-    <View className="space-y-1 mb-5">
-      <View className="flex-row space-x-4 mb-1">
+    <View
+      className="space-y-1 mb-5"
+      style={{
+        height: rowItemHeight + 28,
+      }}
+    >
+      <View className="mb-1">
         <Text className="pl-5 text-sm font-semibold text-text_primary">
           {title}
         </Text>
       </View>
-
-      {/* {isMovieArray(medias)
-        ? renderFlatList(medias as MovieMedia[], title, mediaGenre.id)
-        : renderFlatList(medias as TvMedia[], title, mediaGenre.id)} */}
-      {loadingProps ? (
-        // null
-        <ThumbnailSkeleton />
-      ) : isMovieArray(medias) ? (
-        renderFlatList(
-          medias as MovieMedia[],
-          title,
-          playlist,
-          // loadingProps,
-          thumbnailQualitySettings
-        )
-      ) : (
-        renderFlatList(
-          medias as TvMedia[],
-          title,
-          playlist,
-          // loadingProps,
-          thumbnailQualitySettings
-        )
-      )}
+      {isMovieArray(medias)
+        ? renderFlatList(
+            medias as MovieMedia[],
+            title,
+            playlist,
+            // loadingProps,
+            thumbnailQualitySettings
+          )
+        : renderFlatList(
+            medias as TvMedia[],
+            title,
+            playlist,
+            // loadingProps,
+            thumbnailQualitySettings
+          )}
     </View>
   );
 }
@@ -82,13 +96,6 @@ function RowAsync({ title, playlist, thumbnailQualitySettings }: Props) {
 
 // export default RowAsync;
 export default memo(RowAsync);
-
-// Calculate and pass the dimensioins from the parent(here) to the thumbnails.
-// So every thumbnail wont have to calculate them separately.
-const windowWidth = getDeviceDimensions("window").width;
-
-const rowItemWidth = windowWidth * 31 + 4;
-// const rowItemHeight = ((windowWidth * 31 + 4) * 3) / 3;
 
 function renderFlatList(
   medias: MovieMedia[] | TvMedia[],
@@ -130,7 +137,12 @@ function renderFlatList(
             };
           }}
           renderItem={(media) => (
-            <View className="ml-1 bg-tertiary rounded-md">
+            <View
+              className="ml-1"
+              // style={{
+              //   height: rowItemHeight,
+              // }}
+            >
               <ThumbnailMemoised
                 media={isMovie(media.item) ? media.item : media.item}
                 orientation="portrait"
@@ -169,7 +181,12 @@ function renderFlatList(
             };
           }}
           renderItem={(media) => (
-            <View className="ml-1 bg-tertiary rounded-md">
+            <View
+              className="ml-1"
+              // style={{
+              //   height: rowItemHeight,
+              // }}
+            >
               {/* <ThumbnailMemoised */}
               <Thumbnail
                 media={isMovie(media.item) ? media.item : media.item}

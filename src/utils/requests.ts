@@ -20,10 +20,11 @@ export const searchRequest = async (
   searchText: string,
   mediaType: MediaTypes,
   pageNumber: number,
+  allowAdult: boolean = false,
   abortController?: AbortController
 ) => {
   const page = pageNumber ? pageNumber : 1;
-  const url = `${BASE_URL}/search/${mediaType}?api_key=${API_KEY}&query=${searchText}&language=en-US&include_adult=false&page=${page}`;
+  const url = `${BASE_URL}/search/${mediaType}?api_key=${API_KEY}&query=${searchText}&language=en-US&include_adult=${allowAdult}&page=${page}`;
   // const abortController = new AbortController();
   const data = await fetch(url, { signal: abortController?.signal })
     .then((res) => res.json())
@@ -324,6 +325,7 @@ export const getGenreMediasProps = async (
 export const getRelatedMediasProps = async (
   relatedToMediaId: number,
   mediaType: MediaTypes,
+  allowAdult: boolean = false,
   pageNumber: number
 ) => {
   try {
@@ -331,6 +333,7 @@ export const getRelatedMediasProps = async (
       `/${mediaType}/${relatedToMediaId}/recommendations?`,
       {
         language: "en-US",
+        include_adult: allowAdult,
         page: pageNumber,
       }
     );

@@ -9,6 +9,7 @@ import DefaultYearSettings from "../components/settings/DefaultYearSettings";
 import DefaultLangSettings from "../components/settings/DefaultLangSettings";
 import ImportExportSettings from "../components/settings/ImportExportSettings";
 import DevOnlySettings from "../components/settings/DevOnlySettings";
+import AdultFilterSettings from "../components/settings/AdultFilterSettings";
 
 const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   // const { navigation, route } = props;
@@ -16,32 +17,51 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   return (
     <View className=" bg-secondary flex-1">
       <ScrollView
-        className="bg-secondary px-3 space-y-10"
+        className="bg-secondary px-3 space-y-2 pt-2"
         contentContainerStyle={{
           alignItems: "center",
           justifyContent: "flex-start",
         }}
       >
-        {/* DEFAULT REGION */}
-        <DefaultRegionSettings />
+        <View>
+          {/* DEFAULT REGION */}
+          <DefaultRegionSettings />
+        </View>
 
-        {/* Set Default Language */}
-        <DefaultLangSettings />
+        <View>
+          {/* Set Default Language */}
+          <DefaultLangSettings />
+        </View>
 
-        {/* Set Default Year */}
-        <DefaultYearSettings />
+        <View>
+          {/* Set Default Year */}
+          <DefaultYearSettings />
+        </View>
 
-        {/* Set Default Image Quality */}
-        <ImgQualitySettings />
+        <View>
+          {/* Set Adult Filter */}
+          <AdultFilterSettings />
+        </View>
 
-        {/* IMPORT/EXPORT */}
-        <ImportExportSettings />
+        <View>
+          {/* Set Default Image Quality */}
+          <ImgQualitySettings />
+        </View>
 
-        {/* DELETE */}
-        <DeleteSettings />
+        <View>
+          {/* IMPORT/EXPORT */}
+          <ImportExportSettings />
+        </View>
 
-        {/* DEVELOPMENT ONLY SETTINGS */}
-        <DevOnlySettings />
+        <View>
+          {/* DELETE */}
+          <DeleteSettings />
+        </View>
+
+        <View>
+          {/* DEVELOPMENT ONLY SETTINGS */}
+          <DevOnlySettings />
+        </View>
       </ScrollView>
     </View>
   );

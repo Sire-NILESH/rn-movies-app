@@ -1,4 +1,8 @@
-import { IReduxListMedia, TImgQualityValues } from "../../types/typings";
+import {
+  IReduxListMedia,
+  MediaTypes,
+  TImgQualityValues,
+} from "../../types/typings";
 import {
   View,
   Pressable,
@@ -6,27 +10,31 @@ import {
   StyleProp,
   ViewStyle,
   ImageStyle,
+  Image,
 } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
 import ImageCached from "./ui/ImageCached";
 import ImagePlaceholder from "./ui/ImagePlaceholder";
 import React from "react";
+import { isMovie } from "../utils/helpers/helper";
 
 export interface ICollectionThumbnailProps {
   media: IReduxListMedia;
   orientation: "portrait" | "landscape";
   windowWidth: number;
-  navigateTo: (screen: string, paramOption: Object) => void;
+  imgType?: "cached" | "regular";
   quality?: TImgQualityValues;
+  navigateTo: (screen: string, paramOption: Object) => void;
 }
 
 function CollectionThumbnail({
   media,
   orientation,
   windowWidth,
-  navigateTo,
+  imgType,
   quality,
+  navigateTo,
 }: ICollectionThumbnailProps) {
   const thumbnailDimensions = {
     landscape: {
@@ -80,7 +88,7 @@ function CollectionThumbnail({
       style={containerStyles.containerView}
     >
       <Pressable
-        className="flex-1"
+        className=""
         onPress={() => {
           console.log(media);
           navigateTo("CollectionMoreInfo", {
@@ -91,7 +99,7 @@ function CollectionThumbnail({
       >
         {/* https://github.com/dcodeteam/react-native-fast-image-expo */}
 
-        {imageURL ? (
+        {/* {imageURL ? (
           <ImageCached
             imageURL={imageURL}
             cacheKey={
@@ -100,6 +108,31 @@ function CollectionThumbnail({
                 : `${media.mediaId}-${media.mediaType}-backdrop`
             }
           />
+        ) : (
+          <ImagePlaceholder />
+        )} */}
+
+        {imgType && imgType === "cached" ? (
+          imageURL ? (
+            <ImageCached
+              imageURL={imageURL}
+              cacheKey={
+                orientation === "portrait"
+                  ? `${media.mediaId}-${media.mediaType}-poster`
+                  : `${media.mediaId}-${media.mediaType}-backdrop`
+              }
+            />
+          ) : (
+            <ImagePlaceholder />
+          )
+        ) : imageURL ? (
+          <ImageView
+            imageURL={imageURL}
+            imgType="regular"
+            mediaId={media.mediaId}
+            orientation={orientation}
+            mediaType={media.mediaType}
+          ></ImageView>
         ) : (
           <ImagePlaceholder />
         )}
@@ -119,7 +152,7 @@ function CollectionThumbnail({
             "rgba(28, 25, 23, 0.8)",
           ]}
           // border-2 border-stone-50, when selected.
-          className="absolute flex-1 flex-row items-end pb-2 px-2"
+          className="absolute  flex-row items-end pb-2 px-2"
           style={{
             borderRadius: 6,
             width: dimensions.imageWidth,
@@ -153,3 +186,41 @@ function CollectionThumbnail({
 }
 
 export default React.memo(CollectionThumbnail);
+
+interface IImageView {
+  imgType: "cached" | "regular";
+  imageURL: string;
+  mediaId: number;
+  mediaType: MediaTypes;
+  orientation: "portrait" | "landscape";
+}
+
+function ImageView({
+  imgType,
+  imageURL,
+  mediaId,
+  mediaType,
+  orientation,
+}: IImageView) {
+  return (
+    <>
+      {imgType === "cached" ? (
+        <ImageCached
+          imageURL={imageURL}
+          cacheKey={
+            orientation === "portrait"
+              ? `${mediaId}-${mediaType === "movie" ? "movie" : "tv"}-poster`
+              : `${mediaId}-${mediaType === "tv" ? "movie" : "tv"}-backdrop`
+          }
+        />
+      ) : (
+        <Image
+          source={{ uri: imageURL }}
+          className="h-full w-full"
+          resizeMode="cover"
+          fadeDuration={400}
+        />
+      )}
+    </>
+  );
+}

@@ -17,6 +17,7 @@ import {
 } from "redux-persist";
 import persistStore from "redux-persist/es/persistStore";
 import imageItemQualityReducer from "./imageItemQualitySlice";
+import allowNsfwContentSliceReducer from "./allowNsfwContentSlice";
 
 const persistConfig = {
   key: "root",
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   defaultRegion: defaultRegionSliceReducer,
   defaultLanguageForMedias: defaultLanguageForMediasReducer,
   defaultYearFilterForMedias: defaultYearFilterForMediasReducer,
+  allowNsfwContent: allowNsfwContentSliceReducer,
   // imageItemQualities: imageItemQualityReducer,
 });
 

@@ -185,7 +185,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
                   <Text className="font-semibold text-text_tertiary">
                     Produced in :
                   </Text>
-                  <View className="w-[75%] flex-row items-center flex-wrap">
+                  <View className="w-[78%] flex-row items-center flex-wrap">
                     {media.production_countries.map((c, i) => {
                       return (
                         <View className="flex-row items-center">

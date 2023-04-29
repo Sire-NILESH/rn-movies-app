@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, FlatList, Pressable } from "react-native";
+import { View, Text, FlatList, Pressable, Image } from "react-native";
 // @ts-ignore
 import ExpoFastImage from "expo-fast-image";
 import { useNavigation } from "@react-navigation/native";
@@ -70,7 +70,7 @@ const Cast: React.FC<IProps> = (props) => {
                         <RenderProfile
                           id={p.id}
                           name={p.name}
-                          imgPath={`https://image.tmdb.org/t/p/w100${p.profile_path}`}
+                          imgPath={`https://image.tmdb.org/t/p/w200${p.profile_path}`}
                         />
                       </View>
                       <View className="justify-start">
@@ -118,56 +118,8 @@ const Cast: React.FC<IProps> = (props) => {
                     },
                     currentMediaType: "movie",
                   });
-
-                  // /person/1253360
-
-                  // navigateTo("Tiles", {
-                  //   title: p.name,
-                  //   urlObject: {
-                  //     name: p.name,
-                  //     url: "/search/person",
-                  //     queryParams: {
-                  //       query: p.name,
-                  //       language: "en-US",
-                  //     },
-                  //   },
-                  //   currentMediaType: "movie",
-                  // });
-
-                  // navigateTo("Person Medias", {
-                  //   title: p.name,
-                  //   urlObject: {
-                  //     name: p.name,
-                  //     url: `/discover`,
-                  //     queryParams: {
-                  //       with_people: p.id,
-                  //       language: "en-US",
-                  //     },
-                  //   },
-                  //   currentMediaType: "movie",
-                  // });
-
-                  // navigateTo("Tiles", {
-                  //   title: p.name,
-                  //   playlist: {
-                  //     name: p.name,
-                  //     url: `/discover/movie`,
-                  //     queryParams: {
-                  //       with_people: p.id,
-                  //       language: "en-US",
-                  //     },
-                  //   },
-                  //   currentMediaType: "movie",
-                  // });
                 }}
               >
-                {/* <Text
-                  key={p.id}
-                  numberOfLines={1}
-                  className="text-text_dark text-xs mb-1 text-center w-[100]"
-                >
-                  {p.name}
-                </Text> */}
                 <View
                   className="rounded-md justify-center"
                   style={{
@@ -220,7 +172,7 @@ function RenderProfile({
   imgPath: string;
   name: string;
 }) {
-  const [fallbackImage, setFallbackImage] = useState<boolean>(true);
+  const [fallbackImage, setFallbackImage] = useState<boolean>(false);
 
   function setFallbackImagehandler(state: boolean) {
     setFallbackImage(state);
@@ -228,7 +180,25 @@ function RenderProfile({
 
   return (
     <View className="h-full w-full rounded-xl overflow-hidden border-2 border-stone-800/40">
-      <ExpoFastImage
+      {imgPath && !fallbackImage ? (
+        <Image
+          source={{ uri: imgPath }}
+          className="h-full w-full border-2 border-green-500"
+          resizeMode="cover"
+          fadeDuration={400}
+          onError={(err) => {
+            if (err) {
+              setFallbackImagehandler(true);
+            }
+          }}
+        />
+      ) : (
+        <View className="h-full w-full justify-center items-center">
+          <Ionicons name="person" color={Colors.green[900]} size={54} />
+        </View>
+      )}
+
+      {/* <ExpoFastImage
         uri={imgPath}
         cacheKey={`${id}`}
         resizeMode={"cover"}
@@ -242,12 +212,13 @@ function RenderProfile({
           height: "100%",
           // borderRadius: 9999,
         }}
-      />
-      {fallbackImage && (
-        <View className="absolute h-full w-full justify-center items-center">
+      /> */}
+
+      {/* {fallbackImage && (
+        <View className="h-full w-full justify-center items-center">
           <Ionicons name="person" color={Colors.green[900]} size={54} />
         </View>
-      )}
+      )} */}
     </View>
   );
 }

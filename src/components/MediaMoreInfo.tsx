@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, Dimensions } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
 import {
   ICredits,
@@ -171,7 +171,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
               {/* DESCRIPTION */}
               {media.overview ? (
                 <View className="px-4 mt-5 space-y-2">
-                  <Text className="text-xs text-text_highLight uppercase tracking-[3px]">
+                  <Text className="font-semibold text-text_tertiary">
                     Overview
                   </Text>
                   <Text className="text-text_dark">{media.overview}</Text>
@@ -179,31 +179,31 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
               ) : null}
 
               {/* PRODUCED IN */}
-              {/* {(isTvExtended(media) || isMovieExtended(media)) &&
-            media.production_countries ? (
-              <View className="px-4 mt-5 space-y-2">
-                <Text className="font-semibold text-text_tertiary">
-                  Produced in
-                </Text>
-                <View className="flex-row items-center ">
-                  {media.production_countries.map((c, i) => {
-                    return (
-                      <View className="flex-row items-center flex-wrap">
-                        <Text className="text-text_dark">{c.name}</Text>
-                        {i !== media.production_countries.length - 1 && (
-                          <Text className="text-text_dark"> • </Text>
-                        )}
-                      </View>
-                    );
-                  })}
+              {(isTvExtended(media) || isMovieExtended(media)) &&
+              media.production_countries ? (
+                <View className="flex-row items-start space-x-4 px-4 mt-5">
+                  <Text className="font-semibold text-text_tertiary">
+                    Produced in :
+                  </Text>
+                  <View className="w-[75%] flex-row items-center flex-wrap">
+                    {media.production_countries.map((c, i) => {
+                      return (
+                        <View className="flex-row items-center">
+                          <Text className="text-text_dark">{c.name}</Text>
+                          {i !== media.production_countries.length - 1 && (
+                            <Text className="text-text_dark"> • </Text>
+                          )}
+                        </View>
+                      );
+                    })}
+                  </View>
                 </View>
-              </View>
-            ) : null} */}
+              ) : null}
 
               {/* Other Info */}
               {isTvExtended(media) && media.next_episode_to_air ? (
                 <View className="px-4 space-y-2 mt-8">
-                  <Text className="text-xs text-text_highLight uppercase tracking-[3px]">
+                  <Text className="font-semibold text-text_tertiary">
                     Latest
                   </Text>
                   <Text className="text-text_dark">{`Episode S${
@@ -218,7 +218,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             </View>
 
             {/* BUTTONS CONTAINER */}
-            <View className="w-full flex-row space-between gap-3 pl-4 mt-10">
+            <View className="w-full flex-row space-between gap-3 pl-4 mt-8">
               {/* TRAILER BUTTON */}
               <View className="flex-1">
                 <TrailerButton mediaType={mediaType} mediaId={media.id} />
@@ -254,7 +254,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
           </View> */}
 
             {/* Network List and Watch Provider row */}
-            <View className="mt-10 space-y-12">
+            <View className="mt-8 space-y-12">
               {/* Networks available on */}
               {isTvExtended(media) && media.networks.length > 0 && (
                 <NetworkList

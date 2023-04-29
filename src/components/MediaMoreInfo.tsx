@@ -181,7 +181,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
               {/* PRODUCED IN */}
               {(isTvExtended(media) || isMovieExtended(media)) &&
               media.production_countries ? (
-                <View className="flex-row items-start space-x-4 px-4 mt-5">
+                <View className="flex-row items-start space-x-2 px-4 mt-5">
                   <Text className="font-semibold text-text_tertiary">
                     Produced in :
                   </Text>
@@ -191,7 +191,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
                         <View className="flex-row items-center">
                           <Text className="text-text_dark">{c.name}</Text>
                           {i !== media.production_countries.length - 1 && (
-                            <Text className="text-text_dark"> • </Text>
+                            <Text className="text-text_dark">, </Text>
                           )}
                         </View>
                       );
@@ -202,7 +202,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
 
               {/* Other Info */}
               {isTvExtended(media) && media.next_episode_to_air ? (
-                <View className="px-4 space-y-2 mt-8">
+                <View className="px-4 space-y-2 mt-5">
                   <Text className="font-semibold text-text_tertiary">
                     Latest
                   </Text>

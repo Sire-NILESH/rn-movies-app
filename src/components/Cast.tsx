@@ -3,7 +3,7 @@ import { View, Text, FlatList, Pressable, Image } from "react-native";
 // @ts-ignore
 import ExpoFastImage from "expo-fast-image";
 import { useNavigation } from "@react-navigation/native";
-import { ICast, ICreditPerson, ICredits, ICrew } from "../../types/typings";
+import { ICast, ICrew } from "../../types/typings";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
 

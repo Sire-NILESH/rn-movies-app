@@ -71,6 +71,8 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
       else dateCollectionTemp[date].push(media);
     });
 
+    console.log(dateCollectionTemp);
+
     return dateCollectionTemp;
   }, [medias]);
 

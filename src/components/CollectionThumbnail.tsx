@@ -80,7 +80,7 @@ function CollectionThumbnail({
       orientation === "landscape" ? media.backdrop_path : media.poster_path
     }`;
 
-  console.log(imageURL, imageQuality, quality);
+  // console.log(imageURL, imageQuality, quality);
 
   return (
     <View

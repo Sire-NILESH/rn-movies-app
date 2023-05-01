@@ -41,9 +41,9 @@ interface IProps {
   errorLoadingProps: Error | null;
 }
 
-type TTempImgSettingsObj = {
-  [key in ImageItemTypes]: IImgItemSettingsDB;
-};
+// type TTempImgSettingsObj = {
+//   [key in ImageItemTypes]: IImgItemSettingsDB;
+// };
 
 const MediaMoreInfo: React.FC<IProps> = (props) => {
   const {
@@ -180,7 +180,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
 
               {/* PRODUCED IN */}
               {(isTvExtended(media) || isMovieExtended(media)) &&
-              media.production_countries ? (
+              media.production_countries?.length > 0 ? (
                 <View className="flex-row items-start space-x-2 px-4 mt-5">
                   <Text className="font-semibold text-text_tertiary">
                     Produced in :
@@ -254,7 +254,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
           </View> */}
 
             {/* Network List and Watch Provider row */}
-            <View className="mt-8 space-y-12">
+            <View className="mt-8 space-y-8">
               {/* Networks available on */}
               {isTvExtended(media) && media.networks.length > 0 && (
                 <NetworkList

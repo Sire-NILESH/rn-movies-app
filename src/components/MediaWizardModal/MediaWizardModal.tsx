@@ -2,17 +2,19 @@ import { View, Text, Modal, Pressable, ScrollView } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { Colors } from "./../utils/Colors";
-import { IUrlObject, MediaTypes } from "../../types/typings";
-import { moviePlaylist, tvPlaylist } from "../config/genresWithRoutes";
+import { Colors } from "../../utils/Colors";
+import { IUrlObject, MediaTypes } from "../../../types/typings";
+import { moviePlaylist, tvPlaylist } from "../../config/genresWithRoutes";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import LanguageDropdown from "./ui/LanguageDropdown";
-import YearsDropdown from "./ui/YearsDropdown";
+import LanguageDropdown from "../ui/LanguageDropdown";
+import YearsDropdown from "../ui/YearsDropdown";
 import {
   useDefaultLanguageHooks,
   useDefaultRegionHooks,
   useDefaultYearHooks,
-} from "../hooks/reduxHooks";
+} from "../../hooks/reduxHooks";
+import FeaturedPlaylists from "./FeaturedPlaylists";
+import MediaGenresSelect from "./MediaGenresSelect";
 
 interface IProps {
   isVisible: boolean;
@@ -21,6 +23,8 @@ interface IProps {
   closeWithConfirm: (playlists: IUrlObject[]) => void;
 }
 
+type TViews = "featured_playlists" | "genres_playlist";
+
 const MediaWizardModal: React.FC<IProps> = ({
   isVisible,
   onClose,
@@ -28,10 +32,10 @@ const MediaWizardModal: React.FC<IProps> = ({
   closeWithConfirm,
 }) => {
   const { defaultYear } = useDefaultYearHooks();
-  const { setDefaultLanguageHandler, defaultLanguage } =
-    useDefaultLanguageHooks();
+  const { defaultLanguage } = useDefaultLanguageHooks();
   const [selectedPlaylists, setSelectedPlaylists] = useState<IUrlObject[]>([]);
   const [currentYear, setCurrentYear] = useState<number>(defaultYear.year);
+  const [currentView, setCurrentView] = useState<TViews>("featured_playlists");
   const [currentLang, setCurrentLang] = useState<string>(
     defaultLanguage.iso639_1
   );
@@ -42,6 +46,10 @@ const MediaWizardModal: React.FC<IProps> = ({
 
   const setCurrentLangHandler = (language: string) => {
     setCurrentLang(language);
+  };
+
+  const setCurrentViewHandler = (view: TViews) => {
+    setCurrentView(view);
   };
 
   console.log("YYYYYOOOOOO YEAR", currentYear);
@@ -115,7 +123,7 @@ const MediaWizardModal: React.FC<IProps> = ({
 
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible}>
-      <View className="absolute my-[25%] mx-[5%] h-[90%] w-[90%] bg-secondary rounded-xl pb-2 border-[1px] border-stone-900 [elevation:10]">
+      <View className="absolute my-[25%] mx-[5%] h-[85%] w-[90%] bg-secondary rounded-xl pb-2 border-[1px] border-stone-900 [elevation:10]">
         {/* HEADER */}
         <View className="flex-row items-center justify-between h-[42] bg-tertiary rounded-t-xl px-[20]">
           {/* Header Title */}
@@ -133,7 +141,7 @@ const MediaWizardModal: React.FC<IProps> = ({
           <View className="flex-row justify-between w-[20%]">
             <View className="rounded-full overflow-hidden">
               <Pressable
-                disabled={setSelectedPlaylists.length > 0 ? false : true}
+                disabled={selectedPlaylists.length > 0 ? false : true}
                 className="p-2"
                 onPress={onConfirmHandler}
                 android_ripple={{ color: "#eee" }}
@@ -164,132 +172,87 @@ const MediaWizardModal: React.FC<IProps> = ({
         </View>
 
         <View className="flex-1">
-          <ScrollView className="flex-1">
-            {/* CUSTOM PLAYLIST */}
-            <View className="my-8">
-              {/* <View className="ml-5 rounded-full bg-stone-800/80 px-2 py-2 w-28 mb-1">
-                  <Text className="text-center text-green-500 rounded-full font-semibold uppercase tracking-[3px] text-xs">
+          {/* HEADER */}
+          <View className="flex-row items-center space-x-2 mx-4 py-2">
+            <View className="w-20 rounded-md overflow-hidden">
+              <Pressable
+                onPress={() => {
+                  setCurrentViewHandler("featured_playlists");
+                }}
+                className="p-2"
+                android_ripple={{ color: "#eee" }}
+              >
+                <View className="space-y-2 h-8">
+                  <Text
+                    className="mx-auto font-bold"
+                    style={{
+                      color:
+                        currentView === "featured_playlists"
+                          ? Colors.text_primary
+                          : Colors.text_dark,
+                    }}
+                  >
                     Playlists
                   </Text>
-                </View> */}
-
-              <Text className="mb-1 text-center text-green-500 rounded-full font-semibold uppercase tracking-[3px] text-xs">
-                • Playlists •
-              </Text>
-
-              <Text
-                className="text-center mx-6 text-text_dark text-sm mb-4"
-                numberOfLines={2}
-              >
-                Select from one of our handpicked playlists
-              </Text>
-
-              <View className="rounded-xl mx-5 overflow-hidden">
-                {playlists[0].map((playlist, index) => (
-                  <Pressable
-                    onPress={() => {
-                      // Directly add single genre to the list of selections and confirm modal too
-                      onConfirmPlaylist(playlist);
-                    }}
-                    android_ripple={{ color: "#eee" }}
-                    key={playlist.name}
-                    className="flex-row px-4 bg-stone-800/50"
-                    style={
-                      index % 2 === 0
-                        ? { backgroundColor: "rgba(23, 23, 23, 1)" }
-                        : { backgroundColor: "rgba(23, 23, 23, 0.7)" }
-                    }
-                    //  style={
-                    //    index % 2 === 0
-                    //      ? { backgroundColor: Colors.neutral[800] }
-                    //      : { backgroundColor: Colors.stone[900] }
-                    //  }
-                  >
-                    <Text className="px-2 py-2 text-left text-gray-300">
-                      {playlist.name}
-                    </Text>
-                  </Pressable>
-                ))}
-              </View>
+                  {currentView === "featured_playlists" ? (
+                    <View className="rounded-full bg-green-500 h-1 w-full" />
+                  ) : null}
+                </View>
+              </Pressable>
             </View>
+            <View className="w-20 rounded-md overflow-hidden">
+              <Pressable
+                onPress={() => {
+                  setCurrentViewHandler("genres_playlist");
+                }}
+                className="p-2"
+                android_ripple={{ color: "#eee" }}
+              >
+                <View className="space-y-2 h-8">
+                  <Text
+                    className="mx-auto font-bold"
+                    style={{
+                      color:
+                        currentView === "genres_playlist"
+                          ? Colors.text_primary
+                          : Colors.text_dark,
+                    }}
+                  >
+                    Genres
+                  </Text>
+                  {currentView === "genres_playlist" ? (
+                    <View className="rounded-full bg-green-500 h-1 w-full" />
+                  ) : null}
+                </View>
+              </Pressable>
+            </View>
+          </View>
+
+          <ScrollView className="flex-1">
+            {/* CUSTOM PLAYLIST */}
+            {currentView === "featured_playlists" ? (
+              <FeaturedPlaylists
+                playlists={playlists[0]}
+                onConfirmPlaylist={onConfirmPlaylist}
+              />
+            ) : null}
 
             {/* DIVIDER */}
-            <View className="flex-row items-center my-3">
+            {/* <View className="flex-row items-center my-3">
               <View className="flex-1 border-[1px] border-tertiary rounded-full mx-10" />
               <Text className="text-text_tertiary">OR</Text>
               <View className="flex-1 border-[1px] border-tertiary rounded-full mx-10" />
-            </View>
+            </View> */}
 
-            {/* FILTER */}
-            <View className="mt-8">
-              <Text className="mb-1 text-center text-green-500 rounded-full font-semibold uppercase tracking-[3px] text-xs">
-                • Filters •
-              </Text>
-
-              <Text
-                className="text-center mx-6 text-text_dark text-sm mb-2"
-                numberOfLines={2}
-              >
-                Select a language and/or year of release
-              </Text>
-
-              <View
-                className="flex-row space-x-4 items-center justify-between px-4 mt-2 rounded-xl"
-                // style={{ backgroundColor: "rgb(4, 20, 10)" }}
-              >
-                <LanguageDropdown
-                  saveMode="local"
-                  localLangSetter={setCurrentLangHandler}
-                />
-                <YearsDropdown
-                  saveMode="local"
-                  localYearSetter={setCurrentYearHandler}
-                />
-              </View>
-            </View>
-
-            {/* CUSTOM GENRES SELECTS */}
-            <View className="my-8">
-              <Text className="mb-1 text-center text-green-500 rounded-full font-semibold uppercase tracking-[3px] text-xs">
-                • Genres •
-              </Text>
-
-              <Text
-                className="text-center mx-6 text-text_dark text-sm mb-4"
-                numberOfLines={2}
-              >
-                Select one or more genres from the list below
-              </Text>
-
-              <View className="rounded-xl mx-5 overflow-hidden">
-                {playlists[1].map((playlist, index) => (
-                  <View
-                    key={playlist.name}
-                    className="flex-row px-4"
-                    style={
-                      index % 2 === 0
-                        ? { backgroundColor: "rgba(23, 23, 23, 1)" }
-                        : { backgroundColor: "rgba(23, 23, 23, 0.7)" }
-                    }
-                  >
-                    <BouncyCheckbox
-                      size={20}
-                      fillColor={Colors.green[800]}
-                      unfillColor={"transparent"}
-                      innerIconStyle={{ borderWidth: 1 }}
-                      onPress={(isChecked: boolean) => {
-                        isChecked === true
-                          ? selectedPlaylistHandlers(playlist)
-                          : selectedPlaylistHandlers(playlist, true);
-                      }}
-                    />
-                    <Text className="px-2 py-2 text-left text-gray-300">
-                      {playlist.name}
-                    </Text>
-                  </View>
-                ))}
-              </View>
-            </View>
+            {/* FILTER AND CUSTOM GENRES SELECTS*/}
+            {currentView === "genres_playlist" ? (
+              <MediaGenresSelect
+                genrePlaylists={playlists[1]}
+                selectedPlaylistHandlers={selectedPlaylistHandlers}
+                setCurrentLangHandler={setCurrentLangHandler}
+                setCurrentYearHandler={setCurrentYearHandler}
+              />
+            ) : null}
           </ScrollView>
         </View>
       </View>

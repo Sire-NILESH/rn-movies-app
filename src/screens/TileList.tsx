@@ -16,7 +16,7 @@ import { getTileListScreenMedias } from "../utils/requests";
 import GenreTags from "../components/GenreTags";
 import TilesRenderedView from "../components/TilesRenderedView";
 import NothingToShow from "../components/NothingToShow";
-import MediaWizardModal from "../components/MediaWizardModal";
+import MediaWizardModal from "../components/MediaWizardModal/MediaWizardModal";
 import useImageItemSetting from "../hooks/useImageItemSetting";
 
 const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {

@@ -32,14 +32,14 @@ const Cast: React.FC<IProps> = (props) => {
         initialNumToRender={5}
         data={props.cast}
         className=" mx-2 rounded-lg"
-        keyExtractor={(person) => String(person.id)}
+        keyExtractor={(person) => String(person.id) + String(Math.random() * 1)}
         ListHeaderComponent={() => {
           return (
             <View className="flex-row px-1 mx-1 space-x-2">
               {props.directedBy.map((p) => {
                 return (
                   <View
-                    key={p.id + p.job}
+                    key={p.id + p.job + String(Math.random() * 1)}
                     className="bg-accent rounded-lg  overflow-hidden"
                   >
                     <Pressable

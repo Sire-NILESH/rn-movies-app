@@ -66,26 +66,10 @@ export const tvPlaylist = [
     buildTvPlaylist("Adult Swim Shows", "Adult Swim"),
     buildTvPlaylist("AMC", "AMC"),
     buildTvPlaylist("ABC", "ABC"),
-    buildLanguagePlaylist(
-      `Bollywood (Hindi, ${currentYear})`,
-      "tv",
-      bollywoodHindi
-    ),
-    buildLanguagePlaylist(
-      `Bollywood (Tamil, ${currentYear})`,
-      "tv",
-      bollywoodTamil
-    ),
-    buildLanguagePlaylist(
-      `Bollywood (Telugu, ${currentYear})`,
-      "tv",
-      bollywoodTelugu
-    ),
-    buildLanguagePlaylist(
-      `Bollywood (Kannada, ${currentYear})`,
-      "tv",
-      bollywoodKannada
-    ),
+    buildLanguagePlaylist("Hindi", "tv", bollywoodHindi),
+    buildLanguagePlaylist("Tamil", "tv", bollywoodTamil),
+    buildLanguagePlaylist("Telugu", "tv", bollywoodTelugu),
+    buildLanguagePlaylist("Kannada", "tv", bollywoodKannada),
     buildTvPlaylist("Cartoon Network Shows", "Cartoon Network"),
     buildTvPlaylist("Nickelodeon Shows", "Nickelodeon"),
     buildTvPlaylist("Disney XD Shows", "Disney XD"),
@@ -118,32 +102,11 @@ export const moviePlaylist = [
     // buildAiringTodayPlaylist("Airing Today", "movie"),
     buildNowPlayingPlaylist("Playing in Theatres", "movie"),
     buildUpcomingPlaylist("New Releases", "movie"),
-    buildLanguagePlaylist(
-      "All time Bollywood (Hindi)",
-      "movie",
-      bollywoodHindi,
-      0
-    ),
-    buildLanguagePlaylist(
-      `Bollywood (Hindi, ${currentYear})`,
-      "movie",
-      bollywoodHindi
-    ),
-    buildLanguagePlaylist(
-      `Bollywood (Tamil, ${currentYear})`,
-      "movie",
-      bollywoodTamil
-    ),
-    buildLanguagePlaylist(
-      `Bollywood (Telugu, ${currentYear})`,
-      "movie",
-      bollywoodTelugu
-    ),
-    buildLanguagePlaylist(
-      `Bollywood (Kannada, ${currentYear})`,
-      "movie",
-      bollywoodKannada
-    ),
+    buildLanguagePlaylist("All time Bollywood", "movie", bollywoodHindi, 0),
+    buildLanguagePlaylist(`Hindi, ${currentYear}`, "movie", bollywoodHindi),
+    buildLanguagePlaylist(`Tamil, ${currentYear}`, "movie", bollywoodTamil),
+    buildLanguagePlaylist(`Telugu, ${currentYear}`, "movie", bollywoodTelugu),
+    buildLanguagePlaylist(`Kannada, ${currentYear}`, "movie", bollywoodKannada),
     buildMoviePlaylist("Lucasfilm", "Lucasfilm"),
     buildMoviePlaylist("HBO Movies", "HBO"),
     buildMoviePlaylist("Warner Bros. Entertainment", "Warner Bros"),

@@ -81,13 +81,15 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
 
   useEffect(() => {
     if (refresh) {
-      getMediasFromCollection(screenMediaType, collectionType).then((data) => {
-        console.log(
-          `AAYYYOOO ${data.rows.length} ${collectionType} data from DB`,
-          data["rows"]["_array"]
-        );
-        setMedias(data.rows._array);
-      });
+      getMediasFromCollection(screenMediaType, collectionType)
+        .then((data) => {
+          console.log(
+            `AAYYYOOO ${data.rows.length} ${collectionType} data from DB`,
+            data["rows"]["_array"]
+          );
+          setMedias(data.rows._array);
+        })
+        .catch((err) => {});
     }
   }, [refresh]);
 

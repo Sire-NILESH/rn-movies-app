@@ -17,10 +17,10 @@ const DevOnlySettings = () => {
         onPress={() => {
           getAllFromCollection()
             .then((data) => {
-              console.log(
-                "AAAAAAll data from DB, settings screen",
-                data["rows"]["_array"]
-              );
+              // console.log(
+              //   "AAAAAAll data from DB, settings screen",
+              //   data["rows"]["_array"]
+              // );
             })
             .catch((err) => {
               console.log(err);

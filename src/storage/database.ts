@@ -155,8 +155,6 @@ export async function initDB() {
       query: `CREATE TABLE IF NOT EXISTS medias (
       mediaId REAL NOT NULL,
       mediaType TEXT NOT NULL,
-      dateAdded REAL NOT NULL,
-      dateAddedString TEXT NOT NULL,
       mediaTitle REAL NULL,
       mediaDate REAL NULL,
       poster_path TEXT NULL,
@@ -173,6 +171,8 @@ export async function initDB() {
       query: `CREATE TABLE IF NOT EXISTS collection (
         mediaId REAL NOT NULL,
         mediaType TEXT NOT NULL,
+        dateAdded REAL NOT NULL,
+        dateAddedString TEXT NOT NULL,
         collection TEXT NOT NULL CHECK (collection IN ('favourites', 'watchlist', 'watched')),
         PRIMARY KEY (mediaId, mediaType, collection),
         FOREIGN KEY (mediaId, mediaType) REFERENCES medias (mediaId, mediaType) ON DELETE CASCADE
@@ -320,7 +320,11 @@ export async function initDB() {
 
   // execute querys
   try {
-    await executeMultipleQueries(sqlStatements, "Inital DB setup completed");
+    await executeMultipleQueries(
+      sqlStatements,
+      "...Stage 1 DB setup completed"
+    );
+    console.log("Inital DB setup completed ✅");
   } catch (error) {
     throw error;
   }
@@ -491,61 +495,6 @@ export function getImgItemSetting(imgItem: ImageItemTypes) {
 //   return promise
 // }
 
-export function initDBV2() {
-  // initialize the database
-  const promise = new Promise<void>((resolve, reject) => {
-    database.transaction((tx) => {
-      tx.executeSql(
-        `CREATE TABLE IF NOT EXISTS medias (
-          mediaId REAL NOT NULL,
-          mediaType TEXT NOT NULL,
-          dateAdded REAL NOT NULL,
-          dateAddedString TEXT NOT NULL,
-          mediaTitle REAL NULL,
-          mediaDate REAL NULL,
-          poster_path TEXT NULL,
-          backdrop_path TEXT NULL,
-          PRIMARY KEY (mediaId, mediaType)
-         ) `,
-        [],
-        () => {
-          console.log("...media Table was CREATED into the database");
-          tx.executeSql(
-            `
-          CREATE TABLE IF NOT EXISTS collection (
-            mediaId REAL NOT NULL,
-            mediaType TEXT NOT NULL,
-            collection TEXT NOT NULL CHECK (collection IN ('favourites', 'watchlist', 'watched')),
-            PRIMARY KEY (mediaId, mediaType, collection),
-            FOREIGN KEY (mediaId, mediaType) REFERENCES medias (mediaId, mediaType) ON DELETE CASCADE
-          )`,
-            [],
-            (_tx, _results) => {
-              console.log("...collection Table was CREATED into the database");
-              console.log("Initial DB setup completed.");
-              resolve();
-            },
-            (_, err) => {
-              console.log("Error while CREATING Collection Table\n", err);
-              reject(err);
-              console.log("Initial DB setup failed.");
-              return true;
-            }
-          );
-          resolve();
-        },
-        (_, err) => {
-          console.log("error CREATING inital tables in the database\n", err);
-          reject(err);
-          return true;
-        }
-      );
-    });
-  });
-
-  return promise;
-}
-
 export function showAllTablesInDb() {
   const promise = new Promise<SQlite.SQLResultSet>((resolve, reject) => {
     database.transaction((tx) => {
@@ -653,9 +602,17 @@ export function insertMediaToCollection(
       INSERT INTO collection (
         mediaId,
         mediaType,
+        dateAdded, 
+        dateAddedString,
         collection
-      ) VALUES (?, ?, ?)`,
-        [media.mediaId, media.mediaType, collectionType],
+      ) VALUES (?, ?, ?, ?, ?);`,
+        [
+          media.mediaId,
+          media.mediaType,
+          media.dateAdded,
+          new Date(media.dateAdded).toDateString(),
+          collectionType,
+        ],
         () => {
           console.log(`Inserted media into collection as ${collectionType}`);
 
@@ -665,20 +622,16 @@ export function insertMediaToCollection(
               `INSERT OR IGNORE INTO medias (
                 mediaId, 
                 mediaType, 
-                dateAdded, 
-                dateAddedString,
                 mediaTitle, 
                 mediaDate, 
                 poster_path, 
                 backdrop_path
                 )
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?);
                 `,
               [
                 media.mediaId,
                 media.mediaType,
-                media.dateAdded,
-                new Date(media.dateAdded).toDateString(),
                 media.mediaTitle ? media.mediaTitle : null,
                 media.mediaDate ? media.mediaDate : null,
                 media.poster_path ? media.poster_path : null,
@@ -768,16 +721,31 @@ export function getMediasFromCollection(
   const promise = new Promise<SQlite.SQLResultSet>((resolve, reject) => {
     database.transaction((tx) => {
       tx.executeSql(
-        `SELECT *
-         FROM medias
-         WHERE (mediaId, mediaType) 
-         IN (
-          SELECT mediaId, mediaType
-          FROM collection 
-          WHERE mediaType = ?
-          AND collection = ?
-          )
-          ORDER BY dateAdded DESC
+        // `SELECT *
+        //  FROM medias AS m
+        //  JOIN collection AS c
+        //  ON m.mediaId = c.mediaId
+        //  AND m.mediaType = c.mediaType
+        //  WHERE c.collection = ?
+        //  AND c.mediaType = ?
+        //  ORDER BY c.dateAdded DESC;
+        // `,
+        `SELECT 
+        m.mediaId,
+        m.mediaType,
+        m.mediaTitle,
+        m.mediaDate,
+        m.poster_path,
+        m.backdrop_path,
+        c.dateAdded,
+        c.dateAddedString
+         FROM medias AS m
+         JOIN collection AS c
+         ON m.mediaId = c.mediaId
+         AND m.mediaType = c.mediaType
+         AND c.mediaType = ?
+         WHERE c.collection = ?
+         ORDER BY c.dateAdded DESC;
         `,
         [mediaType, collectionColumn],
         // [mediaType, collectionColumn],
@@ -801,7 +769,7 @@ export function getMediasFromCollection(
 }
 
 export function getAllFromCollection() {
-  const promise = new Promise<SQlite.SQLResultSet>((resolve, reject) => {
+  const promise = new Promise<void>((resolve, reject) => {
     database.transaction((tx) => {
       tx.executeSql(
         `SELECT * 
@@ -809,8 +777,27 @@ export function getAllFromCollection() {
         `,
         [],
         (_, results) => {
-          console.log("Got data from table");
-          resolve(results);
+          console.log(
+            `Got ${results.rows.length} data from medias table :`,
+            results.rows._array
+          );
+
+          database.transaction((tx) => {
+            tx.executeSql(
+              `SELECT * 
+              FROM collection
+              `,
+              [],
+              (_, results) => {
+                console.log(
+                  `Got ${results.rows.length} data from collection table :`,
+                  results.rows._array
+                );
+              }
+            );
+          });
+
+          resolve();
         },
         (_, err) => {
           console.log(
@@ -928,6 +915,8 @@ export async function deleteAllTables() {
       "medias",
       "current_language",
       "current_region",
+      "mediaCollection",
+      "image_qualities",
     ];
 
     database.transaction((tx) => {

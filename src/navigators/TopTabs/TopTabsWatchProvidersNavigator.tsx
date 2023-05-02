@@ -1,21 +1,23 @@
 import React, { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import "react-native-gesture-handler";
+
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { Colors } from "../utils/Colors";
-import { TCollectionType } from "../../types/typings";
-import { topTabRoutesTileList } from "../library/NavigationRoutes/TopTabRoutesTileList";
+
+import { Colors } from "../../utils/Colors";
+import { IUrlObject } from "../../../types/typings";
+import { watchProvidersTopTabRoutes } from "../../library/NavigationRoutes/WatchProvidersTopTabRoutes";
 
 interface IProps {
-  collectionType: TCollectionType;
+  urlObject: IUrlObject;
 }
 
 const TopTabs = createMaterialTopTabNavigator();
 
-const TopTabsTileListNavigator: React.FC<IProps> = (props) => {
+const TopTabsWatchProvidersNavigator: React.FC<IProps> = (props) => {
   const navigation = useNavigation();
 
-  const screenCollectionType = props.collectionType;
+  const urlObject = props.urlObject;
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -37,14 +39,14 @@ const TopTabsTileListNavigator: React.FC<IProps> = (props) => {
       }}
     >
       {/* Laying out all the TopTabs screens from routes */}
-      {topTabRoutesTileList.map((r, i) => (
+      {watchProvidersTopTabRoutes.map((r, i) => (
         <TopTabs.Screen key={i} name={r.name}>
           {(props) => {
             return (
               <r.component
                 name={r.name}
-                collectionType={screenCollectionType}
                 screenMediaType={r.screenMediaType}
+                urlObject={urlObject}
                 {...props}
               />
             );
@@ -55,4 +57,4 @@ const TopTabsTileListNavigator: React.FC<IProps> = (props) => {
   );
 };
 
-export default TopTabsTileListNavigator;
+export default TopTabsWatchProvidersNavigator;

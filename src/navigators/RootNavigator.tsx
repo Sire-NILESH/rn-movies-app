@@ -1,5 +1,5 @@
 import React from "react";
-import StackNavigator from "./StackNavigator";
+import StackNavigator from "./Stack/StackNavigator";
 
 const RootNavigator = () => {
   return <StackNavigator />;

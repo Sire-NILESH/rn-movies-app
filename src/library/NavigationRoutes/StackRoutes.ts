@@ -7,6 +7,7 @@ import SearchTileListScreen from "../../screens/SearchTileListScreen";
 import SeasonsAndEpisodesListScreen from "../../screens/SeasonsAndEpisodesListScreen";
 import TileListScreen from "../../screens/TileList";
 import TrailerScreen from "../../screens/TrailerScreen";
+import WatchProviderStackScreen from "../../screens/WatchProviderStackScreen";
 import { IStackRouteProps } from "../RouteProps";
 
 export const stackRoutes: IStackRouteProps[] = [
@@ -45,6 +46,10 @@ export const stackRoutes: IStackRouteProps[] = [
   {
     name: "Person Medias",
     component: PersonMediasStackScreen,
+  },
+  {
+    name: "Watch Provider",
+    component: WatchProviderStackScreen,
   },
   // {
   //   name: "Drawer",

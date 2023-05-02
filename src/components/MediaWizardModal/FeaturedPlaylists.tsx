@@ -20,7 +20,7 @@ const FeaturedPlaylists: React.FC<IProps> = ({
        </View> */}
 
       <Text className="mb-1 text-center text-green-500 rounded-full font-semibold uppercase tracking-[3px] text-xs">
-        • Playlists •
+        Playlists
       </Text>
 
       <Text

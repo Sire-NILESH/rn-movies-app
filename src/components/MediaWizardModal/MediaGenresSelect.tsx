@@ -24,7 +24,7 @@ const MediaGenresSelect: React.FC<IProps> = ({
       {/* FILTER */}
       <View className="mt-4">
         <Text className="mb-1 text-center text-green-500 rounded-full font-semibold uppercase tracking-[3px] text-xs">
-          • Filters •
+          Filters
         </Text>
 
         <Text
@@ -52,7 +52,7 @@ const MediaGenresSelect: React.FC<IProps> = ({
       {/* CUSTOM GENRES SELECTS */}
       <View className="my-8">
         <Text className="mb-1 text-center text-green-500 rounded-full font-semibold uppercase tracking-[3px] text-xs">
-          • Genres •
+          Genres
         </Text>
 
         <Text

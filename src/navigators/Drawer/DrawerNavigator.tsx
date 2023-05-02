@@ -1,10 +1,10 @@
 import React, { useLayoutEffect } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
-import { Colors } from "../utils/Colors";
+import { Colors } from "../../utils/Colors";
 import "react-native-gesture-handler";
-import CustomDrawer from "../components/CustomDrawer";
-import { drawerRoutes } from "../library/NavigationRoutes/DrawerRoutes";
+import CustomDrawer from "../../components/CustomDrawer";
+import { drawerRoutes } from "../../library/NavigationRoutes/DrawerRoutes";
 
 const Drawer = createDrawerNavigator();
 

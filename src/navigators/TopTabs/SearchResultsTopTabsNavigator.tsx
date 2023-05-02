@@ -2,8 +2,8 @@ import React, { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import "react-native-gesture-handler";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { Colors } from "../utils/Colors";
-import { searchResultsTopTabRoutes } from "../library/NavigationRoutes/SearchResultsTopTabRoutes";
+import { Colors } from "../../utils/Colors";
+import { searchResultsTopTabRoutes } from "../../library/NavigationRoutes/SearchResultsTopTabRoutes";
 
 interface IProps {
   searchQuery: string;

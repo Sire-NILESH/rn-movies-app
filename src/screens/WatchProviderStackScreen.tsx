@@ -1,8 +1,8 @@
 import React, { useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
-import TopTabsPersonMediasNavigator from "../navigators/TopTabs/TopTabsPersonMediasNavigator";
+import TopTabsWatchProvidersNavigator from "../navigators/TopTabs/TopTabsWatchProvidersNavigator";
 
-const PersonMediasStackScreen: React.FunctionComponent<IStackScreenProps> = (
+const WatchProviderStackScreen: React.FunctionComponent<IStackScreenProps> = (
   props
 ) => {
   const { navigation, route } = props;
@@ -17,7 +17,7 @@ const PersonMediasStackScreen: React.FunctionComponent<IStackScreenProps> = (
     });
   }, []);
 
-  return <TopTabsPersonMediasNavigator urlObject={urlObjectReceived} />;
+  return <TopTabsWatchProvidersNavigator urlObject={urlObjectReceived} />;
 };
 
-export default PersonMediasStackScreen;
+export default WatchProviderStackScreen;

@@ -24,7 +24,7 @@ const Cast: React.FC<IProps> = (props) => {
 
   return (
     <View className="flex-1 ">
-      <Text className="ml-4 mb-4 text-text_highLight uppercase tracking-[3px] text-xs">
+      <Text className="ml-4 mb-4 font-semibold text-text_tertiary">
         {props.title}
       </Text>
       <FlatList

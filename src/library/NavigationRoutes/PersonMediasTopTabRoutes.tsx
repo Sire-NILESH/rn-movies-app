@@ -1,5 +1,4 @@
-import { IPersonMediasTopTabsProps, ITopTabsProps } from "../RouteProps";
-import CollectionTopTabScreen from "../../screens/CollectionTopTabScreen";
+import { IPersonMediasTopTabsProps } from "../RouteProps";
 import PersonMediasTopTabScreen from "../../screens/PersonMediasTopTabScreen";
 
 export const personMediasTopTabRoutes: IPersonMediasTopTabsProps[] = [

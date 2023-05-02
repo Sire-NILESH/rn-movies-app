@@ -188,7 +188,10 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
                   <View className="w-[78%] flex-row items-center flex-wrap">
                     {media.production_countries.map((c, i) => {
                       return (
-                        <View className="flex-row items-center">
+                        <View
+                          key={c.iso_3166_1}
+                          className="flex-row items-center"
+                        >
                           <Text className="text-text_dark">{c.name}</Text>
                           {i !== media.production_countries.length - 1 && (
                             <Text className="text-text_dark">, </Text>
@@ -218,7 +221,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             </View>
 
             {/* BUTTONS CONTAINER */}
-            <View className="w-full flex-row space-between gap-3 pl-4 mt-8">
+            <View className="w-full flex-row space-between gap-3 pl-4 mt-4">
               {/* TRAILER BUTTON */}
               <View className="flex-1">
                 <TrailerButton mediaType={mediaType} mediaId={media.id} />
@@ -254,14 +257,17 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
           </View> */}
 
             {/* Network List and Watch Provider row */}
-            <View className="mt-8 space-y-8">
-              {/* Networks available on */}
-              {isTvExtended(media) && media.networks.length > 0 && (
-                <NetworkList
-                  networks={media.networks}
-                  imgQuality={allImgItemsSettings?.companies?.value}
-                />
-              )}
+            <View className="mt-8">
+              {/* Cast and Crew */}
+              {cast.length > 0 || directedBy.length > 0 ? (
+                <View className="h-[195]">
+                  <Cast
+                    cast={cast}
+                    directedBy={directedBy}
+                    title="Behind the scenes"
+                  />
+                </View>
+              ) : null}
 
               {/* Movie Production companies */}
               {isMovieExtended(media) &&
@@ -272,12 +278,13 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
                   />
                 )}
 
-              {/* Cast and Crew */}
-              {cast.length > 0 || directedBy.length > 0 ? (
-                <View className="mt-8 h-[195]">
-                  <Cast cast={cast} directedBy={directedBy} title="Cast" />
-                </View>
-              ) : null}
+              {/* Networks available on */}
+              {isTvExtended(media) && media.networks.length > 0 && (
+                <NetworkList
+                  networks={media.networks}
+                  imgQuality={allImgItemsSettings?.companies?.value}
+                />
+              )}
 
               {/* Platforms available on */}
               <WatchProviders mediaId={media.id} mediaType={mediaType} />

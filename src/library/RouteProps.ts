@@ -5,6 +5,7 @@ import { ITopTabScreenProps } from "./NavigatorScreenProps/TopTabScreenProps";
 import { MediaTypes } from "../../types/typings";
 import { SearchResultsTopTabScreenProps } from "./NavigatorScreenProps/SearchResultsTopTabScreenProps";
 import { IPersonMediasTopTabsScreenProps } from "./NavigatorScreenProps/PersonMediasTopTabsScreenProps";
+import { WatchProviderTopTabsScreenProps } from "./NavigatorScreenProps/WatchProviderTopTabsScreenProps";
 
 export interface IStackRouteProps {
   component:
@@ -33,6 +34,12 @@ export interface ISearchResultsTopTabsProps {
 
 export interface IPersonMediasTopTabsProps {
   component: React.FunctionComponent<IPersonMediasTopTabsScreenProps>;
+  name: string;
+  screenMediaType: MediaTypes;
+}
+
+export interface IWatchProviderTopTabsProps {
+  component: React.FunctionComponent<WatchProviderTopTabsScreenProps>;
   name: string;
   screenMediaType: MediaTypes;
 }

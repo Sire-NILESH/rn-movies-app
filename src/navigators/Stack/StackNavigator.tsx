@@ -1,13 +1,13 @@
 import React from "react";
-import { stackRoutes } from "../library/NavigationRoutes/StackRoutes";
+import { stackRoutes } from "../../library/NavigationRoutes/StackRoutes";
 import {
   TransitionPresets,
   createStackNavigator,
 } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import DrawerNavigator from "./DrawerNavigator";
+import DrawerNavigator from "../Drawer/DrawerNavigator";
 import { enableScreens } from "react-native-screens";
-import { Colors } from "../utils/Colors";
+import { Colors } from "../../utils/Colors";
 
 // https://reactnavigation.org/docs/typescript/
 const Stack = createStackNavigator();
@@ -35,7 +35,7 @@ const StackNavigator = () => {
             backgroundColor: Colors.tertiary,
           },
           // ...TransitionPresets.ScaleFromCenterAndroid,
-          //  ...TransitionPresets.SlideFromRightIOS,
+          // ...TransitionPresets.SlideFromRightIOS,
           // ...TransitionPresets.BottomSheetAndroid,
           // ...TransitionPresets.ModalFadeTransition,
           // ...TransitionPresets.FadeFromBottomAndroid,

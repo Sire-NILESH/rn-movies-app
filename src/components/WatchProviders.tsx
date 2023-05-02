@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, Pressable } from "react-native";
 import React, { useState } from "react";
 import {
   ICountry,
@@ -11,6 +11,7 @@ import { getWatchProviders } from "../utils/requests";
 import CountriesDropdown from "./ui/CountriesDropdown";
 import ImageCached from "./ui/ImageCached";
 import { useDefaultRegionHooks } from "../hooks/reduxHooks";
+import { useNavigation } from "@react-navigation/native";
 
 interface IProps {
   mediaId: number;
@@ -41,11 +42,19 @@ const WatchProviders: React.FC<IProps> = ({
     setCurrentCountry(country);
   };
 
+  const navigation = useNavigation();
+
   const watchProviders: WatchProviderForCountry =
     // @ts-ignore
     screenProps && screenProps[currentCountry.code];
 
   const providerImgQuality = imgQuality ? imgQuality : "200";
+
+  // So every one of them wont have to calculate them separately.
+  const navigateTo = (screen: string, paramOption: Object) => {
+    // @ts-ignore
+    navigation.push(screen, paramOption);
+  };
 
   return (
     <View className="flex-1 mt-10 space-y-5">
@@ -69,20 +78,34 @@ const WatchProviders: React.FC<IProps> = ({
           {renderFlatlist(
             watchProviders.flatrate,
             "Subscription",
-            providerImgQuality
+            providerImgQuality,
+            navigateTo,
+            defaultRegion
           )}
         </View>
       ) : null}
 
       {watchProviders?.rent ? (
         <View>
-          {renderFlatlist(watchProviders.rent, "Rent", providerImgQuality)}
+          {renderFlatlist(
+            watchProviders.rent,
+            "Rent",
+            providerImgQuality,
+            navigateTo,
+            defaultRegion
+          )}
         </View>
       ) : null}
 
       {watchProviders?.buy ? (
         <View>
-          {renderFlatlist(watchProviders.buy, "Buy", providerImgQuality)}
+          {renderFlatlist(
+            watchProviders.buy,
+            "Buy",
+            providerImgQuality,
+            navigateTo,
+            defaultRegion
+          )}
         </View>
       ) : null}
 
@@ -91,14 +114,22 @@ const WatchProviders: React.FC<IProps> = ({
           {renderFlatlist(
             watchProviders.ads,
             "With Adverts",
-            providerImgQuality
+            providerImgQuality,
+            navigateTo,
+            defaultRegion
           )}
         </View>
       ) : null}
 
       {watchProviders?.free ? (
         <View>
-          {renderFlatlist(watchProviders.free, "Free", providerImgQuality)}
+          {renderFlatlist(
+            watchProviders.free,
+            "Free",
+            providerImgQuality,
+            navigateTo,
+            defaultRegion
+          )}
         </View>
       ) : null}
 
@@ -126,7 +157,9 @@ export default WatchProviders;
 function renderFlatlist(
   providerType: WatchProvider[],
   availableType: "Subscription" | "Rent" | "Free" | "Buy" | "With Adverts",
-  providerImgQuality: string
+  providerImgQuality: string,
+  navigateTo: (screen: string, paramOption: Object) => void,
+  watch_region: ICountry
 ) {
   const baseImgUrl = `https://image.tmdb.org/t/p/w${providerImgQuality}`;
 
@@ -147,25 +180,48 @@ function renderFlatlist(
         renderItem={(itemObj) => {
           const p = itemObj.item;
           return (
-            <View className="space-y-4 items-start mr-5">
-              <View
-                className="rounded-2xl justify-center overflow-hidden"
-                style={{
-                  width: 65,
-                  aspectRatio: 1 / 1,
+            <View className="space-y-4 items-start mr-5 overflow-hidden rounded-md">
+              <Pressable
+                className="p-1"
+                android_ripple={{ color: "#eee" }}
+                onPress={() => {
+                  navigateTo("Watch Provider", {
+                    title: `${p.provider_name} (${
+                      (watch_region.name, watch_region.code)
+                    })`,
+                    urlObject: {
+                      name: `${p.provider_name} (${watch_region.name}, ${watch_region.code})`,
+                      url: `/discover`,
+                      queryParams: {
+                        language: "en-US",
+                        with_watch_providers: String(p.provider_id),
+                        watch_region: watch_region.code,
+                      },
+                    },
+                    currentMediaType: "movie",
+                  });
                 }}
               >
-                <ImageCached
-                  imageURL={baseImgUrl + p.logo_path}
-                  cacheKey={p.provider_id + "watchProvider"}
-                />
-              </View>
-              <Text
-                key={p.provider_id}
-                className="text-text_dark text-xs w-[65px] text-center"
-              >
-                {p.provider_name}
-              </Text>
+                <View
+                  className="rounded-2xl justify-center overflow-hidden"
+                  style={{
+                    width: 65,
+                    aspectRatio: 1 / 1,
+                  }}
+                >
+                  <ImageCached
+                    imageURL={baseImgUrl + p.logo_path}
+                    cacheKey={p.provider_id + "watchProvider"}
+                  />
+                </View>
+                <Text
+                  key={p.provider_id}
+                  className="text-text_dark text-xs w-[65px] text-center"
+                >
+                  {p.provider_name}
+                  {/* {console.log(p.provider_name + " : " + p.provider_id)} */}
+                </Text>
+              </Pressable>
             </View>
           );
         }}

@@ -35,8 +35,8 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
   console.log("logo quality", baseImgUrl);
 
   return (
-    <View className="flex-1 space-y-4 mt-3">
-      <Text className="ml-4 text-text_highLight uppercase tracking-[3px] text-xs">
+    <View className="flex-1 space-y-4 mt-8">
+      <Text className="ml-4 font-semibold text-text_tertiary">
         {props.mediaType === "movie" ? "Producers" : "TV Networks"}
       </Text>
       <FlatList
@@ -157,9 +157,9 @@ function RenderLogo({
           </Text> */}
 
           {mediaType === "movie" ? (
-            <Ionicons name="film-outline" color={Colors.green[900]} size={54} />
+            <Ionicons name="film" color={Colors.green[900]} size={54} />
           ) : (
-            <Ionicons name="tv-outline" color={Colors.green[900]} size={54} />
+            <Ionicons name="tv" color={Colors.green[900]} size={54} />
           )}
         </View>
       )}

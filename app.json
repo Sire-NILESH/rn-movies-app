@@ -3,7 +3,7 @@
     "name": "Maven",
     "slug": "Maven",
     "version": "1.0.0",
-    "orientation": "adaptive",
+    "orientation": "portrait",
     "icon": "./assets/iconV2.png",
     "userInterfaceStyle": "dark",
     "splash": {

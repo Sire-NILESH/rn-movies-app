@@ -25,6 +25,7 @@ const GenreTags: React.FC<IProps> = (props) => {
         <FlatList
           horizontal
           data={props.genreIdList}
+          showsHorizontalScrollIndicator={false}
           keyExtractor={(item) =>
             String(item) + ":" + String(Math.random() * 1)
           }

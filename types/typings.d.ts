@@ -407,6 +407,8 @@ export interface IQueryParams {
   with_people?: string;
   with_original_language?: string;
   primary_release_year?: string;
+  with_watch_providers?: string;
+  watch_region?: string;
 }
 
 export interface IUrlObject {

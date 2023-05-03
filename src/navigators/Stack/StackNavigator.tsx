@@ -8,6 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import DrawerNavigator from "../Drawer/DrawerNavigator";
 import { enableScreens } from "react-native-screens";
 import { Colors } from "../../utils/Colors";
+import { View } from "react-native";
 
 // https://reactnavigation.org/docs/typescript/
 const Stack = createStackNavigator();

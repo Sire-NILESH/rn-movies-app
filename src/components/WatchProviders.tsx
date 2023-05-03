@@ -80,7 +80,7 @@ const WatchProviders: React.FC<IProps> = ({
             "Subscription",
             providerImgQuality,
             navigateTo,
-            defaultRegion
+            currentCountry
           )}
         </View>
       ) : null}
@@ -92,7 +92,7 @@ const WatchProviders: React.FC<IProps> = ({
             "Rent",
             providerImgQuality,
             navigateTo,
-            defaultRegion
+            currentCountry
           )}
         </View>
       ) : null}
@@ -104,7 +104,7 @@ const WatchProviders: React.FC<IProps> = ({
             "Buy",
             providerImgQuality,
             navigateTo,
-            defaultRegion
+            currentCountry
           )}
         </View>
       ) : null}
@@ -116,7 +116,7 @@ const WatchProviders: React.FC<IProps> = ({
             "With Adverts",
             providerImgQuality,
             navigateTo,
-            defaultRegion
+            currentCountry
           )}
         </View>
       ) : null}
@@ -128,7 +128,7 @@ const WatchProviders: React.FC<IProps> = ({
             "Free",
             providerImgQuality,
             navigateTo,
-            defaultRegion
+            currentCountry
           )}
         </View>
       ) : null}
@@ -182,7 +182,7 @@ function renderFlatlist(
           return (
             <View className="space-y-4 items-start mr-5 overflow-hidden rounded-md">
               <Pressable
-                className="p-1"
+                className="p-1 space-y-1"
                 android_ripple={{ color: "#eee" }}
                 onPress={() => {
                   navigateTo("Watch Provider", {

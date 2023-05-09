@@ -5,9 +5,11 @@ import ScreenBuilder from "../components/builders/ScreenBuilder";
 import { IDrawerScreenProps } from "../library/NavigatorScreenProps/DrawerScreenProps";
 import { View } from "react-native";
 import ScreenBuilderV2 from "../components/builders/ScreenBuilderV2";
+import useImageItemSetting from "../hooks/useImageItemSetting";
 
 const TvShowsScreen: React.FC<IDrawerScreenProps> = (props) => {
   const { navigation } = props;
+  const { imgItemsSetting } = useImageItemSetting("thumbnail");
 
   // Header Settings
   useLayoutEffect(() => {
@@ -20,8 +22,8 @@ const TvShowsScreen: React.FC<IDrawerScreenProps> = (props) => {
     });
   }, []);
 
-  return <ScreenBuilderV2 screenType="tv" />;
-  // return <ScreenBuilder screenType="tv" />;
+  // return <ScreenBuilderV2 screenType="tv" />;
+  return <ScreenBuilder screenType="tv" imgItemsSetting={imgItemsSetting} />;
 };
 
 export default memo(TvShowsScreen);

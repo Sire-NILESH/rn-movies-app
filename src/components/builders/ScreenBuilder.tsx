@@ -1,13 +1,26 @@
 import { View, ScrollView } from "react-native";
-import { MovieMedia, ScreenTypes, TvMedia } from "../../../types/typings";
+import {
+  IImgItemSettingsDB,
+  IPlaylist,
+  MovieMedia,
+  ScreenTypes,
+  TvMedia,
+} from "../../../types/typings";
 import Banner from "../Banner";
 import Row from "../Row";
 import NothingToShow from "../NothingToShow";
 import { showErrorAlert } from "../../utils/helpers/helper";
 import useFetchScreenProps from "../../hooks/useFetchScreenProps";
 import Loader from "../ui/Loader";
-import { memo } from "react";
-import LoaderShimmer from "../ui/LoaderShimmer";
+import { memo, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { sendUrlObjApiRequestV2 } from "../../utils/requests";
+import {
+  homeScreenPlaylists,
+  movieScreenPlaylists,
+  tvScreenPlaylists,
+} from "../../config/screenGenresConfig";
+import useImageItemSetting from "../../hooks/useImageItemSetting";
 // import * as SplashScreen from "expo-splash-screen";
 // import { useRoute } from "@react-navigation/native";
 
@@ -16,22 +29,36 @@ import LoaderShimmer from "../ui/LoaderShimmer";
 
 interface IProps {
   screenType: ScreenTypes;
+  imgItemsSetting: IImgItemSettingsDB | undefined;
 }
 
-interface IState {
-  genreId: number;
-  genreName: string;
-  genreMedias: TvMedia[] | MovieMedia[];
-}
+// interface IState {
+//   genreId: number;
+//   genreName: string;
+//   genreMedias: TvMedia[] | MovieMedia[];
+// }
 
-const ScreenBuilder: React.FC<IProps> = ({ screenType }) => {
-  // This hook is responsible for loading the screen props and error messages for the Home, TV and Movies screens.
-  const { screenProps, loadingProps, errorLoadingProps } =
-    useFetchScreenProps(screenType);
-
-  if (errorLoadingProps && !loadingProps) {
-    showErrorAlert();
+function getPlaylistsToFetch(screenType: ScreenTypes) {
+  // Get the genre list to fetch depending on the screen type.
+  let playlistsToFetch: IPlaylist[];
+  switch (screenType) {
+    case "tv":
+      playlistsToFetch = tvScreenPlaylists;
+      break;
+    case "movie":
+      playlistsToFetch = movieScreenPlaylists;
+      break;
+    default:
+      playlistsToFetch = homeScreenPlaylists;
   }
+
+  return playlistsToFetch;
+}
+
+const ScreenBuilder: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
+  // This hook is responsible for loading the screen props and error messages for the Home, TV and Movies screens.
+  // const { screenProps, loadingProps, errorLoadingProps } =
+  //   useFetchScreenProps(screenType);
 
   // const route = useRoute();
   // console.log(route);
@@ -50,38 +77,70 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType }) => {
   // onLayout={onLayoutRootView}
   // }, [screenProps, route.name]);
 
+  // const playlistsToFetch = getPlaylistsToFetch(screenType);
+  // console.log(playlistsToFetch); playlistsToFetch.map((p) => p.name)
+
+  // const { imgItemsSetting } = useImageItemSetting("thumbnail");
+
+  const playlistsToFetch = useMemo(() => {
+    const result = getPlaylistsToFetch(screenType);
+    return result;
+  }, []);
+
+  const {
+    isLoading: loadingProps,
+    data: screenProps,
+    error: errorLoadingProps,
+  } = useQuery({
+    queryKey: ["homeScreens", screenType, playlistsToFetch],
+    queryFn: () => sendUrlObjApiRequestV2([...playlistsToFetch], {}),
+    staleTime: 1000 * 60 * 60 * 24, //24hours
+  });
+
+  // if (errorLoadingProps && !loadingProps) {
+  //   showErrorAlert();
+  // }
+
+  // if (loadingProps) {
+  //   return (<View className="flex-1 bg-secondary">
+  //   {/* Loader */}
+  //   <Loader loading={loadingProps || !imgItemsSetting} /> </View>)
+  // }
+
   return (
     <View className="flex-1 bg-secondary">
       {/* Loader */}
-      <Loader loading={loadingProps} />
+      <Loader loading={loadingProps || !imgItemsSetting} />
 
-      {!loadingProps && !screenProps ? (
+      {!loadingProps && !screenProps && !imgItemsSetting ? (
         //   if no props then
         <NothingToShow
           title={"Something went wrong while loading content"}
           problemType="error"
         />
-      ) : !errorLoadingProps && screenProps ? (
+      ) : !errorLoadingProps && screenProps && imgItemsSetting ? (
         //   when no error and props
         <View className="flex-1">
           {screenProps ? (
             <ScrollView className="space-y-10">
-              {screenProps[0].genreMedias ? (
-                <Banner mediaList={screenProps[0].genreMedias} />
+              {screenProps[0].length > 0 ? (
+                <Banner mediaList={screenProps[0]} />
               ) : null}
 
-              {screenProps.map((m: IState) => {
-                if (m.genreMedias?.length > 0) {
-                  return (
-                    <Row
-                      key={m.genreId}
-                      title={m.genreName}
-                      medias={m.genreMedias}
-                      genreIdOfList={m.genreId}
-                    />
-                  );
-                } else null;
-              })}
+              {!loadingProps &&
+                playlistsToFetch.map((p, i) => {
+                  if (screenProps[i]?.length > 0) {
+                    return (
+                      <Row
+                        key={p.name}
+                        title={p.name}
+                        medias={screenProps[i]}
+                        playlist={p}
+                        thumbnailQualitySettings={imgItemsSetting}
+                      />
+                    );
+                  } else null;
+                })}
             </ScrollView>
           ) : null}
         </View>

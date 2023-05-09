@@ -13,6 +13,7 @@ import EpisodeInfoCard from "../components/EpisodeInfoCard";
 import NothingToShow from "../components/NothingToShow";
 import { dateFormatter, showErrorAlert } from "../utils/helpers/helper";
 import Loader from "../components/ui/Loader";
+import { useQuery } from "./../../node_modules/@tanstack/react-query";
 
 const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   IStackScreenProps
@@ -36,18 +37,28 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
     tvMediaSeasons[0]
   );
 
+  // const {
+  //   screenProps: seasonDetails,
+  //   errorLoadingProps,
+  //   loadingProps,
+  // }: {
+  //   screenProps: SeasonDetails;
+  //   errorLoadingProps: Error | null;
+  //   loadingProps: boolean;
+  // } = useFetcher(fetchSeasonDetails, [
+  //   tvMediaId,
+  //   selectedSeason?.season_number,
+  // ]);
+
   const {
-    screenProps: seasonDetails,
-    errorLoadingProps,
-    loadingProps,
-  }: {
-    screenProps: SeasonDetails;
-    errorLoadingProps: Error | null;
-    loadingProps: boolean;
-  } = useFetcher(fetchSeasonDetails, [
-    tvMediaId,
-    selectedSeason?.season_number,
-  ]);
+    isLoading: loadingProps,
+    data: seasonDetails,
+    error: errorLoadingProps,
+  } = useQuery({
+    queryKey: ["tv/season", "tv", tvMediaId, selectedSeason?.season_number],
+    queryFn: () => fetchSeasonDetails(tvMediaId, selectedSeason?.season_number),
+    staleTime: 1000 * 60 * 60 * 1, //1hour
+  });
 
   function setSelectedSeasonHandler(newSelectedSeason: Season) {
     setSelectedSeason(newSelectedSeason);

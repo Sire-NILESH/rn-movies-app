@@ -67,6 +67,11 @@ export interface WatchProviderForCountry {
   ads?: WatchProvider[];
 }
 
+export interface IAllWatchProviderData {
+  [key: string]: WatchProviderForCountry;
+}
+[];
+
 export interface IProductionCompany {
   id: number;
   logo_path: null | string;

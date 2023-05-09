@@ -13,6 +13,7 @@ import useFetcher from "../hooks/useFetcher";
 import { getMediaInfo } from "../utils/requests";
 import FavouriteMediaButton from "../components/ui/FavouriteMediaButton";
 import MediaMoreInfo from "../components/MediaMoreInfo";
+import { useQuery } from "./../../node_modules/@tanstack/react-query";
 
 const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const { navigation, route } = props;
@@ -25,18 +26,33 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
   let extendedMedia;
 
+  // const {
+  //   screenProps,
+  //   loadingProps,
+  //   errorLoadingProps,
+  // }: {
+  //   screenProps: {
+  //     media: TvMediaExtended | MovieMediaExtended;
+  //     mediaCredits: ICredits;
+  //   };
+  //   loadingProps: boolean;
+  //   errorLoadingProps: Error | null;
+  // } = useFetcher(getMediaInfo, [prevMedia.id, mediaType]);
+
   const {
-    screenProps,
-    loadingProps,
-    errorLoadingProps,
-  }: {
-    screenProps: {
-      media: TvMediaExtended | MovieMediaExtended;
-      mediaCredits: ICredits;
-    };
-    loadingProps: boolean;
-    errorLoadingProps: Error | null;
-  } = useFetcher(getMediaInfo, [prevMedia.id, mediaType]);
+    isLoading: loadingProps,
+    data: screenProps,
+    error: errorLoadingProps,
+  } = useQuery({
+    queryKey: ["moreInfo", mediaType, prevMedia.id],
+    queryFn: () => getMediaInfo(prevMedia.id, mediaType),
+    staleTime: 1000 * 60 * 60 * 24, //24hours
+  });
+  // const useMoreInfo = useQuery({
+  //   queryKey: ["moreInfo", mediaType, prevMedia.id],
+  //   queryFn: () => getMediaInfo,
+  //   staleTime: 1000 * 60 * 60 * 24, //24hours
+  // });
 
   extendedMedia = screenProps?.media;
 
@@ -66,26 +82,12 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       media={screenProps?.media}
       extendedMedia={extendedMedia}
       credits={screenProps?.mediaCredits}
+      watchProvidersData={screenProps?.mediaWatchProviders}
       mediaType={mediaType}
-      errorLoadingProps={errorLoadingProps}
+      errorLoadingProps={errorLoadingProps as Error | null}
       loadingProps={loadingProps}
     />
   );
 };
 
 export default memo(MoreInfoScreen);
-
-//  <>
-//       {/* Loader */}
-//       {loadingProps && !screenProps ? (
-//         <Loader loading={loadingProps} />
-//       ) : (
-//         <MediaMoreInfo
-//           media={screenProps && screenProps?.media}
-//           extendedMedia={extendedMedia}
-//           mediaType={mediaType}
-//           errorLoadingProps={errorLoadingProps}
-//           loadingProps={loadingProps}
-//         />
-//       )}
-//     </>

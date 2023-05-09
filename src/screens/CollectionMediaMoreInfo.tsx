@@ -12,6 +12,7 @@ import useFetcher from "../hooks/useFetcher";
 import { getMediaInfo } from "../utils/requests";
 import FavouriteMediaButton from "../components/ui/FavouriteMediaButton";
 import MediaMoreInfo from "../components/MediaMoreInfo";
+import { useQuery } from "./../../node_modules/@tanstack/react-query";
 
 const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
   props
@@ -29,18 +30,28 @@ const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
 
   const parametersForFetcher = [collectionMedia.mediaId, mediaType];
 
+  // const {
+  //   screenProps,
+  //   loadingProps,
+  //   errorLoadingProps,
+  // }: {
+  //   screenProps: {
+  //     media: TvMediaExtended | MovieMediaExtended;
+  //     mediaCredits: ICredits;
+  //   };
+  //   loadingProps: boolean;
+  //   errorLoadingProps: Error | null;
+  //   } = useFetcher(getMediaInfo, parametersForFetcher);
+
   const {
-    screenProps,
-    loadingProps,
-    errorLoadingProps,
-  }: {
-    screenProps: {
-      media: TvMediaExtended | MovieMediaExtended;
-      mediaCredits: ICredits;
-    };
-    loadingProps: boolean;
-    errorLoadingProps: Error | null;
-  } = useFetcher(getMediaInfo, parametersForFetcher);
+    isLoading: loadingProps,
+    data: screenProps,
+    error: errorLoadingProps,
+  } = useQuery({
+    queryKey: ["moreInfo", mediaType, collectionMedia.mediaId],
+    queryFn: () => getMediaInfo(collectionMedia.mediaId, mediaType),
+    staleTime: 1000 * 60 * 60 * 24, //24hours
+  });
 
   extendedMedia = screenProps?.media;
 
@@ -73,7 +84,8 @@ const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
       extendedMedia={extendedMedia}
       credits={screenProps?.mediaCredits}
       mediaType={mediaType}
-      errorLoadingProps={errorLoadingProps}
+      watchProvidersData={screenProps?.mediaWatchProviders}
+      errorLoadingProps={errorLoadingProps as Error | null}
       loadingProps={loadingProps}
     />
   );

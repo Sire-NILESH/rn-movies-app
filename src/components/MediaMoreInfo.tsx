@@ -1,12 +1,14 @@
 import { View, Text } from "react-native";
 import React from "react";
 import {
+  IAllWatchProviderData,
   ICredits,
   IImgItemSettingsDB,
   ImageItemTypes,
   MediaTypes,
   MovieMediaExtended,
   TvMediaExtended,
+  WatchProviderForCountry,
 } from "../../types/typings";
 import { useNavigation } from "@react-navigation/native";
 import Loader from "./ui/Loader";
@@ -35,8 +37,10 @@ import MoreInfoBackdrop from "./MoreInfoBackdrop";
 interface IProps {
   media: TvMediaExtended | MovieMediaExtended;
   mediaType: MediaTypes;
-  credits: ICredits;
   extendedMedia: TvMediaExtended | MovieMediaExtended;
+  credits: ICredits;
+  watchProvidersData: IAllWatchProviderData;
+  // watchProvidersData: { [key: string]: WatchProviderForCountry }[];
   loadingProps: boolean;
   errorLoadingProps: Error | null;
 }
@@ -49,6 +53,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
   const {
     media,
     credits,
+    watchProvidersData,
     mediaType,
     extendedMedia,
     loadingProps,
@@ -287,7 +292,11 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
               )}
 
               {/* Platforms available on */}
-              <WatchProviders mediaId={media.id} mediaType={mediaType} />
+              <WatchProviders
+                mediaId={media.id}
+                mediaType={mediaType}
+                watchProvidersData={watchProvidersData}
+              />
             </View>
 
             {/* Footer, contains 'Similar' and 'Seasons and episodes' bttons */}

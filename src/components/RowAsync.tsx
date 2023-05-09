@@ -19,6 +19,8 @@ import React, { memo } from "react";
 import ThumbnailSkeleton from "./ThumbnailSkeleton";
 import ThumbnailMemoised from "./ThumbnailMemoised";
 import Thumbnail from "./Thumbnail";
+// import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "./../../node_modules/@tanstack/react-query";
 
 interface Props {
   title: string;
@@ -35,20 +37,30 @@ const rowItemWidth = windowWidth * 0.31 + 4;
 const rowItemHeight = ((windowWidth * 0.31 + 4) * 3) / 2;
 
 function RowAsync({ title, playlist, thumbnailQualitySettings }: Props) {
-  const params = [[playlist]];
+  // const params = [[playlist]];
   // const { defaultImgQuality } = useDefaultImageQualityHooks();
   // const { imgItemsSetting } = useImageItemSetting("thumbnail");
 
   // const params = [[mediaGenre.id], mediaGenre.mediaType, 1];
-  const useFetcherMemo = React.useCallback(() => {
-    return useFetcher(sendUrlObjApiRequest, [...params]);
-  }, []);
+  // const useFetcherMemo = React.useCallback(() => {
+  //   return useFetcher(sendUrlObjApiRequest, [...params]);
+  // }, []);
+
+  // const {
+  //   screenProps: medias,
+  //   loadingProps,
+  //   errorLoadingProps,
+  // } = useFetcherMemo();
 
   const {
-    screenProps: medias,
-    loadingProps,
-    errorLoadingProps,
-  } = useFetcherMemo();
+    isLoading: loadingProps,
+    data: medias,
+    error: errorLoadingProps,
+  } = useQuery({
+    queryKey: [`row-${title}`, [{ ...playlist }]],
+    queryFn: () => sendUrlObjApiRequest([playlist]),
+    staleTime: 1000 * 60 * 60 * 24, //24hours
+  });
 
   if (loadingProps || errorLoadingProps) {
     return (

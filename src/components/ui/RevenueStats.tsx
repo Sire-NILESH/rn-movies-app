@@ -21,7 +21,7 @@ const RevenueStats: React.FC<IProps> = ({ budget, revenue }) => {
   return (
     <View className="px-4 space-y-2 mt-4">
       <View className="px-4 mt-0 flex-row items-center justify-between space-x-2 divide-x-[3px] divide-tertiary">
-        <View className="flex-1 px-4 py-2">
+        <View className="flex-1 items-center py-2">
           <Text className="text-text_secondary text-lg font-bold text-center">
             ${budgetFormatted}
           </Text>
@@ -35,7 +35,7 @@ const RevenueStats: React.FC<IProps> = ({ budget, revenue }) => {
           </View>
         </View>
 
-        <View className="flex-1 px-4 py-2">
+        <View className="flex-1 items-center py-2">
           <Text className="text-text_secondary text-lg font-bold text-center">
             {revenue === 0 ? "--" : "$" + revenueFormatted}
           </Text>
@@ -46,7 +46,7 @@ const RevenueStats: React.FC<IProps> = ({ budget, revenue }) => {
           </View>
         </View>
 
-        <View className="flex-1 px-4 py-2">
+        <View className="flex-1 items-center py-2">
           <Text
             className="text-lg font-bold text-center"
             style={{

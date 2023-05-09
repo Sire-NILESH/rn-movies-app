@@ -9,9 +9,10 @@ import Loader from "./../components/ui/Loader";
 import YouTubePlayer from "./../components/YouTubePlayer";
 import TrailerVideoThumbnail from "../components/TrailerVideoThumbnail";
 import { Colors } from "../utils/Colors";
+import { useQuery } from "./../../node_modules/@tanstack/react-query";
 
-const screenDimensions = Dimensions.get("screen");
-const dimensionsForWindow = Dimensions.get("window");
+// const screenDimensions = Dimensions.get("screen");
+// const dimensionsForWindow = Dimensions.get("window");
 
 const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [logging] = useLogging("About Screen");
@@ -20,36 +21,50 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   // @ts-ignore
   const { mediaType, mediaId } = route.params;
 
-  const [videos, setVideos] = useState<Trailer[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<Trailer | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setErrro] = useState<Error | null>(null);
+  // const [videos, setVideos] = useState<Trailer[]>([]);
+  // const [loading, setLoading] = useState<boolean>(false);
+  // const [error, setErrro] = useState<Error | null>(null);
+
+  // useEffect(() => {
+  //   async function loadVideos() {
+  //     if (!mediaType || !mediaId) return;
+
+  //     setLoading(true);
+
+  //     try {
+  //       const videosData = await fetchTrailers(mediaId, mediaType);
+  //       console.log(videosData);
+  //       // if we received some data,
+  //       if (videosData && videosData?.length > 0) {
+  //         videosData.filter((v: Trailer, i: number) => v.site === "YouTube");
+  //         setVideos([...videosData]);
+  //         setSelectedVideo(videosData[0]);
+  //       }
+  //     } catch (err) {
+  //       setErrro(err as Error);
+  //     }
+  //     setLoading(false);
+  //   }
+
+  //   loadVideos();
+  // }, [mediaType, mediaId]);
+
+  const {
+    isLoading: loading,
+    data: videos,
+    isError: error,
+  } = useQuery({
+    queryKey: ["trailer", mediaType, mediaId],
+    queryFn: () => fetchTrailers(mediaId, mediaType),
+    staleTime: 1000 * 60 * 60 * 24, //24hours
+  });
 
   useEffect(() => {
-    async function loadVideos() {
-      if (!mediaType || !mediaId) return;
-
-      setLoading(true);
-
-      try {
-        const videosData = await fetchTrailers(mediaId, mediaType);
-        console.log(videosData?.props);
-        // if we received some data,
-        if (videosData?.props.length > 0) {
-          videosData?.props.filter(
-            (v: Trailer, i: number) => v.site === "YouTube"
-          );
-          setVideos([...videosData?.props]);
-          setSelectedVideo(videosData?.props[0]);
-        }
-      } catch (err) {
-        setErrro(err as Error);
-      }
-      setLoading(false);
+    if (videos && videos.length > 0) {
+      setSelectedVideo(videos[0]);
     }
-
-    loadVideos();
-  }, [mediaType, mediaId]);
+  }, [videos]);
 
   const onPressSetVideoHandler = (video: Trailer) => {
     setSelectedVideo(video);
@@ -68,7 +83,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       <Loader loading={loading} />
 
       {/* if error show nothing*/}
-      {error && !loading && (
+      {error && !videos && (
         <NothingToShow
           title={"Something went wrong while loading videos"}
           problemType="error"
@@ -76,19 +91,19 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       )}
 
       {/* When no videos available for that media */}
-      {videos.length == 0 && !error && !loading && (
+      {videos && videos?.length == 0 && (
         <NothingToShow title="No Videos available" problemType="nothing" />
       )}
 
       {/* When some video is available, show the YT player */}
-      {videos.length > 0 && (
+      {videos && videos.length > 0 && (
         <View className="justify-start">
           <YouTubePlayer video={selectedVideo} loading={loading} />
         </View>
       )}
 
       {/* Title and date Dock */}
-      {!loading && !error && videos.length > 0 && (
+      {!loading && !error && videos && videos.length > 0 && (
         <View className="w-full bg-tertiary px-4 space-y-1 justify-center items-start py-5 [elevation:5]">
           <Text className="text-text_primary font-bold" numberOfLines={3}>
             {selectedVideo?.name}
@@ -106,7 +121,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       )}
 
       {/* All videos list */}
-      {videos.length > 0 && !error ? (
+      {videos && videos.length > 0 && !error ? (
         <FlatList
           data={videos}
           initialNumToRender={3}

@@ -27,16 +27,17 @@ import useFetcher from "../../hooks/useFetcher";
 import { sendUrlObjApiRequest } from "../../utils/requests";
 import { useRoute } from "@react-navigation/native";
 import useImageItemSetting from "../../hooks/useImageItemSetting";
+import { useQuery } from "@tanstack/react-query";
 
 interface IProps {
   screenType: ScreenTypes;
 }
 
-interface IState {
-  genreId: number;
-  genreName: string;
-  genreMedias: TvMedia[] | MovieMedia[];
-}
+// interface IState {
+//   genreId: number;
+//   genreName: string;
+//   genreMedias: TvMedia[] | MovieMedia[];
+// }
 
 function getPlaylistsToFetch(screenType: ScreenTypes) {
   // Get the genre list to fetch depending on the screen type.
@@ -63,17 +64,27 @@ const ScreenBuilderV2: React.FC<IProps> = ({ screenType }) => {
 
   const { imgItemsSetting } = useImageItemSetting("thumbnail");
 
-  const params = [playlistsToFetch, {}];
+  // const params = [playlistsToFetch, {}];
   // const params = [[playlistsToFetch[0].id], playlistsToFetch[0].mediaType, 1];
-  const useFetcherMemo = React.useCallback(() => {
-    return useFetcher(sendUrlObjApiRequest, [...params]);
-  }, []);
+  // const useFetcherMemo = React.useCallback(() => {
+  //   return useFetcher(sendUrlObjApiRequest, [...params]);
+  // }, []);
 
-  const { screenProps, loadingProps, errorLoadingProps } = useFetcherMemo();
+  // const { screenProps, loadingProps, errorLoadingProps } = useFetcherMemo();
 
   // if (loadingProps || screenProps) {
   //   return <Loader loading={loadingProps} />;
   // }
+
+  const {
+    isLoading: loadingProps,
+    data: screenProps,
+    error: errorLoadingProps,
+  } = useQuery({
+    queryKey: ["homeScreenFirstRow", playlistsToFetch[0]],
+    queryFn: () => sendUrlObjApiRequest([playlistsToFetch[0]], {}),
+    staleTime: 1000 * 60 * 60 * 24, //24hours
+  });
 
   return (
     <View className="flex-1 bg-secondary">

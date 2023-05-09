@@ -5,6 +5,7 @@ import {
   IQueryParams,
   IUrlObject,
   MediaTypes,
+  Trailer,
 } from "../../types/typings";
 import { fetchDataFromApi, fetchDataFromApiV2 } from "./api";
 
@@ -230,6 +231,33 @@ export const sendUrlObjApiRequest = async (
 };
 
 /**
+ * Common function that calls the API and returns screen props
+ * Requires a list of IUrlObject to be fetched.
+ *
+ *
+ * @param urlObject - An array of the type IUrlObject to be fetched that contains the url and query params object.
+ */
+export const sendUrlObjApiRequestV2 = async (
+  urlObjects: IUrlObject[],
+  filters?: IQueryParams
+) => {
+  try {
+    const data = await Promise.all([
+      ...urlObjects.map((urlObj) =>
+        fetchDataFromApi(urlObj.url, { ...urlObj.queryParams, ...filters })
+      ),
+    ]);
+
+    // console.log(data[0].data);
+    // return data[0].data.results;
+    const results = data.map((dat) => dat.data.results);
+    return results;
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
  * Is used to load more Genre related media(Movie/Tv) on scroll list end in the Tiles list screen.
  *
  * Currently unused
@@ -379,8 +407,15 @@ export const getMediaInfo = async (mediaId: number, mediaType: MediaTypes) => {
       fetchDataFromApi(`/${mediaType}/${mediaId}/credits`, {
         language: "en-US",
       }),
+      fetchDataFromApi(`/${mediaType}/${mediaId}/watch/providers`, {
+        language: "en-US",
+      }),
     ]);
-    return { media: data[0].data, mediaCredits: data[1].data };
+    return {
+      media: data[0].data,
+      mediaCredits: data[1].data,
+      mediaWatchProviders: data[2].data.results,
+    };
   } catch (err) {
     throw err;
   }
@@ -465,7 +500,15 @@ export const fetchTrailers = async (mediaId: number, mediaType: MediaTypes) => {
       language: "en-US",
     });
     if (data.data.results) {
-      return { props: data.data?.results };
+      // return { props: data.data?.results };
+
+      const videosData: Trailer[] = data.data?.results;
+
+      // if we received some data,
+      if (videosData.length > 0) {
+        videosData.filter((v: Trailer, i: number) => v.site === "YouTube");
+        return [...videosData];
+      }
     }
   } catch (err) {
     throw err;

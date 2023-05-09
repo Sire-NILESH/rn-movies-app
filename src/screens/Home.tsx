@@ -4,11 +4,13 @@ import Header from "./../components/Header";
 import ScreenBuilder from "../components/builders/ScreenBuilder";
 import { IDrawerScreenProps } from "../library/NavigatorScreenProps/DrawerScreenProps";
 import ScreenBuilderV2 from "../components/builders/ScreenBuilderV2";
+import useImageItemSetting from "../hooks/useImageItemSetting";
 
 // const HomeScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 const HomeScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   const [logging] = useLogging("Home Screen");
-  const { navigation, route } = props;
+  const { navigation } = props;
+  const { imgItemsSetting } = useImageItemSetting("thumbnail");
 
   // Header settings
   useLayoutEffect(() => {
@@ -23,8 +25,8 @@ const HomeScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
     });
   }, []);
 
-  // return <ScreenBuilder screenType="home" />;
-  return <ScreenBuilderV2 screenType="home" />;
+  return <ScreenBuilder screenType="home" imgItemsSetting={imgItemsSetting} />;
+  // return <ScreenBuilderV2 screenType="home" />;
 };
 
 export default memo(HomeScreen);

@@ -58,6 +58,7 @@ function Row({ title, medias, playlist, thumbnailQualitySettings }: Props) {
 }
 
 export default Row;
+// export default React.memo(Row);
 
 function renderFlatList(
   medias: MovieMedia[] | TvMedia[],
@@ -81,8 +82,8 @@ function renderFlatList(
     <>
       {medias && isMovieArray(medias) ? (
         <FlatList
-          maxToRenderPerBatch={4}
-          initialNumToRender={4}
+          maxToRenderPerBatch={6}
+          initialNumToRender={6}
           ListFooterComponent={renderFooterItemFunction(
             medias,
             title,

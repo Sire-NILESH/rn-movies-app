@@ -1,6 +1,7 @@
 import { View, Text, FlatList, Pressable } from "react-native";
 import React, { useState } from "react";
 import {
+  IAllWatchProviderData,
   ICountry,
   MediaTypes,
   WatchProvider,
@@ -16,24 +17,26 @@ import { useNavigation } from "@react-navigation/native";
 interface IProps {
   mediaId: number;
   mediaType: MediaTypes;
+  watchProvidersData: IAllWatchProviderData;
   imgQuality?: string;
 }
 
 const WatchProviders: React.FC<IProps> = ({
   mediaId,
   mediaType,
+  watchProvidersData,
   imgQuality,
 }) => {
-  const {
-    screenProps,
-    loadingProps,
-    errorLoadingProps,
-  }: {
-    // screenProps: WatchProviderForCountry;
-    screenProps: [];
-    loadingProps: boolean;
-    errorLoadingProps: Error | null;
-  } = useFetcher(getWatchProviders, [mediaId, mediaType]);
+  // const {
+  //   screenProps,
+  //   loadingProps,
+  //   errorLoadingProps,
+  // }: {
+  //   // screenProps: WatchProviderForCountry;
+  //   screenProps: [];
+  //   loadingProps: boolean;
+  //   errorLoadingProps: Error | null;
+  // } = useFetcher(getWatchProviders, [mediaId, mediaType]);
 
   const { defaultRegion } = useDefaultRegionHooks();
 
@@ -45,8 +48,7 @@ const WatchProviders: React.FC<IProps> = ({
   const navigation = useNavigation();
 
   const watchProviders: WatchProviderForCountry =
-    // @ts-ignore
-    screenProps && screenProps[currentCountry.code];
+    watchProvidersData[currentCountry.code];
 
   const providerImgQuality = imgQuality ? imgQuality : "200";
 
@@ -133,15 +135,15 @@ const WatchProviders: React.FC<IProps> = ({
         </View>
       ) : null}
 
-      {errorLoadingProps && (
+      {/* {errorLoadingProps && (
         <View className="flex-1 justify-center px-4">
           <Text className="text-text_dark text-base text-center">
             Something went wrong while finding providers for this content in{" "}
             {currentCountry.name}
           </Text>
         </View>
-      )}
-      {!watchProviders && !errorLoadingProps && (
+      )} */}
+      {!watchProviders && (
         <View className="flex-1 justify-center px-4">
           <Text className="text-text_dark text-base text-center">
             Currently no providers for this content in {currentCountry.name}

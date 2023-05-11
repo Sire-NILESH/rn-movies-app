@@ -17,7 +17,20 @@ export type TValidTableNames =
   | "current_region"
   | "image_qualities";
 
-const database = SQlite.openDatabase("mediaCollection.db");
+// const database = SQlite.openDatabase("mediaCollection.db");
+
+let database: SQlite.WebSQLDatabase;
+
+export const dbOpen = () => {
+  database = SQlite.openDatabase("mediaCollection.db");
+};
+
+// Open the database
+dbOpen();
+
+export const dbClose = async () => {
+  return database.closeAsync();
+};
 
 // "watchlist" | "favourites" | "watched";
 const mapper: { [key in TCollectionType]: TDbCollectionType } = {

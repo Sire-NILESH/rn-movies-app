@@ -9,10 +9,10 @@ const ThumbnailSkeleton = () => {
 
   return (
     <View className="w-[100%] pl-2 py-1 flex-row items-center">
-      {[1, 1, 1].map((n) => {
+      {[1, 1, 1].map((n, i) => {
         return (
           <View
-            key={Math.random() * 1}
+            key={i}
             className=" border border-stone-800 ml-1 rounded-md"
             style={{
               width: thumbnailSkeletonWidth,

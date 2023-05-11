@@ -151,7 +151,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                             ? {
                                 uri: `https://image.tmdb.org/t/p/w500${tvMediaPosterPathOld}`,
                               }
-                            : require("../../assets/images/placeholders/posterPlaceHolder.webp")
+                            : require("../../assets/images/placeholders/posterPlaceHolder.png")
                         }
                         resizeMode="cover" //similar to web, "cover", "contain", etc.
                         style={{ width: "100%", height: "100%" }}

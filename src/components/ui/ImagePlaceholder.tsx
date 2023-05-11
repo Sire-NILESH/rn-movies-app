@@ -2,8 +2,7 @@ import { StyleSheet, Image } from "react-native";
 import React from "react";
 
 const ImagePlaceholder = () => {
-  const imagePath =
-    "../../../assets/images/placeholders/posterPlaceHolder.webp";
+  const imagePath = "../../../assets/images/placeholders/posterPlaceHolder.png";
 
   return (
     <Image

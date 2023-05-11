@@ -48,19 +48,18 @@ function Header() {
     },
   ];
 
-  function renderHeaderLink(props: { name: string; navigateTo: () => void }) {
+  function RenderHeaderLink(props: {
+    link: { name: string; navigateTo: () => void };
+  }) {
     return (
-      <View
-        key={props.name + String(Math.random() * 1)}
-        className="rounded-full overflow-hidden"
-      >
+      <View className="rounded-full overflow-hidden">
         <Pressable
           android_ripple={{ color: "#eee" }}
           className="py-2 px-1"
-          onPress={props.navigateTo}
+          onPress={props.link.navigateTo}
         >
           <Text className="text-text_primary text text-center font-semibold px-1">
-            {props.name}
+            {props.link.name}
           </Text>
         </Pressable>
       </View>
@@ -89,7 +88,9 @@ function Header() {
       </View>
 
       <View className="flex-1 flex-row ml-2 justify-end gap-x-4">
-        {headerLinksScreenParams.map((link) => renderHeaderLink(link))}
+        {headerLinksScreenParams.map((link, index) => (
+          <RenderHeaderLink key={`${link.name}-${index}`} link={link} />
+        ))}
       </View>
     </LinearGradient>
   );

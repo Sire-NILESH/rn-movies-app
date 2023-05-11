@@ -31,18 +31,18 @@ const MediaCardInfo: React.FC<IProps> = ({ media }) => {
                     media.backdrop_path || media.poster_path
                   }`,
                 }
-              : require("../../assets/images/placeholders/posterPlaceHolder.webp")
+              : require("../../assets/images/placeholders/posterPlaceHolder.png")
           }
           className="rounded-l-2xl"
           style={{ width: "100%", height: "100%", resizeMode: "cover" }}
         /> */}
 
         <ExpoFastImage
-          // uri={require("../../assets/images/placeholders/posterPlaceHolder.webp")}
+          // uri={require("../../assets/images/placeholders/posterPlaceHolder.png")}
           source={
             imageUrl
               ? { uri: imageUrl }
-              : require("../../assets/images/placeholders/posterPlaceHolder.webp")
+              : require("../../assets/images/placeholders/posterPlaceHolder.png")
           }
           // uri={imageUrl}
           className="rounded-l-2xl"
@@ -55,7 +55,7 @@ const MediaCardInfo: React.FC<IProps> = ({ media }) => {
         />
 
         {/* // <Image
-             source={require("../../assets/images/placeholders/posterPlaceHolder.webp")}
+             source={require("../../assets/images/placeholders/posterPlaceHolder.png")}
              className="rounded-l-2xl"
              style={{ width: "100%", height: "100%", resizeMode: "cover" }}
            /> */}

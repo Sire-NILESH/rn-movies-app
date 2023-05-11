@@ -48,20 +48,22 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
           <ImgQualitySettings />
         </View>
 
-        <View>
-          {/* IMPORT/EXPORT */}
+        {/* <View>
+          IMPORT/EXPORT
           <ImportExportSettings />
-        </View>
+        </View> */}
 
         <View>
           {/* DELETE */}
           <DeleteSettings />
         </View>
 
-        <View>
-          {/* DEVELOPMENT ONLY SETTINGS */}
+        {/* <View>
+          DEVELOPMENT ONLY SETTINGS
           <DevOnlySettings />
-        </View>
+        </View> */}
+
+        <View className="h-24" />
       </ScrollView>
     </View>
   );

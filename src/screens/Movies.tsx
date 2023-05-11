@@ -1,10 +1,10 @@
 import { useLayoutEffect, memo } from "react";
 import HeaderSearchButton from "../components/ui/HeaderSearchButton";
-import ScreenBuilder from "../components/builders/ScreenBuilder";
 import { IDrawerScreenProps } from "../library/NavigatorScreenProps/DrawerScreenProps";
 import { View } from "react-native";
-import ScreenBuilderV2 from "../components/builders/ScreenBuilderV2";
 import useImageItemSetting from "../hooks/useImageItemSetting";
+import ScreenBuilderV3 from "../components/builders/ScreenBuilderV3";
+import ScreenBuilder from "../components/builders/ScreenBuilder";
 
 // const MoviesScreen: React.FC<IStackScreenProps> = (props) => {
 const MoviesScreen: React.FC<IDrawerScreenProps> = (props) => {
@@ -22,9 +22,11 @@ const MoviesScreen: React.FC<IDrawerScreenProps> = (props) => {
     });
   }, []);
 
-  // return <ScreenBuilderV3 screenType="movie" />;
-  // return <ScreenBuilderV2 screenType="movie" />;
+  // return (
+  //   <ScreenBuilderV3 screenType="movie" imgItemsSetting={imgItemsSetting} />
+  // );
   return <ScreenBuilder screenType="movie" imgItemsSetting={imgItemsSetting} />;
+  // return <ScreenBuilderV2 screenType="movie" />;
 };
 
 export default memo(MoviesScreen);

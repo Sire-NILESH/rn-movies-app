@@ -1,10 +1,10 @@
 import React, { useLayoutEffect, memo } from "react";
 import { useLogging } from "../hooks/useLogging";
 import Header from "./../components/Header";
-import ScreenBuilder from "../components/builders/ScreenBuilder";
 import { IDrawerScreenProps } from "../library/NavigatorScreenProps/DrawerScreenProps";
-import ScreenBuilderV2 from "../components/builders/ScreenBuilderV2";
 import useImageItemSetting from "../hooks/useImageItemSetting";
+import ScreenBuilderV3 from "../components/builders/ScreenBuilderV3";
+import ScreenBuilder from "../components/builders/ScreenBuilder";
 
 // const HomeScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 const HomeScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
@@ -25,6 +25,9 @@ const HomeScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
     });
   }, []);
 
+  // return (
+  //   <ScreenBuilderV3 screenType="home" imgItemsSetting={imgItemsSetting} />
+  // );
   return <ScreenBuilder screenType="home" imgItemsSetting={imgItemsSetting} />;
   // return <ScreenBuilderV2 screenType="home" />;
 };

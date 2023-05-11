@@ -34,9 +34,9 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
 
   console.log("new media card image ", imageUrl);
   return (
-    <View className="mt-5 mx-3 justify-between border border-stone-900 rounded-2xl overflow-hidden">
+    <View className="mt-5 mx-3 justify-between rounded-2xl border border-stone-800 overflow-hidden">
       <View
-        className="relative flex-1 overflow-hidden"
+        className="relative flex-1 "
         style={{ width: "100%", aspectRatio: 16 / 9 }}
       >
         {imageUrl ? (
@@ -49,7 +49,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
           <Image
             source={{ uri: imageUrl }}
             resizeMode="cover"
-            className="h-full w-full"
+            className="h-full w-full rounded-2xl"
           />
         ) : (
           <ImagePlaceholder />

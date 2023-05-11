@@ -82,7 +82,7 @@ function renderFlatList(
     <>
       {medias && isMovieArray(medias) ? (
         <FlatList
-          maxToRenderPerBatch={6}
+          maxToRenderPerBatch={20}
           initialNumToRender={6}
           ListFooterComponent={renderFooterItemFunction(
             medias,
@@ -114,15 +114,15 @@ function renderFlatList(
               />
             </View>
           )}
-          keyExtractor={(media) => {
-            return String(media.id) + String(Math.random() * 1);
+          keyExtractor={(media, i) => {
+            return `${media.id}-${i}`;
           }}
           horizontal
         />
       ) : (
         <FlatList
-          maxToRenderPerBatch={4}
-          initialNumToRender={4}
+          maxToRenderPerBatch={20}
+          initialNumToRender={6}
           ListFooterComponent={renderFooterItemFunction(
             medias,
             title,
@@ -153,8 +153,8 @@ function renderFlatList(
               />
             </View>
           )}
-          keyExtractor={(media) => {
-            return String(media.id) + String(Math.random() * 1);
+          keyExtractor={(media, i) => {
+            return `${media.id}-${i}`;
           }}
           horizontal
         />

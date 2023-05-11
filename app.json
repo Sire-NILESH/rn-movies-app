@@ -4,10 +4,10 @@
     "slug": "Maven",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/iconV2.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "splash": {
-      "image": "./assets/splashV2.png",
+      "image": "./assets/splash.png",
       "resizeMode": "cover",
       "backgroundColor": "#000"
     },
@@ -16,16 +16,32 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "usesIcloudStorage": true,
+      "bundleIdentifier": "com.sire.maven"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/iconV2.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#000"
-      }
+      },
+      "package": "com.sire.maven"
     },
     "web": {
-      "favicon": "./assets/faviconV2.png"
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-document-picker",
+        {
+          "iCloudContainerEnvironment": "Production"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "21432e59-7ae2-4223-8aee-21220b1dfe47"
+      }
     }
   }
 }

@@ -26,18 +26,14 @@ const GenreTags: React.FC<IProps> = (props) => {
           horizontal
           data={props.genreIdList}
           showsHorizontalScrollIndicator={false}
-          keyExtractor={(item) =>
-            String(item) + ":" + String(Math.random() * 1)
-          }
+          keyExtractor={(item, i) => `${item}-${i}`}
           renderItem={(itemObj) => <GerneTag genreId={itemObj.item} />}
         />
       ) : (
         <FlatList
           horizontal
           data={props.genreNames}
-          keyExtractor={(item) =>
-            String(item.name) + ":" + String(Math.random() * 1)
-          }
+          keyExtractor={(item, i) => `${item.name}-${i}`}
           renderItem={(itemObj) => <GerneTag genreName={itemObj.item} />}
         />
       )}

@@ -6,6 +6,7 @@ import { IDrawerScreenProps } from "../library/NavigatorScreenProps/DrawerScreen
 import { View } from "react-native";
 import ScreenBuilderV2 from "../components/builders/ScreenBuilderV2";
 import useImageItemSetting from "../hooks/useImageItemSetting";
+import ScreenBuilderV3 from "../components/builders/ScreenBuilderV3";
 
 const TvShowsScreen: React.FC<IDrawerScreenProps> = (props) => {
   const { navigation } = props;

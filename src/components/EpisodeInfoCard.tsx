@@ -49,7 +49,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
               ? {
                   uri: `https://image.tmdb.org/t/p/w500${episode.still_path}`,
                 }
-              : require("../../assets/images/placeholders/posterPlaceHolder.webp")
+              : require("../../assets/images/placeholders/posterPlaceHolder.png")
           }
           style={{ width: "100%", height: "100%", resizeMode: "cover" }}
         />

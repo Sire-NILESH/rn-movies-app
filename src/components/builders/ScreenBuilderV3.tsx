@@ -16,6 +16,7 @@ import {
   movieScreenPlaylists,
   tvScreenPlaylists,
 } from "../../config/screenGenresConfig";
+import { FlatList } from "react-native-gesture-handler";
 // import * as SplashScreen from "expo-splash-screen";
 // import { useRoute } from "@react-navigation/native";
 
@@ -50,7 +51,7 @@ function getPlaylistsToFetch(screenType: ScreenTypes) {
   return playlistsToFetch;
 }
 
-const ScreenBuilder: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
+const ScreenBuilderV3: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
   // This hook is responsible for loading the screen props and error messages for the Home, TV and Movies screens.
   // const { screenProps, loadingProps, errorLoadingProps } =
   //   useFetchScreenProps(screenType);
@@ -117,12 +118,37 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
         //   when no error and props
         <View className="flex-1">
           {screenProps ? (
-            <ScrollView className="space-y-10">
+            <ScrollView className="space-y-4">
               {screenProps[0].length > 0 ? (
                 <Banner mediaList={screenProps[0]} />
               ) : null}
 
-              {!loadingProps &&
+              {!loadingProps && (
+                <FlatList
+                  className=""
+                  maxToRenderPerBatch={8}
+                  initialNumToRender={8}
+                  data={playlistsToFetch}
+                  keyExtractor={(playlist) => playlist.name}
+                  renderItem={(wrappedPlaylist) => {
+                    const i = wrappedPlaylist.index;
+                    const p = wrappedPlaylist.item;
+                    if (screenProps[i].length > 0) {
+                      return (
+                        <Row
+                          key={p.name}
+                          title={p.name}
+                          medias={screenProps[i]}
+                          playlist={p}
+                          thumbnailQualitySettings={imgItemsSetting}
+                        />
+                      );
+                    } else return null;
+                  }}
+                />
+              )}
+
+              {/* {!loadingProps &&
                 playlistsToFetch.map((p, i) => {
                   if (screenProps[i]?.length > 0) {
                     return (
@@ -135,7 +161,7 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
                       />
                     );
                   } else null;
-                })}
+                })} */}
             </ScrollView>
           ) : null}
         </View>
@@ -144,4 +170,4 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
   );
 };
 
-export default memo(ScreenBuilder);
+export default memo(ScreenBuilderV3);

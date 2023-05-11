@@ -82,8 +82,8 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
             </View>
           );
         }}
-        keyExtractor={(media) => {
-          return `${media.id}`;
+        keyExtractor={(media, i) => {
+          return `${media.id}-${i}`;
         }}
         numColumns={3}
         ListFooterComponent={renderLoader}

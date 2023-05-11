@@ -33,7 +33,7 @@ const DefaultRegionSettings = () => {
       title="Default region"
       subtitle={`A default region for the watch providers.`}
     >
-      <CardRow rowTitle="Select a Language">
+      <CardRow rowTitle="Select a Country">
         <CountriesDropdown
           currentCountry={currentDefaultRegion}
           setCountryHandler={onSetDefaultRegion}

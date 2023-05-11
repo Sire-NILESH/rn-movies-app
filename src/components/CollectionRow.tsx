@@ -95,8 +95,8 @@ function renderFlatList(
               />
             </View>
           )}
-          keyExtractor={(media) => {
-            return String(media.mediaId) + String(Math.random() * 1);
+          keyExtractor={(media, i) => {
+            return `${media.mediaId}-${i}`;
           }}
         />
       ) : null}

@@ -1,3 +1,4 @@
+import AboutScreen from "../../screens/AboutScreen";
 import CollectionMediaMoreInfo from "../../screens/CollectionMediaMoreInfo";
 import MoreInfoScreen from "../../screens/MoreInfo";
 import PersonMediasStackScreen from "../../screens/PersonMediasStackScreen";
@@ -50,6 +51,10 @@ export const stackRoutes: IStackRouteProps[] = [
   {
     name: "Watch Provider",
     component: WatchProviderStackScreen,
+  },
+  {
+    name: "About",
+    component: AboutScreen,
   },
   // {
   //   name: "Drawer",

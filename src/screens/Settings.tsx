@@ -10,6 +10,7 @@ import DefaultLangSettings from "../components/settings/DefaultLangSettings";
 import ImportExportSettings from "../components/settings/ImportExportSettings";
 import DevOnlySettings from "../components/settings/DevOnlySettings";
 import AdultFilterSettings from "../components/settings/AdultFilterSettings";
+import AboutSettings from "../components/settings/AboutSettings";
 
 const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   // const { navigation, route } = props;
@@ -62,6 +63,11 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
           DEVELOPMENT ONLY SETTINGS
           <DevOnlySettings />
         </View> */}
+
+        <View>
+          {/* DELETE */}
+          <AboutSettings />
+        </View>
 
         <View className="h-24" />
       </ScrollView>

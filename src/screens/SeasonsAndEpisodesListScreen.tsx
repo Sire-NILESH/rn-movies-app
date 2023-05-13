@@ -54,7 +54,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
     isLoading: loadingProps,
     data: seasonDetails,
     error: errorLoadingProps,
-  } = useQuery({
+  } = useQuery<SeasonDetails>({
     queryKey: ["tv/season", "tv", tvMediaId, selectedSeason?.season_number],
     queryFn: () => fetchSeasonDetails(tvMediaId, selectedSeason?.season_number),
     staleTime: 1000 * 60 * 60 * 1, //1hour
@@ -130,7 +130,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                       "rgba(28, 25, 23, 0.9)",
                       Colors.black,
                     ]}
-                    className="flex-row px-4 pt-4 justify-between items-start mb-10"
+                    className="flex-row px-4 pt-4 justify-between items-start mb-5"
                   >
                     {/* Season Poster  h-[200] w-[133] */}
                     <View
@@ -195,7 +195,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
 
                   {/* Overview */}
                   {seasonDetails.overview ? (
-                    <View className="mb-10 px-4 space-y-2">
+                    <View className="mb-2 px-4 space-y-2">
                       <Text className="text-text_primary font-bold">
                         Overview:{" "}
                       </Text>

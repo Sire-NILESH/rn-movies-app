@@ -13,7 +13,7 @@ interface IProps {
 const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
   return (
     <LinearGradient
-      className="mt-5 mx-3 py-3 rounded-2xl border border-gray-800 justify-between"
+      className="mt-5 mx-3 py-3 rounded-2xl border border-stone-800 justify-between"
       colors={[
         "rgba(28, 25, 23, 0.8)",
         "rgba(41, 37, 36, 1)",

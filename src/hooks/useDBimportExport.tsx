@@ -15,7 +15,7 @@ const useDBimportExport = () => {
         await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
       if (permissions.granted) {
         const base64 = await FileSystem.readAsStringAsync(
-          FileSystem.documentDirectory + "Maven/storage/mediaCollection.db",
+          FileSystem.documentDirectory + "Maven/collection/mediaCollection.db",
           {
             encoding: FileSystem.EncodingType.Base64,
           }
@@ -37,7 +37,7 @@ const useDBimportExport = () => {
       }
     } else {
       await Sharing.shareAsync(
-        FileSystem.documentDirectory + "Maven/storage/mediaCollection.db"
+        FileSystem.documentDirectory + "Maven/collection/mediaCollection.db"
       );
     }
   };
@@ -51,11 +51,13 @@ const useDBimportExport = () => {
     if (result.type === "success") {
       if (
         !(
-          await FileSystem.getInfoAsync(FileSystem.documentDirectory + "SQLite")
+          await FileSystem.getInfoAsync(
+            FileSystem.documentDirectory + "Maven/collection/"
+          )
         ).exists
       ) {
         await FileSystem.makeDirectoryAsync(
-          FileSystem.documentDirectory + "SQLite"
+          FileSystem.documentDirectory + "Maven/collection/"
         );
       }
 
@@ -64,7 +66,7 @@ const useDBimportExport = () => {
       });
 
       await FileSystem.writeAsStringAsync(
-        FileSystem.documentDirectory + "Maven/storage/mediaCollection.db",
+        FileSystem.documentDirectory + "Maven/collection/mediaCollection.db",
         base64,
         { encoding: FileSystem.EncodingType.Base64 }
       );

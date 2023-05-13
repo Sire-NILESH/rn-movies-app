@@ -7,7 +7,6 @@ export default function SettingsCardWrapper(props: {
   title: string;
   subtitle: string;
   children?: React.ReactNode;
-  // children?: string | JSX.Element | JSX.Element[] | (() => JSX.Element);
 }) {
   return (
     <View className="w-full bg-neutral-900 py-4 px-2 rounded-xl">

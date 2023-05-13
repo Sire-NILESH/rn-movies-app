@@ -7,8 +7,6 @@ import {
   WatchProvider,
   WatchProviderForCountry,
 } from "../../types/typings";
-import useFetcher from "../hooks/useFetcher";
-import { getWatchProviders } from "../utils/requests";
 import CountriesDropdown from "./ui/CountriesDropdown";
 import ImageCached from "./ui/ImageCached";
 import { useDefaultRegionHooks } from "../hooks/reduxHooks";
@@ -22,22 +20,9 @@ interface IProps {
 }
 
 const WatchProviders: React.FC<IProps> = ({
-  mediaId,
-  mediaType,
   watchProvidersData,
   imgQuality,
 }) => {
-  // const {
-  //   screenProps,
-  //   loadingProps,
-  //   errorLoadingProps,
-  // }: {
-  //   // screenProps: WatchProviderForCountry;
-  //   screenProps: [];
-  //   loadingProps: boolean;
-  //   errorLoadingProps: Error | null;
-  // } = useFetcher(getWatchProviders, [mediaId, mediaType]);
-
   const { defaultRegion } = useDefaultRegionHooks();
 
   const [currentCountry, setCurrentCountry] = useState<ICountry>(defaultRegion);
@@ -62,7 +47,6 @@ const WatchProviders: React.FC<IProps> = ({
     <View className="flex-1 mt-10 space-y-5">
       <View
         className="flex-row  items-center justify-between px-4 mt-2 mx-2 bg-accent rounded-xl"
-        // style={{ backgroundColor: "rgb(4, 20, 10)" }}
         style={{ backgroundColor: "rgb(4, 20, 10)" }}
       >
         <Text className="text-text_tertiary mx-4">
@@ -135,14 +119,6 @@ const WatchProviders: React.FC<IProps> = ({
         </View>
       ) : null}
 
-      {/* {errorLoadingProps && (
-        <View className="flex-1 justify-center px-4">
-          <Text className="text-text_dark text-base text-center">
-            Something went wrong while finding providers for this content in{" "}
-            {currentCountry.name}
-          </Text>
-        </View>
-      )} */}
       {!watchProviders && (
         <View className="flex-1 justify-center px-4">
           <Text className="text-text_dark text-base text-center">

@@ -1,22 +1,17 @@
 import React from "react";
-import { View, Text, Image, ImageBackground } from "react-native";
+import { View, Text, ImageBackground } from "react-native";
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
   DrawerItemList,
 } from "@react-navigation/drawer";
 
-import Logo from "./ui/Logo";
 import { LinearGradient } from "expo-linear-gradient";
-import { Colors } from "../utils/Colors";
 
 const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
   return (
     <View style={{ flex: 1 }}>
-      <DrawerContentScrollView
-        {...props}
-        //   contentContainerStyle={{ backgroundColor: "#8200d6" }}
-      >
+      <DrawerContentScrollView {...props}>
         <View className="mt-0" style={{ width: "100%", aspectRatio: 16 / 9 }}>
           <LinearGradient
             colors={[
@@ -46,15 +41,6 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
               }} //for Image styles internally.
             ></ImageBackground>
           </LinearGradient>
-
-          {/* <Image
-            source={require("../../assets/images/icons/maven_main.png")}
-            resizeMode={"cover"}
-            style={{
-              width: "100%",
-              height: "100%",
-            }}
-          /> */}
         </View>
 
         <View className="flex-1 pt-2 my-0 px-2">

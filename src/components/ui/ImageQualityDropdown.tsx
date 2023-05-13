@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View } from "react-native";
 import Dropdown from "./Dropdown";
-// import { useDefaultImageQualityHooks } from "../../hooks/reduxHooks";
+
 import {
   IImageItemSettingsValue,
   IImageQuality,
-  IImgItemSettingsDB,
   ImageItemTypes,
 } from "../../../types/typings";
-import { storeObjectData } from "../../storage/asyncStorage";
 import { showErrorAlert } from "../../utils/helpers/helper";
-import useImgSettings from "../../hooks/useImgSettings";
 import useImageItemSetting from "../../hooks/useImageItemSetting";
 
 interface IProps {

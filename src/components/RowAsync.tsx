@@ -1,6 +1,4 @@
 import {
-  IGenresToShowHomeScreen,
-  IImageQuality,
   IImgItemSettingsDB,
   IPlaylist,
   MovieMedia,
@@ -14,9 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
 import { isMovie } from "./../utils/helpers/helper";
 import { sendUrlObjApiRequest } from "../utils/requests";
-import useFetcher from "../hooks/useFetcher";
 import React, { memo } from "react";
-import ThumbnailSkeleton from "./ThumbnailSkeleton";
 import ThumbnailMemoised from "./ThumbnailMemoised";
 import Thumbnail from "./Thumbnail";
 // import { useQuery } from "@tanstack/react-query";
@@ -24,7 +20,6 @@ import { useQuery } from "./../../node_modules/@tanstack/react-query";
 
 interface Props {
   title: string;
-  // mediaGenre: IGenresToShowHomeScreen;
   playlist: IPlaylist;
   thumbnailQualitySettings?: IImgItemSettingsDB;
 }
@@ -37,21 +32,6 @@ const rowItemWidth = windowWidth * 0.31 + 4;
 const rowItemHeight = ((windowWidth * 0.31 + 4) * 3) / 2;
 
 function RowAsync({ title, playlist, thumbnailQualitySettings }: Props) {
-  // const params = [[playlist]];
-  // const { defaultImgQuality } = useDefaultImageQualityHooks();
-  // const { imgItemsSetting } = useImageItemSetting("thumbnail");
-
-  // const params = [[mediaGenre.id], mediaGenre.mediaType, 1];
-  // const useFetcherMemo = React.useCallback(() => {
-  //   return useFetcher(sendUrlObjApiRequest, [...params]);
-  // }, []);
-
-  // const {
-  //   screenProps: medias,
-  //   loadingProps,
-  //   errorLoadingProps,
-  // } = useFetcherMemo();
-
   const {
     isLoading: loadingProps,
     data: medias,
@@ -104,9 +84,6 @@ function RowAsync({ title, playlist, thumbnailQualitySettings }: Props) {
   );
 }
 
-// ) : null}
-
-// export default RowAsync;
 export default memo(RowAsync);
 
 function renderFlatList(
@@ -139,7 +116,6 @@ function renderFlatList(
           )}
           bounces
           className="pl-2 py-1"
-          // className="ml-2 h-32"
           data={medias}
           getItemLayout={(_data, index) => {
             return {
@@ -149,12 +125,7 @@ function renderFlatList(
             };
           }}
           renderItem={(media) => (
-            <View
-              className="ml-1"
-              // style={{
-              //   height: rowItemHeight,
-              // }}
-            >
+            <View className="ml-1">
               <ThumbnailMemoised
                 media={isMovie(media.item) ? media.item : media.item}
                 orientation="portrait"
@@ -183,7 +154,6 @@ function renderFlatList(
           )}
           bounces
           className="px-2 py-1"
-          // className="ml-2 h-32"
           data={medias}
           getItemLayout={(_data, index) => {
             return {
@@ -193,13 +163,7 @@ function renderFlatList(
             };
           }}
           renderItem={(media) => (
-            <View
-              className="ml-1"
-              // style={{
-              //   height: rowItemHeight,
-              // }}
-            >
-              {/* <ThumbnailMemoised */}
+            <View className="ml-1">
               <Thumbnail
                 media={isMovie(media.item) ? media.item : media.item}
                 orientation="portrait"

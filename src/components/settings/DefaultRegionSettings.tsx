@@ -10,22 +10,9 @@ const DefaultRegionSettings = () => {
   const [currentDefaultRegion, setDefaultRegion] =
     useState<ICountry>(defaultRegion);
 
-  // useEffect(() => {
-  //   async function getDefaultRegion() {
-  //     const region = await getdataFromACollection("current_region");
-  //     setDefaultRegion(region.rows._array[0]);
-  //   }
-  //   getDefaultRegion();
-  // }, []);
-
   function onSetDefaultRegion(country: ICountry) {
     setDefaultRegionHandler(country);
   }
-
-  // DB method
-  // async function setDefaultRegionHandler(country: ICountry) {
-  //   await addRegion(country);
-  // }
 
   return (
     <SettingsCardWrapper

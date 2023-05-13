@@ -1,6 +1,5 @@
 import React, { useEffect, useState, memo } from "react";
 import { View } from "react-native";
-
 import { ITopTabScreenProps } from "../library/NavigatorScreenProps/TopTabScreenProps";
 import { getDeviceDimensions } from "../utils/helpers/helper";
 import { FlatList } from "react-native-gesture-handler";
@@ -49,10 +48,6 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
   useEffect(() => {
     if (refresh) {
       getMediasFromCollection(screenMediaType, collectionType).then((data) => {
-        console.log(
-          `AAYYYOOO ${data.rows.length} ${collectionType} data from DB`,
-          data["rows"]["_array"]
-        );
         setMedias(data.rows._array);
       });
     }

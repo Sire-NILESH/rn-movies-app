@@ -1,4 +1,3 @@
-import { View } from "react-native";
 import { useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { MediaTypes, MovieMedia, TvMedia } from "../../types/typings";
@@ -11,8 +10,6 @@ const SearchTileListScreen: React.FunctionComponent<IStackScreenProps> = (
   // @ts-ignore
   const {
     title,
-    medias,
-    searchCategory,
   }: {
     title: string;
     medias: MovieMedia[] | TvMedia[];
@@ -25,12 +22,6 @@ const SearchTileListScreen: React.FunctionComponent<IStackScreenProps> = (
       headerTitle: title,
     });
   }, []);
-
-  //   searchScreenOptions?: {
-  //    searchQuery: string;
-  //    searchCategory: MediaTypes;
-  //    abortController: AbortController;
-  //  };
 
   return <SearchResultsTopTabsNavigator searchQuery={title} />;
 };

@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React, { useEffect, useState } from "react";
 import {
   IQueryParams,
@@ -33,8 +33,6 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [error, setError] = useState<Error | null>(null);
 
-  console.log("help", urlObjectLocal);
-
   // thumbnail images quality
   const { imgItemsSetting: thumbnailQuality } =
     useImageItemSetting("thumbnail");
@@ -67,16 +65,6 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
 
   return (
     <View className="flex-1 bg-secondary min-w-full w-full items-center">
-      {/* <View
-        className="flex-row  items-center justify-between px-4 my-2 mx-2 bg-accent rounded-xl h-8"
-        // style={{ backgroundColor: "rgb(4, 20, 10)" }}
-        style={{ backgroundColor: "rgb(4, 20, 10)" }}
-      >
-        <Text className="text-text_tertiary mx-4">
-          Contents available in {urlObjectLocal.queryParams.watch_region}
-        </Text>
-      </View> */}
-
       {/* Tiles */}
       <View className="flex-1 relative w-full px-2">
         {error && medias.length === 0 ? (

@@ -17,26 +17,11 @@ const defaultRegionSlice = createSlice({
       //   set a default region of the type 'ICountry' directly on the state object
       state.name = action.payload.name;
       state.code = action.payload.code;
-
-      // state = {
-      //   ...{
-      //     name: action.payload.name,
-      //     code: action.payload.code,
-      //   },
-      // };
-
-      // state = Object.assign(state, {
-      //   name: action.payload.name,
-      //   code: action.payload.code,
-      // });
     },
   },
 });
 
 export const { setDefaultRegion } = defaultRegionSlice.actions;
-
-// Other code such as selectors can use the imported `RootState` type
-// export const defaultRegion = (state: RootState) => state.defaultRegion;
 
 const defaultRegionSliceReducer = defaultRegionSlice.reducer;
 export default defaultRegionSliceReducer;

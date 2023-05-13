@@ -3,12 +3,9 @@ import React from "react";
 import {
   IAllWatchProviderData,
   ICredits,
-  IImgItemSettingsDB,
-  ImageItemTypes,
   MediaTypes,
   MovieMediaExtended,
   TvMediaExtended,
-  WatchProviderForCountry,
 } from "../../types/typings";
 import { useNavigation } from "@react-navigation/native";
 import Loader from "./ui/Loader";
@@ -40,14 +37,9 @@ interface IProps {
   extendedMedia: TvMediaExtended | MovieMediaExtended;
   credits: ICredits;
   watchProvidersData: IAllWatchProviderData;
-  // watchProvidersData: { [key: string]: WatchProviderForCountry }[];
   loadingProps: boolean;
   errorLoadingProps: Error | null;
 }
-
-// type TTempImgSettingsObj = {
-//   [key in ImageItemTypes]: IImgItemSettingsDB;
-// };
 
 const MediaMoreInfo: React.FC<IProps> = (props) => {
   const {
@@ -64,20 +56,6 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
 
   // img setttings state
   const { allImgItemsSettings } = useImgSettings();
-
-  // const allImgQualitiesObject = React.useMemo(
-  //   function () {
-  //     if (allImgItemsSettings) {
-  //       let temp: TTempImgSettingsObj = {} as TTempImgSettingsObj;
-  //       allImgItemsSettings.forEach(function (item) {
-  //         temp[item.name] = item;
-  //       });
-  //       return temp;
-  //     }
-  //   },
-  //   // []
-  //   [allImgItemsSettings]
-  // );
 
   const cast = credits?.cast;
   const directedBy = credits?.crew.filter((c) => {
@@ -242,24 +220,6 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
                 <WatchedMediaButton media={media} mediaType={mediaType} />
               </View>
             </View>
-
-            {/* Network List and Watch Provider row */}
-
-            {/* <View className="mb-10 space-y-6">
-            {cast ? (
-              <View className="bg-neutral-900/60 pb-6 mx-2 rounded-lg">
-                <Cast personList={credits.cast} title="Cast" />
-              </View>
-            ) : null}
-            <View className="bg-neutral-900/60 pb-6 mx-2 rounded-md">
-              {directedBy ? (
-                <Cast
-                  personList={credits.crew.filter((c) => c.job === "Director")}
-                  title="Directed by"
-                />
-              ) : null}
-            </View>
-          </View> */}
 
             {/* Network List and Watch Provider row */}
             <View className="mt-8">

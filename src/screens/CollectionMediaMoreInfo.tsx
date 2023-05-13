@@ -1,14 +1,6 @@
 import { useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
-import {
-  ICredits,
-  IDbListMedia,
-  IReduxListMedia,
-  MediaTypes,
-  MovieMediaExtended,
-  TvMediaExtended,
-} from "../../types/typings";
-import useFetcher from "../hooks/useFetcher";
+import { IDbListMedia, MediaTypes } from "../../types/typings";
 import { getMediaInfo } from "../utils/requests";
 import FavouriteMediaButton from "../components/ui/FavouriteMediaButton";
 import MediaMoreInfo from "../components/MediaMoreInfo";
@@ -28,21 +20,6 @@ const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
 
   let extendedMedia;
 
-  const parametersForFetcher = [collectionMedia.mediaId, mediaType];
-
-  // const {
-  //   screenProps,
-  //   loadingProps,
-  //   errorLoadingProps,
-  // }: {
-  //   screenProps: {
-  //     media: TvMediaExtended | MovieMediaExtended;
-  //     mediaCredits: ICredits;
-  //   };
-  //   loadingProps: boolean;
-  //   errorLoadingProps: Error | null;
-  //   } = useFetcher(getMediaInfo, parametersForFetcher);
-
   const {
     isLoading: loadingProps,
     data: screenProps,
@@ -54,11 +31,6 @@ const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
   });
 
   extendedMedia = screenProps?.media;
-
-  // function getTitle(): string {
-  //   if (media && "title" in media) return media.title;
-  //   return media && media.name;
-  // }
 
   // Header settings
   useLayoutEffect(() => {
@@ -75,8 +47,6 @@ const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
       },
     });
   }, [screenProps]);
-
-  console.log("Media from collection more info", screenProps?.media);
 
   return (
     <MediaMoreInfo

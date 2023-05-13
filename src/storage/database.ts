@@ -62,9 +62,9 @@ const executeMultipleQueries = async (
             sql.query,
             sql.arguments,
             (_tx, results) => {
-              console.log(sql.successMessage);
+              // console.log(sql.successMessage);
               if (sql.rowsAffectedSuccess && results.rowsAffected > 0) {
-                console.log(sql.rowsAffectedSuccess);
+                // console.log(sql.rowsAffectedSuccess);
               }
 
               if (results.rows.length === 0) {
@@ -86,8 +86,8 @@ const executeMultipleQueries = async (
               // }
             },
             (_, err) => {
-              console.log(sql.errorMessage);
-              console.log(err);
+              // console.log(sql.errorMessage);
+              // console.log(err);
               // reject(err);
               return true;
             }
@@ -98,68 +98,12 @@ const executeMultipleQueries = async (
         reject(error);
       },
       () => {
-        console.log(finalMessage);
+        // console.log(finalMessage);
         resolve();
       }
     );
   });
 };
-
-// export async function executeReturnTypeQuery(
-//   sqlStatements: ISQLQuery[],
-//   finalMessage: string
-// ) {
-
-//   return new Promise<SQlite.SQLResultSet>((resolve, reject) => {
-//     database.transaction(
-//       (tx) => {
-//         sqlStatements.forEach((sql) => {
-//           tx.executeSql(
-//             sql.query,
-//             sql.arguments,
-//             (_tx, results) => {
-//               console.log(sql.successMessage);
-//               if (sql.rowsAffectedSuccess && results.rowsAffected > 0) {
-//                 console.log(sql.rowsAffectedSuccess);
-//               }
-
-//               if (results.rows.length === 0) {
-//                 // EXE ANY NESTED SQL STATEMENT FOR CASE WHEN ROWS WERE AFFECTED.
-//                 if (sql.nestedQueryWhenEmptyTable !== undefined) {
-//                   // create the async function that will execute the nested SQL statements
-//                   async function exeNestedQuery() {
-//                     // ts needed a new check to make sure it is'nt undefined
-//                     if (sql.nestedQueryWhenEmptyTable)
-//                       await executeMultipleQueries(
-//                         sql.nestedQueryWhenEmptyTable,
-//                         "success running nested query"
-//                       );
-//                   }
-
-//                   exeNestedQuery();
-//                 }
-//               }
-//               // }
-//             },
-//             (_, err) => {
-//               console.log(sql.errorMessage);
-//               console.log(err);
-//               // reject(err);
-//               return true;
-//             }
-//           );
-//         });
-//       },
-//       (error) => {
-//         reject(error);
-//       },
-//       () => {
-//         console.log(finalMessage);
-//         resolve();
-//       }
-//     );
-//   });
-// };
 
 export async function initDB() {
   const sqlStatements: ISQLQuery[] = [
@@ -427,14 +371,14 @@ export function getImgItemSetting(imgItem: ImageItemTypes) {
         `,
         [imgItem],
         (_, results) => {
-          console.log("Got data from table");
+          // console.log("Got data from table");
           resolve(results);
         },
         (_, err) => {
-          console.log(
-            "error retrieveing data from table, from database.js\n",
-            err
-          );
+          // console.log(
+          //   "error retrieveing data from table, from database.js\n",
+          //   err
+          // );
           reject(err);
           return true;
         }
@@ -444,69 +388,6 @@ export function getImgItemSetting(imgItem: ImageItemTypes) {
 
   return promise;
 }
-
-// export async function getImgItemSetting(imgItem: ImageItemTypes) {
-//   const sqlStatements: ISQLQuery[] = [
-//     {
-//       query: `
-//         SELECT *
-//         FROM image_qualities
-//         WHERE name = ?
-//       `,
-//       arguments: [imgItem],
-//       successMessage: "",
-//       errorMessage: `Error getting img settings data for ${imgItem} from image_qualities table`,
-//     },
-//   ];
-
-//   await executeMultipleQueries(
-//     sqlStatements,
-//     `SUCCESS, got img settings data for ${imgItem} tfrom image_qualities table`
-//   );
-// }
-
-// async function getDefaultRegionDB() {
-//    const promise = new Promise<void>((resolve, reject) => {
-//     database.transaction((tx) => {
-//       tx.executeSql(
-//         `
-//       DELETE FROM current_region;`,
-//         [],
-//         (_tx, results) => {
-//           console.log("...deleted prior data from current_region table");
-
-//           // Now add the new region to the table
-//           database.transaction((tx) => {
-//             tx.executeSql(`INSERT INTO current_region (
-//               name,
-//               code
-//               ) VALUES ?, ?
-//               ;`,
-//               [country.name, country.code],
-//               (_tx, results) => {
-//                 if (results.rowsAffected > 0) {
-//                   console.log("SUCCESS, new region data added to current_region table")
-//                   resolve()
-//                 }
-//               },
-//               (_tx, err) => {
-//                 console.log("Error deleting prior data from current_language table")
-//                 reject(err)
-//                 return true
-//               }
-//             )
-//           })
-//         },
-//         (_, err) => {
-//           console.log("Error deleting prior data from current_language table")
-//           return true;
-//         }
-//       );
-//     });
-//   });
-
-//   return promise
-// }
 
 export function showAllTablesInDb() {
   const promise = new Promise<SQlite.SQLResultSet>((resolve, reject) => {
@@ -520,12 +401,12 @@ export function showAllTablesInDb() {
       `,
         [],
         (_tx, results) => {
-          console.log("Total tables in the database: ", results.rows.length);
-          console.log(results.rows._array);
+          // console.log("Total tables in the database: ", results.rows.length);
+          // console.log(results.rows._array);
           resolve(results);
         },
         (_tx, err) => {
-          console.log("Error fetching tables from database");
+          // console.log("Error fetching tables from database");
           reject(err);
           return true;
         }
@@ -555,9 +436,9 @@ export function removeMediaFromCollection(
         [mediaId, mediaType, collectionType],
         // SUCCESS CASE LEVEL 1
         () => {
-          console.log(
-            `DELETEed media ${mediaId} of type ${mediaType} from ${collectionType} collection`
-          );
+          // console.log(
+          //   `DELETEed media ${mediaId} of type ${mediaType} from ${collectionType} collection`
+          // );
 
           // When reached here, we removed the media from the collection, now also remove it from the medias table.
           database.transaction((tx) => {
@@ -572,17 +453,17 @@ export function removeMediaFromCollection(
               // SUCCESS CASE LEVEL 2
               (_tx, results) => {
                 if (results.rowsAffected > 0) {
-                  console.log(
-                    `DELETEed media ${mediaId} of type ${mediaType} from the medias table as it was in no other collection`
-                  );
+                  // console.log(
+                  //   `DELETEed media ${mediaId} of type ${mediaType} from the medias table as it was in no other collection`
+                  // );
                 }
                 resolve();
               },
               // ERROR CASE LEVEL 2
               (_, err) => {
-                console.log(
-                  `Error INSERTING media into the collection as ${collectionType}js`
-                );
+                // console.log(
+                //   `Error INSERTING media into the collection as ${collectionType}js`
+                // );
                 reject(err);
                 return true;
               }
@@ -591,9 +472,9 @@ export function removeMediaFromCollection(
         },
         // ERROR CASE LEVEL 1
         (_tx, err) => {
-          console.log(
-            `Error DELETING media ${mediaId} of type ${mediaType} from the ${collectionType} collection, database.js`
-          );
+          // console.log(
+          //   `Error DELETING media ${mediaId} of type ${mediaType} from the ${collectionType} collection, database.js`
+          // );
           reject(err);
           return true;
         }
@@ -627,7 +508,7 @@ export function insertMediaToCollection(
           collectionType,
         ],
         () => {
-          console.log(`Inserted media into collection as ${collectionType}`);
+          // console.log(`Inserted media into collection as ${collectionType}`);
 
           // When reached here, we have the media into the collection, now also add it to the medias table.
           database.transaction((tx) => {
@@ -651,14 +532,14 @@ export function insertMediaToCollection(
                 media.backdrop_path ? media.backdrop_path : null,
               ],
               () => {
-                console.log("INSERTED media into medias table");
+                // console.log("INSERTED media into medias table");
                 resolve();
               },
               (_, err) => {
-                console.log(
-                  "error INSERTING media into medias table, from database.js\n",
-                  err
-                );
+                // console.log(
+                //   "error INSERTING media into medias table, from database.js\n",
+                //   err
+                // );
                 reject(err);
                 return true;
               }
@@ -666,9 +547,9 @@ export function insertMediaToCollection(
           });
         },
         (_tx, err) => {
-          console.log(
-            `Error INSERTING media into the collection as ${collectionType}`
-          );
+          // console.log(
+          //   `Error INSERTING media into the collection as ${collectionType}`
+          // );
           reject(err);
           return true;
         }
@@ -696,23 +577,23 @@ export function mediaExistsInCollection(
         `,
         [mediaId, mediaType, collectionType],
         (_tx, results) => {
-          console.log(
-            `Media ${mediaId} of type ${mediaType} queried in ${collectionType} collection table`
-          );
+          // console.log(
+          //   `Media ${mediaId} of type ${mediaType} queried in ${collectionType} collection table`
+          // );
           if (results.rows.length > 0) {
             // media exists
-            console.log("Media exists");
+            // console.log("Media exists");
             resolve(true);
           } else {
             // media does not exist.
-            console.log("Media does not exist");
+            // console.log("Media does not exist");
             resolve(false);
           }
         },
         (_tx, err) => {
-          console.log(
-            `Error querying ${mediaId} of type ${mediaType} in ${collectionType} collection table`
-          );
+          // console.log(
+          //   `Error querying ${mediaId} of type ${mediaType} in ${collectionType} collection table`
+          // );
           reject(err);
           return true;
         }
@@ -734,15 +615,6 @@ export function getMediasFromCollection(
   const promise = new Promise<SQlite.SQLResultSet>((resolve, reject) => {
     database.transaction((tx) => {
       tx.executeSql(
-        // `SELECT *
-        //  FROM medias AS m
-        //  JOIN collection AS c
-        //  ON m.mediaId = c.mediaId
-        //  AND m.mediaType = c.mediaType
-        //  WHERE c.collection = ?
-        //  AND c.mediaType = ?
-        //  ORDER BY c.dateAdded DESC;
-        // `,
         `SELECT 
         m.mediaId,
         m.mediaType,
@@ -763,14 +635,14 @@ export function getMediasFromCollection(
         [mediaType, collectionColumn],
         // [mediaType, collectionColumn],
         (_, results) => {
-          console.log(`Got ${mediaType} medias from ${collectionColumn}`);
+          // console.log(`Got ${mediaType} medias from ${collectionColumn}`);
           resolve(results);
         },
         (_, err) => {
-          console.log(
-            `error retrieveing ${mediaType} medias from ${collectionColumn}, from database.js\n`,
-            err
-          );
+          // console.log(
+          //   `error retrieveing ${mediaType} medias from ${collectionColumn}, from database.js\n`,
+          //   err
+          // );
           reject(err);
           return true;
         }
@@ -790,10 +662,10 @@ export function getAllFromCollection() {
         `,
         [],
         (_, results) => {
-          console.log(
-            `Got ${results.rows.length} data from medias table :`,
-            results.rows._array
-          );
+          // console.log(
+          //   `Got ${results.rows.length} data from medias table :`,
+          //   results.rows._array
+          // );
 
           database.transaction((tx) => {
             tx.executeSql(
@@ -802,10 +674,10 @@ export function getAllFromCollection() {
               `,
               [],
               (_, results) => {
-                console.log(
-                  `Got ${results.rows.length} data from collection table :`,
-                  results.rows._array
-                );
+                // console.log(
+                //   `Got ${results.rows.length} data from collection table :`,
+                //   results.rows._array
+                // );
               }
             );
           });
@@ -813,10 +685,10 @@ export function getAllFromCollection() {
           resolve();
         },
         (_, err) => {
-          console.log(
-            "error retrieveing data from table, from database.js\n",
-            err
-          );
+          // console.log(
+          //   "error retrieveing data from table, from database.js\n",
+          //   err
+          // );
           reject(err);
           return true;
         }
@@ -836,15 +708,14 @@ export function getdataFromACollection(collectionName: TValidTableNames) {
         `,
         [],
         (_, results) => {
-          console.log("Got data from table");
-          console.log();
+          // console.log("Got data from table");
           resolve(results);
         },
         (_, err) => {
-          console.log(
-            "error retrieveing data from table, from database.js\n",
-            err
-          );
+          // console.log(
+          //   "error retrieveing data from table, from database.js\n",
+          //   err
+          // );
           reject(err);
           return true;
         }
@@ -868,9 +739,9 @@ export async function deleteCollection(collectionType: TDbCollectionType) {
         // SUCCESS CASE LEVEL 1
         (_tx, results) => {
           if (results.rowsAffected > 0) {
-            console.log(
-              `DELETED all medias from ${collectionType} collection 💥`
-            );
+            // console.log(
+            //   `DELETED all medias from ${collectionType} collection 💥`
+            // );
           }
 
           // When reached here, we removed the media from the collection, now also remove it from the medias table.
@@ -888,17 +759,17 @@ export async function deleteCollection(collectionType: TDbCollectionType) {
               // SUCCESS CASE LEVEL 2
               (_tx, results) => {
                 if (results.rowsAffected > 0) {
-                  console.log(
-                    `DELETEed all medias from the medias table that was of the type ${collectionType} collection`
-                  );
+                  // console.log(
+                  //   `DELETEed all medias from the medias table that was of the type ${collectionType} collection`
+                  // );
                 }
                 resolve();
               },
               // ERROR CASE LEVEL 2
               (_, err) => {
-                console.log(
-                  `Error DELETING medias from the medias table, from database.js`
-                );
+                // console.log(
+                //   `Error DELETING medias from the medias table, from database.js`
+                // );
                 reject(err);
                 return true;
               }
@@ -907,9 +778,9 @@ export async function deleteCollection(collectionType: TDbCollectionType) {
         },
         // ERROR CASE LEVEL 1
         (_tx, err) => {
-          console.log(
-            `Error DELETING medias from the ${collectionType} collection, from database.js`
-          );
+          // console.log(
+          //   `Error DELETING medias from the ${collectionType} collection, from database.js`
+          // );
           reject(err);
           return true;
         }
@@ -942,10 +813,10 @@ export async function deleteAllTables() {
             resolve();
           },
           (_, err) => {
-            console.log(
-              `error deleting "${tableName}" table, from database.js\n`,
-              err
-            );
+            // console.log(
+            //   `error deleting "${tableName}" table, from database.js\n`,
+            //   err
+            // );
             reject(err);
             return true;
           }

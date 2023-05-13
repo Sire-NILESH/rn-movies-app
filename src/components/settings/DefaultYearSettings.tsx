@@ -1,4 +1,3 @@
-import { View, Text } from "react-native";
 import React from "react";
 import CardRow from "./CardRow";
 import YearsDropdown from "../ui/YearsDropdown";

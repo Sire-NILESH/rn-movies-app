@@ -50,28 +50,15 @@ const WatchlistButton: React.FC<IProps> = ({
           mediaType,
           "watchlist"
         );
-        console.log(booleanResult);
+
         setIsWatchlisted(booleanResult);
       } catch (err) {
         setIsWatchlisted(false);
-        console.log(err);
       }
     };
 
     isWatchlistedInDB();
   }, [media]);
-
-  // useEffect(() => {
-  //   if (isWatchListed) {
-  //     removeMediaFromWatchlistHandler(media.id);
-  //   } else {
-  //     addMediaToWatchlistHandler(reduxListMediaObjBuilder(media, mediaType));
-  //   }
-
-  //   // return () => {
-  //   //   second
-  //   // }
-  // }, [isWatchListed]);
 
   const addToDBHandler = async () => {
     try {
@@ -79,17 +66,13 @@ const WatchlistButton: React.FC<IProps> = ({
         reduxListMediaObjBuilder(media, mediaType),
         "watchlist"
       );
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   const removeFromDBHandler = async () => {
     try {
       await removeMediaFromCollection(media.id, mediaType, "watchlist");
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   return (
@@ -106,35 +89,11 @@ const WatchlistButton: React.FC<IProps> = ({
         if (isWatchListed) {
           setIsWatchlistedHandler();
           removeFromDBHandler();
-          // removeMediaFromWatchlistHandler(media.id);
         } else {
           setIsWatchlistedHandler();
           addToDBHandler();
-
-          // addMediaToWatchlistHandler(
-          //   reduxListMediaObjBuilder(media, mediaType)
-          // );
         }
       }}
-
-      // if (isWatchListed) {
-      //   setIsWatchlistedHandler();
-      //   removeMediaFromWatchlistHandler(media.id);
-      // } else {
-      //   setIsWatchlistedHandler();
-      //   addMediaToWatchlistHandler(
-      //     reduxListMediaObjBuilder(media, mediaType)
-      //   );
-      // }
-
-      //   if (isMediaWatchlisted(media.id)) {
-      //     removeMediaFromWatchlistHandler(media.id);
-      //   } else {
-      //     addMediaToWatchlistHandler(
-      //       reduxListMediaObjBuilder(media, mediaType)
-      //     );
-      //   }
-      // }}
     >
       <View className="flex-row items-center justify-between">
         <Ionicons
@@ -151,7 +110,6 @@ const WatchlistButton: React.FC<IProps> = ({
           }}
         >
           {" "}
-          {/* {isMediaWatchlisted(media.id) ? "Watchlisted" : "Watchlist"} */}
           {"Watchlist"}
         </Text>
       </View>

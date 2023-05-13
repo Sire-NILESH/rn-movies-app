@@ -1,7 +1,5 @@
 import React, { useEffect, memo, useState } from "react";
 import { View } from "react-native";
-// import { useAppSelector } from "../hooks/reduxHooks";
-
 import { ITopTabScreenProps } from "../library/NavigatorScreenProps/TopTabScreenProps";
 import { IDBCollectionMedia } from "../../types/typings";
 import CollectionRow from "../components/CollectionRow";
@@ -13,11 +11,6 @@ import useImageItemSetting from "../hooks/useImageItemSetting";
 const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   const { navigation, route, collectionType, screenMediaType } = props;
 
-  // const reduxCollection = collectionTypeToReduxCollection[collectionType];
-
-  // REDUX TOOLKIT HOOKS
-  // const reduxMedias = useAppSelector((state) => state[reduxCollection]);
-  // use this medias instead of the redux's useSelector data because it will always cause the screen to re exe on every addition of media to the collection even if the screen is not visible to the user. We will only add data to the existing medias array only if the screen is visible to the user which is known by the refresh state.
   const [medias, setMedias] = useState<IDBCollectionMedia[]>([]);
   const [refresh, setRefresh] = useState(false);
 
@@ -48,11 +41,8 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
     };
   }, [navigation]);
 
-  console.log("refresh", collectionType, screenMediaType, refresh);
-
-  // Prepare all the heavylifting/building data for the render only when screen was focused/in-front-of-the-user. With the above useEffect setup it will take care of the medias. So memoizing this with media set as dependency will ensure that this will be built only when screen is focused and not on every re-exe caused by the redux's useSelector.
+  // Prepare all the heavylifting/building data for the render only when screen was focused/in-front-of-the-user. With the above useEffect setup it will take care of the medias. So memoizing this with media set as dependency will ensure that this will be built only when screen is focused.
   const dateCollection = React.useMemo(() => {
-    console.log("preparing data");
     // A collection medias according to the dates they were added.
     const dateCollectionTemp: { [key: string]: IDBCollectionMedia[] } = {};
 
@@ -71,8 +61,6 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
       else dateCollectionTemp[date].push(media);
     });
 
-    console.log(dateCollectionTemp);
-
     return dateCollectionTemp;
   }, [medias]);
 
@@ -83,10 +71,6 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
     if (refresh) {
       getMediasFromCollection(screenMediaType, collectionType)
         .then((data) => {
-          console.log(
-            `AAYYYOOO ${data.rows.length} ${collectionType} data from DB`,
-            data["rows"]["_array"]
-          );
           setMedias(data.rows._array);
         })
         .catch((err) => {});

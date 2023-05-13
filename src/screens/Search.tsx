@@ -1,7 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Text, View, TextInput, SafeAreaView, Pressable } from "react-native";
-import { useLogging } from "../hooks/useLogging";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { Colors } from "./../utils/Colors";
 import { FlatList } from "react-native-gesture-handler";
@@ -39,9 +38,6 @@ const SearchInput: React.FC<ISearchInputProps> = (props) => {
     <View className="flex-1 bg-tertiary min-w-[250] mt-[10]">
       <TextInput
         placeholder="Search something..."
-        // placeholder={`Search ${
-        //   props.searchCategory === "tv" ? "TV shows" : "Movies"
-        // }...`}
         className="bg-stone-700 px-6 py-1 rounded-md text-gray-100"
         placeholderTextColor={Colors.stone[400]}
         onChangeText={props.onTextChangeHandler}
@@ -74,7 +70,6 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       const data = await searchRequest(
         searchQuery ? searchQuery : "",
         "multi",
-        // searchCategory ? searchCategory : "multi",
         1,
         allowNsfwContent.nsfw,
         abortController
@@ -87,7 +82,7 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         fetchSearchQuery();
       }
     } catch (err: any) {
-      console.log(err.message);
+      // console.log(err.message);
     }
 
     return () => abortController.abort();
@@ -112,13 +107,7 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             medias={searchQueryResult?.results}
             title={searchQuery}
             searchCategory={searchCategory}
-            disabled={
-              searchQuery && searchQuery.length > 0 ? false : true
-              // searchQueryResult?.results.length &&
-              // searchQueryResult?.results.length > 0
-              //   ? false
-              //   : true
-            }
+            disabled={searchQuery && searchQuery.length > 0 ? false : true}
           />
         </View>
       ),
@@ -195,8 +184,6 @@ function renderFlatList(
               mediaObj.index % 2 === 0
                 ? { backgroundColor: Colors.secondary }
                 : { backgroundColor: Colors.tertiary }
-              // ? { backgroundColor: Colors.stone[800] }
-              // : { backgroundColor: Colors.stone[900] }
             }
           >
             <Pressable
@@ -276,5 +263,3 @@ function renderFlatList(
     />
   );
 }
-// dateFormatter(mediaObj.item.release_date)
-// dateFormatter(mediaObj.item.first_air_date)

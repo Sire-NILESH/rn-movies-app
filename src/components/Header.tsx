@@ -68,16 +68,7 @@ function Header() {
 
   return (
     <LinearGradient
-      colors={[
-        "rgba(15, 15, 15, 1)",
-        "rgba(15, 15, 15, 0.5)",
-        "rgba(0,0,0,0)",
-
-        // "rgba(28, 25, 23, 1)",
-        // "rgba(28, 25, 23, 0.7)",
-        // "rgba(28, 25, 23, 0.3)",
-        // "rgba(0,0,0,0)",
-      ]}
+      colors={["rgba(15, 15, 15, 1)", "rgba(15, 15, 15, 0.5)", "rgba(0,0,0,0)"]}
       className="flex-row justify-between items-center w-[100%] h-[80] px-4"
     >
       <View>

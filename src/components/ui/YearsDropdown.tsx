@@ -54,12 +54,6 @@ const YearsDropdown: React.FC<IProps> = (props) => {
     <Dropdown
       borderRadius="full"
       currentSelected={defaultYear}
-      // currentSelected={
-      //   props.saveMode === "applicationWide"
-      //     ? { year: defaultYear.year, value: defaultYear.value }
-      //     : // ? { year: defaultYear.year, value: String(defaultYear) }
-      //       { year: 0, value: "All Years" }
-      // }
       listData={yearsArr}
       setSelected={
         props.saveMode === "applicationWide"

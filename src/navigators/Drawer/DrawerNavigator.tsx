@@ -20,7 +20,6 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawer {...props} />}
-      // Common Stack screen's header settings below here
       screenOptions={{
         headerTintColor: Colors.text_primary,
         headerTitleAlign: "center",
@@ -28,33 +27,16 @@ const DrawerNavigator = () => {
         headerStyle: {
           backgroundColor: Colors.tertiary,
         },
-        // drawerStatusBarAnimation: "slide",
-        // drawerType: "slide",
         drawerLabelStyle: {
           marginLeft: -20,
         },
-
-        // Drawer styles
-        // drawerActiveBackgroundColor: Colors.stone[700],
-        // drawerInactiveBackgroundColor: Colors.stone[700],
         drawerActiveTintColor: Colors.green[300],
         drawerInactiveTintColor: Colors.stone[400],
         drawerAllowFontScaling: true,
         overlayColor: "",
         drawerStyle: {
-          // backgroundColor: "rgba(20, 15, 15, 1)",
           backgroundColor: Colors.tertiary,
-          // backgroundColor: Colors.black,
         },
-        // drawerLabelStyle: {
-        //   marginLeft: -25,
-        //   fontSize: 15,
-        // },
-
-        // lazy: false,
-        // drawerIcon: (props) => (
-        //   <IconButton name="tv-outline" color={props.color} size={props.size} />
-        // ),
       }}
     >
       {/* Laying out all the Drawer screens from routes */}

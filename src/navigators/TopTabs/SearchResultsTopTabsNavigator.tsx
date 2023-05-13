@@ -26,7 +26,6 @@ const SearchResultsTopTabsNavigator: React.FC<IProps> = (props) => {
     <TopTabs.Navigator
       screenOptions={{
         tabBarLabelStyle: { fontSize: 12 },
-        // tabBarItemStyle: { width: '100' },
         tabBarStyle: { backgroundColor: Colors.tertiary },
         tabBarActiveTintColor: Colors.text_primary,
         tabBarInactiveTintColor: Colors.text_dark,

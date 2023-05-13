@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React, { useEffect, useState } from "react";
 import {
   IQueryParams,
@@ -33,8 +33,6 @@ const PersonMediasScreenBuilder: React.FC<IProps> = ({
   const [_pageNumber, setPageNumber] = useState<number>(1);
   const [error, setError] = useState<Error | null>(null);
 
-  console.log(urlObjectLocal);
-
   // thumbnail images quality
   const { imgItemsSetting: thumbnailQuality } =
     useImageItemSetting("thumbnail");
@@ -51,13 +49,8 @@ const PersonMediasScreenBuilder: React.FC<IProps> = ({
         );
         // if we received some data, then page exists.
         if (moreMedias.medias.length > 0) {
-          // console.log(moreMedias);
-          // const sorted = moreMedias.medias.sort(
-          //   (a, b) => b.episode_count - a.episode_count
-          // );
-          // episode_count
           setMedias((prev) => [...prev, ...moreMedias.medias]);
-          // const sorted = setMedias((prev) => [...prev, ...moreMedias.medias]);
+
           // we will immediately bolck further medias from loading as the api sends all the data at once without pagination in this case pf '/person/{person_id}/{mediaType}_credits'
           setBlockNewLoads(true);
         }

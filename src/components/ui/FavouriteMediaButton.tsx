@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import { useFavouriteMediaListHooks } from "../../hooks/reduxHooks";
+
 import {
   MediaTypes,
   MovieMedia,
@@ -29,12 +29,6 @@ const FavouriteMediaButton: React.FC<IProps> = ({
   media,
   mediaType,
 }) => {
-  // const {
-  //   addMediaToFavouriteHandler,
-  //   removeMediaFromFavouriteHandler,
-  //   isMediaFavourite,
-  // } = useFavouriteMediaListHooks();
-
   const [isFavourite, setIsFavourite] = useState<Boolean>(false);
 
   const setIsFavouritedHandler = () => {
@@ -49,11 +43,9 @@ const FavouriteMediaButton: React.FC<IProps> = ({
           mediaType,
           "favourites"
         );
-        console.log(booleanResult);
         setIsFavourite(booleanResult);
       } catch (err) {
         setIsFavourite(false);
-        console.log(err);
       }
     };
 
@@ -66,17 +58,13 @@ const FavouriteMediaButton: React.FC<IProps> = ({
         reduxListMediaObjBuilder(media, mediaType),
         "favourites"
       );
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   const removeFromDBHandler = async () => {
     try {
       await removeMediaFromCollection(media.id, mediaType, "favourites");
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   return (
@@ -90,13 +78,9 @@ const FavouriteMediaButton: React.FC<IProps> = ({
           if (isFavourite) {
             setIsFavouritedHandler();
             removeFromDBHandler();
-            // removeMediaFromFavouriteHandler(mediaId);
           } else {
             setIsFavouritedHandler();
             addToDBHandler();
-            // addMediaToFavouriteHandler(
-            //   reduxListMediaObjBuilder(media, mediaType)
-            // );
           }
         }}
       >

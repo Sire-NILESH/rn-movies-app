@@ -3,7 +3,6 @@ import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Colors } from "../utils/Colors";
 import { getDeviceDimensions } from "../utils/helpers/helper";
-import { TAllImgSettingsDB, TImgQualityValues } from "../../types/typings";
 
 interface IProps {
   mediaPosterPath: string;
@@ -19,8 +18,6 @@ const MoreInfoBackdrop: React.FC<IProps> = ({
   const posterImgQuality = imgQuality ? imgQuality : 400;
 
   const imgUrl = `https://image.tmdb.org/t/p/w${posterImgQuality}${mediaPosterPath}`;
-
-  console.log("media info banner", imgUrl);
 
   return (
     <View

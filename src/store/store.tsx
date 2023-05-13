@@ -1,7 +1,4 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import watchlistReducer from "./watchlistSlice";
-import watchedMediaListReducer from "./watchedMediaListSlice";
-import favouriteListReducer from "./favouritesSlice";
 import defaultRegionSliceReducer from "./defaultRegionSlice";
 import defaultLanguageForMediasReducer from "./languageForMediasSlice";
 import defaultYearFilterForMediasReducer from "./yearFIlterForMediasSlice";
@@ -16,25 +13,19 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import persistStore from "redux-persist/es/persistStore";
-import imageItemQualityReducer from "./imageItemQualitySlice";
 import allowNsfwContentSliceReducer from "./allowNsfwContentSlice";
 
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
   version: 1,
-  // whitelist : ["defaultRegion", "defaultLanguageForMedias"]
 };
 
 const rootReducer = combineReducers({
-  // watchlistMedias: watchlistReducer,
-  // watchedMedias: watchedMediaListReducer,
-  // favouriteMedias: favouriteListReducer,
   defaultRegion: defaultRegionSliceReducer,
   defaultLanguageForMedias: defaultLanguageForMediasReducer,
   defaultYearFilterForMedias: defaultYearFilterForMediasReducer,
   allowNsfwContent: allowNsfwContentSliceReducer,
-  // imageItemQualities: imageItemQualityReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

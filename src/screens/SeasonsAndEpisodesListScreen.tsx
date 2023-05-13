@@ -3,8 +3,7 @@ import React, { useLayoutEffect, useState } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { useLogging } from "../hooks/useLogging";
 import { Season, SeasonDetails } from "../../types/typings";
-import useFetcher from "../hooks/useFetcher";
-import REQUESTS, { fetchSeasonDetails } from "../utils/requests";
+import { fetchSeasonDetails } from "../utils/requests";
 import { Colors } from "../utils/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import SeasonsHeader from "../components/SeasonsHeader";
@@ -18,7 +17,6 @@ import { useQuery } from "./../../node_modules/@tanstack/react-query";
 const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   IStackScreenProps
 > = (props) => {
-  const [logging] = useLogging("Contact Screen");
   const { navigation, route } = props;
   // @ts-ignore
   const {
@@ -36,19 +34,6 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   const [selectedSeason, setSelectedSeason] = useState<Season>(
     tvMediaSeasons[0]
   );
-
-  // const {
-  //   screenProps: seasonDetails,
-  //   errorLoadingProps,
-  //   loadingProps,
-  // }: {
-  //   screenProps: SeasonDetails;
-  //   errorLoadingProps: Error | null;
-  //   loadingProps: boolean;
-  // } = useFetcher(fetchSeasonDetails, [
-  //   tvMediaId,
-  //   selectedSeason?.season_number,
-  // ]);
 
   const {
     isLoading: loadingProps,
@@ -68,7 +53,6 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      // headerTitle: tvMediaName,
       header: (props) => (
         <SeasonsHeader
           tvMediaId={tvMediaId}
@@ -117,7 +101,6 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
           />
         </View>
       ) : (
-        /* {seasonDetails && tvMediaSeasons[selectedSeason.season_number] && ( */
         seasonDetails && (
           <View className="flex-1">
             <FlatList
@@ -132,7 +115,6 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                     ]}
                     className="flex-row px-4 pt-4 justify-between items-start mb-5"
                   >
-                    {/* Season Poster  h-[200] w-[133] */}
                     <View
                       className="border border-stone-800 rounded-md overflow-hidden"
                       style={{ width: 133, aspectRatio: 2 / 3 }}
@@ -169,13 +151,6 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                             ? "Extras"
                             : seasonDetails.season_number}
                         </Text>
-                        {/* <Text className="text-text_tertiary text">
-                          Has {seasonDetails.episodes.length} episodes
-                        </Text> */}
-
-                        {/* <Text className="text-text_tertiary text-xs mt-1">
-                          {seasonDetails.air_date}
-                        </Text> */}
                       </View>
                       <View className="flex-row space-x-2 items-center mt-auto">
                         <Text className="text-text_tertiary text">
@@ -183,11 +158,6 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                         </Text>
                         <Text className="text-text_tertiary text">
                           {dateFormatter(seasonDetails.air_date)}
-                          {/* {new Date(seasonDetails.air_date)
-                            .toDateString()
-                            .split(" ")
-                            .splice(1)
-                            .join(" ")} */}
                         </Text>
                       </View>
                     </View>
@@ -208,11 +178,6 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
               }
               data={seasonDetails.episodes}
               className=""
-              // ItemSeparatorComponent={() => {
-              //   return (
-              //     <View className="border-[1px] border-x-0 h-3  border-stone-800 my-5" />
-              //   );
-              // }}
               keyExtractor={(episode) => String(episode.id)}
               maxToRenderPerBatch={4}
               initialNumToRender={4}

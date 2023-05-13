@@ -20,7 +20,7 @@ import WatchlistButton from "./ui/WatchlistButton";
 interface Props {
   mediaList: MovieMedia[] | TvMedia[];
 }
-// const windowDimensions = Dimensions.get("window");
+
 const screenDimensions = Dimensions.get("screen");
 
 function Banner({ mediaList }: Props) {
@@ -55,7 +55,6 @@ function Banner({ mediaList }: Props) {
       ) : (
         <View className="h-[40px] w-full"></View>
       )}
-      {/* <View className="h-[80px] w-full"></View> */}
       <View
         className="absolute top-0 left-0 w-[100%] flex-1 h-full"
         style={{
@@ -182,21 +181,6 @@ function Banner({ mediaList }: Props) {
                 mediaType={isMovie(media) ? "movie" : "tv"}
                 isBannerButton={true}
               />
-              {/* <CustomButton
-                width={100}
-                height={40}
-                radius={5}
-                color={Colors.stone[200]}
-                border={1}
-                method={playButtonPressHandler}
-                shadow={false}
-                styledClassName="border-stone-200"
-              >
-                <View className="flex-row  gap-1 items-center">
-                  <Ionicons name="star-outline" size={12} />
-                  <Text className="font-bold">Favorite</Text>
-                </View>
-              </CustomButton> */}
             </View>
 
             <View className="mt-5 w-[140]">

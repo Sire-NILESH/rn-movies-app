@@ -29,7 +29,7 @@ const SeasonsHeader: React.FC<IProps> = (props) => {
           <Ionicons name="arrow-back" size={24} color={Colors.gray[50]} />
         </Pressable>
       </View>
-      {/* <View className="flex-1"> */}
+
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}

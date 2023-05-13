@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, Pressable, Image } from "react-native";
-// @ts-ignore
-import ExpoFastImage from "expo-fast-image";
 import { useNavigation } from "@react-navigation/native";
 import { ICast, ICrew } from "../../types/typings";
 import { Ionicons } from "@expo/vector-icons";
@@ -95,9 +93,6 @@ const Cast: React.FC<IProps> = (props) => {
             </View>
           );
         }}
-        // contentContainerStyle={{
-        //   alignItems: "center",
-        // }}
         renderItem={(itemObj) => {
           const p = itemObj.item;
 
@@ -142,9 +137,7 @@ const Cast: React.FC<IProps> = (props) => {
                   >
                     {p.name}
                   </Text>
-                  {/* <Text className="text-center text-text_highLight text-xs">
-                  as
-                </Text> */}
+
                   <Text
                     className="w-[100] mt-1 text-center text-text_highLight text-xs"
                     numberOfLines={2}
@@ -197,28 +190,6 @@ function RenderProfile({
           <Ionicons name="person" color={Colors.green[900]} size={54} />
         </View>
       )}
-
-      {/* <ExpoFastImage
-        uri={imgPath}
-        cacheKey={`${id}`}
-        resizeMode={"cover"}
-        className="border-2 border-green-500 relative"
-        onLoad={() => {
-          setFallbackImagehandler(false);
-          // console.log("onload event here", event);
-        }}
-        style={{
-          width: "100%",
-          height: "100%",
-          // borderRadius: 9999,
-        }}
-      /> */}
-
-      {/* {fallbackImage && (
-        <View className="h-full w-full justify-center items-center">
-          <Ionicons name="person" color={Colors.green[900]} size={54} />
-        </View>
-      )} */}
     </View>
   );
 }

@@ -79,8 +79,6 @@ function Thumbnail({
       orientation === "landscape" ? media.backdrop_path : media.poster_path
     }`;
 
-  // console.log(imageURL, imageQuality);
-
   return (
     <View
       className="relative overflow-hidden bg-tertiary"
@@ -89,7 +87,6 @@ function Thumbnail({
       <Pressable
         className=""
         onPress={() => {
-          console.log(media);
           // @ts-ignore
           navigateTo("More Info", {
             mediaType: isMovie(media) ? "movie" : "tv",
@@ -124,20 +121,6 @@ function Thumbnail({
           <ImagePlaceholder />
         )}
 
-        {/* 
-        {imageURL ? (
-          <ImageCached
-            imageURL={imageURL}
-            cacheKey={
-              orientation === "portrait"
-                ? `${media.id}-${isMovie(media) ? "movie" : "tv"}-poster`
-                : `${media.id}-${isMovie(media) ? "movie" : "tv"}-backdrop`
-            }
-          />
-        ) : (
-          <ImagePlaceholder />
-        )} */}
-
         {/* Movie Title and date box */}
         <LinearGradient
           // colors={[
@@ -152,7 +135,6 @@ function Thumbnail({
             "rgba(28, 25, 23, 0.2)",
             "rgba(28, 25, 23, 0.8)",
           ]}
-          // border-2 border-stone-50, when selected.
           className="absolute  flex-row items-end pb-2 px-2"
           style={{
             borderRadius: 6,

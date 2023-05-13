@@ -1,6 +1,5 @@
 import React from "react";
 import { IProductionCompany } from "../../types/typings";
-import { useNavigation } from "@react-navigation/native";
 import CompanyLogoBuilder from "./builders/CompanyLogoBuilder";
 
 interface IProps {

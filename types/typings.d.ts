@@ -25,12 +25,6 @@ export interface IGenresToShowHomeScreen {
   mediaType: MediaTypes;
 }
 
-// export interface IGenresToShowMainScreens {
-//   id: number;
-//   name: string;
-//   mediaType: MediaTypes;
-// }
-
 export interface Trailer {
   id: string;
   iso_639_1: string;
@@ -93,20 +87,6 @@ export interface NextEpisodeToAir {
   vote_average: number;
   vote_count: number;
 }
-// export interface NextEpisodeToAir {
-//   "air_date": "2023-04-06",
-//   "episode_number": 4,
-//   "id": 4194485,
-//   "name": "Episode 4",
-//   "overview": "",
-//   "production_code": "",
-//   "runtime": null,
-//   "season_number": 1,
-//   "show_id": 95558,
-//   "still_path": "/mTVbmWDto55GqhYiwL3qLIsMO3y.jpg",
-//   "vote_average": 0,
-//   "vote_count": 0,
-// }
 
 export interface Media {
   id: number;
@@ -292,16 +272,6 @@ export interface ICredits {
 }
 
 // Define a type for the watchlist slice state
-// interface IWatchListMedia {
-//   mediaId: number;
-//   mediaType: MediaTypes;
-//   mediaTitle?: string;
-//   mediaDate?: string;
-//   poster_path?: string;
-//   backdrop_path?: string;
-// }
-
-// Define a type for the watchlist slice state
 interface IReduxListMedia {
   mediaId: number;
   mediaType: MediaTypes;
@@ -333,10 +303,6 @@ export interface ISOLang {
   iso639_2T: string;
   iso639_2B: string;
 }
-
-// export type TCollectionToTableCollection = {
-//   [key in TCollectionType]: keyof RootState;
-// };
 
 export interface Element {
   type:
@@ -445,7 +411,6 @@ export type ImageItemTypes =
   | "companies";
 
 export interface IImageItemSettingsValue {
-  //   name: string;
   key: ImageItemTypes;
   imgQuality: IImageQuality;
 }
@@ -459,10 +424,3 @@ export type TAllImgSettingsDB = IImgItemSettingsDB[];
 export type IImageItemQualitySetting = {
   [key in ImageItemTypes]: IImageItemSettingsValue;
 };
-
-// export type TDropdownYearsArrayObj =
-//   | {
-//       year: 0;
-//       value: "All Years";
-//     }
-//   | IDropdownYearsObj;

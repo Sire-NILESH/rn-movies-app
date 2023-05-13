@@ -1,16 +1,12 @@
 import { View, Text, Modal, Pressable, ScrollView } from "react-native";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Colors } from "../../utils/Colors";
 import { IUrlObject, MediaTypes } from "../../../types/typings";
 import { moviePlaylist, tvPlaylist } from "../../config/genresWithRoutes";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import LanguageDropdown from "../ui/LanguageDropdown";
-import YearsDropdown from "../ui/YearsDropdown";
 import {
   useDefaultLanguageHooks,
-  useDefaultRegionHooks,
   useDefaultYearHooks,
 } from "../../hooks/reduxHooks";
 import FeaturedPlaylists from "./FeaturedPlaylists";
@@ -52,15 +48,10 @@ const MediaWizardModal: React.FC<IProps> = ({
     setCurrentView(view);
   };
 
-  console.log("YYYYYOOOOOO YEAR", currentYear);
-  console.log("YYYYYOOOOOO LANG", currentLang);
-
   const filters = {
     primary_release_year: String(currentYear),
     with_original_language: currentLang,
   };
-
-  console.log("fffffffiiilters", filters);
 
   function selectedPlaylistHandlers(
     playlist: IUrlObject,
@@ -236,13 +227,6 @@ const MediaWizardModal: React.FC<IProps> = ({
                 onConfirmPlaylist={onConfirmPlaylist}
               />
             ) : null}
-
-            {/* DIVIDER */}
-            {/* <View className="flex-row items-center my-3">
-              <View className="flex-1 border-[1px] border-tertiary rounded-full mx-10" />
-              <Text className="text-text_tertiary">OR</Text>
-              <View className="flex-1 border-[1px] border-tertiary rounded-full mx-10" />
-            </View> */}
 
             {/* FILTER AND CUSTOM GENRES SELECTS*/}
             {currentView === "genres_playlist" ? (

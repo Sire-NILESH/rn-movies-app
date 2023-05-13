@@ -17,22 +17,11 @@ import {
   tvScreenPlaylists,
 } from "../../config/screenGenresConfig";
 import { FlatList } from "react-native-gesture-handler";
-// import * as SplashScreen from "expo-splash-screen";
-// import { useRoute } from "@react-navigation/native";
-
-// Keep the splash screen visible while we fetch resources
-// SplashScreen.preventAutoHideAsync();
 
 interface IProps {
   screenType: ScreenTypes;
   imgItemsSetting: IImgItemSettingsDB | undefined;
 }
-
-// interface IState {
-//   genreId: number;
-//   genreName: string;
-//   genreMedias: TvMedia[] | MovieMedia[];
-// }
 
 function getPlaylistsToFetch(screenType: ScreenTypes) {
   // Get the genre list to fetch depending on the screen type.
@@ -52,32 +41,6 @@ function getPlaylistsToFetch(screenType: ScreenTypes) {
 }
 
 const ScreenBuilderV3: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
-  // This hook is responsible for loading the screen props and error messages for the Home, TV and Movies screens.
-  // const { screenProps, loadingProps, errorLoadingProps } =
-  //   useFetchScreenProps(screenType);
-
-  // const route = useRoute();
-  // console.log(route);
-
-  // const onLayoutRootView = useCallback(async () => {
-  //   if (screenProps && route.name === "Home") {
-  //     // This tells the splash screen to hide immediately! If we call this after
-  //     // `setAppIsReady`, then we may see a blank screen while the app is
-  //     // loading its initial state and rendering its first pixels. So instead,
-  //     // we hide the splash screen once we know the root view has already
-  //     // performed layout.
-  //     console.log("--------------------------------");
-  //     await SplashScreen.hideAsync();
-  //   }
-
-  // onLayout={onLayoutRootView}
-  // }, [screenProps, route.name]);
-
-  // const playlistsToFetch = getPlaylistsToFetch(screenType);
-  // console.log(playlistsToFetch); playlistsToFetch.map((p) => p.name)
-
-  // const { imgItemsSetting } = useImageItemSetting("thumbnail");
-
   const playlistsToFetch = useMemo(() => {
     const result = getPlaylistsToFetch(screenType);
     return result;
@@ -92,16 +55,6 @@ const ScreenBuilderV3: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
     queryFn: () => sendUrlObjApiRequestV2([...playlistsToFetch], {}),
     staleTime: 1000 * 60 * 60 * 24, //24hours
   });
-
-  // if (errorLoadingProps && !loadingProps) {
-  //   showErrorAlert();
-  // }
-
-  // if (loadingProps) {
-  //   return (<View className="flex-1 bg-secondary">
-  //   {/* Loader */}
-  //   <Loader loading={loadingProps || !imgItemsSetting} /> </View>)
-  // }
 
   return (
     <View className="flex-1 bg-secondary">
@@ -147,21 +100,6 @@ const ScreenBuilderV3: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
                   }}
                 />
               )}
-
-              {/* {!loadingProps &&
-                playlistsToFetch.map((p, i) => {
-                  if (screenProps[i]?.length > 0) {
-                    return (
-                      <Row
-                        key={p.name}
-                        title={p.name}
-                        medias={screenProps[i]}
-                        playlist={p}
-                        thumbnailQualitySettings={imgItemsSetting}
-                      />
-                    );
-                  } else null;
-                })} */}
             </ScrollView>
           ) : null}
         </View>

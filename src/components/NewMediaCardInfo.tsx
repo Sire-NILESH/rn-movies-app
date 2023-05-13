@@ -1,11 +1,6 @@
 import { View, Text, Image } from "react-native";
 import React from "react";
-import {
-  MovieMedia,
-  TAllImgSettingsDB,
-  TvMedia,
-  TvMediaExtended,
-} from "../../types/typings";
+import { MovieMedia, TvMedia, TvMediaExtended } from "../../types/typings";
 import {
   dateFormatter,
   isMovie,
@@ -17,7 +12,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "./../utils/Colors";
 import ImagePlaceholder from "./ui/ImagePlaceholder";
-import ImageCached from "./ui/ImageCached";
 import { by639_1 } from "iso-language-codes";
 
 interface IProps {
@@ -32,7 +26,6 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
     ? `https://image.tmdb.org/t/p/w${posterImgQuality}${media.backdrop_path}`
     : `https://image.tmdb.org/t/p/w${posterImgQuality}${media.poster_path}`;
 
-  console.log("new media card image ", imageUrl);
   return (
     <View className="mt-5 mx-3 justify-between rounded-2xl border border-stone-800 overflow-hidden">
       <View
@@ -40,12 +33,6 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
         style={{ width: "100%", aspectRatio: 16 / 9 }}
       >
         {imageUrl ? (
-          // <ImageCached
-          //   imageURL={imageUrl}
-          //   cacheKey={`${media.id}-${isMovie(media) ? "movie" : "tv"}-backdrop`}
-          //   resizeType="stretch"
-          // />
-
           <Image
             source={{ uri: imageUrl }}
             resizeMode="cover"

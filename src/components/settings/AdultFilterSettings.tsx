@@ -1,5 +1,4 @@
-import { View, Text } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import SettingsCardWrapper from "./SettingsCardWrapper";
 import CardRow from "./CardRow";
 import { Switch } from "react-native-gesture-handler";
@@ -10,7 +9,6 @@ const AdultFilterSettings = () => {
   const { toggleAllowNsfwContentHandler, allowNsfwContent } =
     useAllowNsfwContentHooks();
 
-  //   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => toggleAllowNsfwContentHandler();
 
   return (

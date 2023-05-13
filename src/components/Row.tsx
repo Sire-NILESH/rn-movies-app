@@ -21,15 +21,11 @@ interface Props {
   thumbnailQualitySettings?: IImgItemSettingsDB;
 }
 
-// Calculate and pass the dimensioins from the parent(here) to the thumbnails.
+// Calculate and pass the dimensions from the parent(here) to the thumbnails.
 // So every thumbnail wont have to calculate them separately.
 const windowWidth = getDeviceDimensions("window").width;
-// const windowDimensions = getDeviceDimensions("window");
 
 const rowItemWidth = windowWidth * 31 + 8;
-// const rowItemHeight = ((windowWidth * 0.31 + 4) * 3) / 3 + 44;
-
-// 44
 
 function Row({ title, medias, playlist, thumbnailQualitySettings }: Props) {
   return (
@@ -58,7 +54,6 @@ function Row({ title, medias, playlist, thumbnailQualitySettings }: Props) {
 }
 
 export default Row;
-// export default React.memo(Row);
 
 function renderFlatList(
   medias: MovieMedia[] | TvMedia[],
@@ -67,9 +62,6 @@ function renderFlatList(
   thumbnailQualitySettings?: IImgItemSettingsDB
 ) {
   const navigation = useNavigation();
-  // const { defaultImgQuality } = useDefaultImageQualityHooks();
-
-  // const { imgItemsSetting } = useImageItemSetting("thumbnail");
 
   // Navigation handler for child components like thumbnail and jumpTo button.
   // So every one of them wont have to calculate them separately.
@@ -92,7 +84,6 @@ function renderFlatList(
           )}
           bounces
           className="pl-2 py-1"
-          // className="ml-2 h-32"
           data={medias}
           getItemLayout={(_data, index) => {
             return {
@@ -131,7 +122,6 @@ function renderFlatList(
           )}
           bounces
           className="px-2 py-1"
-          // className="ml-2 h-32"
           data={medias}
           getItemLayout={(_data, index) => {
             return {
@@ -204,8 +194,3 @@ function renderFooterItemFunction(
     </View>
   );
 }
-
-// `/discover/${mediaType}`, {
-//   with_genres: commaSeparatedGenres,
-//   page: pageNumber,
-// })

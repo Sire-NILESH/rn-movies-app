@@ -2,14 +2,12 @@ import React, { memo } from "react";
 import { useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import {
-  ICredits,
   MediaTypes,
   MovieMedia,
   MovieMediaExtended,
   TvMedia,
   TvMediaExtended,
 } from "../../types/typings";
-import useFetcher from "../hooks/useFetcher";
 import { getMediaInfo } from "../utils/requests";
 import FavouriteMediaButton from "../components/ui/FavouriteMediaButton";
 import MediaMoreInfo from "../components/MediaMoreInfo";
@@ -26,19 +24,6 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
   let extendedMedia;
 
-  // const {
-  //   screenProps,
-  //   loadingProps,
-  //   errorLoadingProps,
-  // }: {
-  //   screenProps: {
-  //     media: TvMediaExtended | MovieMediaExtended;
-  //     mediaCredits: ICredits;
-  //   };
-  //   loadingProps: boolean;
-  //   errorLoadingProps: Error | null;
-  // } = useFetcher(getMediaInfo, [prevMedia.id, mediaType]);
-
   const {
     isLoading: loadingProps,
     data: screenProps,
@@ -48,11 +33,6 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     queryFn: () => getMediaInfo(prevMedia.id, mediaType),
     staleTime: 1000 * 60 * 60 * 24, //24hours
   });
-  // const useMoreInfo = useQuery({
-  //   queryKey: ["moreInfo", mediaType, prevMedia.id],
-  //   queryFn: () => getMediaInfo,
-  //   staleTime: 1000 * 60 * 60 * 24, //24hours
-  // });
 
   extendedMedia = screenProps?.media;
 

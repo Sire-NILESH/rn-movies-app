@@ -5,7 +5,7 @@ import {
   formatCurrencyNumbers,
 } from "../../utils/helpers/helper";
 import { Colors } from "../../utils/Colors";
-import { Ionicons, FontAwesome5, FontAwesome } from "@expo/vector-icons";
+import { Ionicons, FontAwesome } from "@expo/vector-icons";
 
 interface IProps {
   budget: number;

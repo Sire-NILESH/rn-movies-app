@@ -26,10 +26,10 @@ const DeleteSettings = () => {
     //  and only on confirmation
     deleteCollection(deletingItem)
       .then(() => {
-        console.log(`Deleted ${deletingItem} 💥`);
+        // console.log(`Deleted ${deletingItem} 💥`);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }
 

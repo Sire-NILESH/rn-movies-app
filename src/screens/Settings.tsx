@@ -7,14 +7,10 @@ import DefaultRegionSettings from "../components/settings/DefaultRegionSettings"
 import ImgQualitySettings from "../components/settings/ImgQualitySettings";
 import DefaultYearSettings from "../components/settings/DefaultYearSettings";
 import DefaultLangSettings from "../components/settings/DefaultLangSettings";
-import ImportExportSettings from "../components/settings/ImportExportSettings";
-import DevOnlySettings from "../components/settings/DevOnlySettings";
 import AdultFilterSettings from "../components/settings/AdultFilterSettings";
 import AboutSettings from "../components/settings/AboutSettings";
 
 const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
-  // const { navigation, route } = props;
-
   return (
     <View className=" bg-secondary flex-1">
       <ScrollView

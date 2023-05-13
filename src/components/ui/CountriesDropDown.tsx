@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { countries } from "../../utils/helpers/helper";
@@ -16,11 +16,7 @@ const CountriesDropdown: React.FC<IProps> = ({
   setCountryHandler,
 }) => {
   return (
-    <View
-      className=""
-      // style={{ backgroundColor: "rgb(4, 20, 10)" }}
-      style={{ backgroundColor: "rgb(4, 20, 10)" }}
-    >
+    <View className="" style={{ backgroundColor: "rgb(4, 20, 10)" }}>
       <SelectDropdown
         data={countries}
         //   search={true}
@@ -35,9 +31,7 @@ const CountriesDropdown: React.FC<IProps> = ({
           setCountryHandler(selectedCountry);
         }}
         buttonStyle={{
-          // backgroundColor: "transparent",
           backgroundColor: Colors.accentLighter,
-          // backgroundColor: "rgb(7, 38, 19)",
           borderRadius: 100,
           width: 150,
           height: 45,

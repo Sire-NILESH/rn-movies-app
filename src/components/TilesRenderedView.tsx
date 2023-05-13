@@ -1,6 +1,6 @@
 import { View, FlatList, ActivityIndicator } from "react-native";
 import ThumbnailMemoised from "./ThumbnailMemoised";
-import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
+import { getDeviceDimensions } from "../utils/helpers/helper";
 import { useNavigation } from "@react-navigation/native";
 import { memo, useCallback, useMemo } from "react";
 import { IImgItemSettingsDB } from "../../types/typings";
@@ -15,7 +15,6 @@ interface IProps {
 
 const TilesRenderedView: React.FC<IProps> = (props) => {
   const navigation = useNavigation();
-  // const { defaultImgQuality } = useDefaultImageQualityHooks();
 
   const loadMoreItem = () => {
     // Increase the page number by one only if the load new medias is enabled
@@ -47,12 +46,6 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
     );
   };
 
-  console.log("rendered tiles renderer");
-
-  // const renderFlatlist = () => {
-  //   return
-  // }
-
   return (
     <View className="flex-1 relative">
       <FlatList
@@ -65,10 +58,8 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
           paddingVertical: 8,
         }}
         renderItem={(media) => {
-          // console.log("rendered tiles renderer");
           return (
             <View className="mx-[2]">
-              {/* <Thumbnail media={media.item} orientation="portrait" /> */}
               <ThumbnailMemoised
                 media={media.item}
                 orientation="portrait"
@@ -76,9 +67,7 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
                 windowWidth={windowWidth}
                 imgType="regular"
                 quality={props.thumbnailQuality?.value}
-                // quality={defaultImgQuality.value}
               />
-              {/* <MemoisedThumbnail media={media.item} orientation="portrait" /> */}
             </View>
           );
         }}
@@ -93,5 +82,5 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
     </View>
   );
 };
-// export default TilesRenderedView;
+
 export default memo(TilesRenderedView);

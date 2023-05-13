@@ -1,4 +1,3 @@
-import { View } from "react-native";
 import React from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { isIImageQuality, isISOLang } from "../../utils/helpers/helper";
@@ -30,24 +29,10 @@ export default function Dropdown<T extends TSupportedTypes>({
     full: 1000,
   };
 
-  // if (isIImageQuality(currentSelected)) {
-  //   console.log(listData);
-  // }
-
   return (
     <>
       <SelectDropdown
         data={listData}
-        // search={true}
-        // searchInputStyle={{
-        //   backgroundColor: Colors.stone[800],
-        //   //  borderRadius: radiusForDropdown[borderRadius],
-        //   borderBottomColor: Colors.accentLighter,
-        //   paddingHorizontal: 16,
-        // }}
-        // searchInputTxtColor={Colors.text_primary}
-        //   searchPlaceHolder={"Search"}
-        //   searchPlaceHolderColor={Colors.text_dark}
         renderDropdownIcon={(s) => (
           <MaterialIcons
             name="arrow-drop-down"
@@ -59,12 +44,9 @@ export default function Dropdown<T extends TSupportedTypes>({
           setSelected(selectedItem);
         }}
         buttonStyle={{
-          // backgroundColor: "transparent",
           backgroundColor: Colors.accentLighter,
-          // backgroundColor: "rgb(7, 38, 19)",
           borderRadius: radiusForDropdown[borderRadius],
           width: 150,
-          // height: 20,
           borderWidth: 0,
           borderBottomColor: "red",
         }}

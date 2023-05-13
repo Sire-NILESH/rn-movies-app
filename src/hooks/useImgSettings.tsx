@@ -3,7 +3,6 @@ import {
   IImageItemSettingsValue,
   IImgItemSettingsDB,
   ImageItemTypes,
-  TAllImgSettingsDB,
 } from "../../types/typings";
 import { addImgItemSetting, getdataFromACollection } from "../storage/database";
 
@@ -32,8 +31,6 @@ const useImgSettings = () => {
             temp[item.name] = item;
           });
           setAllImageItemsSettings(temp);
-
-          // setAllImageItemsSettings(imgSettings.rows._array);
         }
       } catch (err) {
         setErrorImgSettings(err as Error);
@@ -43,20 +40,6 @@ const useImgSettings = () => {
     // exe the function
     getAllImgSettingsFromDB();
   }, []);
-
-  // async function getImgSettingsFromDB(imgItem: ImageItemTypes) {
-  //   try {
-  //     setErrorImgSettings(null);
-  //     const imgSettings = await getImgItemSetting(imgItem);
-  //     if (imgSettings.rows.length > 0) {
-  //       return imgSettings.rows._array as TAllImgSettingsDB;
-  //     }
-  //   } catch (err) {
-  //     setErrorImgSettings(err as Error);
-  //   }
-  // }
-
-  // getImgItemSetting();
 
   /**
    * Function to set an image quality setting for a specific supported image type.
@@ -76,7 +59,6 @@ const useImgSettings = () => {
     allImgItemsSettings,
     errorImgSettings,
     setImgItemQualitySettings,
-    // getAllImgSettingsFromDB,
   };
 };
 

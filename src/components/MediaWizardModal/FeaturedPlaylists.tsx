@@ -13,12 +13,6 @@ const FeaturedPlaylists: React.FC<IProps> = ({
 }) => {
   return (
     <View className="my-4">
-      {/* <View className="ml-5 rounded-full bg-stone-800/80 px-2 py-2 w-28 mb-1">
-         <Text className="text-center text-green-500 rounded-full font-semibold uppercase tracking-[3px] text-xs">
-           Playlists
-         </Text>
-       </View> */}
-
       <Text className="mb-1 text-center text-green-500 rounded-full font-semibold uppercase tracking-[3px] text-xs">
         Playlists
       </Text>
@@ -45,11 +39,6 @@ const FeaturedPlaylists: React.FC<IProps> = ({
                 ? { backgroundColor: "rgba(23, 23, 23, 1)" }
                 : { backgroundColor: "rgba(23, 23, 23, 0.7)" }
             }
-            //  style={
-            //    index % 2 === 0
-            //      ? { backgroundColor: Colors.neutral[800] }
-            //      : { backgroundColor: Colors.stone[900] }
-            //  }
           >
             <Text className="px-2 py-2 text-left text-gray-300">
               {playlist.name}

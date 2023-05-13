@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ImageResizeMode } from "react-native";
+import { StyleSheet, ImageResizeMode } from "react-native";
 import React from "react";
 // @ts-ignore, module isnt in TS and also couldnt find any type module for this online.
 import ExpoFastImage from "expo-fast-image";

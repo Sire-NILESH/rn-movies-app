@@ -24,8 +24,5 @@ const allowNsfwContentSlice = createSlice({
 
 export const { toggleAllowNsfwContent } = allowNsfwContentSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
-// export const defaultRegion = (state: RootState) => state.defaultRegion;
-
 const allowNsfwContentSliceReducer = allowNsfwContentSlice.reducer;
 export default allowNsfwContentSliceReducer;

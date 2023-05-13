@@ -81,7 +81,6 @@ function renderFlatList(
           contentContainerStyle={{
             width: "100%",
           }}
-          // className="ml-2 h-32"
           data={medias}
           renderItem={(media) => (
             <View className="ml-1">

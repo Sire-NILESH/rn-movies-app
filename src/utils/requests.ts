@@ -7,7 +7,7 @@ import {
   MediaTypes,
   Trailer,
 } from "../../types/typings";
-import { fetchDataFromApi, fetchDataFromApiV2 } from "./api";
+import { fetchDataFromApi } from "./api";
 
 /**
  * API call to get the search results for the keywords.
@@ -31,13 +31,10 @@ export const searchRequest = async (
     .then((res) => res.json())
     .catch((err) => {
       if (err.message === "Aborted") {
-        console.log(err.message);
         return;
       } else throw err;
     });
 
-  console.log("fetching", searchText);
-  // console.log("------", data.results);
   if (data?.results) return { results: data?.results, mediaType: mediaType };
 };
 
@@ -160,7 +157,6 @@ export const getTileListScreenMedias = async (
   try {
     const data = await Promise.all([
       ...urlObjects.map((urlObj) => {
-        console.log(urlObj);
         return fetchDataFromApi(urlObj.url, {
           ...urlObj.queryParams,
           ...filters,
@@ -223,7 +219,6 @@ export const sendUrlObjApiRequest = async (
       ),
     ]);
 
-    // console.log(data[0].data);
     return data[0].data.results;
   } catch (err) {
     throw err;
@@ -248,8 +243,6 @@ export const sendUrlObjApiRequestV2 = async (
       ),
     ]);
 
-    // console.log(data[0].data);
-    // return data[0].data.results;
     const results = data.map((dat) => dat.data.results);
     return results;
   } catch (err) {
@@ -273,10 +266,8 @@ export const getGenreMediasProps = async (
   networkId?: number,
   productionCompanyId?: number
 ) => {
-  console.log(mediaType, getTheseGenreMedias, pageNumber);
-
   // if the id of the genre is less than 1, it is a custom genre.
-  console.log(getTheseGenreMedias[0]);
+  // console.log(getTheseGenreMedias[0]);
 
   if (getTheseGenreMedias[0] >= 1) {
     const commaSeparatedGenres = getTheseGenreMedias.join(",");
@@ -368,7 +359,7 @@ export const getRelatedMediasProps = async (
     // return data.results;
     return data.data.results;
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     throw err;
   }
 };

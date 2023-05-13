@@ -1,6 +1,5 @@
 import { Trailer } from "../../types/typings";
 import { View, Image, Pressable, Text } from "react-native";
-
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 
@@ -34,9 +33,8 @@ const TrailerVideoThumbnail: React.FC<IProps> = (props) => {
                 }
               : require("../../assets/images/placeholders/posterPlaceHolder.png")
           }
-          onError={(err) => {
+          onError={(_err) => {
             // on error getting HD res thumbnail, try to get MQ res thumbnail.
-            console.log("Error", err);
             setImageUri(
               `https://img.youtube.com/vi/${props.video.key}/mqdefault.jpg`
             );

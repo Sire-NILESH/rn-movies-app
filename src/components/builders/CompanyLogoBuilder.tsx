@@ -32,8 +32,6 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
 
   const baseImgUrl = `https://image.tmdb.org/t/p/w${logoImgQuality}`;
 
-  console.log("logo quality", baseImgUrl);
-
   return (
     <View className="flex-1 space-y-4 mt-8">
       <Text className="ml-4 font-semibold text-text_tertiary">
@@ -46,7 +44,6 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
         keyExtractor={(producitonCompany) => String(producitonCompany.id)}
         renderItem={(itemObj) => {
           const c = itemObj.item;
-          console.log(c.name, c.id);
           return (
             <View className="space-y-3 justify-start mr-5 rounded-md overflow-hidden">
               <Pressable
@@ -146,16 +143,6 @@ function RenderLogo({
       />
       {fallbackImage && (
         <View className="absolute h-full w-full justify-center items-center">
-          {/* <Text
-            className="text-center text-[36px] font-bold text-text_darkest w-full px-2"
-            numberOfLines={1}
-          >
-            {companyName
-              .split(" ")
-              .map((c) => c[0].toUpperCase())
-              .join(".")}
-          </Text> */}
-
           {mediaType === "movie" ? (
             <Ionicons name="film" color={Colors.green[900]} size={54} />
           ) : (

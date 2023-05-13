@@ -1,5 +1,4 @@
 import { View, Pressable } from "react-native";
-//ctrl + alt + d
 interface IProps {
   /**
    * Method to be executed on press of the button.

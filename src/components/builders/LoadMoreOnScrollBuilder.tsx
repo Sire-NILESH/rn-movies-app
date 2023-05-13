@@ -17,7 +17,6 @@ interface IProps {
   searchScreenOptions?: {
     searchQuery: string;
     searchCategory: MediaTypes;
-    //  abortController: AbortController;
   };
 }
 
@@ -64,10 +63,8 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
               : "multi",
             pageNumber,
             allowNsfwContent.nsfw
-            // props.searchScreenOptions.abortController
           );
           moreMedias = searchResults;
-          //  console.log("more medias", moreMedias);
         }
 
         // if we received some data, then page exists.
@@ -88,8 +85,6 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
     }
     loadMedias();
   }, [pageNumber, getRelatedMediasProps, searchRequest]);
-
-  console.log("pageNumber", pageNumber);
 
   // Show alert on error
   if (error && !loadingNewMedias) {

@@ -7,13 +7,9 @@ interface IProps {
 }
 
 const NothingToShow: React.FC<IProps> = (props) => {
-  console.log(props);
-
   return (
     <View className="flex-1 font-semibold items-center justify-center">
-      <Text className="text-3xl h-20 text-stone-700 text-center [lineHeight:5]">
-        {/* {props.title ? props.title + "\n \n" : "Nothing to show"} ಥ_ಥ #10d950 */}
-      </Text>
+      <Text className="text-3xl h-20 text-stone-700 text-center [lineHeight:5]"></Text>
       <>
         {props.problemType === "error" ? (
           <View

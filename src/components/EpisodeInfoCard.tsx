@@ -37,12 +37,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
       </View>
 
       {/* IMAGE CARD */}
-      <View
-        className="flex-1 "
-        style={{ width: "100%", aspectRatio: 16 / 9 }}
-        //   className="flex-1 rounded-xl border border-gray-800 overflow-hidden mx-auto"
-        //   style={{ width: "93%", aspectRatio: 16 / 9 }}
-      >
+      <View className="flex-1 " style={{ width: "100%", aspectRatio: 16 / 9 }}>
         <Image
           source={
             episode.still_path
@@ -74,10 +69,6 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
                 <Text className="text-text_primary">/10</Text>
               </Text>
             </View>
-            {/* <DataElement
-              text={`${episode.vote_average.toFixed(2)}/10`}
-              iconName="star"
-            /> */}
           </View>
           <View>
             <DataElement

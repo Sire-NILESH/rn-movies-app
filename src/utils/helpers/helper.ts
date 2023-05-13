@@ -2,6 +2,7 @@ import {
   Genre,
   ICountry,
   ICreditPerson,
+  IImageItemQualitySetting,
   IImageQuality,
   INetworkIds,
   IProductionComapnyIds,
@@ -239,6 +240,41 @@ export function tvMediaType(code: string): string {
   // @ts-ignore
   return codes[code];
 }
+
+export const initialImageQualitiesSettingsObj: IImageItemQualitySetting = {
+  thumbnail: {
+    //  name: "Thumbnail",
+    key: "thumbnail",
+    imgQuality: {
+      quality: "Very high",
+      value: "500",
+    },
+  },
+  watchProviders: {
+    //  name: "Watch Providers",
+    key: "watchProviders",
+    imgQuality: {
+      quality: "Very high",
+      value: "500",
+    },
+  },
+  banner: {
+    //  name: "Banner",
+    key: "banner",
+    imgQuality: {
+      quality: "Very high",
+      value: "500",
+    },
+  },
+  companies: {
+    //  name: "TV Network/Producers",
+    key: "companies",
+    imgQuality: {
+      quality: "Very high",
+      value: "500",
+    },
+  },
+};
 
 export const networkIds: INetworkIds = {
   Netflix: 213,

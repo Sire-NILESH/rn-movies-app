@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { View, FlatList, Dimensions, Text } from "react-native";
+import { View, FlatList, Text } from "react-native";
 import { useLogging } from "../hooks/useLogging";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { Trailer } from "../../types/typings";
@@ -11,9 +11,6 @@ import TrailerVideoThumbnail from "../components/TrailerVideoThumbnail";
 import { Colors } from "../utils/Colors";
 import { useQuery } from "./../../node_modules/@tanstack/react-query";
 
-// const screenDimensions = Dimensions.get("screen");
-// const dimensionsForWindow = Dimensions.get("window");
-
 const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [logging] = useLogging("About Screen");
   const { navigation, route } = props;
@@ -22,33 +19,6 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const { mediaType, mediaId } = route.params;
 
   const [selectedVideo, setSelectedVideo] = useState<Trailer | null>(null);
-  // const [videos, setVideos] = useState<Trailer[]>([]);
-  // const [loading, setLoading] = useState<boolean>(false);
-  // const [error, setErrro] = useState<Error | null>(null);
-
-  // useEffect(() => {
-  //   async function loadVideos() {
-  //     if (!mediaType || !mediaId) return;
-
-  //     setLoading(true);
-
-  //     try {
-  //       const videosData = await fetchTrailers(mediaId, mediaType);
-  //       console.log(videosData);
-  //       // if we received some data,
-  //       if (videosData && videosData?.length > 0) {
-  //         videosData.filter((v: Trailer, i: number) => v.site === "YouTube");
-  //         setVideos([...videosData]);
-  //         setSelectedVideo(videosData[0]);
-  //       }
-  //     } catch (err) {
-  //       setErrro(err as Error);
-  //     }
-  //     setLoading(false);
-  //   }
-
-  //   loadVideos();
-  // }, [mediaType, mediaId]);
 
   const {
     isLoading: loading,
@@ -128,7 +98,6 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           className="pt-4 px-2"
           style={{
             backgroundColor: Colors.primary,
-            // backgroundColor: "rgb(4, 16, 9)",
           }}
           contentContainerStyle={{
             justifyContent: "flex-start",
@@ -139,7 +108,6 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               <View
                 className="h-2 w-full"
                 style={{ backgroundColor: Colors.primary }}
-                // style={{ backgroundColor: "rgb(4, 16, 9)" }}
               ></View>
             );
           }}

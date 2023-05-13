@@ -67,8 +67,6 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         page: pageNumber,
       };
 
-      console.log(filters);
-
       setLoadingNewMedias(true);
       try {
         const playlistsToFetch =
@@ -125,9 +123,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         setGenreIds(genrelist);
       }
 
-      // set the year and lang filter
-      // setLangAndYearFilter(langAndYearFilter);
-      // since we now have new set of Genres, we can unblock new loads
+      // since we now have new set of playlists, we can unblock new loads
       setBlockNewLoads(false);
     }
   };

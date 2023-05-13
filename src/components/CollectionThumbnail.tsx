@@ -17,7 +17,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import ImageCached from "./ui/ImageCached";
 import ImagePlaceholder from "./ui/ImagePlaceholder";
 import React from "react";
-import { isMovie } from "../utils/helpers/helper";
 
 export interface ICollectionThumbnailProps {
   media: IReduxListMedia;
@@ -80,8 +79,6 @@ function CollectionThumbnail({
       orientation === "landscape" ? media.backdrop_path : media.poster_path
     }`;
 
-  // console.log(imageURL, imageQuality, quality);
-
   return (
     <View
       className="relative overflow-hidden"
@@ -90,28 +87,12 @@ function CollectionThumbnail({
       <Pressable
         className=""
         onPress={() => {
-          console.log(media);
           navigateTo("CollectionMoreInfo", {
             mediaType: media.mediaType,
             collectionMedia: media,
           });
         }}
       >
-        {/* https://github.com/dcodeteam/react-native-fast-image-expo */}
-
-        {/* {imageURL ? (
-          <ImageCached
-            imageURL={imageURL}
-            cacheKey={
-              orientation === "portrait"
-                ? `${media.mediaId}-${media.mediaType}-poster`
-                : `${media.mediaId}-${media.mediaType}-backdrop`
-            }
-          />
-        ) : (
-          <ImagePlaceholder />
-        )} */}
-
         {imgType && imgType === "cached" ? (
           imageURL ? (
             <ImageCached
@@ -139,19 +120,12 @@ function CollectionThumbnail({
 
         {/* Movie Title and date box */}
         <LinearGradient
-          // colors={[
-          //   "rgba(0,0,0,0)",
-          //   "rgba(0,0,0,0)",
-          //   "rgba(15, 15, 15, 0.2)",
-          //   "rgba(15, 15, 15, 0.8)",
-          // ]}
           colors={[
             "rgba(0,0,0,0)",
             "rgba(0,0,0,0)",
             "rgba(28, 25, 23, 0.2)",
             "rgba(28, 25, 23, 0.8)",
           ]}
-          // border-2 border-stone-50, when selected.
           className="absolute  flex-row items-end pb-2 px-2"
           style={{
             borderRadius: 6,

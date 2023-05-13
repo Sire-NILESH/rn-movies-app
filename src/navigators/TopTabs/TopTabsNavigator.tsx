@@ -20,16 +20,13 @@ const TopTabsNavigator: React.FC<IProps> = (props) => {
   const screenCollectionType = props.collectionType;
 
   useLayoutEffect(() => {
-    navigation.setOptions({
-      // headerShown: false,
-    });
+    navigation.setOptions({});
   }, []);
 
   return (
     <TopTabs.Navigator
       screenOptions={{
         tabBarLabelStyle: { fontSize: 12 },
-        // tabBarItemStyle: { width: '100' },
         tabBarStyle: { backgroundColor: Colors.tertiary },
         tabBarActiveTintColor: Colors.text_primary,
         tabBarInactiveTintColor: Colors.text_dark,

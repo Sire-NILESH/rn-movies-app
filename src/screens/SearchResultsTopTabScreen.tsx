@@ -6,7 +6,7 @@ import LoadMoreOnScrollBuilder from "../components/builders/LoadMoreOnScrollBuil
 const SearchResultsTopTabScreen: React.FC<SearchResultsTopTabScreenProps> = (
   props
 ) => {
-  const { navigation, route, searchQuery, screenMediaType } = props;
+  const { searchQuery, screenMediaType } = props;
 
   return (
     <View className="flex-1 bg-secondary">

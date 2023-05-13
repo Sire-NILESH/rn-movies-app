@@ -6,7 +6,6 @@ import { Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 interface IProps {
-  // media: TvMediaExtended | MovieMediaExtended
   onPressHandler: () => void;
   title: string;
   subtitle: string;
@@ -27,10 +26,7 @@ const MoreInfoFooterButton: React.FC<IProps> = (props) => {
     >
       <Pressable
         className="flex-1 px-4 py-4 justify-between"
-        onPress={() =>
-          //  onPressHandler here
-          props.onPressHandler()
-        }
+        onPress={() => props.onPressHandler()}
         android_ripple={{ color: "#eee" }}
       >
         <View className="flex-row items-center gap-2">

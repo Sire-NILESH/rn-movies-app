@@ -21,8 +21,6 @@ const WarningModal: React.FC<IProps> = (props) => {
     props.closeModal();
   }
 
-  console.log(props.deletingItem);
-
   function onCancelHandler() {
     // TODO: cancel and close modal
     props.closeModal();

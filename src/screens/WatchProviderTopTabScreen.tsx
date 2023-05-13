@@ -3,9 +3,7 @@ import { WatchProviderTopTabsScreenProps } from "../library/NavigatorScreenProps
 import WatchProviderScreenBuilder from "../components/builders/WatchProviderScreenBuilder";
 
 const WatchProviderTopTabScreen: React.FC<WatchProviderTopTabsScreenProps> = ({
-  name,
   navigation,
-  route,
   screenMediaType,
   urlObject,
 }) => {
@@ -15,11 +13,6 @@ const WatchProviderTopTabScreen: React.FC<WatchProviderTopTabsScreenProps> = ({
       title: screenMediaType === "movie" ? "Movies" : "TV Shows",
     });
   }, []);
-
-  // useEffect(() => {
-  //   const url = urlObject.url + `/${screenMediaType}_credits`;
-  //   urlObject.url = url;
-  // }, []);
 
   return (
     <WatchProviderScreenBuilder

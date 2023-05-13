@@ -1,4 +1,4 @@
-import { View, Text, Button } from "react-native";
+import { View, Button } from "react-native";
 import React from "react";
 import {
   deleteAllTables,
@@ -16,12 +16,7 @@ const DevOnlySettings = () => {
         color={"black"}
         onPress={() => {
           getAllFromCollection()
-            .then((data) => {
-              // console.log(
-              //   "AAAAAAll data from DB, settings screen",
-              //   data["rows"]["_array"]
-              // );
-            })
+            .then((_data) => {})
             .catch((err) => {
               console.log(err);
             });

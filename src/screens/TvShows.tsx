@@ -1,12 +1,9 @@
 import { useLayoutEffect, memo } from "react";
-import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import HeaderSearchButton from "../components/ui/HeaderSearchButton";
 import ScreenBuilder from "../components/builders/ScreenBuilder";
 import { IDrawerScreenProps } from "../library/NavigatorScreenProps/DrawerScreenProps";
 import { View } from "react-native";
-import ScreenBuilderV2 from "../components/builders/ScreenBuilderV2";
 import useImageItemSetting from "../hooks/useImageItemSetting";
-import ScreenBuilderV3 from "../components/builders/ScreenBuilderV3";
 
 const TvShowsScreen: React.FC<IDrawerScreenProps> = (props) => {
   const { navigation } = props;
@@ -23,7 +20,6 @@ const TvShowsScreen: React.FC<IDrawerScreenProps> = (props) => {
     });
   }, []);
 
-  // return <ScreenBuilderV2 screenType="tv" />;
   return <ScreenBuilder screenType="tv" imgItemsSetting={imgItemsSetting} />;
 };
 

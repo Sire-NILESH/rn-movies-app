@@ -17,7 +17,6 @@ import {
   mediaExistsInCollection,
   removeMediaFromCollection,
 } from "../../storage/database";
-import { LinearGradient } from "expo-linear-gradient";
 
 interface IProps {
   media: MovieMediaExtended | TvMediaExtended | MovieMedia | TvMedia;

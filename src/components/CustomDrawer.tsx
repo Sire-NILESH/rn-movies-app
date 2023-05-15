@@ -54,10 +54,16 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
         </View>
         <View className="flex-row items-center">
           <Text className="text-stone-500 text-xs">
+            Made with <Text className="font-bold text-stone-400">💖</Text> from{" "}
+            <Text className="font-bold text-stone-400">Sire</Text>
+          </Text>
+        </View>
+        {/* <View className="flex-row items-center">
+          <Text className="text-stone-500 text-xs">
             Powered by <Text className="font-bold text-stone-400">TMDB</Text>{" "}
             and <Text className="font-bold text-stone-400">justWatch</Text>
           </Text>
-        </View>
+        </View> */}
       </View>
     </View>
   );

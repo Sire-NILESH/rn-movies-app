@@ -2,6 +2,7 @@ import {
   Genre,
   ICountry,
   ICreditPerson,
+  ICreditPersonGender,
   IImageItemQualitySetting,
   IImageQuality,
   INetworkIds,
@@ -238,6 +239,17 @@ export function tvMediaType(code: string): string {
   };
 
   // @ts-ignore
+  return codes[code];
+}
+
+export function getGender(code: 0 | 1 | 2 | 3): string {
+  const codes = {
+    0: "Not specified",
+    1: "Female",
+    2: "Male",
+    3: "Non Binary",
+  };
+
   return codes[code];
 }
 

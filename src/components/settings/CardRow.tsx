@@ -12,7 +12,9 @@ const CardRow: React.FC<IProps> = (props) => {
       className="flex-row items-center justify-between px-2 mt-2 mx-2 bg-accent rounded-xl"
       style={{ backgroundColor: "rgb(4, 20, 10)", minHeight: 45 }}
     >
-      <Text className="text-text_tertiary mx-4">{props.rowTitle} </Text>
+      <Text className="text-text_tertiary mx-4 max-w-[80%]" numberOfLines={1}>
+        {props.rowTitle}{" "}
+      </Text>
       {props.children}
     </View>
   );

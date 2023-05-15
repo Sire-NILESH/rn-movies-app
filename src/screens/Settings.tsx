@@ -60,10 +60,10 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
           <DevOnlySettings />
         </View> */}
 
-        {/* <View>
-          ABOUT
+        <View>
+          {/* ABOUT */}
           <AboutSettings />
-        </View> */}
+        </View>
 
         <View className="h-24" />
       </ScrollView>

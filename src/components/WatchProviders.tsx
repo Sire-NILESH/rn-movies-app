@@ -142,8 +142,8 @@ function renderFlatlist(
   const baseImgUrl = `https://image.tmdb.org/t/p/w${providerImgQuality}`;
 
   return (
-    <View className="space-y-3 py-4 mx-2 rounded-xl border-2 bg-accent">
-      <Text className="text-text_highLight uppercase tracking-[3px] ml-4">
+    <View className="space-y-3 py-4 mx-2 rounded-xl bg-accent">
+      <Text className="font-bold text-text_highLight uppercase tracking-[2px] ml-4">
         {availableType}
       </Text>
       <FlatList
@@ -181,7 +181,7 @@ function renderFlatlist(
                 }}
               >
                 <View
-                  className="rounded-2xl justify-center overflow-hidden"
+                  className="rounded-2xl justify-center overflow-hidden border border-stone-800"
                   style={{
                     width: 65,
                     aspectRatio: 1 / 1,

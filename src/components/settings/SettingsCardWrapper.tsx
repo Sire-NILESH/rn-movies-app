@@ -11,11 +11,13 @@ export default function SettingsCardWrapper(props: {
   return (
     <View className="w-full bg-neutral-900 py-4 px-2 rounded-xl">
       <View className="flex-row space-x-2 items-center mb-2 mx-2">
-        <Ionicons
-          name={props.iconName}
-          color={Colors.text_dark}
-          size={24}
-        ></Ionicons>
+        <View className="h-full">
+          <Ionicons
+            name={props.iconName}
+            color={Colors.text_dark}
+            size={24}
+          ></Ionicons>
+        </View>
         <View className="w-[92%]">
           <Text className="text-text_highLight font-semibold mb-1">
             {props.title}

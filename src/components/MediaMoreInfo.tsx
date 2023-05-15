@@ -165,10 +165,10 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
               {(isTvExtended(media) || isMovieExtended(media)) &&
               media.production_countries?.length > 0 ? (
                 <View className="flex-row items-start space-x-2 px-4 mt-5">
-                  <Text className="font-semibold text-text_tertiary">
+                  {/* <Text className="font-semibold text-text_tertiary">
                     Produced in :
-                  </Text>
-                  <View className="w-[78%] flex-row items-center flex-wrap">
+                  </Text> */}
+                  {/* <View className="w-[78%] flex-row items-center flex-wrap">
                     {media.production_countries.map((c, i) => {
                       return (
                         <View
@@ -182,7 +182,19 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
                         </View>
                       );
                     })}
-                  </View>
+                    
+                  </View> */}
+                  <Text className="text-text_dark" style={{ lineHeight: 20 }}>
+                    <Text className="font-semibold text-text_tertiary">
+                      Produced in :{" "}
+                    </Text>
+                    {media.production_countries
+                      .map((c, i) => {
+                        return c.name;
+                      })
+                      .join(", ")}
+                    {". "}
+                  </Text>
                 </View>
               ) : null}
 
@@ -225,7 +237,8 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             <View className="mt-8">
               {/* Cast and Crew */}
               {cast.length > 0 || directedBy.length > 0 ? (
-                <View className="h-[195]">
+                // <View className="h-[195]">
+                <View className="h-72">
                   <Cast
                     cast={cast}
                     directedBy={directedBy}

@@ -33,9 +33,9 @@ export default function HeaderSearchButton({
   }
 
   return (
-    <View className="rounded-full overflow-hidden">
+    <View className="h-10 w-10 rounded-full overflow-hidden">
       <Pressable
-        className="p-2"
+        className="h-full w-full items-center justify-center"
         onPress={disabled && disabled === true ? null : onPressHandler}
         android_ripple={{ color: "#eee" }}
       >

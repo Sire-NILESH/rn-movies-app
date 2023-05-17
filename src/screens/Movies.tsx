@@ -4,6 +4,7 @@ import { IDrawerScreenProps } from "../library/NavigatorScreenProps/DrawerScreen
 import { View } from "react-native";
 import useImageItemSetting from "../hooks/useImageItemSetting";
 import ScreenBuilder from "../components/builders/ScreenBuilder";
+import HeaderWrapperV2 from "../components/Header/HeaderWrapper";
 
 const MoviesScreen: React.FC<IDrawerScreenProps> = (props) => {
   const { navigation } = props;
@@ -12,11 +13,23 @@ const MoviesScreen: React.FC<IDrawerScreenProps> = (props) => {
   // Header settings
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: (props) => (
-        <View className="mr-2">
-          <HeaderSearchButton searchCategory="movie" />
-        </View>
-      ),
+      // headerRight: (props) => (
+      //   <View className="mr-2">
+      //     <HeaderSearchButton searchCategory="movie" />
+      //   </View>
+      // ),
+
+      header: () => {
+        // return <Header translateY={translateY} />;
+        return (
+          <HeaderWrapperV2 title={"Movies"}>
+            <View className="">
+              <HeaderSearchButton searchCategory="movie" />
+            </View>
+          </HeaderWrapperV2>
+        );
+      },
+      headerTransparent: true,
     });
   }, []);
 

@@ -22,12 +22,6 @@ interface IProps {
   imgItemsSetting: IImgItemSettingsDB | undefined;
 }
 
-// interface IState {
-//   genreId: number;
-//   genreName: string;
-//   genreMedias: TvMedia[] | MovieMedia[];
-// }
-
 function getPlaylistsToFetch(screenType: ScreenTypes) {
   // Get the genre list to fetch depending on the screen type.
   let playlistsToFetch: IPlaylist[];

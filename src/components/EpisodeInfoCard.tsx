@@ -20,7 +20,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
           </Text>
         </View> */}
         <Text className="ml-2 text-text_highLight w-[90%]">
-          <Text className="text-base font-bold">{episode.name}</Text>
+          <Text className="text-base font-bold">{`E-${episode.episode_number}: ${episode.name}`}</Text>
         </Text>
       </View>
 

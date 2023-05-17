@@ -9,8 +9,14 @@ import {
   buildGenrePlaylist,
   buildTrendingPlaylist,
 } from "../utils/helpers/helper";
+import HeaderWrapper from "./HeaderWrapper";
+import { SharedValue } from "react-native-reanimated";
 
-function Header() {
+interface IProps {
+  translateY: SharedValue<number>;
+}
+
+const Header: React.FC<IProps> = (props) => {
   const navigation = useNavigation<DrawerNavigationOptions>();
 
   const headerLinksScreenParams = [
@@ -67,9 +73,20 @@ function Header() {
   }
 
   return (
-    <LinearGradient
-      colors={["rgba(15, 15, 15, 1)", "rgba(15, 15, 15, 0.5)", "rgba(0,0,0,0)"]}
-      className="flex-row justify-between items-center w-[100%] h-[80] px-4"
+    // <HeaderWrapper
+    //   translateY={props.translateY}
+    //   style={{
+    //     // backgroundColor: Colors.tertiary,
+    //     height: 55,
+    //     width: "100%",
+    //     display: "flex",
+    //     justifyContent: "center",
+    //   }}
+    // >
+    <View
+      // colors={["rgba(15, 15, 15, 0.8)", "rgba(15, 15, 15, 0.2)"]}
+      className="flex-row justify-between items-center w-[100%] px-4 h-[60] bg-stone-900/50 "
+      // style={{ elevation: 0 }}
     >
       <View>
         {/* @ts-ignore */}
@@ -83,8 +100,9 @@ function Header() {
           <RenderHeaderLink key={`${link.name}-${index}`} link={link} />
         ))}
       </View>
-    </LinearGradient>
+    </View>
+    // </HeaderWrapper>
   );
-}
+};
 
 export default Header;

@@ -76,7 +76,7 @@ const Cast: React.FC<IProps> = (props) => {
                           {p.gender != null && getGender(p.gender)}
                         </Text>
 
-                        <View className="h-8 min-w-[100] mt-4 bg-stone-50 rounded-full overflow-hidden">
+                        <View className="h-8 min-w-[100] mt-4 bg-neutral-700/60 rounded-full overflow-hidden">
                           <Pressable
                             className="h-full flex justify-center items-center px-2"
                             android_ripple={{ color: "#eee" }}
@@ -95,7 +95,7 @@ const Cast: React.FC<IProps> = (props) => {
                             }}
                           >
                             <Text
-                              className="text-text_darkest text-xs font-bold"
+                              className="text-text_primary text-xs font-bold"
                               numberOfLines={2}
                             >
                               {p.job}
@@ -103,11 +103,22 @@ const Cast: React.FC<IProps> = (props) => {
                           </Pressable>
                         </View>
 
-                        {/* <Text
-                          className="text-center mt-2 text-text_primary text-xs font-bold"
+                        <Text
+                          className="w-[100] mt-4 text-center text-text_tertiary text-xs font-bold"
                           numberOfLines={2}
                         >
-                          {p.popularity.toFixed(2)}/10
+                          {/* {  "Crew member"} */}
+                          {p.department === "Writing"
+                            ? "Writing"
+                            : "Crew member"}
+                        </Text>
+
+                        {/* <Text
+                          className="text-center mt-4 text-text_tertiary  text-xs font-bold"
+                          numberOfLines={2}
+                          style={{ lineHeight: 18 }}
+                        >
+                          {`TMDB rating\n ${p.popularity.toFixed(2)}/100`}
                         </Text> */}
                       </View>
                     </View>

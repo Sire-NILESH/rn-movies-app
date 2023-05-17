@@ -101,7 +101,7 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         );
       },
       headerRight: (props) => (
-        <View className="mr-2">
+        <View className="mr-4">
           <HeaderSearchButton
             gotoList={true}
             medias={searchQueryResult?.results}

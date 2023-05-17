@@ -1,9 +1,9 @@
 import React, { useLayoutEffect, memo } from "react";
-import { useLogging } from "../hooks/useLogging";
-import Header from "./../components/Header";
 import { IDrawerScreenProps } from "../library/NavigatorScreenProps/DrawerScreenProps";
 import useImageItemSetting from "../hooks/useImageItemSetting";
 import ScreenBuilder from "../components/builders/ScreenBuilder";
+import HomeHeader from "../components/Header/HomeHeader";
+import HeaderWrapper from "../components/Header/HeaderWrapper";
 
 const HomeScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   const { navigation } = props;
@@ -13,7 +13,11 @@ const HomeScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       header: () => {
-        return <Header />;
+        return (
+          <HeaderWrapper>
+            <HomeHeader />
+          </HeaderWrapper>
+        );
       },
       headerTransparent: true,
     });

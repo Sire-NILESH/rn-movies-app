@@ -4,12 +4,10 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "./../utils/Colors";
 import { DrawerNavigationOptions } from "@react-navigation/drawer";
-import { LinearGradient } from "expo-linear-gradient";
 import {
   buildGenrePlaylist,
   buildTrendingPlaylist,
 } from "../utils/helpers/helper";
-import HeaderWrapper from "./HeaderWrapper";
 import { SharedValue } from "react-native-reanimated";
 
 interface IProps {
@@ -73,21 +71,7 @@ const Header: React.FC<IProps> = (props) => {
   }
 
   return (
-    // <HeaderWrapper
-    //   translateY={props.translateY}
-    //   style={{
-    //     // backgroundColor: Colors.tertiary,
-    //     height: 55,
-    //     width: "100%",
-    //     display: "flex",
-    //     justifyContent: "center",
-    //   }}
-    // >
-    <View
-      // colors={["rgba(15, 15, 15, 0.8)", "rgba(15, 15, 15, 0.2)"]}
-      className="flex-row justify-between items-center w-[100%] px-4 h-[60] bg-stone-900/50 "
-      // style={{ elevation: 0 }}
-    >
+    <View className="flex-row justify-between items-center w-[100%] px-4 h-[60] bg-stone-900/50 ">
       <View>
         {/* @ts-ignore */}
         <Pressable onPress={() => navigation.toggleDrawer()}>
@@ -101,7 +85,6 @@ const Header: React.FC<IProps> = (props) => {
         ))}
       </View>
     </View>
-    // </HeaderWrapper>
   );
 };
 

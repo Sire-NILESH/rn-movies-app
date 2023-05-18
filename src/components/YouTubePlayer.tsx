@@ -21,7 +21,7 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
   }, []);
 
   const onStateChanged = useCallback((state: any) => {
-    console.log(state);
+    // console.log(state);
     if (state === "ended") {
       setPlaying(false);
     }

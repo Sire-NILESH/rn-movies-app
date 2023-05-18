@@ -1,10 +1,14 @@
 import React from "react";
 import { stackRoutes } from "../../library/NavigationRoutes/StackRoutes";
-import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  TransitionPresets,
+  createStackNavigator,
+} from "@react-navigation/stack";
+import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import DrawerNavigator from "../Drawer/DrawerNavigator";
 import { enableScreens } from "react-native-screens";
 import { Colors } from "../../utils/Colors";
+import { View } from "react-native-animatable";
 
 // https://reactnavigation.org/docs/typescript/
 const Stack = createStackNavigator();
@@ -18,7 +22,7 @@ const StackNavigator = () => {
   enableScreens(true);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={DarkTheme}>
       <Stack.Navigator
         // initialRouteName="Home"
         initialRouteName="DrawerNav"
@@ -31,6 +35,24 @@ const StackNavigator = () => {
           headerStyle: {
             backgroundColor: Colors.tertiary,
           },
+          // cardOverlay: () => (
+          //   <View
+          //     style={{
+          //       flex: 1,
+          //       backgroundColor: "rgba(0, 0, 0, 1)",
+          //     }}
+          //   />
+          // ),
+
+          // ...TransitionPresets.ScaleFromCenterAndroid,
+          // ...TransitionPresets.SlideFromRightIOS,
+          // ...TransitionPresets.BottomSheetAndroid,
+          // ...TransitionPresets.ModalFadeTransition,
+          // ...TransitionPresets.FadeFromBottomAndroid,
+          // ...TransitionPresets.ModalPresentationIOS,
+          // ...TransitionPresets.RevealFromBottomAndroid,
+          // ...TransitionPresets.ModalTransition,
+          // ...TransitionPresets.ModalSlideFromBottomIOS,
         }}
       >
         {/* List of all the routes for the Stack Screen is maintained in the 'routes' separately */}

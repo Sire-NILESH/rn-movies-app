@@ -67,8 +67,8 @@ function Banner({ mediaList }: Props) {
       >
         <LinearGradient
           colors={[
-            "rgba(28, 25, 23, 0.4)",
-            // "rgba(28, 25, 23, 0.5)",
+            "rgba(28, 25, 23, 0.6)",
+            "rgba(28, 25, 23, 0.6)",
             "rgba(28, 25, 23, 0.6)",
             Colors.secondary,
           ]}

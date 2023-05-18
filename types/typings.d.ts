@@ -340,6 +340,7 @@ export interface INetworkIds {
   "Toon Disney": 142;
   "Disney XD": 44;
   ANIMAX: 171;
+  "The CW": 71;
 }
 
 export interface IProductionComapnyIds {

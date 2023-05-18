@@ -314,6 +314,7 @@ export const networkIds: INetworkIds = {
   "Toon Disney": 142,
   "Disney XD": 44,
   ANIMAX: 171,
+  "The CW": 71,
 };
 
 export const productionComapnyIds = {

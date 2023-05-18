@@ -109,7 +109,7 @@ const Cast: React.FC<IProps> = (props) => {
                         >
                           {/* {  "Crew member"} */}
                           {p.department === "Writing"
-                            ? "Writing"
+                            ? "Writing department"
                             : "Crew member"}
                         </Text>
 

@@ -21,15 +21,25 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
   }, []);
 
   const onStateChanged = useCallback((state: any) => {
+    console.log(state);
     if (state === "ended") {
       setPlaying(false);
     }
     if (state === "playing") {
       setPlaying(true);
     }
-    if (state === "paused") {
-      setPlaying(false);
-    }
+    // if (state === "paused") {
+    //   setPlaying(false);
+    // }
+    // if (state === "unstarted") {
+    //   setPlaying(true);
+    // }
+    // if (state === "buffering") {
+    //   setPlaying(true);
+    // }
+    // else {
+    //   setPlaying(true);
+    // }
   }, []);
 
   return (

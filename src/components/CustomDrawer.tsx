@@ -18,9 +18,9 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
               "rgba(0,0,0,0)",
               "rgba(0,0,0,0)",
               "rgba(0,0,0,0)",
-              "rgba(28, 25, 23, 0.2)",
+              // "rgba(28, 25, 23, 0.2)",
               "rgba(28, 25, 25, 0.4)",
-              "rgba(28, 25, 25, 1)",
+              "rgba(28, 25, 25, 8)",
             ]}
             style={{
               width: "100%",
@@ -28,7 +28,7 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
             }}
           >
             <ImageBackground //wrapping the main entry screen with this <ImageBackground> component
-              source={require("../../assets/images/icons/maven_main.png")}
+              source={require("../../assets/images/drawerImage/maven_main.png")}
               resizeMode="cover" //similar to web, "cover", "contain", etc.
               style={{
                 width: "100%",

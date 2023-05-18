@@ -20,6 +20,7 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawer {...props} />}
+      // backBehavior={"none"}
       screenOptions={{
         headerTintColor: Colors.text_primary,
         headerTitleAlign: "center",

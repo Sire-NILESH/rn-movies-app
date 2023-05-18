@@ -78,6 +78,7 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
         ListFooterComponent={renderLoader}
         onEndReachedThreshold={0.9}
         onEndReached={loadMoreItem}
+        initialNumToRender={24}
       />
     </View>
   );

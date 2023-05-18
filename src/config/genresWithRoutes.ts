@@ -62,6 +62,7 @@ export const tvPlaylist = [
     buildTvPlaylist("HULU Shows", "HULU"),
     buildTvPlaylist("Amazon Prime Shows", "Amazon Prime"),
     buildTvPlaylist("Disney+ Shows", "Disney+"),
+    buildTvPlaylist("The CW", "The CW"),
     buildTvPlaylist("Apple TV+ Shows", "Apple TV+"),
     buildTvPlaylist("Adult Swim Shows", "Adult Swim"),
     buildTvPlaylist("AMC", "AMC"),

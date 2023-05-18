@@ -44,6 +44,7 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
         keyExtractor={(producitonCompany) => String(producitonCompany.id)}
         renderItem={(itemObj) => {
           const c = itemObj.item;
+          // console.log(c.name, c.id);
           return (
             <View className="space-y-3 justify-start mr-5 rounded-md overflow-hidden">
               <Pressable

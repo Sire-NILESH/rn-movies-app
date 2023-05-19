@@ -8,7 +8,7 @@ import Banner from "../Banner";
 import Row from "../Row";
 import NothingToShow from "../NothingToShow";
 import Loader from "../ui/Loader";
-import { memo, useMemo } from "react";
+import React, { memo, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { sendUrlObjApiRequestV2 } from "../../utils/requests";
 import {
@@ -32,12 +32,17 @@ function getPlaylistsToFetch(screenType: ScreenTypes) {
     case "movie":
       playlistsToFetch = movieScreenPlaylists;
       break;
+    case "homescreen":
+      playlistsToFetch = homeScreenPlaylists;
+      break;
     default:
       playlistsToFetch = homeScreenPlaylists;
   }
 
   return playlistsToFetch;
 }
+
+const staleTime = 1000 * 60 * 60 * 24; //24hours
 
 const ScreenBuilder: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
   const playlistsToFetch = useMemo(() => {
@@ -50,9 +55,10 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
     data: screenProps,
     error: errorLoadingProps,
   } = useQuery({
-    queryKey: ["homeScreens", screenType, playlistsToFetch],
-    queryFn: () => sendUrlObjApiRequestV2([...playlistsToFetch], {}),
-    staleTime: 1000 * 60 * 60 * 24, //24hours
+    queryKey: ["homeScreens", screenType],
+    queryFn: async () => sendUrlObjApiRequestV2(playlistsToFetch),
+    staleTime: staleTime, //24hours playlistsToFetch.map((p) => p)
+    // cacheTime: 1000 * 60 * 60 * 24, // 24 hours
   });
 
   return (

@@ -62,6 +62,7 @@ export const drawerRoutes: IDrawerRouteProps[] = [
       },
     },
   },
+
   {
     name: "Watchlist",
     component: WatchlistScreen,

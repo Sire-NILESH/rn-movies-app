@@ -13,6 +13,7 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
+import { useState } from "react";
 
 // Keep the splash screen visible while we fetch resources
 // SplashScreen.preventAutoHideAsync();
@@ -20,14 +21,21 @@ import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client
 export default function App() {
   // DB setup hook
   const { dbInitialized, dbInitError, dbInitLoading } = useDBInitialize();
-
-  // Create a client
-  const queryClient = new QueryClient({
-    defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
-  });
+  const [queryCacheHyderated, setQueryCacheHyderated] = useState(false);
 
   const asyncStoragePersister = createAsyncStoragePersister({
     storage: AsyncStorage,
+  });
+
+  // Create a client
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 1000 * 60 * 60 * 24,
+        // cacheTime: 1000 * 60 * 60 * 24,
+        refetchOnMount: false,
+      },
+    },
   });
 
   return (
@@ -41,6 +49,9 @@ export default function App() {
             <PersistQueryClientProvider
               client={queryClient}
               persistOptions={{ persister: asyncStoragePersister }}
+              onSuccess={() => {
+                setQueryCacheHyderated(true);
+              }}
             >
               <SafeAreaView className="flex-1 bg-tertiary">
                 <Loader loading={dbInitLoading} />
@@ -53,7 +64,7 @@ export default function App() {
                   />
                 ) : null}
 
-                {dbInitialized ? (
+                {dbInitialized && queryCacheHyderated ? (
                   // RootNavigation
                   <RootNavigator />
                 ) : null}

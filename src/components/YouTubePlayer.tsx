@@ -11,6 +11,8 @@ interface IProps {
   loading: boolean;
 }
 
+type YTState = "playing" | "ended" | "paused" | "buffering" | "unstarted";
+
 const YouTubePlayer: React.FC<IProps> = (props) => {
   const [playing, setPlaying] = useState(false);
 
@@ -20,11 +22,11 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
     );
   }, []);
 
-  const onStateChanged = useCallback((state: any) => {
+  const onStateChanged = useCallback((state: string) => {
     // console.log(state);
-    if (state === "ended") {
-      setPlaying(false);
-    }
+    // if (state === "ended") {
+    //   setPlaying(false);
+    // }
     if (state === "playing") {
       setPlaying(true);
     }

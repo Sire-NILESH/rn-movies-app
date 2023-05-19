@@ -17,7 +17,7 @@ export interface IGenre {
   name: string;
 }
 
-export type ScreenTypes = "tv" | "movie" | "home";
+export type ScreenTypes = "tv" | "movie" | "homescreen";
 
 export interface IGenresToShowHomeScreen {
   id: number;

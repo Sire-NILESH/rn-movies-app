@@ -41,16 +41,14 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             "This product uses the TMDB API but is not endorsed or certified by TMDB in any way whatsoever."
           }
         >
-          <CardRow rowTitle="TMDB api">
+          <CardRow rowTitle="TMDB website">
             <CustomButton
               height={50}
               width={50}
               radius={100}
               color={Colors.accentLighter}
               method={() => {
-                Linking.openURL(
-                  "https://developers.themoviedb.org/3/getting-started/introduction"
-                );
+                Linking.openURL("https://www.themoviedb.org/");
               }}
             >
               <View className="flex-row space-x-2 items-center">
@@ -73,16 +71,14 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             "This product uses the TMDB API that provides watch providers for contents from JustWatch but is not endorsed or certified by TMDB or JustWatch in any way whatsoever."
           }
         >
-          <CardRow rowTitle="TMDB api">
+          <CardRow rowTitle="JustWatch website">
             <CustomButton
               height={50}
               width={50}
               radius={100}
               color={Colors.accentLighter}
               method={() => {
-                Linking.openURL(
-                  "https://developers.themoviedb.org/3/movies/get-movie-watch-providers"
-                );
+                Linking.openURL("https://www.justwatch.com/");
               }}
             >
               <View className="flex-row space-x-2 items-center">

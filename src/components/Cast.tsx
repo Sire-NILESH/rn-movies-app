@@ -228,7 +228,7 @@ function RenderProfile({
   }
 
   return (
-    <View className="h-full w-full rounded-full overflow-hidden border-2 border-stone-800/40">
+    <View className="h-full w-full rounded-2xl overflow-hidden border-2 border-stone-800/40">
       {imgPath && !fallbackImage ? (
         <Image
           source={{ uri: imgPath }}

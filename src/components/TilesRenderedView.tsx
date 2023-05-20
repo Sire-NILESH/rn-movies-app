@@ -2,7 +2,7 @@ import { View, FlatList, ActivityIndicator } from "react-native";
 import ThumbnailMemoised from "./ThumbnailMemoised";
 import { getDeviceDimensions } from "../utils/helpers/helper";
 import { useNavigation } from "@react-navigation/native";
-import { memo, useCallback, useMemo } from "react";
+import { memo, useMemo } from "react";
 import { IImgItemSettingsDB } from "../../types/typings";
 
 interface IProps {
@@ -49,7 +49,6 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
   return (
     <View className="flex-1 relative">
       <FlatList
-        bounces
         data={props.medias}
         ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
         contentContainerStyle={{
@@ -78,7 +77,7 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
         ListFooterComponent={renderLoader}
         onEndReachedThreshold={0.9}
         onEndReached={loadMoreItem}
-        initialNumToRender={24}
+        initialNumToRender={20}
       />
     </View>
   );

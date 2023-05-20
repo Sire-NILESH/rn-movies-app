@@ -1,6 +1,7 @@
 import { IUrlObject } from "../../types/typings";
 import {
   buildAiringTodayPlaylist,
+  buildDiscoverPlaylist,
   buildGenrePlaylist,
   buildLanguagePlaylist,
   buildMoviePlaylist,
@@ -55,6 +56,7 @@ export const tvPlaylist = [
     buildTrendingPlaylist("Trending", "tv"),
     buildPopularPlaylist("Popular", "tv"),
     buildTopRatedPlaylist("Top Rated", "tv"),
+    buildDiscoverPlaylist("Discover", "tv"),
     buildAiringTodayPlaylist("Airing Today", "tv"),
     buildTvPlaylist("Netflix Shows", "Netflix"),
     buildTvPlaylist("HBO Shows", "HBO"),
@@ -100,6 +102,7 @@ export const moviePlaylist = [
     buildTrendingPlaylist("Trending", "movie"),
     buildPopularPlaylist("Popular", "movie"),
     buildTopRatedPlaylist("Top Rated", "movie"),
+    buildDiscoverPlaylist("Discover", "movie"),
     // buildAiringTodayPlaylist("Airing Today", "movie"),
     buildNowPlayingPlaylist("Playing in Theatres", "movie"),
     buildUpcomingPlaylist("New Releases", "movie"),

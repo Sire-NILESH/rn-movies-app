@@ -66,14 +66,6 @@ export const getHomeScreenProps = async (
       else if (genre.id < 1) {
         let URL;
         if (genre.mediaType === "movie") {
-          console.log(
-            "reached here",
-            (URL =
-              // @ts-ignore
-              customGenreIdToFetcher.customMovieGenresToFetcherURL[
-                String(genre.id)
-              ])
-          );
           URL =
             // @ts-ignore
             customGenreIdToFetcher.customMovieGenresToFetcherURL[
@@ -499,6 +491,8 @@ export const fetchTrailers = async (mediaId: number, mediaType: MediaTypes) => {
       if (videosData.length > 0) {
         videosData.filter((v: Trailer, i: number) => v.site === "YouTube");
         return [...videosData];
+      } else {
+        return [];
       }
     }
   } catch (err) {

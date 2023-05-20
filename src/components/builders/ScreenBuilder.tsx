@@ -55,7 +55,7 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
     data: screenProps,
     error: errorLoadingProps,
   } = useQuery({
-    queryKey: ["homeScreens", screenType],
+    queryKey: ["homeScreens", screenType, playlistsToFetch.map((p) => p)],
     queryFn: async () => sendUrlObjApiRequestV2(playlistsToFetch),
     staleTime: staleTime, //24hours playlistsToFetch.map((p) => p)
     // cacheTime: 1000 * 60 * 60 * 24, // 24 hours

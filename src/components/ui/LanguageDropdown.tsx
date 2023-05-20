@@ -32,9 +32,16 @@ const LanguageDropdown: React.FC<IProps> = (props) => {
       currentSelected={
         props.saveMode === "applicationWide" ? defaultLanguage : localLanguage
       }
-      listData={Object.values(by639_1).sort((a, b) =>
-        a.name > b.name ? 1 : -1
-      )}
+      listData={[
+        {
+          name: "All Languages",
+          nativeName: "All Languages",
+          iso639_1: "",
+          iso639_2T: "",
+          iso639_2B: "",
+        },
+        ...Object.values(by639_1).sort((a, b) => (a.name > b.name ? 1 : -1)),
+      ]}
       setSelected={
         props.saveMode === "applicationWide"
           ? setDefaultLanguageHandler

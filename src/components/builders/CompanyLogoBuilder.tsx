@@ -92,12 +92,20 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
                     companyName={c.name}
                   />
                 </View>
+
                 <Text
+                  className="text-text_tertiary text-xs font-semibold text-center mt-2 w-[140]"
+                  numberOfLines={2}
+                >
+                  {c.name}
+                </Text>
+
+                {/* <Text
                   key={c.id}
                   className="text-text_dark text-xs mt-1 text-center w-[140]"
                 >
                   {c.name}
-                </Text>
+                </Text> */}
               </Pressable>
             </View>
           );

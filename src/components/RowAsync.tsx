@@ -29,7 +29,7 @@ interface Props {
 const windowWidth = getDeviceDimensions("window").width;
 
 const rowItemWidth = windowWidth * 0.31 + 4;
-const rowItemHeight = ((windowWidth * 0.31 + 4) * 3) / 2;
+const rowItemHeight = 2 / ((windowWidth * 0.31 + 4) * 3);
 
 function RowAsync({ title, playlist, thumbnailQualitySettings }: Props) {
   const {

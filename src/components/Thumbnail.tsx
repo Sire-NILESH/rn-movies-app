@@ -81,7 +81,7 @@ function Thumbnail({
 
   return (
     <View
-      className="relative overflow-hidden bg-tertiary"
+      className="relative overflow-hidden bg-neutral-900"
       style={containerStyles.containerView}
     >
       <Pressable

@@ -354,6 +354,20 @@ export function buildTvPlaylist(
     },
   };
 }
+
+export function buildDiscoverPlaylist(
+  name: string,
+  mediaType: MediaTypes
+): IUrlObject {
+  return {
+    name: name,
+    url: `/discover/${mediaType}`,
+    queryParams: {
+      language: "en-US",
+    },
+  };
+}
+
 export function buildMoviePlaylist(
   name: string,
   productionCompanyId: keyof IProductionComapnyIds

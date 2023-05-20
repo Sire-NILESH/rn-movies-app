@@ -25,7 +25,7 @@ interface Props {
 // So every thumbnail wont have to calculate them separately.
 const windowWidth = getDeviceDimensions("window").width;
 
-const rowItemWidth = windowWidth * 31 + 8;
+const rowItemWidth = windowWidth * 0.31 + 4;
 
 function Row({ title, medias, playlist, thumbnailQualitySettings }: Props) {
   return (
@@ -89,7 +89,7 @@ function renderFlatList(
             return {
               index: index,
               length: rowItemWidth,
-              offset: rowItemWidth + index,
+              offset: rowItemWidth * index,
             };
           }}
           renderItem={(media) => (
@@ -120,14 +120,13 @@ function renderFlatList(
             playlist,
             navigateTo
           )}
-          bounces
           className="px-2 py-1"
           data={medias}
           getItemLayout={(_data, index) => {
             return {
               index: index,
               length: rowItemWidth,
-              offset: rowItemWidth + index,
+              offset: rowItemWidth * index,
             };
           }}
           renderItem={(media) => (

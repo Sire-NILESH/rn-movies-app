@@ -14,7 +14,7 @@ interface IProps {
 type YTState = "playing" | "ended" | "paused" | "buffering" | "unstarted";
 
 const YouTubePlayer: React.FC<IProps> = (props) => {
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(true);
 
   const changeScreenOrientation = useCallback(async () => {
     await ScreenOrientation.lockAsync(
@@ -22,27 +22,27 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
     );
   }, []);
 
-  const onStateChanged = useCallback((state: string) => {
-    // console.log(state);
-    // if (state === "ended") {
-    //   setPlaying(false);
-    // }
-    if (state === "playing") {
-      setPlaying(true);
-    }
-    // if (state === "paused") {
-    //   setPlaying(false);
-    // }
-    // if (state === "unstarted") {
-    //   setPlaying(true);
-    // }
-    // if (state === "buffering") {
-    //   setPlaying(true);
-    // }
-    // else {
-    //   setPlaying(true);
-    // }
-  }, []);
+  // const onStateChanged = useCallback((state: string) => {
+  //   // console.log(state);
+  //   // if (state === "ended") {
+  //   //   setPlaying(false);
+  //   // }
+  //   if (state === "playing") {
+  //     setPlaying(true);
+  //   }
+  //   // if (state === "paused") {
+  //   //   setPlaying(false);
+  //   // }
+  //   // if (state === "unstarted") {
+  //   //   setPlaying(true);
+  //   // }
+  //   // if (state === "buffering") {
+  //   //   setPlaying(true);
+  //   // }
+  //   // else {
+  //   //   setPlaying(true);
+  //   // }
+  // }, []);
 
   return (
     <View
@@ -62,7 +62,7 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
                 width={dimensionsForScreen.width}
                 play={playing}
                 videoId={props.video.key}
-                onChangeState={onStateChanged}
+                // onChangeState={onStateChanged}
                 onFullScreenChange={(status) => {
                   if (status === true) changeScreenOrientation();
                 }}

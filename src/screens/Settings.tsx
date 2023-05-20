@@ -14,7 +14,7 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   return (
     <View className=" bg-secondary flex-1">
       <ScrollView
-        className="bg-secondary px-3 space-y-2 pt-2"
+        className="bg-secondary px-2 space-y-2 pt-2"
         contentContainerStyle={{
           alignItems: "center",
           justifyContent: "flex-start",

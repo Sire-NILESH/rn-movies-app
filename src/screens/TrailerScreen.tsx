@@ -24,6 +24,8 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     isLoading: loading,
     data: videos,
     isError: error,
+    error: err,
+    status,
   } = useQuery({
     queryKey: ["trailer", mediaType, mediaId],
     queryFn: () => fetchTrailers(mediaId, mediaType),
@@ -53,7 +55,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       <Loader loading={loading} />
 
       {/* if error show nothing*/}
-      {error && !videos && (
+      {(err as Error) && (
         <NothingToShow
           title={"Something went wrong while loading videos"}
           problemType="error"
@@ -61,12 +63,12 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       )}
 
       {/* When no videos available for that media */}
-      {videos && videos?.length == 0 && (
+      {videos && videos?.length === 0 && (
         <NothingToShow title="No Videos available" problemType="nothing" />
       )}
 
       {/* When some video is available, show the YT player */}
-      {videos && videos.length > 0 && (
+      {!error && videos && videos.length > 0 && status === "success" && (
         <View className="justify-start">
           <YouTubePlayer video={selectedVideo} loading={loading} />
         </View>
@@ -94,7 +96,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       {videos && videos.length > 0 && !error ? (
         <FlatList
           data={videos}
-          initialNumToRender={3}
+          initialNumToRender={5}
           className="pt-4 px-2"
           style={{
             backgroundColor: Colors.primary,

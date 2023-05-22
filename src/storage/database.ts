@@ -8,6 +8,7 @@ import {
   TCollectionType,
   TDbCollectionType,
 } from "../../types/typings";
+import { defaultImgQualitiesconfig } from "../config/imgQualityConfig";
 
 export type TValidTableNames =
   | "medias"
@@ -178,6 +179,7 @@ export async function initDB() {
           'banner', 
           'companies')),
         quality TEXT NOT NULL CHECK (quality IN (
+          'Default', 
           'Low', 
           'Medium', 
           'High', 
@@ -252,17 +254,17 @@ export async function initDB() {
            (?, ?, ?);`,
           arguments: [
             "thumbnail",
-            "Medium",
-            "300",
+            "Default",
+            defaultImgQualitiesconfig["thumbnail"].value,
             "watchProviders",
-            "Medium",
-            "300",
+            "Default",
+            defaultImgQualitiesconfig["watchProviders"].value,
             "banner",
-            "High",
-            "400",
+            "Default",
+            defaultImgQualitiesconfig["banner"].value,
             "companies",
-            "Low",
-            "200",
+            "Default",
+            defaultImgQualitiesconfig["companies"].value,
           ],
           successMessage: "...adding initial data to image_qualities table",
           rowsAffectedSuccess:

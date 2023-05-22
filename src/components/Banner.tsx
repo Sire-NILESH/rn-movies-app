@@ -16,6 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import WatchlistButton from "./ui/WatchlistButton";
 import { supportedLangs } from "../utils/helpers/langs";
+import { by639_1 } from "iso-language-codes";
 
 interface Props {
   mediaList: MovieMedia[] | TvMedia[];
@@ -158,9 +159,9 @@ function Banner({ mediaList }: Props) {
                 />
                 <Text className="text-text_primary font-semibold">
                   {/*  @ts-ignore */}
-                  {supportedLangs[media.original_language]?.english_name
+                  {by639_1[media.original_language]?.name
                     ? // @ts-ignore
-                      supportedLangs[media.original_language]?.english_name
+                      by639_1[media.original_language]?.name
                     : media.original_language}
                 </Text>
               </View>

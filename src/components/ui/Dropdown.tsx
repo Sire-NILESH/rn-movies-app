@@ -5,7 +5,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import {
   IDropdownYearsObj,
   IImageQuality,
-  ISOLang,
   ISupportedLang,
 } from "../../../types/typings";
 import { Colors } from "../../utils/Colors";
@@ -34,13 +33,21 @@ export default function Dropdown<T extends TSupportedTypes>({
     <>
       <SelectDropdown
         data={listData}
-        renderDropdownIcon={(s) => (
-          <MaterialIcons
-            name="arrow-drop-down"
-            size={24}
-            color={Colors.text_secondary}
-          />
-        )}
+        renderDropdownIcon={(isOpened) => {
+          return isOpened ? (
+            <MaterialIcons
+              name="arrow-drop-up"
+              size={24}
+              color={Colors.text_secondary}
+            />
+          ) : (
+            <MaterialIcons
+              name="arrow-drop-down"
+              size={24}
+              color={Colors.text_secondary}
+            />
+          );
+        }}
         onSelect={(selectedItem: T, _index) => {
           setSelected(selectedItem);
         }}
@@ -52,7 +59,7 @@ export default function Dropdown<T extends TSupportedTypes>({
           borderBottomColor: "red",
         }}
         buttonTextStyle={{ color: Colors.text_primary, fontSize: 14 }}
-        rowStyle={{ borderBottomColor: Colors.accentLighter }}
+        rowStyle={{ borderBottomColor: Colors.stone[800] }}
         rowTextStyle={{ color: Colors.text_primary, fontSize: 14 }}
         dropdownOverlayColor={"transparent"}
         dropdownStyle={{

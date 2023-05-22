@@ -396,7 +396,7 @@ export interface IDropdownYearsObj {
   value: string;
 }
 
-export type TImgQualities = "Low" | "Medium" | "High" | "Very high";
+export type TImgQualities = "Default" | "Low" | "Medium" | "High" | "Very high";
 
 export type TImgQualityValues = "200" | "300" | "400" | "500";
 

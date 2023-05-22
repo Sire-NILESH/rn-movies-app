@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Dropdown from "./Dropdown";
-
 import {
   IImageItemSettingsValue,
   IImageQuality,
@@ -8,19 +7,11 @@ import {
 } from "../../../types/typings";
 import { showErrorAlert } from "../../utils/helpers/helper";
 import useImageItemSetting from "../../hooks/useImageItemSetting";
+import { getAllImageConfigForImageType } from "../../config/imgQualityConfig";
 
 interface IProps {
   imageItem: ImageItemTypes;
-  //   saveMode: "local" | "applicationWide";
-  //   localYearSetter?: (year: number) => void;
 }
-
-const imgQualities: IImageQuality[] = [
-  { quality: "Very high", value: "500" },
-  { quality: "High", value: "400" },
-  { quality: "Medium", value: "300" },
-  { quality: "Low", value: "200" },
-];
 
 /**
  * A React component that displays a dropdown for selecting Image Qualities.
@@ -28,9 +19,6 @@ const imgQualities: IImageQuality[] = [
  * @returns A Dropdown instance for selecting Image qualities.
  */
 const ImageQualityDropdown: React.FC<IProps> = (props) => {
-  // const { setDefaultImgQualityHandler, defaultImgItemQualities } =
-  //   useDefaultImageQualityHooks();
-
   const { imgItemsSetting, errorImgSettings, setImgItemQualitySettings } =
     useImageItemSetting(props.imageItem);
 
@@ -70,7 +58,7 @@ const ImageQualityDropdown: React.FC<IProps> = (props) => {
           borderRadius="full"
           currentSelected={currentSelectedImageQuality}
           // currentSelected={defaultImgItemQualities[props.imageItem].imgQuality}
-          listData={imgQualities}
+          listData={getAllImageConfigForImageType(props.imageItem)}
           setSelected={setDefaultImgQualityOfDB}
         />
       ) : null}

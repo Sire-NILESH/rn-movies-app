@@ -20,13 +20,21 @@ const CountriesDropdown: React.FC<IProps> = ({
       <SelectDropdown
         data={countries}
         //   search={true}
-        renderDropdownIcon={(s) => (
-          <MaterialIcons
-            name="arrow-drop-down"
-            size={24}
-            color={Colors.text_secondary}
-          />
-        )}
+        renderDropdownIcon={(isOpened) => {
+          return isOpened ? (
+            <MaterialIcons
+              name="arrow-drop-up"
+              size={24}
+              color={Colors.text_secondary}
+            />
+          ) : (
+            <MaterialIcons
+              name="arrow-drop-down"
+              size={24}
+              color={Colors.text_secondary}
+            />
+          );
+        }}
         onSelect={(selectedCountry: ICountry, index) => {
           setCountryHandler(selectedCountry);
         }}

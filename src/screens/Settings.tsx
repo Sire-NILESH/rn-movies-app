@@ -9,6 +9,7 @@ import DefaultYearSettings from "../components/settings/DefaultYearSettings";
 import DefaultLangSettings from "../components/settings/DefaultLangSettings";
 import AdultFilterSettings from "../components/settings/AdultFilterSettings";
 import AboutSettings from "../components/settings/AboutSettings";
+// import DevOnlySettings from "../components/settings/DevOnlySettings";
 
 const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   return (
@@ -55,17 +56,16 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
           <DeleteSettings />
         </View>
 
-        {/* <View>
-          DEVELOPMENT ONLY SETTINGS
-          <DevOnlySettings />
-        </View> */}
-
         <View>
           {/* ABOUT */}
           <AboutSettings />
         </View>
 
-        <View className="h-24" />
+        {/* <View>
+          DEVELOPMENT ONLY SETTINGS
+          <DevOnlySettings />
+        </View>
+        <View className="h-24" /> */}
       </ScrollView>
     </View>
   );

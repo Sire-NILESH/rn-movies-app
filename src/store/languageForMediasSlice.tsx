@@ -1,13 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { ISupportedLang } from "../../types/typings";
+import { defaultLang } from "../config/defaultLanguage";
 
 // Define the initial state using that type
-const initialState: ISupportedLang = {
-  name: "All Languages",
-  english_name: "All Languages",
-  iso_639_1: "",
-};
+const initialState: ISupportedLang = defaultLang;
 
 // Create the Slice
 const defaultLanguageForMediasSlice = createSlice({

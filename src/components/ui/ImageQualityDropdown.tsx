@@ -57,7 +57,6 @@ const ImageQualityDropdown: React.FC<IProps> = (props) => {
         <Dropdown
           borderRadius="full"
           currentSelected={currentSelectedImageQuality}
-          // currentSelected={defaultImgItemQualities[props.imageItem].imgQuality}
           listData={getAllImageConfigForImageType(props.imageItem)}
           setSelected={setDefaultImgQualityOfDB}
         />

@@ -11,6 +11,7 @@ import CountriesDropdown from "./ui/CountriesDropdown";
 import ImageCached from "./ui/ImageCached";
 import { useDefaultRegionHooks } from "../hooks/reduxHooks";
 import { useNavigation } from "@react-navigation/native";
+import Dropdown from "./ui/Dropdown";
 
 interface IProps {
   mediaId: number;

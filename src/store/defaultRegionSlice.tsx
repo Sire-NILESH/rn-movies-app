@@ -1,12 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { ICountry } from "../../types/typings";
+import { defaultRegionConfig } from "../config/defaultRegion";
 
 // Define the initial state using that type
-const initialState: ICountry = {
-  name: "United States",
-  code: "US",
-};
+const initialState: ICountry = defaultRegionConfig;
 
 // Create the Slice
 const defaultRegionSlice = createSlice({

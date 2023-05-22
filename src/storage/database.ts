@@ -14,7 +14,7 @@ export type TValidTableNames =
   | "medias"
   | "collection"
   | "query"
-  | "current_language"
+  // | "current_language"
   | "current_region"
   | "image_qualities";
 
@@ -142,21 +142,21 @@ export async function initDB() {
       errorMessage: "Error creating collection table",
     },
     // CURRENT LANGUAGE TABLE
-    {
-      query: `CREATE TABLE IF NOT EXISTS current_language (
-        name TEXT NOT NULL,
-        nativeName TEXT NOT NULL,
-        iso639_1 TEXT NOT NULL ,
-        iso639_2T TEXT NOT NULL ,
-        iso639_2B TEXT NOT NULL ,
-        PRIMARY KEY (iso639_1)
-      );`,
-      arguments: [],
-      successMessage: "...checked current_language table STATUS: FINE",
-      rowsAffectedSuccess:
-        "...current_language table was CREATED into the database ✨",
-      errorMessage: "Error creating current_language table",
-    },
+    // {
+    //   query: `CREATE TABLE IF NOT EXISTS current_language (
+    //     name TEXT NOT NULL,
+    //     nativeName TEXT NOT NULL,
+    //     iso639_1 TEXT NOT NULL ,
+    //     iso639_2T TEXT NOT NULL ,
+    //     iso639_2B TEXT NOT NULL ,
+    //     PRIMARY KEY (iso639_1)
+    //   );`,
+    //   arguments: [],
+    //   successMessage: "...checked current_language table STATUS: FINE",
+    //   rowsAffectedSuccess:
+    //     "...current_language table was CREATED into the database ✨",
+    //   errorMessage: "Error creating current_language table",
+    // },
     // CURRENT REGION TABLE
     {
       query: `CREATE TABLE IF NOT EXISTS current_region (
@@ -198,24 +198,24 @@ export async function initDB() {
       errorMessage: "Error creating image_qualities table",
     },
     // INSERT INITIAL DATA TO CURRENT LANGUAGE TABLE
-    {
-      query: `INSERT INTO current_language (
-        name, 
-        nativeName, 
-        iso639_1, 
-        iso639_2T, 
-        iso639_2B
-        ) SELECT ?, ?, ?, ?, ?
-        WHERE NOT EXISTS (
-          SELECT *
-          FROM current_language
-      );`,
-      arguments: ["English", "English", "en", "eng", "eng"],
-      successMessage: "...checked current_language table STATUS: FINE",
-      rowsAffectedSuccess:
-        "...current_language table's initial data was added into the table since it was found empty  ✨",
-      errorMessage: "Error add initial data to current_language table",
-    },
+    // {
+    //   query: `INSERT INTO current_language (
+    //     name,
+    //     nativeName,
+    //     iso639_1,
+    //     iso639_2T,
+    //     iso639_2B
+    //     ) SELECT ?, ?, ?, ?, ?
+    //     WHERE NOT EXISTS (
+    //       SELECT *
+    //       FROM current_language
+    //   );`,
+    //   arguments: ["English", "English", "en", "eng", "eng"],
+    //   successMessage: "...checked current_language table STATUS: FINE",
+    //   rowsAffectedSuccess:
+    //     "...current_language table's initial data was added into the table since it was found empty  ✨",
+    //   errorMessage: "Error add initial data to current_language table",
+    // },
     // INSERT INITIAL DATA TO CURRENT REGION TABLE
     {
       query: `INSERT INTO current_region (
@@ -230,7 +230,7 @@ export async function initDB() {
       successMessage: "...checked current_region table STATUS: FINE",
       rowsAffectedSuccess:
         "...current_region table's initial data was added into the table since it was found empty",
-      errorMessage: "Error add initial data to current_language table",
+      errorMessage: "Error add initial data to current_region table",
     },
     // INSERT INITIAL DATA TO IMG ITEM QUALITY SETTINGS TABLE
     {
@@ -298,7 +298,7 @@ export async function addRegionV2(country: ICountry) {
       successMessage:
         "...attempt to delete prior data from current_region table",
       rowsAffectedSuccess: "...deleted prior data from current_region table",
-      errorMessage: "Error deleting prior data from current_language table",
+      errorMessage: "Error deleting prior data from current_region table",
     },
 
     // INSERT REGION DATA TO CURRENT REGION TABLE
@@ -799,7 +799,7 @@ export async function deleteAllTables() {
     const tableNames = [
       "collection",
       "medias",
-      "current_language",
+      // "current_language",
       "current_region",
       "mediaCollection",
       "image_qualities",

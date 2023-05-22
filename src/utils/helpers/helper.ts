@@ -216,6 +216,14 @@ export function isIImageQuality(obj: Object): obj is IImageQuality {
   );
 }
 
+export function isICountry(obj: Object): obj is ICountry {
+  return (
+    obj !== null &&
+    (obj as ICountry).name !== undefined &&
+    (obj as ICountry).code !== undefined
+  );
+}
+
 export function showErrorAlert(title?: string, message?: string) {
   Alert.alert(
     "Error!",

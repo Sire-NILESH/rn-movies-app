@@ -1,12 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { IDropdownYearsObj } from "../../types/typings";
+import { defaultYearConfig } from "../config/defaultYear";
 
 // Define the initial state using that type
-const initialState: IDropdownYearsObj = {
-  year: 0,
-  value: "All years",
-};
+const initialState: IDropdownYearsObj = defaultYearConfig;
 // Create the Slice
 const defaultYearFilterForMediasSlice = createSlice({
   name: "defaultYearFIlterForMedias",

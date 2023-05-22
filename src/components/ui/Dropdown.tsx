@@ -1,15 +1,24 @@
 import React from "react";
 import SelectDropdown from "react-native-select-dropdown";
-import { isIImageQuality, isSupportedLang } from "../../utils/helpers/helper";
+import {
+  isICountry,
+  isIImageQuality,
+  isSupportedLang,
+} from "../../utils/helpers/helper";
 import { MaterialIcons } from "@expo/vector-icons";
 import {
+  ICountry,
   IDropdownYearsObj,
   IImageQuality,
   ISupportedLang,
 } from "../../../types/typings";
 import { Colors } from "../../utils/Colors";
 
-type TSupportedTypes = ISupportedLang | IDropdownYearsObj | IImageQuality;
+type TSupportedTypes =
+  | ISupportedLang
+  | IDropdownYearsObj
+  | IImageQuality
+  | ICountry;
 
 interface IProps<T extends TSupportedTypes> {
   listData: T[];
@@ -71,6 +80,8 @@ export default function Dropdown<T extends TSupportedTypes>({
             ? currentSelected.english_name
             : isIImageQuality(currentSelected)
             ? currentSelected.quality
+            : isICountry(currentSelected)
+            ? currentSelected.name
             : currentSelected.value
         }
         buttonTextAfterSelection={(selectedItem: T, index) => {
@@ -80,6 +91,8 @@ export default function Dropdown<T extends TSupportedTypes>({
             ? selectedItem.english_name
             : isIImageQuality(selectedItem)
             ? selectedItem.quality
+            : isICountry(selectedItem)
+            ? selectedItem.name
             : selectedItem.value;
         }}
         rowTextForSelection={(item: T, index) => {
@@ -89,6 +102,8 @@ export default function Dropdown<T extends TSupportedTypes>({
             ? item.english_name
             : isIImageQuality(item)
             ? item.quality
+            : isICountry(item)
+            ? item.name
             : item.value;
         }}
       />

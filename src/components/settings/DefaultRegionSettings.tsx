@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { ICountry } from "../../../types/typings";
-import CountriesDropdown from "../ui/CountriesDropdown";
 import { useDefaultRegionHooks } from "../../hooks/reduxHooks";
 import SettingsCardWrapper from "./SettingsCardWrapper";
 import CardRow from "./CardRow";
+import CountriesDropdown from "../ui/CountriesDropdown";
 
 const DefaultRegionSettings = () => {
   const { setDefaultRegionHandler, defaultRegion } = useDefaultRegionHooks();

@@ -179,12 +179,16 @@ function renderFlatList(
       renderItem={(mediaObj) => {
         return (
           <View
-            className="w-full justify-center overflow-clip"
-            style={
+            className={`w-full justify-center overflow-clip ${
               mediaObj.index % 2 === 0
-                ? { backgroundColor: Colors.secondary }
-                : { backgroundColor: Colors.tertiary }
-            }
+                ? "bg-neutral-900/40"
+                : "bg-neutral-800/50"
+            }`}
+            // style={
+            //   mediaObj.index % 2 === 0
+            //     ? { backgroundColor: Colors.secondary }
+            //     : { backgroundColor: Colors.tertiary }
+            // }
           >
             <Pressable
               className="flex-1 flex-row items-center space-x-2 px-4 py-3"

@@ -21,6 +21,7 @@
       "bundleIdentifier": "com.sire.maven"
     },
     "android": {
+      "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/android.png",
         "backgroundColor": "#000"

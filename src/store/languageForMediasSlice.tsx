@@ -1,14 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { ISOLang } from "../../types/typings";
+import { ISupportedLang } from "../../types/typings";
 
 // Define the initial state using that type
-const initialState: ISOLang = {
-  name: "English",
-  nativeName: "English",
-  iso639_1: "en",
-  iso639_2T: "eng",
-  iso639_2B: "eng",
+const initialState: ISupportedLang = {
+  name: "All Languages",
+  english_name: "All Languages",
+  iso_639_1: "",
 };
 
 // Create the Slice
@@ -16,13 +14,14 @@ const defaultLanguageForMediasSlice = createSlice({
   name: "defaultLanguageForMedias",
   initialState: initialState,
   reducers: {
-    setDefaultLanguageForMedias: (state, action: PayloadAction<ISOLang>) => {
+    setDefaultLanguageForMedias: (
+      state,
+      action: PayloadAction<ISupportedLang>
+    ) => {
       //   set a default language of the type 'ISOLang' directly on the state object
       state.name = action.payload.name;
-      state.nativeName = action.payload.nativeName;
-      state.iso639_1 = action.payload.iso639_1;
-      state.iso639_2T = action.payload.iso639_2T;
-      state.iso639_2B = action.payload.iso639_2T;
+      state.iso_639_1 = action.payload.iso_639_1;
+      state.english_name = action.payload.english_name;
     },
   },
 });

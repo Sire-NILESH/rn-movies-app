@@ -17,7 +17,7 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
   const navigation = useNavigation();
 
   const loadMoreItem = () => {
-    // Increase the page number by one only if the load new medias is enabled
+    // Increase the page number by 1 only if the load new medias is enabled
     if (!props.blockNewLoads && !props.loadingNewMedias)
       props.setPageNumber((prev) => prev + 1);
   };

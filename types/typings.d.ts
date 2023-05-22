@@ -425,3 +425,10 @@ export type TAllImgSettingsDB = IImgItemSettingsDB[];
 export type IImageItemQualitySetting = {
   [key in ImageItemTypes]: IImageItemSettingsValue;
 };
+
+export interface ISupportedLang {
+  iso_639_1: string;
+  english_name: string;
+  name: string;
+}
+[];

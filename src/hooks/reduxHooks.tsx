@@ -1,7 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
 import type { RootState, AppDispatch } from "../store/store";
-import { ICountry, IDropdownYearsObj, ISOLang } from "../../types/typings";
+import {
+  ICountry,
+  IDropdownYearsObj,
+  ISupportedLang,
+} from "../../types/typings";
 
 import { setDefaultRegion } from "../store/defaultRegionSlice";
 import { setDefaultLanguageForMedias } from "../store/languageForMediasSlice";
@@ -34,7 +38,7 @@ export const useDefaultLanguageHooks = () => {
   );
   const dispatch = useAppDispatch();
 
-  const setDefaultLanguageHandler = (language: ISOLang) => {
+  const setDefaultLanguageHandler = (language: ISupportedLang) => {
     dispatch(setDefaultLanguageForMedias(language));
   };
 

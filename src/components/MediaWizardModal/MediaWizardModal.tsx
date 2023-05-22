@@ -33,7 +33,7 @@ const MediaWizardModal: React.FC<IProps> = ({
   const [currentYear, setCurrentYear] = useState<number>(defaultYear.year);
   const [currentView, setCurrentView] = useState<TViews>("featured_playlists");
   const [currentLang, setCurrentLang] = useState<string>(
-    defaultLanguage.iso639_1
+    defaultLanguage.iso_639_1
   );
 
   const setCurrentYearHandler = (year: number) => {

@@ -2,7 +2,6 @@ import React from "react";
 import { useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { View } from "react-native";
-import AboutSettings from "../components/settings/AboutSettings";
 import { ScrollView } from "react-native-gesture-handler";
 import SettingsCardWrapper from "../components/settings/SettingsCardWrapper";
 import CardRow from "../components/settings/CardRow";
@@ -46,17 +45,14 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               height={50}
               width={50}
               radius={100}
-              color={Colors.accentLighter}
+              color={"transparent"}
+              // color={Colors.accentLighter}
               method={() => {
                 Linking.openURL("https://www.themoviedb.org/");
               }}
             >
               <View className="flex-row space-x-2 items-center">
-                <Ionicons
-                  name="arrow-forward-outline"
-                  size={20}
-                  color={Colors.text_primary}
-                />
+                <Ionicons name="link" size={20} color={Colors.blue[500]} />
               </View>
             </CustomButton>
           </CardRow>
@@ -76,17 +72,14 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               height={50}
               width={50}
               radius={100}
-              color={Colors.accentLighter}
+              color={"transparent"}
+              // color={Colors.accentLighter}
               method={() => {
                 Linking.openURL("https://www.justwatch.com/");
               }}
             >
               <View className="flex-row space-x-2 items-center">
-                <Ionicons
-                  name="arrow-forward-outline"
-                  size={20}
-                  color={Colors.text_primary}
-                />
+                <Ionicons name="link" size={20} color={Colors.blue[500]} />
               </View>
             </CustomButton>
           </CardRow>
@@ -106,7 +99,8 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               height={50}
               width={50}
               radius={100}
-              color={Colors.accentLighter}
+              color={"transparent"}
+              // color={Colors.accentLighter}
               method={() => {
                 Linking.openURL(
                   "https://www.freepik.com/free-vector/cute-cat-get-mad-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_22070005.htm#page=3&query=funny%20cats%20illustrations&position=49&from_view=search&track=ais"
@@ -114,11 +108,7 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               }}
             >
               <View className="flex-row space-x-2 items-center">
-                <Ionicons
-                  name="arrow-forward-outline"
-                  size={20}
-                  color={Colors.text_primary}
-                />
+                <Ionicons name="link" size={20} color={Colors.blue[500]} />
               </View>
             </CustomButton>
           </CardRow>
@@ -127,7 +117,8 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               height={50}
               width={50}
               radius={100}
-              color={Colors.accentLighter}
+              color={"transparent"}
+              // color={Colors.accentLighter}
               method={() => {
                 Linking.openURL(
                   "https://www.freepik.com/free-vector/cute-cat-yawning-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-flat_24770206.htm"
@@ -135,11 +126,7 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               }}
             >
               <View className="flex-row space-x-2 items-center">
-                <Ionicons
-                  name="arrow-forward-outline"
-                  size={20}
-                  color={Colors.text_primary}
-                />
+                <Ionicons name="link" size={20} color={Colors.blue[500]} />
               </View>
             </CustomButton>
           </CardRow>

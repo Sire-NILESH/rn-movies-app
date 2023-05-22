@@ -159,7 +159,7 @@ export const getTileListScreenMedias = async (
     if (urlObjects[0].url.startsWith("/person/")) {
       const medias = [...data[0].data.cast, ...data[0].data.crew];
 
-      // some people are credited for cast as well as crew members in some media(same), and since we collect both the cast and crew and crew we have possibility(proven) of having same media multiple times.
+      // some people are credited for cast as well as crew members in some media(same), and since we collect both the cast and crew, we have possibility(proven) of having same media multiple times.
       const withoutDuplicates = Object.values(
         medias.reduce((acc, obj) => {
           acc[obj.id] = obj;

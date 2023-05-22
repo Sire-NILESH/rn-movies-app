@@ -43,6 +43,7 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
       const filters: IQueryParams = { page: pageNumber };
       setLoadingNewMedias(true);
       try {
+        console.log(urlObjectLocal);
         const moreMedias = await getTileListScreenMedias(
           [urlObjectLocal],
           filters

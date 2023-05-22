@@ -25,7 +25,8 @@ const AboutSettings = () => {
           height={50}
           width={50}
           radius={100}
-          color={Colors.accentLighter}
+          color={"transparent"}
+          // color={Colors.accentLighter}
           method={() => {
             navigationHandler();
           }}

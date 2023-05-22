@@ -2,19 +2,17 @@ import {
   Genre,
   ICountry,
   ICreditPerson,
-  ICreditPersonGender,
   IImageItemQualitySetting,
   IImageQuality,
   INetworkIds,
   IProductionComapnyIds,
   IReduxListMedia,
   ISOLang,
+  ISupportedLang,
   IUrlObject,
-  Media,
   MediaTypes,
   MovieMedia,
   MovieMediaExtended,
-  TCollectionToTReduxCollection,
   TvMedia,
   TvMediaExtended,
 } from "../../../types/typings";
@@ -198,6 +196,15 @@ export function isISOLang(obj: Object): obj is ISOLang {
     (obj as ISOLang).iso639_1 !== undefined &&
     (obj as ISOLang).iso639_2T !== undefined &&
     (obj as ISOLang).iso639_2B !== undefined
+  );
+}
+
+export function isSupportedLang(obj: Object): obj is ISupportedLang {
+  return (
+    obj !== null &&
+    (obj as ISupportedLang).iso_639_1 !== undefined &&
+    (obj as ISupportedLang).english_name !== undefined &&
+    (obj as ISupportedLang).name !== undefined
   );
 }
 

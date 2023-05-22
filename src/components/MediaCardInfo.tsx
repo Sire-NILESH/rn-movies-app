@@ -2,9 +2,9 @@ import { View, Text } from "react-native";
 import React from "react";
 import { MovieMedia, TvMedia, TvMediaExtended } from "../../types/typings";
 import { isMovie, isTvExtended } from "../utils/helpers/helper";
-import { isoLangs } from "../utils/helpers/isoLangs";
 // @ts-ignore
 import ExpoFastImage from "expo-fast-image";
+import { supportedLangs } from "../utils/helpers/langs";
 
 interface IProps {
   media: MovieMedia | TvMedia | TvMediaExtended;
@@ -64,9 +64,9 @@ const MediaCardInfo: React.FC<IProps> = ({ media }) => {
             Language:{"  "}
             <Text className="text-green-100">
               {/*  @ts-ignore */}
-              {isoLangs[media.original_language]?.name
+              {supportedLangs[media.original_language]?.english_name
                 ? // @ts-ignore
-                  isoLangs[media.original_language]?.name
+                  supportedLangs[media.original_language]?.english_name
                 : media.original_language}
             </Text>
           </Text>

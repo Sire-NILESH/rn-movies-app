@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Dropdown from "./Dropdown";
-import { by639_1 } from "iso-language-codes";
 import { useDefaultLanguageHooks } from "../../hooks/reduxHooks";
-import { ISOLang } from "../../../types/typings";
+import { ISupportedLang } from "../../../types/typings";
+import { supportedLangs } from "../../utils/helpers/langs";
 
 interface IProps {
   saveMode: "local" | "applicationWide";
@@ -17,12 +17,13 @@ interface IProps {
 const LanguageDropdown: React.FC<IProps> = (props) => {
   const { setDefaultLanguageHandler, defaultLanguage } =
     useDefaultLanguageHooks();
-  const [localLanguage, setLocalLanguage] = useState<ISOLang>(defaultLanguage);
+  const [localLanguage, setLocalLanguage] =
+    useState<ISupportedLang>(defaultLanguage);
 
-  const setLocalLanguageHandler = (language: ISOLang) => {
+  const setLocalLanguageHandler = (language: ISupportedLang) => {
     setLocalLanguage(language);
     if (props.localLangSetter) {
-      props.localLangSetter(language.iso639_1);
+      props.localLangSetter(language.iso_639_1);
     }
   };
 
@@ -35,12 +36,10 @@ const LanguageDropdown: React.FC<IProps> = (props) => {
       listData={[
         {
           name: "All Languages",
-          nativeName: "All Languages",
-          iso639_1: "",
-          iso639_2T: "",
-          iso639_2B: "",
+          english_name: "All Languages",
+          iso_639_1: "",
         },
-        ...Object.values(by639_1).sort((a, b) => (a.name > b.name ? 1 : -1)),
+        ...supportedLangs,
       ]}
       setSelected={
         props.saveMode === "applicationWide"

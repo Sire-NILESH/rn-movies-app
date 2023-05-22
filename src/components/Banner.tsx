@@ -13,9 +13,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { dateFormatter, isMovie } from "./../utils/helpers/helper";
 import { Ionicons } from "@expo/vector-icons";
-import { isoLangs } from "../utils/helpers/isoLangs";
 import { ScrollView } from "react-native-gesture-handler";
 import WatchlistButton from "./ui/WatchlistButton";
+import { supportedLangs } from "../utils/helpers/langs";
 
 interface Props {
   mediaList: MovieMedia[] | TvMedia[];
@@ -158,9 +158,9 @@ function Banner({ mediaList }: Props) {
                 />
                 <Text className="text-text_primary font-semibold">
                   {/*  @ts-ignore */}
-                  {isoLangs[media.original_language]?.name
+                  {supportedLangs[media.original_language]?.english_name
                     ? // @ts-ignore
-                      isoLangs[media.original_language]?.name
+                      supportedLangs[media.original_language]?.english_name
                     : media.original_language}
                 </Text>
               </View>

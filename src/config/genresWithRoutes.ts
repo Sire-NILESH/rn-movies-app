@@ -1,4 +1,3 @@
-import { IUrlObject } from "../../types/typings";
 import {
   buildAiringTodayPlaylist,
   buildDiscoverPlaylist,
@@ -49,7 +48,10 @@ const bollywoodKannada = {
   nativeName: "ಕನ್ನಡ",
 };
 
-const tvGenresPlaylists = tvGenresList.map((g) => buildGenrePlaylist("tv", g));
+const tvGenresPlaylists = [
+  buildDiscoverPlaylist("Discover", "tv"),
+  ...tvGenresList.map((g) => buildGenrePlaylist("tv", g)),
+];
 
 export const tvPlaylist = [
   [
@@ -91,9 +93,10 @@ export const tvPlaylist = [
   [...tvGenresPlaylists],
 ];
 
-const moviGenresPlaylists = movieGenresList.map((g) =>
-  buildGenrePlaylist("movie", g)
-);
+const moviGenresPlaylists = [
+  buildDiscoverPlaylist("Discover", "movie"),
+  ...movieGenresList.map((g) => buildGenrePlaylist("movie", g)),
+];
 
 // : [IUrlObject[],IUrlObject[]]
 
@@ -106,7 +109,7 @@ export const moviePlaylist = [
     // buildAiringTodayPlaylist("Airing Today", "movie"),
     buildNowPlayingPlaylist("Playing in Theatres", "movie"),
     buildUpcomingPlaylist("New Releases", "movie"),
-    buildLanguagePlaylist("All time Bollywood", "movie", bollywoodHindi, 0),
+    buildLanguagePlaylist("Bollywood", "movie", bollywoodHindi, 0),
     buildLanguagePlaylist(`Hindi, ${currentYear}`, "movie", bollywoodHindi),
     buildLanguagePlaylist(`Tamil, ${currentYear}`, "movie", bollywoodTamil),
     buildLanguagePlaylist(`Telugu, ${currentYear}`, "movie", bollywoodTelugu),

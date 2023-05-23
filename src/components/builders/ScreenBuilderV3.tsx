@@ -15,7 +15,7 @@ import {
   homeScreenPlaylists,
   movieScreenPlaylists,
   tvScreenPlaylists,
-} from "../../config/screenGenresConfig";
+} from "../../config/homeScreensPlaylistsConfig";
 import { FlatList } from "react-native-gesture-handler";
 
 interface IProps {

@@ -85,7 +85,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   /* if the season doesnt have a poster we use the old poster that was used in the MoreInfoScreeen which was passed here as tvMediaPosterPathOld */
 
   return (
-    <View className="flex-1 bg-secondary pb-4">
+    <View className="flex-1 bg-secondary">
       {/* Loader */}
       {loadingProps && (
         <View className="h-full z-40">

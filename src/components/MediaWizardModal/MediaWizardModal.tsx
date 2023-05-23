@@ -3,7 +3,10 @@ import { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Colors } from "../../utils/Colors";
 import { IUrlObject, MediaTypes } from "../../../types/typings";
-import { moviePlaylist, tvPlaylist } from "../../config/genresWithRoutes";
+import {
+  moviePlaylist,
+  tvPlaylist,
+} from "../../config/customPlaylistsAndGenresList";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
   useDefaultLanguageHooks,

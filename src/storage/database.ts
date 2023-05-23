@@ -8,7 +8,13 @@ import {
   TCollectionType,
   TDbCollectionType,
 } from "../../types/typings";
-import { defaultImgQualitiesconfig } from "../config/imgQualityConfig";
+import {
+  allImageItemsQualities,
+  allImgItemsType,
+  allImgItemsValues,
+  defaultImgQualitiesconfig,
+  getAllImageConfigForImageType,
+} from "../config/imgQualityConfig";
 
 export type TValidTableNames =
   | "medias"
@@ -173,22 +179,15 @@ export async function initDB() {
     // IMAGE ITEMS QUALITIES TABLE
     {
       query: `CREATE TABLE IF NOT EXISTS image_qualities (
-        name TEXT NOT NULL CHECK (name IN (
-          'thumbnail',
-          'watchProviders',
-          'banner', 
-          'companies')),
-        quality TEXT NOT NULL CHECK (quality IN (
-          'Default', 
-          'Low', 
-          'Medium', 
-          'High', 
-          'Very high')),
-        value TEXT NOT NULL CHECK (value IN (
-          '200', 
-          '300', 
-          '400', 
-          '500')),
+        name TEXT NOT NULL CHECK (name IN ( 
+          ${allImgItemsType.map((img) => `\'${img}\'`).join(", ")}
+          )),
+        quality TEXT NOT NULL CHECK (quality IN ( 
+          ${allImageItemsQualities.map((img) => `\'${img}\'`).join(", ")}
+          )),
+        value TEXT NOT NULL CHECK (value IN ( 
+          ${allImgItemsValues.map((img) => `\'${img}\'`).join(", ")}
+          )),
         PRIMARY KEY (name)
       );`,
       arguments: [],

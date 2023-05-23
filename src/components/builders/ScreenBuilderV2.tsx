@@ -10,7 +10,7 @@ import {
   homeScreenPlaylists,
   movieScreenPlaylists,
   tvScreenPlaylists,
-} from "../../config/screenGenresConfig";
+} from "../../config/homeScreensPlaylistsConfig";
 import RowAsync from "../RowAsync";
 import { sendUrlObjApiRequest } from "../../utils/requests";
 import useImageItemSetting from "../../hooks/useImageItemSetting";

@@ -77,7 +77,7 @@ function Banner({ mediaList }: Props) {
         >
           <ImageBackground //wrapping the main entry screen with this <ImageBackground> component
             source={{
-              uri: `https://image.tmdb.org/t/p/w500${
+              uri: `https://image.tmdb.org/t/p/w780${
                 media?.poster_path || media?.backdrop_path
               }`,
             }}

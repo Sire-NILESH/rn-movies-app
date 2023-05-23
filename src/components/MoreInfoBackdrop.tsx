@@ -17,6 +17,7 @@ const MoreInfoBackdrop: React.FC<IProps> = ({
 }) => {
   const posterImgQuality = imgQuality ? imgQuality : 400;
 
+  // const imgUrl = `https://image.tmdb.org/t/p/w780${mediaPosterPath}`;
   const imgUrl = `https://image.tmdb.org/t/p/w${posterImgQuality}${mediaPosterPath}`;
 
   return (

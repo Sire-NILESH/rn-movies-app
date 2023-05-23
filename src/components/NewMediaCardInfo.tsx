@@ -30,7 +30,11 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
     <View className="mt-5 mx-3 justify-between rounded-2xl border border-stone-800 overflow-hidden">
       <View
         className="relative flex-1 "
-        style={{ width: "100%", aspectRatio: 16 / 9 }}
+        style={{
+          width: "100%",
+          aspectRatio: 16 / 9,
+          // height: 250,
+        }}
       >
         {imageUrl ? (
           <Image

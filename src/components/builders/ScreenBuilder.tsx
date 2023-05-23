@@ -15,7 +15,7 @@ import {
   homeScreenPlaylists,
   movieScreenPlaylists,
   tvScreenPlaylists,
-} from "../../config/screenGenresConfig";
+} from "../../config/homeScreensPlaylistsConfig";
 
 interface IProps {
   screenType: ScreenTypes;

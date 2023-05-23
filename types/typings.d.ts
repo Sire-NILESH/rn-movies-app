@@ -398,7 +398,7 @@ export interface IDropdownYearsObj {
 
 export type TImgQualities = "Default" | "Low" | "Medium" | "High" | "Very high";
 
-export type TImgQualityValues = "200" | "300" | "400" | "500";
+export type TImgQualityValues = "200" | "300" | "400" | "500" | "780";
 
 export interface IImageQuality {
   quality: TImgQualities;

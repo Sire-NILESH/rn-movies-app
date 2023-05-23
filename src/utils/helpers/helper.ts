@@ -510,6 +510,7 @@ export function buildLanguagePlaylist(
   };
 }
 
+// deprecated
 export const movieGenres = [
   // Custom Genres
   [
@@ -599,6 +600,7 @@ export const movieGenresList: Genre[] = [
   { id: 37, name: "Western" },
 ];
 
+// deprecated
 export const tvGenres = [
   // Custom Genres below
   [

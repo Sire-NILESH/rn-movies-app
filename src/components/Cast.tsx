@@ -210,7 +210,7 @@ const Cast: React.FC<IProps> = (props) => {
   );
 };
 
-export default Cast;
+export default React.memo(Cast);
 
 function RenderProfile({
   id,

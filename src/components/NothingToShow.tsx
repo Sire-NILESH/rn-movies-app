@@ -9,7 +9,10 @@ interface IProps {
 const NothingToShow: React.FC<IProps> = (props) => {
   return (
     <View className="flex-1 font-semibold items-center justify-center">
-      <Text className="text-3xl h-20 text-stone-700 text-center [lineHeight:5]"></Text>
+      <Text
+        className="text-3xl h-20 text-stone-700 text-center"
+        style={{ lineHeight: 5 }}
+      ></Text>
       <>
         {props.problemType === "error" ? (
           <View

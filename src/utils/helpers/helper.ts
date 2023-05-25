@@ -21,17 +21,19 @@ import {
 import { Alert, Dimensions } from "react-native";
 
 export function isMovie(
-  media: MovieMedia | TvMedia | null
+  media: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended | null
 ): media is MovieMedia {
   return media !== null && (media as MovieMedia).title !== undefined;
 }
 
-export function isTv(media: MovieMedia | TvMedia | null): media is TvMedia {
+export function isTv(
+  media: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended | null
+): media is TvMedia {
   return media !== null && (media as TvMedia).name !== undefined;
 }
 
 export function isTvExtended(
-  media: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended
+  media: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended | null
 ): media is TvMediaExtended {
   return media !== null && (media as TvMediaExtended).seasons !== undefined;
 }

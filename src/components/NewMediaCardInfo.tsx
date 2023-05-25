@@ -49,15 +49,18 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
 
       <LinearGradient
         colors={[
+          // "rgba(0, 0, 0, 0)",
+          // "rgba(0, 0, 0, 0)",
+
           "rgba(15, 15, 15, 0.4)",
           "rgba(15, 15, 15, 0.5)",
           "rgba(15, 15, 15, 0.4)",
           "rgba(15, 15, 15, 0.3)",
-          "rgba(15, 15, 15, 0.3)",
+          "rgba(15, 15, 15, 0.1)",
         ]}
         start={{ x: 0.0, y: 1 }}
         style={{ width: "100%", aspectRatio: 16 / 9 }}
-        className="absolute rounded-l-2xl py-6 flex-row items-center justify-between"
+        className="absolute bg-black/5 rounded-l-2xl py-6 flex-row items-center justify-between"
       >
         <View className="space-y-4">
           <View className="flex-row items-center space-x-2 px-4">
@@ -84,7 +87,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
               size={18}
               color={Colors.text_primary}
             />
-            <Text className="text-text_highLight">
+            <Text className="text-text_highLight font-bold">
               {isMovie(media) ? "Movie" : "TV"}
             </Text>
           </View>
@@ -95,7 +98,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
               size={18}
               color={Colors.text_primary}
             />
-            <Text className="text-text_highLight">
+            <Text className="text-text_highLight font-bold">
               {isMovie(media)
                 ? media.release_date
                   ? dateFormatter(media.release_date)
@@ -111,7 +114,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
                 size={18}
                 color={Colors.text_primary}
               />
-              <Text className="text-text_highLight">
+              <Text className="text-text_highLight font-bold">
                 {by639_1[media.original_language]?.name
                   ? by639_1[media.original_language]?.name
                   : media.original_language}
@@ -126,7 +129,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
                 size={18}
                 color={Colors.text_primary}
               />
-              <Text className="text-text_highLight">
+              <Text className="text-text_highLight font-bold">
                 <Text className="text-text_highLight">
                   {toHoursAndMinutes(media.runtime)}
                 </Text>
@@ -137,8 +140,8 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
           {isTvExtended(media) && (
             <View className="flex-row items-center space-x-2 px-4">
               <Ionicons name="bookmark" size={18} color={Colors.text_primary} />
-              <Text className="text-text_highLight">
-                <Text className="text-text_highLight">{media.status}</Text>
+              <Text className="text-text_highLight font-bold">
+                <Text className="text-text_highLight">{media.type}</Text>
               </Text>
             </View>
           )}

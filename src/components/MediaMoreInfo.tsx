@@ -99,8 +99,8 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             {/* Content Title/name and original title/name  */}
             <View className="mt-64 flex-1 pt-6">
               {/* Title */}
-              <View className="px-4 w-[95%]">
-                <Text className="text-[42px] font-bold text-text_highLight object-cover">
+              <View className="px-4 w-[100%]">
+                <Text className="text-[40px] font-bold text-text_highLight object-cover">
                   {getTitle()}
                 </Text>
 
@@ -121,7 +121,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
                 ) : (isTvExtended(media) || isMovieExtended(media)) &&
                   media.tagline ? (
                   <Text className="text-sm text-text_tertiary pt-2">
-                    <Text className="text-text_tertiary">
+                    <Text className="text-text_secondary">
                       {(isTvExtended(media) || isMovieExtended(media)) &&
                         media.tagline}
                     </Text>
@@ -132,8 +132,16 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
               {/* Genre Tags Row */}
 
               {media.genres.length > 0 ? (
-                <View className="w-full h-10 justify-center items-center mt-5">
+                <View className="w-full h-10 flex-row items-center mt-5">
                   <GenreTags
+                    headerComponent={() => (
+                      <View className="mr-2 ml-3 bg-neutral-800/40 border border-stone-600/50 px-4 h-8 rounded-xl items-center justify-center">
+                        <Text className="text-text_highLight">
+                          {media.status}
+                          {/* {console.log(media.status)} */}
+                        </Text>
+                      </View>
+                    )}
                     genreIdList={media.genres.map((genre) => genre.id)}
                     // genreIdList={media.genre_ids}
                     backgroundType="transparent"

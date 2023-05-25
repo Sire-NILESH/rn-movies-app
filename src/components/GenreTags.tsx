@@ -1,5 +1,5 @@
 import { View, Text, FlatList } from "react-native";
-import React from "react";
+import React, { ComponentType } from "react";
 import { idToGenresMapped } from "../utils/helpers/helper";
 import { Colors } from "./../utils/Colors";
 import { IUrlObject } from "../../types/typings";
@@ -8,6 +8,7 @@ interface IProps {
   genreNames?: IUrlObject[];
   genreIdList?: number[];
   backgroundType: "transparent" | "colored";
+  headerComponent?: ComponentType<any>;
 }
 
 const GenreTags: React.FC<IProps> = (props) => {
@@ -27,6 +28,13 @@ const GenreTags: React.FC<IProps> = (props) => {
           data={props.genreIdList}
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item, i) => `${item}-${i}`}
+          ListHeaderComponent={props.headerComponent}
+          // ListHeaderComponentStyle={
+          //   {
+          //     // flexDirection: "row",
+          //     // width: 200,
+          //   }
+          // }
           renderItem={(itemObj) => <GerneTag genreId={itemObj.item} />}
         />
       ) : (

@@ -163,6 +163,22 @@ export interface TvMediaExtended extends TvMedia {
     name: string;
   }[];
   status: string;
+  /** "Documentary"
+     | "News"
+     | "Miniseries"
+     | "Reality"
+     | "Scripted"
+     | "Talk Show"
+     | "Video" */
+  type: string;
+  // type:
+  //   | "Documentary"
+  //   | "News"
+  //   | "Miniseries"
+  //   | "Reality"
+  //   | "Scripted"
+  //   | "Talk Show"
+  //   | "Video";
   tagline: string;
 }
 

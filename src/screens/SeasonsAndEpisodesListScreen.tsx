@@ -181,6 +181,9 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
               keyExtractor={(episode) => String(episode.id)}
               maxToRenderPerBatch={4}
               initialNumToRender={4}
+              ItemSeparatorComponent={() => (
+                <View className="border border-b-stone-800 mx-10" />
+              )}
               renderItem={(episodeObj) => (
                 <EpisodeInfoCard episode={episodeObj.item} />
               )}

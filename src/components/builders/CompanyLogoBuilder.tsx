@@ -79,7 +79,7 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
                 }}
               >
                 <View
-                  className="bg-green-100 rounded-md p-1 justify-center"
+                  className="bg-stone-50 rounded-md p-1 justify-center"
                   style={{
                     width: 140,
                     aspectRatio: 16 / 9,

@@ -11,7 +11,7 @@ interface IProps {
 
 const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
   return (
-    <View className="mt-5 mx-3 py-3 rounded-2xl border border-stone-800 justify-between">
+    <View className="mt-5 py-3 justify-between">
       {/* TITLE AND EPISODE NUMBER */}
       <View className="flex-row items-center mx-3 space-x-2 mb-3">
         {/* <View className="bg-white rounded-full h-8 w-8 items-center justify-center">
@@ -20,7 +20,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
           </Text>
         </View> */}
         <Text className="ml-2 text-text_highLight w-[90%]">
-          <Text className="text-base font-bold">{`E-${episode.episode_number}: ${episode.name}`}</Text>
+          <Text className="text-xl font-bold">{`E-${episode.episode_number}: ${episode.name}`}</Text>
         </Text>
       </View>
 
@@ -67,17 +67,17 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
               iconName="list"
             />
           </View>
+          {episode.runtime ? (
+            <View>
+              <DataElement text={`${episode.runtime} mins`} iconName="time" />
+            </View>
+          ) : null}
           <View>
             <DataElement
               text={dateFormatter(episode.air_date)}
               iconName="calendar"
             />
           </View>
-          {episode.runtime ? (
-            <View>
-              <DataElement text={`${episode.runtime} mins`} iconName="time" />
-            </View>
-          ) : null}
         </View>
       </View>
 

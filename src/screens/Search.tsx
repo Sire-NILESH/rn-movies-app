@@ -124,19 +124,7 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           searchQuery.length >= 0 &&
           searchQueryResult &&
           searchQueryResult?.results.length > 0
-            ? isMovieArray(searchQueryResult?.results)
-              ? renderFlatList(
-                  searchQueryResult?.results,
-                  searchCategory,
-                  navigation
-                )
-              : !isTvArray(searchQueryResult?.results)
-              ? renderFlatList(
-                  searchQueryResult?.results,
-                  searchCategory,
-                  navigation
-                )
-              : null
+            ? renderFlatList(searchQueryResult?.results, navigation)
             : null}
         </View>
       </SafeAreaView>
@@ -148,7 +136,6 @@ export default SearchScreen;
 
 function renderFlatList(
   searchQueryResult: MovieMedia[] | TvMedia[] | null,
-  searchCategory: MediaTypes,
   navigation: StackNavigationProp<any>
 ) {
   function navigateTo(

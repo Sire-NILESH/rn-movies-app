@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
 import { MovieMedia, TvMedia, TvMediaExtended } from "../../types/typings";
 import {
@@ -27,7 +27,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
     : `https://image.tmdb.org/t/p/w${posterImgQuality}${media.poster_path}`;
 
   return (
-    <View className="mt-5 mx-3 justify-between rounded-2xl border border-stone-800 overflow-hidden">
+    <View className="mt-5 mx-3 justify-between rounded-2xl border border-stone-800/80 overflow-hidden">
       <View
         className="relative flex-1 "
         style={{
@@ -52,7 +52,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
           // "rgba(0, 0, 0, 0)",
           // "rgba(0, 0, 0, 0)",
 
-          "rgba(15, 15, 15, 0.4)",
+          "rgba(15, 15, 15, 0.5)",
           "rgba(15, 15, 15, 0.5)",
           "rgba(15, 15, 15, 0.4)",
           "rgba(15, 15, 15, 0.3)",
@@ -60,12 +60,15 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
         ]}
         start={{ x: 0.0, y: 1 }}
         style={{ width: "100%", aspectRatio: 16 / 9 }}
-        className="absolute bg-black/5 rounded-l-2xl py-6 flex-row items-center justify-between"
+        className="absolute bg-stone-900/10 rounded-l-2xl py-6 flex-row items-center justify-between"
       >
         <View className="space-y-4">
           <View className="flex-row items-center space-x-2 px-4">
             <Ionicons name="star" size={18} color={Colors.yellow[300]} />
-            <Text className="font-bold text-text_highLight tracking-widest">
+            <Text
+              className="font-bold text-text_highLight tracking-widest"
+              style={styles.textShadow}
+            >
               <Text
                 className="font-bold"
                 style={{
@@ -87,7 +90,10 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
               size={18}
               color={Colors.text_primary}
             />
-            <Text className="text-text_highLight font-bold">
+            <Text
+              className="text-text_highLight font-bold"
+              style={styles.textShadow}
+            >
               {isMovie(media) ? "Movie" : "TV"}
             </Text>
           </View>
@@ -98,7 +104,10 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
               size={18}
               color={Colors.text_primary}
             />
-            <Text className="text-text_highLight font-bold">
+            <Text
+              className="text-text_highLight font-bold"
+              style={styles.textShadow}
+            >
               {isMovie(media)
                 ? media.release_date
                   ? dateFormatter(media.release_date)
@@ -114,7 +123,10 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
                 size={18}
                 color={Colors.text_primary}
               />
-              <Text className="text-text_highLight font-bold">
+              <Text
+                className="text-text_highLight font-bold"
+                style={styles.textShadow}
+              >
                 {by639_1[media.original_language]?.name
                   ? by639_1[media.original_language]?.name
                   : media.original_language}
@@ -129,10 +141,11 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
                 size={18}
                 color={Colors.text_primary}
               />
-              <Text className="text-text_highLight font-bold">
-                <Text className="text-text_highLight">
-                  {toHoursAndMinutes(media.runtime)}
-                </Text>
+              <Text
+                className="text-text_highLight font-bold"
+                style={styles.textShadow}
+              >
+                {toHoursAndMinutes(media.runtime)}
               </Text>
             </View>
           )}
@@ -140,8 +153,11 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
           {isTvExtended(media) && (
             <View className="flex-row items-center space-x-2 px-4">
               <Ionicons name="bookmark" size={18} color={Colors.text_primary} />
-              <Text className="text-text_highLight font-bold">
-                <Text className="text-text_highLight">{media.type}</Text>
+              <Text
+                className="text-text_highLight font-bold"
+                style={styles.textShadow}
+              >
+                {media.type}
               </Text>
             </View>
           )}
@@ -152,3 +168,11 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
 };
 
 export default NewMediaCardInfo;
+
+const styles = StyleSheet.create({
+  textShadow: {
+    textShadowColor: Colors.stone[700],
+    textShadowOffset: { height: 2, width: 0 },
+    textShadowRadius: 3,
+  },
+});

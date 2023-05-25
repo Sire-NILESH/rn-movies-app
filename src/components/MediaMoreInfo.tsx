@@ -99,8 +99,8 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             {/* Content Title/name and original title/name  */}
             <View className="mt-64 flex-1 pt-6">
               {/* Title */}
-              <View className="px-4">
-                <Text className="text-3xl font-semibold text-text_highLight object-cover">
+              <View className="px-4 w-[95%]">
+                <Text className="text-[42px] font-bold text-text_highLight object-cover">
                   {getTitle()}
                 </Text>
 

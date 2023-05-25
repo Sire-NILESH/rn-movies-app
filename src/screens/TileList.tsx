@@ -11,7 +11,11 @@ import {
   MovieMedia,
   TvMedia,
 } from "../../types/typings";
-import { isMovieArray, showErrorAlert } from "../utils/helpers/helper";
+import {
+  isMovieArray,
+  isTvArray,
+  showErrorAlert,
+} from "../utils/helpers/helper";
 import { getTileListScreenMedias } from "../utils/requests";
 import GenreTags from "../components/GenreTags";
 import TilesRenderedView from "../components/TilesRenderedView";
@@ -52,7 +56,9 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     ? currentMediaType
     : isMovieArray(mediaList)
     ? "movie"
-    : "tv";
+    : isTvArray(mediaList)
+    ? "tv"
+    : "multi";
 
   // thumbnail images quality
   const { imgItemsSetting: thumbnailQuality } =

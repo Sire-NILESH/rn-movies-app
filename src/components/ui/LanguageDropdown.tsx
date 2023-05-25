@@ -7,6 +7,7 @@ import { supportedLangs } from "../../utils/helpers/langs";
 interface IProps {
   saveMode: "local" | "applicationWide";
   localLangSetter?: (language: string) => void;
+  bgColor?: string;
 }
 
 /**
@@ -46,6 +47,7 @@ const LanguageDropdown: React.FC<IProps> = (props) => {
           ? setDefaultLanguageHandler
           : setLocalLanguageHandler
       }
+      bgColor={props.bgColor && props.bgColor}
     />
   );
 };

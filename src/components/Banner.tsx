@@ -1,5 +1,5 @@
 import { MovieMedia, TvMedia } from "../../types/typings";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import {
   Text,
   View,
@@ -15,7 +15,6 @@ import { dateFormatter, isMovie } from "./../utils/helpers/helper";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import WatchlistButton from "./ui/WatchlistButton";
-import { supportedLangs } from "../utils/helpers/langs";
 import { by639_1 } from "iso-language-codes";
 
 interface Props {
@@ -28,7 +27,6 @@ function Banner({ mediaList }: Props) {
   const [media, setMedia] = useState<MovieMedia | TvMedia | null>(null);
 
   const navigation = useNavigation();
-  const route = useRoute();
 
   useEffect(() => {
     if (mediaList) {
@@ -50,7 +48,7 @@ function Banner({ mediaList }: Props) {
   }
 
   return (
-    <View className="flex-1 py-10 w-[100%]">
+    <View className="flex-1 w-[100%]">
       <View className="h-[60px] w-full"></View>
 
       {/* {route.name === "Home" ? (
@@ -68,16 +66,16 @@ function Banner({ mediaList }: Props) {
       >
         <LinearGradient
           colors={[
-            "rgba(28, 25, 23, 0.6)",
-            "rgba(28, 25, 23, 0.6)",
-            "rgba(28, 25, 23, 0.6)",
+            "rgba(28, 25, 23, 0.7)",
+            "rgba(28, 25, 23, 0.7)",
+            "rgba(28, 25, 23, 0.7)",
             Colors.secondary,
           ]}
           style={styles.rootScreen}
         >
           <ImageBackground //wrapping the main entry screen with this <ImageBackground> component
             source={{
-              uri: `https://image.tmdb.org/t/p/w780${
+              uri: `https://image.tmdb.org/t/p/w500${
                 media?.poster_path || media?.backdrop_path
               }`,
             }}
@@ -92,7 +90,10 @@ function Banner({ mediaList }: Props) {
       {media ? (
         <View className="px-4 mt-10 space-y-3">
           {/* Title/Name */}
-          <Text className="text-2xl font-bold text-text_highLight">
+          <Text
+            className="text-[38px] max-w-xs font-semibold text-text_primary"
+            numberOfLines={2}
+          >
             {isMovie(media) ? media.title : media?.name}
           </Text>
 
@@ -170,8 +171,8 @@ function Banner({ mediaList }: Props) {
 
           {/* OverView */}
           <Text
-            className="max-w-xs text-xs text-text_secondary"
-            numberOfLines={4}
+            className="max-w-[95%] text-xs font-semibold text-text_tertiary"
+            numberOfLines={3}
           >
             {media?.overview}
           </Text>
@@ -213,7 +214,7 @@ function Banner({ mediaList }: Props) {
   );
 }
 
-export default Banner;
+export default memo(Banner);
 
 const styles = StyleSheet.create({
   rootScreen: {

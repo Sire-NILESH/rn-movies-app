@@ -25,6 +25,7 @@ interface IProps<T extends TSupportedTypes> {
   currentSelected: T;
   setSelected: (item: T) => void;
   borderRadius: "medium" | "full";
+  bgColor?: string;
 }
 
 export default function Dropdown<T extends TSupportedTypes>({
@@ -32,6 +33,7 @@ export default function Dropdown<T extends TSupportedTypes>({
   currentSelected,
   borderRadius,
   setSelected,
+  bgColor,
 }: IProps<T>) {
   const radiusForDropdown = {
     medium: 10,
@@ -61,7 +63,7 @@ export default function Dropdown<T extends TSupportedTypes>({
           setSelected(selectedItem);
         }}
         buttonStyle={{
-          backgroundColor: Colors.accentLighter,
+          backgroundColor: bgColor ? bgColor : Colors.accentLighter,
           borderRadius: radiusForDropdown[borderRadius],
           width: 150,
           borderWidth: 0,

@@ -81,20 +81,22 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
                 <Banner mediaList={screenProps[0]} />
               ) : null}
 
-              {!loadingProps &&
-                playlistsToFetch.map((p, i) => {
-                  if (screenProps[i]?.length > 0) {
-                    return (
-                      <Row
-                        key={p.name}
-                        title={p.name}
-                        medias={screenProps[i]}
-                        playlist={p}
-                        thumbnailQualitySettings={imgItemsSetting}
-                      />
-                    );
-                  } else null;
-                })}
+              <View className="pt-4">
+                {!loadingProps &&
+                  playlistsToFetch.map((p, i) => {
+                    if (screenProps[i]?.length > 0) {
+                      return (
+                        <Row
+                          key={p.name}
+                          title={p.name}
+                          medias={screenProps[i]}
+                          playlist={p}
+                          thumbnailQualitySettings={imgItemsSetting}
+                        />
+                      );
+                    } else null;
+                  })}
+              </View>
             </ScrollView>
           ) : null}
         </View>

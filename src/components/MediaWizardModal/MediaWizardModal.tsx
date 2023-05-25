@@ -2,7 +2,12 @@ import { View, Text, Modal, Pressable, ScrollView } from "react-native";
 import { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Colors } from "../../utils/Colors";
-import { IUrlObject, MediaTypes } from "../../../types/typings";
+import {
+  IQueryParams,
+  IUrlObject,
+  MediaTypes,
+  TReleaseYearConstraint,
+} from "../../../types/typings";
 import {
   moviePlaylist,
   tvPlaylist,
@@ -14,6 +19,7 @@ import {
 } from "../../hooks/reduxHooks";
 import FeaturedPlaylists from "./FeaturedPlaylists";
 import MediaGenresSelect from "./MediaGenresSelect";
+import { addReleaseAndAirDateFilters } from "../../utils/helpers/helper";
 
 interface IProps {
   isVisible: boolean;
@@ -34,6 +40,8 @@ const MediaWizardModal: React.FC<IProps> = ({
   const { defaultLanguage } = useDefaultLanguageHooks();
   const [selectedPlaylists, setSelectedPlaylists] = useState<IUrlObject[]>([]);
   const [currentYear, setCurrentYear] = useState<number>(defaultYear.year);
+  const [releaseYearConstraint, setReleaseYearConstraint] =
+    useState<TReleaseYearConstraint>();
   const [currentView, setCurrentView] = useState<TViews>("featured_playlists");
   const [currentLang, setCurrentLang] = useState<string>(
     defaultLanguage.iso_639_1
@@ -41,6 +49,12 @@ const MediaWizardModal: React.FC<IProps> = ({
 
   const setCurrentYearHandler = (year: number) => {
     setCurrentYear(year);
+  };
+
+  const setReleaseYearConstraintHandler = (
+    constraint: TReleaseYearConstraint
+  ) => {
+    setReleaseYearConstraint(constraint);
   };
 
   const setCurrentLangHandler = (language: string) => {
@@ -51,10 +65,20 @@ const MediaWizardModal: React.FC<IProps> = ({
     setCurrentView(view);
   };
 
-  const filters = {
-    primary_release_year: String(currentYear),
+  const resetHandler = () => {
+    setReleaseYearConstraint(undefined);
+  };
+
+  const filters: IQueryParams = {
     with_original_language: currentLang,
   };
+
+  addReleaseAndAirDateFilters(
+    filters,
+    mediaListType,
+    currentYear,
+    releaseYearConstraint
+  );
 
   function selectedPlaylistHandlers(
     playlist: IUrlObject,
@@ -117,7 +141,7 @@ const MediaWizardModal: React.FC<IProps> = ({
 
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible}>
-      <View className="absolute my-[25%] mx-[5%] h-[85%] w-[90%] bg-secondary rounded-xl pb-2 border-[1px] border-stone-900 [elevation:10]">
+      <View className="absolute my-[25%] mx-[5%] h-[85%] w-[90%] bg-neutral-800 rounded-xl pb-2 border-[1px] border-stone-900 [elevation:10]">
         {/* HEADER */}
         <View className="flex-row items-center justify-between h-[42] bg-tertiary rounded-t-xl px-[20]">
           {/* Header Title */}
@@ -171,6 +195,7 @@ const MediaWizardModal: React.FC<IProps> = ({
             <View className="w-20 rounded-md overflow-hidden">
               <Pressable
                 onPress={() => {
+                  resetHandler();
                   setCurrentViewHandler("featured_playlists");
                 }}
                 className="p-2"
@@ -197,6 +222,7 @@ const MediaWizardModal: React.FC<IProps> = ({
             <View className="w-20 rounded-md overflow-hidden">
               <Pressable
                 onPress={() => {
+                  // resetHandler();
                   setCurrentViewHandler("genres_playlist");
                 }}
                 className="p-2"
@@ -234,10 +260,15 @@ const MediaWizardModal: React.FC<IProps> = ({
             {/* FILTER AND CUSTOM GENRES SELECTS*/}
             {currentView === "genres_playlist" ? (
               <MediaGenresSelect
+                mediaListType={mediaListType}
                 genrePlaylists={playlists[1]}
                 selectedPlaylistHandlers={selectedPlaylistHandlers}
                 setCurrentLangHandler={setCurrentLangHandler}
                 setCurrentYearHandler={setCurrentYearHandler}
+                setReleaseYearConstraintHandler={
+                  setReleaseYearConstraintHandler
+                }
+                currentYear={currentYear}
               />
             ) : null}
           </ScrollView>

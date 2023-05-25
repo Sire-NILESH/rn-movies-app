@@ -6,6 +6,7 @@ import {
   IImageQuality,
   INetworkIds,
   IProductionComapnyIds,
+  IQueryParams,
   IReduxListMedia,
   ISOLang,
   ISupportedLang,
@@ -13,6 +14,7 @@ import {
   MediaTypes,
   MovieMedia,
   MovieMediaExtended,
+  TReleaseYearConstraint,
   TvMedia,
   TvMediaExtended,
 } from "../../../types/typings";
@@ -172,8 +174,8 @@ export function isMovieArray(
 
 export function isTvArray(
   medias: MovieMedia[] | TvMedia[]
-): medias is MovieMedia[] {
-  return medias !== null && (medias as MovieMedia[])[0].title !== undefined;
+): medias is TvMedia[] {
+  return medias !== null && (medias as TvMedia[])[0].name !== undefined;
 }
 
 export function isReduxCollectionMediaList(
@@ -223,6 +225,35 @@ export function isICountry(obj: Object): obj is ICountry {
     (obj as ICountry).code !== undefined
   );
 }
+
+export const addReleaseAndAirDateFilters = (
+  filters: IQueryParams,
+  mediaListType: MediaTypes,
+  currentYear: number,
+  releaseYearConstraint: TReleaseYearConstraint
+) => {
+  if (mediaListType === "tv") {
+    if (releaseYearConstraint === "gte" && currentYear !== 0) {
+      filters["first_air_date.gte"] = `${currentYear}-01-01`;
+      filters["air_date.gte"] = `${currentYear}-01-01`;
+    } else if (releaseYearConstraint === "lte" && currentYear !== 0) {
+      filters["first_air_date.lte"] = `${currentYear}-01-01`;
+      filters["air_date.lte"] = `${currentYear}-01-01`;
+    } else {
+      filters.first_air_date_year = String(currentYear);
+    }
+  } else if (mediaListType === "movie") {
+    if (releaseYearConstraint === "gte" && currentYear !== 0) {
+      filters["primary_release_date.gte"] = `${currentYear}-01-01`;
+      filters["release_date.gte"] = `${currentYear}-01-01`;
+    } else if (releaseYearConstraint === "lte" && currentYear !== 0) {
+      filters["primary_release_date.lte"] = `${currentYear}-01-01`;
+      filters["release_date.lte"] = `${currentYear}-01-01`;
+    } else {
+      filters.primary_release_year = String(currentYear);
+    }
+  }
+};
 
 export function showErrorAlert(title?: string, message?: string) {
   Alert.alert(

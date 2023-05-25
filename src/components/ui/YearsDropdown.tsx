@@ -6,6 +6,7 @@ import { IDropdownYearsObj } from "../../../types/typings";
 interface IProps {
   saveMode: "local" | "applicationWide";
   localYearSetter?: (year: number) => void;
+  bgColor?: string;
 }
 
 const currentYear = new Date(Date.now()).getFullYear();
@@ -60,6 +61,7 @@ const YearsDropdown: React.FC<IProps> = (props) => {
           ? setDefaultYearOfHook
           : setLocalYearHandler
       }
+      bgColor={props.bgColor && props.bgColor}
     />
   );
 };

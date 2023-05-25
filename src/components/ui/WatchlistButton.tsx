@@ -76,14 +76,20 @@ const WatchlistButton: React.FC<IProps> = ({
 
   return (
     <CustomButton
-      color={isWatchListed ? Colors.stone[50] : Colors.tertiary}
+      color={
+        isWatchListed
+          ? Colors.stone[50]
+          : isBannerButton && isBannerButton
+          ? Colors.stone[300]
+          : Colors.tertiary
+      }
       height={42}
       width={"100%"}
       radius={8}
-      border={isBannerButton && isBannerButton ? 1 : 0}
-      styledClassName={
-        isBannerButton && isBannerButton ? "border-stone-800" : ""
-      }
+      // border={isBannerButton && isBannerButton ? 1 : 0}
+      // styledClassName={
+      //   isBannerButton && isBannerButton ? "border-stone-800 bg-stone-300" : ""
+      // }
       method={() => {
         if (isWatchListed) {
           setIsWatchlistedHandler();
@@ -100,12 +106,20 @@ const WatchlistButton: React.FC<IProps> = ({
           // name="list"
           name={isWatchListed ? "checkmark" : "add"}
           // name={isMediaWatchlisted(media.id) ? "checkmark" : "add"}
-          color={Colors.stone[500]}
+          color={
+            isBannerButton && isBannerButton && !isWatchListed
+              ? Colors.stone[500]
+              : Colors.stone[500]
+          }
         ></Ionicons>
         <Text
           className="ml-1"
           style={{
-            color: isWatchListed ? Colors.stone[800] : Colors.text_primary,
+            color: isBannerButton
+              ? Colors.stone[800]
+              : isWatchListed
+              ? Colors.stone[800]
+              : Colors.text_primary,
           }}
         >
           {" "}

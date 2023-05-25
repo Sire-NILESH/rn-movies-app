@@ -378,9 +378,22 @@ export interface IQueryParams {
   with_cast?: string;
   with_people?: string;
   with_original_language?: string;
-  primary_release_year?: string;
   with_watch_providers?: string;
   watch_region?: string;
+
+  // for movie
+  primary_release_year?: string;
+  "primary_release_date.gte"?: string;
+  "release_date.gte"?: string;
+  "primary_release_date.lte"?: string;
+  "release_date.lte"?: string;
+
+  // for tv
+  first_air_date_year?: string;
+  "first_air_date.gte"?: string;
+  "air_date.gte"?: string;
+  "first_air_date.lte"?: string;
+  "air_date.lte"?: string;
 }
 
 export interface IUrlObject {
@@ -395,6 +408,8 @@ export interface IDropdownYearsObj {
   year: number;
   value: string;
 }
+
+export type TReleaseYearConstraint = "gte" | "lte" | undefined;
 
 export type TImgQualities = "Default" | "Low" | "Medium" | "High" | "Very high";
 

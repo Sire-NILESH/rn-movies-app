@@ -19,7 +19,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
         </Text>
       </View>
 
-      <View className="flex-row items-center space-x-2">
+      <View className="flex-row items-center space-x-1">
         {/* IMAGE CARD */}
         <View
           className="mx-4 rounded-xl border border-stone-800 overflow-hidden"
@@ -78,7 +78,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
 
       {/* OVERVIEW */}
       <View className="px-4 pt-3">
-        <Text className="text-text_tertiary text-sm font-normal">
+        <Text className="text-text_dark text-xs font-normal">
           {episode.overview.length > 0
             ? episode.overview
             : "Overview unavailable"}

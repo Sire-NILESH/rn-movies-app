@@ -11,6 +11,7 @@ import { getAllImageConfigForImageType } from "../../config/imgQualityConfig";
 
 interface IProps {
   imageItem: ImageItemTypes;
+  dropdownBgColor?: string;
 }
 
 /**
@@ -59,6 +60,7 @@ const ImageQualityDropdown: React.FC<IProps> = (props) => {
           currentSelected={currentSelectedImageQuality}
           listData={getAllImageConfigForImageType(props.imageItem)}
           setSelected={setDefaultImgQualityOfDB}
+          bgColor={props.dropdownBgColor}
         />
       ) : null}
     </>

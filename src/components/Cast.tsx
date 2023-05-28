@@ -96,7 +96,7 @@ const Cast: React.FC<IProps> = (props) => {
                           >
                             <Text
                               className="text-text_primary text-xs font-bold"
-                              numberOfLines={2}
+                              numberOfLines={1}
                             >
                               {p.job}
                             </Text>

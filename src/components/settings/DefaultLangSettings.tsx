@@ -11,7 +11,7 @@ const DefaultLangSettings = () => {
       subtitle={`Set a default language to find medias of that lanuage only.`}
     >
       <CardRow rowTitle="Select a Language">
-        <LanguageDropdown saveMode="applicationWide" />
+        <LanguageDropdown saveMode="applicationWide" bgColor={"transparent"} />
       </CardRow>
     </SettingsCardWrapper>
   );

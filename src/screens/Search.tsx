@@ -168,8 +168,8 @@ function renderFlatList(
           <View
             className={`w-full justify-center overflow-clip ${
               mediaObj.index % 2 === 0
-                ? "bg-neutral-900/40"
-                : "bg-neutral-800/50"
+                ? "bg-neutral-900/50"
+                : "bg-neutral-800/60"
             }`}
             // style={
             //   mediaObj.index % 2 === 0
@@ -231,7 +231,7 @@ function renderFlatList(
                     ? "person"
                     : "tv-outline"
                 }
-                color={Colors.stone[500]}
+                color={Colors.neutral[500]}
               />
               <Text className="text-text_primary">
                 {isMovie(mediaObj.item)

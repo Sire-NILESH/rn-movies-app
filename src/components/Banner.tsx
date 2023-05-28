@@ -60,24 +60,23 @@ function Banner({ mediaList }: Props) {
         className="absolute top-0 left-0 w-[100%] flex-1 h-full"
         style={{
           width: screenDimensions.width,
-          height: undefined,
-          aspectRatio: 2 / 3,
+          height: 700,
+          // aspectRatio: 2 / 3,
         }}
       >
         <LinearGradient
           colors={[
-            "rgba(28, 25, 23, 0.7)",
-            "rgba(28, 25, 23, 0.7)",
-            "rgba(28, 25, 23, 0.7)",
+            "rgba(23, 23, 23, 0.7)",
+            "rgba(23, 23, 23, 0.7)",
+            "rgba(23, 23, 23, 0.7)",
+            // "rgba(23, 23, 23, 0.9)",
             Colors.secondary,
           ]}
           style={styles.rootScreen}
         >
-          <ImageBackground //wrapping the main entry screen with this <ImageBackground> component
+          <ImageBackground //wrapping the main entry screen with this <ImageBackground> component   media?.poster_path || media?.backdrop_path
             source={{
-              uri: `https://image.tmdb.org/t/p/w500${
-                media?.poster_path || media?.backdrop_path
-              }`,
+              uri: `https://image.tmdb.org/t/p/w1280${media?.backdrop_path}`,
             }}
             resizeMode="cover" //similar to web, "cover", "contain", etc.
             style={styles.rootScreen} //for View dimensions internally
@@ -91,7 +90,7 @@ function Banner({ mediaList }: Props) {
         <View className="px-4 mt-10 space-y-3">
           {/* Title/Name */}
           <Text
-            className="text-[38px] max-w-xs font-semibold text-text_primary"
+            className="text-[38px] max-w-xs font-semibold text-text_highLight"
             numberOfLines={2}
           >
             {isMovie(media) ? media.title : media?.name}

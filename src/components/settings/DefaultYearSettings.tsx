@@ -11,7 +11,7 @@ const DefaultYearSettings = () => {
       subtitle={`Set a default year to find medias released in that year.`}
     >
       <CardRow rowTitle="Select a Year">
-        <YearsDropdown saveMode="applicationWide" />
+        <YearsDropdown saveMode="applicationWide" bgColor={"transparent"} />
       </CardRow>
     </SettingsCardWrapper>
   );

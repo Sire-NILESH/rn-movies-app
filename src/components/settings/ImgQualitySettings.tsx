@@ -12,19 +12,31 @@ const ImgQualitySettings = () => {
       subtitle={`Set a lower image quality for faster loading and reduced cache storage.`}
     >
       <CardRow rowTitle="Thumbnail">
-        <ImageQualityDropdown imageItem="thumbnail" />
+        <ImageQualityDropdown
+          imageItem="thumbnail"
+          dropdownBgColor={"transparent"}
+        />
       </CardRow>
 
       <CardRow rowTitle="Banner">
-        <ImageQualityDropdown imageItem="banner" />
+        <ImageQualityDropdown
+          imageItem="banner"
+          dropdownBgColor={"transparent"}
+        />
       </CardRow>
 
       <CardRow rowTitle="Watch providers">
-        <ImageQualityDropdown imageItem="watchProviders" />
+        <ImageQualityDropdown
+          imageItem="watchProviders"
+          dropdownBgColor={"transparent"}
+        />
       </CardRow>
 
       <CardRow rowTitle="Tv Networks/Producers">
-        <ImageQualityDropdown imageItem="companies" />
+        <ImageQualityDropdown
+          imageItem="companies"
+          dropdownBgColor={"transparent"}
+        />
       </CardRow>
     </SettingsCardWrapper>
   );

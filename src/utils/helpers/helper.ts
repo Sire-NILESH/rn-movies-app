@@ -730,6 +730,7 @@ export const countries: ICountry[] = [
   { name: "Austria", code: "AT" },
   { name: "Belgium", code: "BE" },
   { name: "Brazil", code: "BR" },
+  { name: "China", code: "CN" },
   { name: "Colombia", code: "CO" },
   { name: "Czech Republic", code: "CZ" },
   { name: "Denmark", code: "DK" },

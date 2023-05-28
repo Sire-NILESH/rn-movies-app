@@ -74,8 +74,9 @@ export default function Dropdown<T extends TSupportedTypes>({
         rowTextStyle={{ color: Colors.text_primary, fontSize: 14 }}
         dropdownOverlayColor={"transparent"}
         dropdownStyle={{
-          backgroundColor: Colors.tertiary,
+          backgroundColor: Colors.stone[800],
           borderRadius: 10,
+          marginTop: -24,
         }}
         defaultButtonText={
           isSupportedLang(currentSelected)

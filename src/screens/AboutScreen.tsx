@@ -21,7 +21,7 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   }, []);
 
   return (
-    <ScrollView className="flex-1 bg-secondary pt-2 px-2 space-y-2">
+    <ScrollView className="flex-1 bg-secondary pt-[1px]">
       <View>
         <SettingsCardWrapper
           iconName="information-circle-outline"

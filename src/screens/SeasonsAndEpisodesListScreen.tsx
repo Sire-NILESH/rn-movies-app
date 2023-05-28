@@ -1,7 +1,6 @@
 import { View, Text, Pressable, Image, FlatList } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
-import { useLogging } from "../hooks/useLogging";
 import { Season, SeasonDetails } from "../../types/typings";
 import { fetchSeasonDetails } from "../utils/requests";
 import { Colors } from "../utils/Colors";
@@ -105,7 +104,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
           <View className="flex-1">
             <FlatList
               ListHeaderComponent={
-                <>
+                <View className="mb-5">
                   <LinearGradient
                     colors={[
                       "rgba(22, 101, 52, 0.5)",
@@ -169,12 +168,12 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                       <Text className="text-text_primary font-bold">
                         Overview:{" "}
                       </Text>
-                      <Text className="text-text_tertiary text-xs">
+                      <Text className="text-text_tertiary text-sm">
                         {seasonDetails.overview}
                       </Text>
                     </View>
                   ) : null}
-                </>
+                </View>
               }
               data={seasonDetails.episodes}
               className=""
@@ -182,7 +181,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
               maxToRenderPerBatch={4}
               initialNumToRender={4}
               ItemSeparatorComponent={() => (
-                <View className="border border-b-stone-800 mx-10" />
+                <View className="border border-b-stone-800 mx-10 my-4" />
               )}
               renderItem={(episodeObj) => (
                 <EpisodeInfoCard episode={episodeObj.item} />

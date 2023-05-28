@@ -30,7 +30,7 @@ const TopTabsTileListNavigator: React.FC<IProps> = (props) => {
         tabBarInactiveTintColor: Colors.text_dark,
         tabBarAndroidRipple: { borderless: false },
         tabBarPressColor: "#e9e9e9",
-        tabBarIndicatorStyle: { backgroundColor: Colors.green[500] },
+        tabBarIndicatorStyle: { backgroundColor: Colors.neutral[100] },
       }}
     >
       {/* Laying out all the TopTabs screens from routes */}

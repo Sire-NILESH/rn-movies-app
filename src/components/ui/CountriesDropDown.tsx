@@ -6,11 +6,13 @@ import Dropdown from "./Dropdown";
 interface IProps {
   currentCountry: ICountry;
   setCountryHandler: (country: ICountry) => void;
+  bgColor?: string;
 }
 
 const CountriesDropdown: React.FC<IProps> = ({
   currentCountry,
   setCountryHandler,
+  bgColor,
 }) => {
   return (
     <Dropdown
@@ -18,6 +20,7 @@ const CountriesDropdown: React.FC<IProps> = ({
       currentSelected={currentCountry}
       listData={countries}
       setSelected={setCountryHandler}
+      bgColor={bgColor}
     />
   );
 };

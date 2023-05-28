@@ -12,10 +12,7 @@ interface IProps {
 
 const IconCardRow: React.FC<IProps> = (props) => {
   return (
-    <View
-      className="flex-row items-center justify-between px-2 mt-2 mx-2 bg-accent rounded-xl"
-      style={{ backgroundColor: "rgb(4, 20, 10)" }}
-    >
+    <View className="flex-row items-center justify-between px-2 mt-2 mx-2 bg-neutral-800 rounded-xl">
       <View className="flex-row space-x-2 items-center mx-4">
         {props.rowIcon !== undefined ? (
           <Ionicons

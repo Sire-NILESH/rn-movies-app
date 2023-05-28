@@ -31,7 +31,7 @@ const DrawerNavigator = () => {
         drawerLabelStyle: {
           marginLeft: -20,
         },
-        drawerActiveTintColor: Colors.green[300],
+        drawerActiveTintColor: Colors.neutral[50],
         drawerInactiveTintColor: Colors.stone[400],
         drawerAllowFontScaling: true,
         overlayColor: "",

@@ -27,7 +27,7 @@ const StackNavigator = () => {
           presentation: "modal",
           headerTintColor: Colors.text_primary,
           headerTitleAlign: "center",
-          headerShadowVisible: true,
+          headerShadowVisible: false,
           headerStyle: {
             backgroundColor: Colors.tertiary,
           },

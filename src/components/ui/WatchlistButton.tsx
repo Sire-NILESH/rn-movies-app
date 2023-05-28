@@ -81,7 +81,7 @@ const WatchlistButton: React.FC<IProps> = ({
           ? Colors.stone[50]
           : isBannerButton && isBannerButton
           ? Colors.stone[300]
-          : Colors.tertiary
+          : Colors.stone[900]
       }
       height={42}
       width={"100%"}

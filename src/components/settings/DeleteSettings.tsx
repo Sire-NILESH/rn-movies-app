@@ -45,7 +45,6 @@ const DeleteSettings = () => {
           width={50}
           radius={100}
           color={"transparent"}
-          // color={Colors.accentLighter}
           method={() => {
             //  Open the modal for confirmation
             deletingItemHandler(props.toDelete);

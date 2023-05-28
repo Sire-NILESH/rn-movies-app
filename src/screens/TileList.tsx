@@ -144,6 +144,9 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   // Header settings
   useLayoutEffect(() => {
     navigation.setOptions({
+      headerStyle: {
+        backgroundColor: Colors.tertiary,
+      },
       headerTitle: (props) => {
         return (
           <View className="w-full max-w-[225]">

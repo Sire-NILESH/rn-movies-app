@@ -4,8 +4,6 @@ import useImageItemSetting from "../hooks/useImageItemSetting";
 import ScreenBuilder from "../components/builders/ScreenBuilder";
 import HomeHeader from "../components/Header/HomeHeader";
 import HeaderWrapper from "../components/Header/HeaderWrapper";
-import ScreenBuilderV2 from "../components/builders/ScreenBuilderV2";
-import { useQuery } from "@tanstack/react-query";
 
 const HomeScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   const { navigation } = props;
@@ -27,7 +25,6 @@ const HomeScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
 
   return (
     <ScreenBuilder screenType="homescreen" imgItemsSetting={imgItemsSetting} />
-    // <ScreenBuilderV2 screenType="homescreen" />
   );
 };
 

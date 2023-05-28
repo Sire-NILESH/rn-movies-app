@@ -5,7 +5,11 @@ import SettingsCardWrapper from "./SettingsCardWrapper";
 import CardRow from "./CardRow";
 import CountriesDropdown from "../ui/CountriesDropdown";
 
-const DefaultRegionSettings = () => {
+interface IProps {
+  dropdownBgColor?: string;
+}
+
+const DefaultRegionSettings: React.FC<IProps> = ({ dropdownBgColor }) => {
   const { setDefaultRegionHandler, defaultRegion } = useDefaultRegionHooks();
   const [currentDefaultRegion, setDefaultRegion] =
     useState<ICountry>(defaultRegion);
@@ -24,6 +28,7 @@ const DefaultRegionSettings = () => {
         <CountriesDropdown
           currentCountry={currentDefaultRegion}
           setCountryHandler={onSetDefaultRegion}
+          bgColor={dropdownBgColor}
         />
       </CardRow>
     </SettingsCardWrapper>

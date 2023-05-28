@@ -8,7 +8,7 @@ import Banner from "../Banner";
 import Row from "../Row";
 import NothingToShow from "../NothingToShow";
 import Loader from "../ui/Loader";
-import React, { memo, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { sendUrlObjApiRequestV2 } from "../../utils/requests";
 import {
@@ -50,52 +50,54 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
     return result;
   }, []);
 
-  const {
-    isLoading: loadingProps,
-    data: screenProps,
-    error: errorLoadingProps,
-  } = useQuery({
+  const { data: screenProps, status } = useQuery({
     queryKey: ["homeScreens", screenType, playlistsToFetch.map((p) => p)],
     queryFn: async () => sendUrlObjApiRequestV2(playlistsToFetch),
-    staleTime: staleTime, //24hours playlistsToFetch.map((p) => p)
+    staleTime: staleTime, //24hours
     // cacheTime: 1000 * 60 * 60 * 24, // 24 hours
   });
+
+  const getNonEmptyArray = useMemo(() => {
+    if (screenProps !== undefined) {
+      return screenProps.filter((arr) => arr.length > 0)[0];
+    }
+    return [];
+  }, [screenProps]);
 
   return (
     <View className="flex-1 bg-secondary">
       {/* Loader */}
-      <Loader loading={loadingProps || !imgItemsSetting} />
+      <Loader loading={status === "loading" || !imgItemsSetting} />
 
-      {!loadingProps && !screenProps && !imgItemsSetting ? (
-        //   if no props then
+      {status === "error" ? (
+        //   if error, then
         <NothingToShow
           title={"Something went wrong while loading content"}
           problemType="error"
         />
-      ) : !errorLoadingProps && screenProps && imgItemsSetting ? (
+      ) : status === "success" && imgItemsSetting ? (
         //   when no error and props
         <View className="flex-1">
           {screenProps ? (
             <ScrollView className="space-y-10">
               {screenProps[0].length > 0 ? (
-                <Banner mediaList={screenProps[0]} />
+                <Banner mediaList={getNonEmptyArray} />
               ) : null}
 
               <View className="pt-4">
-                {!loadingProps &&
-                  playlistsToFetch.map((p, i) => {
-                    if (screenProps[i]?.length > 0) {
-                      return (
-                        <Row
-                          key={p.name}
-                          title={p.name}
-                          medias={screenProps[i]}
-                          playlist={p}
-                          thumbnailQualitySettings={imgItemsSetting}
-                        />
-                      );
-                    } else null;
-                  })}
+                {playlistsToFetch.map((p, i) => {
+                  if (screenProps[i]?.length > 0) {
+                    return (
+                      <Row
+                        key={p.name}
+                        title={p.name}
+                        medias={screenProps[i]}
+                        playlist={p}
+                        thumbnailQualitySettings={imgItemsSetting}
+                      />
+                    );
+                  } else null;
+                })}
               </View>
             </ScrollView>
           ) : null}
@@ -105,4 +107,4 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
   );
 };
 
-export default memo(ScreenBuilder);
+export default ScreenBuilder;

@@ -18,9 +18,9 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
               "rgba(0,0,0,0)",
               "rgba(0,0,0,0)",
               "rgba(0,0,0,0)",
-              // "rgba(28, 25, 23, 0.2)",
-              "rgba(28, 25, 25, 0.4)",
-              "rgba(28, 25, 25, 8)",
+              // "rgba(23, 23, 23, 0.2)",
+              "rgba(23, 23, 23, 0.4)",
+              "rgba(23, 23, 23, 8)",
             ]}
             style={{
               width: "100%",
@@ -52,12 +52,12 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
         <View className="flex-row items-center">
           <Text className="text-stone-500 text-xs">Version 1.0.0</Text>
         </View>
-        <View className="flex-row items-center">
+        {/* <View className="flex-row items-center">
           <Text className="text-stone-500 text-xs">
             Made with <Text className="font-bold text-stone-400">💖</Text> from{" "}
             <Text className="font-bold text-stone-400">Sire</Text>
           </Text>
-        </View>
+        </View> */}
         {/* <View className="flex-row items-center">
           <Text className="text-stone-500 text-xs">
             Powered by <Text className="font-bold text-stone-400">TMDB</Text>{" "}

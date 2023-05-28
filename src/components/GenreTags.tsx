@@ -19,7 +19,7 @@ const GenreTags: React.FC<IProps> = (props) => {
         backgroundColor:
           props.backgroundType === "transparent"
             ? "transparent"
-            : Colors.stone[900],
+            : Colors.tertiary,
       }}
     >
       {props.genreIdList ? (

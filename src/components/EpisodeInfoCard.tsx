@@ -11,16 +11,11 @@ interface IProps {
 
 const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
   return (
-    <View className="mt-5 py-3 justify-between">
+    <View className="py-3 justify-between">
       {/* TITLE AND EPISODE NUMBER */}
       <View className="flex-row items-center mx-3 space-x-2 mb-3">
-        {/* <View className="bg-white rounded-full h-8 w-8 items-center justify-center">
-          <Text className="text-text_darkest font-bold">
-            {episode.episode_number}
-          </Text>
-        </View> */}
         <Text className="ml-2 text-text_highLight w-[90%]">
-          <Text className="text-xl font-bold">{`E-${episode.episode_number}: ${episode.name}`}</Text>
+          <Text className="text-xl font-bold">{`EP ${episode.episode_number}: ${episode.name}`}</Text>
         </Text>
       </View>
 
@@ -48,7 +43,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
             <View className="flex-row space-x-2 items-center">
               <Ionicons name={"star"} color={Colors.yellow[400]} size={16} />
               <Text
-                className="text-green-500 text-xs"
+                className="text-green-500 text-sm"
                 style={{
                   color:
                     Number(episode.vote_average.toFixed(2)) > 4
@@ -82,9 +77,13 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
       </View>
 
       {/* OVERVIEW */}
-      <Text className="text-text_highLight px-5 py-3">
-        <Text className="text-text_tertiary text-xs">{episode.overview}</Text>
-      </Text>
+      <View className="px-4 pt-3">
+        <Text className="text-text_tertiary text-xs">
+          {episode.overview.length > 0
+            ? episode.overview
+            : "Overview unavailable"}
+        </Text>
+      </View>
     </View>
   );
 };
@@ -101,7 +100,7 @@ function DataElement({
   return (
     <View className="flex-row space-x-2 items-center">
       <Ionicons name={iconName} color={Colors.stone[400]} size={16} />
-      <Text className="text-text_primary text-xs">{text}</Text>
+      <Text className="text-text_primary text-sm">{text}</Text>
     </View>
   );
 }

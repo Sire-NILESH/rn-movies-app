@@ -32,7 +32,7 @@ export default function App() {
     defaultOptions: {
       queries: {
         staleTime: 1000 * 60 * 60 * 24,
-        cacheTime: 1000 * 60 * 60 * 24 * 7,
+        cacheTime: 1000 * 60 * 60 * 24 * 7, //1 week
         refetchOnMount: false,
       },
     },

@@ -78,7 +78,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
 
       {/* OVERVIEW */}
       <View className="px-4 pt-3">
-        <Text className="text-text_tertiary text-xs">
+        <Text className="text-text_tertiary text-sm font-normal">
           {episode.overview.length > 0
             ? episode.overview
             : "Overview unavailable"}

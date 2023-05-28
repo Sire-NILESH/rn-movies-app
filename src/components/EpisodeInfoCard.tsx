@@ -15,7 +15,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
       {/* TITLE AND EPISODE NUMBER */}
       <View className="flex-row items-center mx-3 space-x-2 mb-3">
         <Text className="ml-2 text-text_highLight w-[90%]">
-          <Text className="text-xl font-bold">{`EP ${episode.episode_number}: ${episode.name}`}</Text>
+          <Text className="text-xl font-semibold">{`EP ${episode.episode_number}: ${episode.name}`}</Text>
         </Text>
       </View>
 
@@ -78,7 +78,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
 
       {/* OVERVIEW */}
       <View className="px-4 pt-3">
-        <Text className="text-text_dark text-xs font-normal">
+        <Text className="text-text_tertiary text-sm">
           {episode.overview.length > 0
             ? episode.overview
             : "Overview unavailable"}

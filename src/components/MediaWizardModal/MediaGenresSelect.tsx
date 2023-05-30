@@ -5,16 +5,19 @@ import YearsDropdown from "../ui/YearsDropdown";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Colors } from "../../utils/Colors";
 import {
+  IGenreSortBy,
   IUrlObject,
   MediaTypes,
   TReleaseYearConstraint,
 } from "../../../types/typings";
+import GenresSortByDropDown from "../ui/GenresSortByDropDown";
 
 interface IProps {
   genrePlaylists: IUrlObject[];
   selectedPlaylistHandlers(playlist: IUrlObject, remove?: boolean): void;
   setCurrentLangHandler: (language: string) => void;
   setCurrentYearHandler: (year: number) => void;
+  setCurrentGenreSortByHandler: (sortByFilter: IGenreSortBy) => void;
   setReleaseYearConstraintHandler: (constraint: TReleaseYearConstraint) => void;
   currentYear: number;
   mediaListType: MediaTypes;
@@ -25,6 +28,7 @@ const MediaGenresSelect: React.FC<IProps> = ({
   selectedPlaylistHandlers,
   setCurrentLangHandler,
   setCurrentYearHandler,
+  setCurrentGenreSortByHandler,
   setReleaseYearConstraintHandler,
   currentYear,
   mediaListType,
@@ -161,6 +165,20 @@ const MediaGenresSelect: React.FC<IProps> = ({
               }}
             />
             <Text className="text-text_secondary">{"After"}</Text>
+          </View>
+        </View>
+
+        <View className="mt-6 space-y-4">
+          <Text className="ml-6 text-text_dark text-sm" numberOfLines={2}>
+            {"Sort content ( desc : Descending, asc : Ascending )"}
+          </Text>
+
+          <View className="ml-4">
+            <GenresSortByDropDown
+              saveMode="local"
+              localGenreSortBySetter={setCurrentGenreSortByHandler}
+              bgColor={Colors.stone[900]}
+            />
           </View>
         </View>
       </View>

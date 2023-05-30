@@ -17,13 +17,13 @@ import { ScrollView } from "react-native-gesture-handler";
 import WatchlistButton from "./ui/WatchlistButton";
 import { by639_1 } from "iso-language-codes";
 
-interface Props {
+interface IProps {
   mediaList: MovieMedia[] | TvMedia[];
 }
 
 const screenDimensions = Dimensions.get("screen");
 
-function Banner({ mediaList }: Props) {
+const Banner: React.FC<IProps> = ({ mediaList }) => {
   const [media, setMedia] = useState<MovieMedia | TvMedia | null>(null);
 
   const navigation = useNavigation();
@@ -211,7 +211,7 @@ function Banner({ mediaList }: Props) {
       ) : null}
     </View>
   );
-}
+};
 
 export default memo(Banner);
 

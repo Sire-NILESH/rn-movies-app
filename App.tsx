@@ -18,6 +18,17 @@ import { useState } from "react";
 // Keep the splash screen visible while we fetch resources
 // SplashScreen.preventAutoHideAsync();
 
+// Create a client
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 60 * 24,
+      cacheTime: 1000 * 60 * 60 * 24 * 7, //1 week
+      refetchOnMount: false,
+    },
+  },
+});
+
 export default function App() {
   // DB setup hook
   const { dbInitialized, dbInitError, dbInitLoading } = useDBInitialize();
@@ -27,16 +38,24 @@ export default function App() {
     storage: AsyncStorage,
   });
 
-  // Create a client
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 1000 * 60 * 60 * 24,
-        cacheTime: 1000 * 60 * 60 * 24 * 7, //1 week
-        refetchOnMount: false,
-      },
-    },
-  });
+  function enterApp() {
+    if (dbInitLoading) {
+      return <Loader loading={dbInitLoading} />;
+    } else if (!dbInitLoading && dbInitError) {
+      return (
+        // when reached here, the db initialization hsa failed and the app is in unclean state, show nothing/error
+        <NothingToShow
+          title={"Something went wrong while loading content"}
+          problemType="error"
+        />
+      );
+    } else if (dbInitialized && queryCacheHyderated) {
+      return (
+        // RootNavigation
+        <RootNavigator />
+      );
+    } else return null;
+  }
 
   return (
     <>
@@ -54,20 +73,7 @@ export default function App() {
               }}
             >
               <SafeAreaView className="flex-1 bg-tertiary">
-                <Loader loading={dbInitLoading} />
-
-                {!dbInitLoading && dbInitError ? (
-                  // when reached here, the db initialization hsa failed and the app is in unclean state, show nothing/error
-                  <NothingToShow
-                    title={"Something went wrong while loading content"}
-                    problemType="error"
-                  />
-                ) : null}
-
-                {dbInitialized && queryCacheHyderated ? (
-                  // RootNavigation
-                  <RootNavigator />
-                ) : null}
+                {enterApp()}
               </SafeAreaView>
             </PersistQueryClientProvider>
           </QueryClientProvider>

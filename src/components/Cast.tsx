@@ -5,6 +5,7 @@ import { ICast, ICrew } from "../../types/typings";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
 import { getGender } from "../utils/helpers/helper";
+import RenderProfileImage from "./RenderProfileImage";
 
 interface IProps {
   cast: ICast[];
@@ -50,9 +51,7 @@ const Cast: React.FC<IProps> = (props) => {
                           aspectRatio: 1 / 1,
                         }}
                       >
-                        <RenderProfile
-                          id={p.id}
-                          name={p.name}
+                        <RenderProfileImage
                           imgPath={`https://image.tmdb.org/t/p/w200${p.profile_path}`}
                         />
                       </View>
@@ -142,9 +141,7 @@ const Cast: React.FC<IProps> = (props) => {
                     aspectRatio: 1 / 1,
                   }}
                 >
-                  <RenderProfile
-                    id={p.id}
-                    name={p.name}
+                  <RenderProfileImage
                     imgPath={`https://image.tmdb.org/t/p/w200${p.profile_path}`}
                   />
                 </View>
@@ -211,41 +208,3 @@ const Cast: React.FC<IProps> = (props) => {
 };
 
 export default React.memo(Cast);
-
-function RenderProfile({
-  id,
-  name,
-  imgPath,
-}: {
-  id: number;
-  imgPath: string;
-  name: string;
-}) {
-  const [fallbackImage, setFallbackImage] = useState<boolean>(false);
-
-  function setFallbackImagehandler(state: boolean) {
-    setFallbackImage(state);
-  }
-
-  return (
-    <View className="h-full w-full rounded-2xl overflow-hidden border-2 border-stone-800/40">
-      {imgPath && !fallbackImage ? (
-        <Image
-          source={{ uri: imgPath }}
-          className="h-full w-full border-2 border-green-500"
-          resizeMode="cover"
-          fadeDuration={400}
-          onError={(err) => {
-            if (err) {
-              setFallbackImagehandler(true);
-            }
-          }}
-        />
-      ) : (
-        <View className="h-full w-full justify-center items-center">
-          <Ionicons name="person" color={Colors.green[900]} size={54} />
-        </View>
-      )}
-    </View>
-  );
-}

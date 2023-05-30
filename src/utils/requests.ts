@@ -539,14 +539,16 @@ export const fetchSeasonDetails = async (
       }
     );
 
-    if (data.data) {
-      // Deleting unnecessary data from each season that we won't use.
-      data.data.episodes.forEach((e: any) => {
-        delete e["crew"];
-        delete e["guest_stars"];
-      });
-      return data.data;
-    }
+    return data.data;
+
+    // if (data.data) {
+    //   // Deleting unnecessary data from each season that we won't use.
+    //   data.data.episodes.forEach((e: any) => {
+    //     delete e["crew"];
+    //     delete e["guest_stars"];
+    //   });
+    //   return data.data;
+    // }
   } catch (err) {
     throw err;
   }

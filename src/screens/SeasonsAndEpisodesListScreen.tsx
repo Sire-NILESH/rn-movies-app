@@ -1,7 +1,7 @@
 import { View, Text, Pressable, Image, FlatList } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
-import { Season, SeasonDetails } from "../../types/typings";
+import { EpisodeCastAndCrew, Season, SeasonDetails } from "../../types/typings";
 import { fetchSeasonDetails } from "../utils/requests";
 import { Colors } from "../utils/Colors";
 import { Ionicons } from "@expo/vector-icons";
@@ -12,6 +12,7 @@ import NothingToShow from "../components/NothingToShow";
 import { dateFormatter, showErrorAlert } from "../utils/helpers/helper";
 import Loader from "../components/ui/Loader";
 import { useQuery } from "./../../node_modules/@tanstack/react-query";
+import CastAndCrewModal from "../components/ui/CastAndCrewModal";
 
 const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   IStackScreenProps
@@ -33,6 +34,18 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   const [selectedSeason, setSelectedSeason] = useState<Season>(
     tvMediaSeasons[0]
   );
+  const [castAndCrewForModal, setcastAndCrewForModal] =
+    useState<EpisodeCastAndCrew>();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  function castandCrewModalHandler(castAndCrew: EpisodeCastAndCrew) {
+    setIsModalOpen(true);
+    setcastAndCrewForModal(castAndCrew);
+  }
+
+  function modalHandler(state: boolean) {
+    setIsModalOpen(state);
+  }
 
   const {
     isLoading: loadingProps,
@@ -102,6 +115,15 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
       ) : (
         seasonDetails && (
           <View className="flex-1">
+            <CastAndCrewModal
+              isVisible={isModalOpen}
+              closeModal={() => {
+                setcastAndCrewForModal(undefined);
+                modalHandler(false);
+              }}
+              tvShowName={tvMediaName}
+              castAndCrew={castAndCrewForModal}
+            />
             <FlatList
               ListHeaderComponent={
                 <View className="mb-5">
@@ -184,7 +206,10 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                 <View className="border border-b-stone-800 mx-10 my-4" />
               )}
               renderItem={(episodeObj) => (
-                <EpisodeInfoCard episode={episodeObj.item} />
+                <EpisodeInfoCard
+                  episode={episodeObj.item}
+                  castandCrewModalHandler={castandCrewModalHandler}
+                />
               )}
             />
           </View>

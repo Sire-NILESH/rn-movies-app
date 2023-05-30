@@ -12,11 +12,13 @@ type TProps = PropsWithChildren<{ title?: string }>;
 const HeaderWrapper: React.FC<TProps> = (props) => {
   const navigation = useNavigation<DrawerNavigationOptions>();
 
-  // bg-black/30
-
   return (
     <LinearGradient
-      colors={["rgba(15, 15, 15, 1)", "rgba(0,0,0,0)"]}
+      colors={[
+        "rgba(15, 15, 15, 0.7)",
+        "rgba(15, 15, 15, 0.2)",
+        "rgba(0,0,0,0)",
+      ]}
       className="flex-row justify-between items-center w-[100%] px-4 h-[60]"
       // style={{ elevation: 1 }}
     >
@@ -39,14 +41,3 @@ const HeaderWrapper: React.FC<TProps> = (props) => {
 };
 
 export default HeaderWrapper;
-
-{
-  /* <Pressable
-//  @ts-ignore
-onPress={() => navigation.toggleDrawer()}
-android_ripple={{ color: "#eee" }}
-className="h-full w-full items-center justify-center"
->
-<Ionicons name="menu-outline" size={28} color={Colors.text_primary} />
-</Pressable> */
-}

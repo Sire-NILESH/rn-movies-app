@@ -3,6 +3,7 @@ import { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Colors } from "../../utils/Colors";
 import {
+  IGenreSortBy,
   IQueryParams,
   IUrlObject,
   MediaTypes,
@@ -46,6 +47,7 @@ const MediaWizardModal: React.FC<IProps> = ({
   const [currentLang, setCurrentLang] = useState<string>(
     defaultLanguage.iso_639_1
   );
+  const [currentGenreSortBy, setCurrentGenreSortBy] = useState<IGenreSortBy>();
 
   const setCurrentYearHandler = (year: number) => {
     setCurrentYear(year);
@@ -59,6 +61,10 @@ const MediaWizardModal: React.FC<IProps> = ({
 
   const setCurrentLangHandler = (language: string) => {
     setCurrentLang(language);
+  };
+
+  const setCurrentGenreSortByHandler = (sortByFilter: IGenreSortBy) => {
+    setCurrentGenreSortBy(sortByFilter);
   };
 
   const setCurrentViewHandler = (view: TViews) => {
@@ -79,6 +85,16 @@ const MediaWizardModal: React.FC<IProps> = ({
     currentYear,
     releaseYearConstraint
   );
+
+  if (currentGenreSortBy !== undefined) {
+    if (currentGenreSortBy.value === undefined) {
+      delete filters.sort_by;
+    } else {
+      filters.sort_by = currentGenreSortBy.value;
+    }
+  } else if (currentGenreSortBy === undefined) {
+    delete filters.sort_by;
+  }
 
   function selectedPlaylistHandlers(
     playlist: IUrlObject,
@@ -141,7 +157,7 @@ const MediaWizardModal: React.FC<IProps> = ({
 
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible}>
-      <View className="absolute my-[25%] mx-[5%] h-[85%] w-[90%] bg-neutral-800 rounded-xl pb-2 border-[1px] border-stone-900 [elevation:10]">
+      <View className="absolute my-[25%] mx-[5%] h-[85%] w-[90%] bg-neutral-800 rounded-xl pb-2 border border-neutral-700/60 [elevation:10]">
         {/* HEADER */}
         <View className="flex-row items-center justify-between h-[42] bg-tertiary rounded-t-xl px-[20]">
           {/* Header Title */}
@@ -265,6 +281,7 @@ const MediaWizardModal: React.FC<IProps> = ({
                 selectedPlaylistHandlers={selectedPlaylistHandlers}
                 setCurrentLangHandler={setCurrentLangHandler}
                 setCurrentYearHandler={setCurrentYearHandler}
+                setCurrentGenreSortByHandler={setCurrentGenreSortByHandler}
                 setReleaseYearConstraintHandler={
                   setReleaseYearConstraintHandler
                 }

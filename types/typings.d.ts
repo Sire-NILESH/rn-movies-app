@@ -198,6 +198,8 @@ export interface Episode {
   id: number;
   name: string;
   overview: string;
+  crew: ICrew[];
+  guest_stars: ICast[];
   production_code: string;
   runtime: number;
   season_number: number;
@@ -283,6 +285,14 @@ export interface ICrew extends ICreditPerson {
 
 export interface ICredits {
   id: number;
+  cast: ICast[];
+  crew: ICrew[];
+}
+
+export interface EpisodeCastAndCrew {
+  seasonNumber: number;
+  episodeNumber: number;
+  episdodeName: string;
   cast: ICast[];
   crew: ICrew[];
 }
@@ -396,6 +406,7 @@ export interface IQueryParams {
   with_original_language?: string;
   with_watch_providers?: string;
   watch_region?: string;
+  sort_by?: TGenresSortByValue;
 
   // for movie
   primary_release_year?: string;
@@ -463,3 +474,34 @@ export interface ISupportedLang {
   name: string;
 }
 [];
+
+export type TGenresSortByValue =
+  | "popularity.asc"
+  | "popularity.desc"
+  | "revenue.asc"
+  | "revenue.desc"
+  | "primary_release_date.asc"
+  | "primary_release_date.desc"
+  | "vote_average.asc"
+  | "vote_average.desc"
+  | "vote_count.asc"
+  | "vote_count.desc"
+  | undefined;
+
+export type TGenresSortByKey =
+  | "Popularity asc"
+  | "Popularity desc"
+  | "Revenue asc"
+  | "Revenue desc"
+  | "Release asc"
+  | "Release desc"
+  | "Ratings asc"
+  | "Ratings desc"
+  | "Avg Ratings desc"
+  | "Avg Ratings asc"
+  | "Default";
+
+export interface IGenreSortBy {
+  key: TGenresSortByKey;
+  value: TGenresSortByValue;
+}

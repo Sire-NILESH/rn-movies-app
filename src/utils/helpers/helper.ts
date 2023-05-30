@@ -2,6 +2,8 @@ import {
   Genre,
   ICountry,
   ICreditPerson,
+  IDropdownYearsObj,
+  IGenreSortBy,
   IImageItemQualitySetting,
   IImageQuality,
   INetworkIds,
@@ -227,6 +229,22 @@ export function isICountry(obj: Object): obj is ICountry {
     (obj as ICountry).code !== undefined
   );
 }
+
+export function isIDropdownYear(obj: Object): obj is IDropdownYearsObj {
+  return (
+    obj !== null &&
+    (obj as IDropdownYearsObj).year !== undefined &&
+    (obj as IDropdownYearsObj).value !== undefined
+  );
+}
+
+// export function isIGenreSortBy(obj: Object): obj is IGenreSortBy {
+//   return (
+//     obj !== null &&
+//     (obj as IGenreSortBy).key in TGenresSortByKey &&
+//     (obj as IGenreSortBy).code !== undefined
+//   );
+// }
 
 export const addReleaseAndAirDateFilters = (
   filters: IQueryParams,

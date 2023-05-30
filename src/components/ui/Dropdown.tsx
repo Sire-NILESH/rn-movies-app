@@ -2,6 +2,7 @@ import React from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import {
   isICountry,
+  isIDropdownYear,
   isIImageQuality,
   isSupportedLang,
 } from "../../utils/helpers/helper";
@@ -9,6 +10,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import {
   ICountry,
   IDropdownYearsObj,
+  IGenreSortBy,
   IImageQuality,
   ISupportedLang,
 } from "../../../types/typings";
@@ -18,7 +20,8 @@ type TSupportedTypes =
   | ISupportedLang
   | IDropdownYearsObj
   | IImageQuality
-  | ICountry;
+  | ICountry
+  | IGenreSortBy;
 
 interface IProps<T extends TSupportedTypes> {
   listData: T[];
@@ -26,6 +29,7 @@ interface IProps<T extends TSupportedTypes> {
   setSelected: (item: T) => void;
   borderRadius: "medium" | "full";
   bgColor?: string;
+  dropdownWidth?: number;
 }
 
 export default function Dropdown<T extends TSupportedTypes>({
@@ -34,6 +38,7 @@ export default function Dropdown<T extends TSupportedTypes>({
   borderRadius,
   setSelected,
   bgColor,
+  dropdownWidth,
 }: IProps<T>) {
   const radiusForDropdown = {
     medium: 10,
@@ -65,7 +70,7 @@ export default function Dropdown<T extends TSupportedTypes>({
         buttonStyle={{
           backgroundColor: bgColor ? bgColor : Colors.accentLighter,
           borderRadius: radiusForDropdown[borderRadius],
-          width: 150,
+          width: dropdownWidth ? dropdownWidth : 150,
           borderWidth: 0,
           borderBottomColor: "red",
         }}
@@ -75,8 +80,12 @@ export default function Dropdown<T extends TSupportedTypes>({
         dropdownOverlayColor={"transparent"}
         dropdownStyle={{
           backgroundColor: Colors.stone[800],
+          borderWidth: 1,
+          borderTopWidth: 1,
           borderRadius: 10,
+          borderColor: "rgba(23, 23, 23, 0.3)",
           marginTop: -24,
+          // width: 150,
         }}
         defaultButtonText={
           isSupportedLang(currentSelected)
@@ -85,7 +94,9 @@ export default function Dropdown<T extends TSupportedTypes>({
             ? currentSelected.quality
             : isICountry(currentSelected)
             ? currentSelected.name
-            : currentSelected.value
+            : isIDropdownYear(currentSelected)
+            ? currentSelected.value
+            : currentSelected.key
         }
         buttonTextAfterSelection={(selectedItem: T, index) => {
           // text represented after item is selected
@@ -96,7 +107,9 @@ export default function Dropdown<T extends TSupportedTypes>({
             ? selectedItem.quality
             : isICountry(selectedItem)
             ? selectedItem.name
-            : selectedItem.value;
+            : isIDropdownYear(selectedItem)
+            ? selectedItem.value
+            : selectedItem.key;
         }}
         rowTextForSelection={(item: T, index) => {
           // text represented for each item in dropdown
@@ -107,7 +120,9 @@ export default function Dropdown<T extends TSupportedTypes>({
             ? item.quality
             : isICountry(item)
             ? item.name
-            : item.value;
+            : isIDropdownYear(item)
+            ? item.value
+            : item.key;
         }}
       />
     </>

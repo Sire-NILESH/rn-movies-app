@@ -1,15 +1,19 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Pressable } from "react-native";
 import React from "react";
-import { Episode } from "../../types/typings";
+import { Episode, EpisodeCastAndCrew } from "../../types/typings";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
 import { dateFormatter } from "../utils/helpers/helper";
 
 interface IProps {
   episode: Episode;
+  castandCrewModalHandler: (castAndCrew: EpisodeCastAndCrew) => void;
 }
 
-const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
+const EpisodeInfoCard: React.FC<IProps> = ({
+  episode,
+  castandCrewModalHandler,
+}) => {
   return (
     <View className="py-3 justify-between">
       {/* TITLE AND EPISODE NUMBER */}
@@ -19,10 +23,10 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
         </Text>
       </View>
 
-      <View className="flex-row items-center space-x-1">
+      <View className="flex-row items-center space-x-4">
         {/* IMAGE CARD */}
         <View
-          className="mx-4 rounded-xl border border-stone-800 overflow-hidden"
+          className="ml-4 rounded-xl border border-stone-800 overflow-hidden"
           style={{ width: "60%", aspectRatio: 16 / 9 }}
         >
           <Image
@@ -78,11 +82,65 @@ const EpisodeInfoCard: React.FC<IProps> = ({ episode }) => {
 
       {/* OVERVIEW */}
       <View className="px-4 pt-3">
-        <Text className="text-text_tertiary text-sm">
+        <Text className="text-text_dark text-sm">
           {episode.overview.length > 0
             ? episode.overview
             : "Overview unavailable"}
         </Text>
+      </View>
+
+      {/* DIRECTOR */}
+      <View className="px-4 pt-3">
+        <Text className="text-text_secondary mb-1">Directed by</Text>
+        <Text className="text-blue-400 text-sm">
+          {episode.crew?.length > 0
+            ? episode.crew
+                .filter((c) => c.job === "Director")
+                .slice(0, 5)
+                .map((c) => c.name)
+                .join(",  ")
+            : "--"}
+        </Text>
+      </View>
+
+      {/* GUEST APPEARANCE */}
+      <View className="px-4 pt-3">
+        <Text className="text-text_secondary mb-1">Guest stars</Text>
+        <Text className="text-blue-400 text-sm">
+          {episode.guest_stars?.length > 0
+            ? episode.guest_stars
+                .slice(0, 5)
+                .map((g) => g.name)
+                .join(",  ")
+                .concat(episode.guest_stars?.length > 5 ? "..." : " ")
+            : "--"}
+        </Text>
+
+        {/* SHOW MORE BUTTON */}
+        <View className="mt-3 w-[100] rounded-lg overflow-hidden">
+          <Pressable
+            className="px-[1px] items-center justify-center bg-transparent w-[100px] h-[30px]"
+            onPress={() =>
+              castandCrewModalHandler({
+                seasonNumber: episode.season_number,
+                episodeNumber: episode.episode_number,
+                cast: episode.guest_stars,
+                crew: episode.crew,
+                episdodeName: episode.name,
+              })
+            }
+            android_ripple={{ color: "#eee" }}
+          >
+            <View className="flex-row gap-1 items-center">
+              <Ionicons
+                name="information-circle"
+                size={18}
+                color={Colors.stone[400]}
+              />
+              <Text className="font-bold text-gray-50">Show more</Text>
+            </View>
+          </Pressable>
+        </View>
       </View>
     </View>
   );

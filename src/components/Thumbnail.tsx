@@ -79,6 +79,8 @@ function Thumbnail({
       orientation === "landscape" ? media.backdrop_path : media.poster_path
     }`;
 
+  const mediaType = isMovie(media) ? "movie" : "tv";
+
   return (
     <View
       className="relative overflow-hidden bg-neutral-900"
@@ -87,10 +89,15 @@ function Thumbnail({
       <Pressable
         className=""
         onPress={() => {
-          // @ts-ignore
           navigateTo("More Info", {
-            mediaType: isMovie(media) ? "movie" : "tv",
+            mediaType: mediaType,
             media: media,
+          });
+        }}
+        onLongPress={() => {
+          navigateTo("Related", {
+            relatedToMediaId: media.id,
+            mediaType: mediaType,
           });
         }}
       >
@@ -102,8 +109,8 @@ function Thumbnail({
               imageURL={imageURL}
               cacheKey={
                 orientation === "portrait"
-                  ? `${media.id}-${isMovie(media) ? "movie" : "tv"}-poster`
-                  : `${media.id}-${isMovie(media) ? "movie" : "tv"}-backdrop`
+                  ? `${media.id}-${mediaType}-poster`
+                  : `${media.id}-${mediaType}-backdrop`
               }
             />
           ) : (
@@ -115,7 +122,7 @@ function Thumbnail({
             imgType="regular"
             mediaId={media.id}
             orientation={orientation}
-            mediaType={isMovie(media) ? "movie" : "tv"}
+            mediaType={mediaType}
           ></ImageView>
         ) : (
           <ImagePlaceholder />
@@ -123,12 +130,6 @@ function Thumbnail({
 
         {/* Movie Title and date box */}
         <LinearGradient
-          // colors={[
-          //   "rgba(0,0,0,0)",
-          //   "rgba(0,0,0,0)",
-          //   "rgba(15, 15, 15, 0.2)",
-          //   "rgba(15, 15, 15, 0.8)",
-          // ]}
           colors={[
             "rgba(0,0,0,0)",
             "rgba(0,0,0,0)",

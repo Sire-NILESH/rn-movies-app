@@ -131,7 +131,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                     colors={[
                       "rgba(22, 101, 52, 0.5)",
                       "rgba(22, 101, 52, 0.3)",
-                      "rgba(28, 25, 23, 0.9)",
+                      // "rgba(23, 23, 23, 0.8)",
                       Colors.black,
                     ]}
                     className="flex-row px-4 pt-4 justify-between items-start mb-5"

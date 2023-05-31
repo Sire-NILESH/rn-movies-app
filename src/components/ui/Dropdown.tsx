@@ -76,7 +76,12 @@ export default function Dropdown<T extends TSupportedTypes>({
         }}
         buttonTextStyle={{ color: Colors.text_primary, fontSize: 14 }}
         rowStyle={{ borderBottomColor: Colors.stone[800] }}
-        rowTextStyle={{ color: Colors.text_primary, fontSize: 14 }}
+        rowTextStyle={{
+          color: Colors.text_primary,
+          fontSize: 14,
+          // textAlign: "left",
+          // paddingHorizontal: 4,
+        }}
         dropdownOverlayColor={"transparent"}
         dropdownStyle={{
           backgroundColor: Colors.stone[800],

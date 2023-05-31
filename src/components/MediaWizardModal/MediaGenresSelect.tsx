@@ -168,9 +168,9 @@ const MediaGenresSelect: React.FC<IProps> = ({
           </View>
         </View>
 
-        <View className="mt-6 space-y-4">
-          <Text className="ml-6 text-text_dark text-sm" numberOfLines={2}>
-            {"Sort content ( desc : Descending, asc : Ascending )"}
+        <View className="mt-6">
+          <Text className="ml-6 mb-4 text-text_dark text-sm" numberOfLines={2}>
+            {"Sort content by ( ↓ Descending, ↑ Ascending )"}
           </Text>
 
           <View className="ml-4">

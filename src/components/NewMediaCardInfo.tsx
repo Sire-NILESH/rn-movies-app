@@ -152,7 +152,11 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
 
           {isTvExtended(media) && (
             <View className="flex-row items-center space-x-2 px-4">
-              <Ionicons name="bookmark" size={18} color={Colors.text_primary} />
+              <Ionicons
+                name="document-text-outline"
+                size={18}
+                color={Colors.text_primary}
+              />
               <Text
                 className="text-text_highLight font-bold"
                 style={styles.textShadow}

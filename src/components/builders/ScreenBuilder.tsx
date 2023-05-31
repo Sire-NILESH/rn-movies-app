@@ -8,7 +8,7 @@ import Banner from "../Banner";
 import Row from "../Row";
 import NothingToShow from "../NothingToShow";
 import Loader from "../ui/Loader";
-import React, { useMemo } from "react";
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { sendUrlObjApiRequestV2 } from "../../utils/requests";
 import {
@@ -16,6 +16,7 @@ import {
   movieScreenPlaylists,
   tvScreenPlaylists,
 } from "../../config/homeScreensPlaylistsConfig";
+// import { queryClient } from "../../../App";
 
 interface IProps {
   screenType: ScreenTypes;
@@ -45,24 +46,37 @@ function getPlaylistsToFetch(screenType: ScreenTypes) {
 const staleTime = 1000 * 60 * 60 * 24; //24hours
 
 const ScreenBuilder: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
-  const playlistsToFetch = useMemo(() => {
-    const result = getPlaylistsToFetch(screenType);
-    return result;
-  }, []);
+  const playlistsToFetch = getPlaylistsToFetch(screenType);
 
   const { data: screenProps, status } = useQuery({
-    queryKey: ["homeScreens", screenType, playlistsToFetch.map((p) => p)],
+    queryKey: ["homeScreens", screenType, playlistsToFetch],
     queryFn: async () => sendUrlObjApiRequestV2(playlistsToFetch),
     staleTime: staleTime, //24hours
     // cacheTime: 1000 * 60 * 60 * 24, // 24 hours
+    // initialData: () =>
+    //   queryClient.getQueryData([
+    //     JSON.stringify([
+    //       "homeScreens",
+    //       screenType,
+    //       playlistsToFetch.map((p) => p.name),
+    //     ]),
+    //   ]),
+    // initialDataUpdatedAt: () =>
+    //   queryClient.getQueryState([
+    //     JSON.stringify([
+    //       "homeScreens",
+    //       screenType,
+    //       playlistsToFetch.map((p) => p.name),
+    //     ]),
+    //   ])?.dataUpdatedAt,
   });
 
-  const getNonEmptyArray = useMemo(() => {
+  const getNonEmptyArray = () => {
     if (screenProps !== undefined) {
       return screenProps.filter((arr) => arr.length > 0)[0];
     }
     return [];
-  }, [screenProps]);
+  };
 
   return (
     <View className="flex-1 bg-secondary">
@@ -80,9 +94,7 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
         <View className="flex-1">
           {screenProps ? (
             <ScrollView className="space-y-10">
-              {screenProps[0].length > 0 ? (
-                <Banner mediaList={getNonEmptyArray} />
-              ) : null}
+              <Banner mediaList={getNonEmptyArray()} />
 
               <View className="pt-4">
                 {playlistsToFetch.map((p, i) => {

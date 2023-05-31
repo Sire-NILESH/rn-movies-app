@@ -14,6 +14,12 @@ const EpisodeInfoCard: React.FC<IProps> = ({
   episode,
   castandCrewModalHandler,
 }) => {
+  const directedBy = episode.crew
+    .filter((c) => c.job === "Director")
+    .slice(0, 5)
+    .map((c) => c.name)
+    .join(",  ");
+
   return (
     <View className="py-3 justify-between">
       {/* TITLE AND EPISODE NUMBER */}
@@ -56,19 +62,24 @@ const EpisodeInfoCard: React.FC<IProps> = ({
                 }}
               >
                 {`${episode.vote_average.toFixed(2)}`}
-                <Text className="text-text_primary">/10</Text>
+                <Text className="text-text_primary"> / 10</Text>
               </Text>
             </View>
           </View>
+
           <View>
             <DataElement
-              text={"Ep. " + String(episode.episode_number)}
+              text={"Episode " + String(episode.episode_number)}
               iconName="list"
             />
           </View>
+
           {episode.runtime ? (
             <View>
-              <DataElement text={`${episode.runtime} mins`} iconName="time" />
+              <DataElement
+                text={`${episode.runtime} minutes`}
+                iconName="time"
+              />
             </View>
           ) : null}
           <View>
@@ -82,7 +93,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({
 
       {/* OVERVIEW */}
       <View className="px-4 pt-3">
-        <Text className="text-text_dark text-sm">
+        <Text className="text-text_tertiary text-sm">
           {episode.overview.length > 0
             ? episode.overview
             : "Overview unavailable"}
@@ -91,22 +102,19 @@ const EpisodeInfoCard: React.FC<IProps> = ({
 
       {/* DIRECTOR */}
       <View className="px-4 pt-3">
-        <Text className="text-text_secondary mb-1">Directed by</Text>
-        <Text className="text-blue-400 text-sm">
-          {episode.crew?.length > 0
-            ? episode.crew
-                .filter((c) => c.job === "Director")
-                .slice(0, 5)
-                .map((c) => c.name)
-                .join(",  ")
-            : "--"}
+        <Text className="text-text_tertiary mb-1">Directed by:</Text>
+        <Text className="text-text_highLight text-base font-semibold">
+          {directedBy.length > 0 ? directedBy : "--"}
         </Text>
       </View>
 
       {/* GUEST APPEARANCE */}
       <View className="px-4 pt-3">
-        <Text className="text-text_secondary mb-1">Guest stars</Text>
-        <Text className="text-blue-400 text-sm">
+        <Text className="text-text_tertiary mb-1">Guest appearances:</Text>
+        <Text
+          className="text-text_highLight text-sm font-semibold"
+          style={{ lineHeight: 24 }}
+        >
           {episode.guest_stars?.length > 0
             ? episode.guest_stars
                 .slice(0, 5)
@@ -117,9 +125,9 @@ const EpisodeInfoCard: React.FC<IProps> = ({
         </Text>
 
         {/* SHOW MORE BUTTON */}
-        <View className="mt-3 w-[100] rounded-lg overflow-hidden">
+        <View className="mt-3 w-[150] rounded-lg overflow-hidden">
           <Pressable
-            className="px-[1px] items-center justify-center bg-transparent w-[100px] h-[30px]"
+            className="px-[1px] items-center justify-center bg-transparent w-[150px] h-[30px]"
             onPress={() =>
               castandCrewModalHandler({
                 seasonNumber: episode.season_number,
@@ -137,7 +145,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({
                 size={18}
                 color={Colors.stone[400]}
               />
-              <Text className="font-bold text-gray-50">Show more</Text>
+              <Text className="font-bold text-blue-400">Show more credits</Text>
             </View>
           </Pressable>
         </View>

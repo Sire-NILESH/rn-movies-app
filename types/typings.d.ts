@@ -489,16 +489,16 @@ export type TGenresSortByValue =
   | undefined;
 
 export type TGenresSortByKey =
-  | "Popularity asc"
-  | "Popularity desc"
-  | "Revenue asc"
-  | "Revenue desc"
-  | "Release asc"
-  | "Release desc"
-  | "Ratings asc"
-  | "Ratings desc"
-  | "Avg Ratings desc"
-  | "Avg Ratings asc"
+  | "↑ Popularity"
+  | "↓ Popularity"
+  | "↑ Revenue"
+  | "↓ Revenue"
+  | "↑ Release"
+  | "↓ Release"
+  | "↑ Ratings"
+  | "↓ Ratings"
+  | "↓ Avg Ratings"
+  | "↑ Avg Ratings"
   | "Default";
 
 export interface IGenreSortBy {

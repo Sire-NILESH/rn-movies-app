@@ -19,7 +19,7 @@ export default function SettingsCardWrapper(props: {
           ></Ionicons>
         </View>
         <View className="w-[92%]">
-          <Text className="text-text_highLight font-semibold mb-1">
+          <Text className="text-text_highLight text-base mb-1">
             {props.title}
           </Text>
           <Text className="text-text_dark text-sm">{props.subtitle}</Text>

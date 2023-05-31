@@ -28,12 +28,12 @@ const CastAndCrewModal: React.FC<IProps> = (props) => {
 
   return (
     <Modal
-      animationType="slide"
+      animationType="fade"
       transparent={true}
       visible={props.isVisible}
       className="items-center justify-center"
     >
-      <View className="absolute my-[40%] mx-[5%] h-[64%] w-[90%] bg-zinc-900 rounded-xl pb-2 border border-neutral-700/60 [elevation:10] overflow-hidden">
+      <View className="absolute my-[40%] mx-[5%] h-[65%] w-[90%] bg-zinc-900 rounded-xl pb-2 border border-neutral-700/60 [elevation:10] overflow-hidden">
         {/* HEADER */}
         <View className="mt-1 flex-row items-center justify-between h-[42] px-[20]">
           {/* Header Title */}

@@ -4,16 +4,16 @@ import Dropdown from "./Dropdown";
 
 const sortBydropdownData: IGenreSortBy[] = [
   { key: "Default", value: undefined },
-  { key: "Ratings desc", value: "vote_count.desc" },
-  { key: "Ratings asc", value: "vote_count.asc" },
-  { key: "Popularity desc", value: "popularity.desc" },
-  { key: "Popularity asc", value: "popularity.asc" },
-  { key: "Revenue desc", value: "revenue.desc" },
-  { key: "Revenue asc", value: "revenue.asc" },
-  { key: "Release desc", value: "primary_release_date.desc" },
-  { key: "Release asc", value: "primary_release_date.asc" },
-  { key: "Avg Ratings desc", value: "vote_average.desc" },
-  { key: "Avg Ratings asc", value: "vote_average.asc" },
+  { key: "↓ Ratings", value: "vote_count.desc" },
+  { key: "↑ Ratings", value: "vote_count.asc" },
+  { key: "↓ Popularity", value: "popularity.desc" },
+  { key: "↑ Popularity", value: "popularity.asc" },
+  { key: "↓ Revenue", value: "revenue.desc" },
+  { key: "↑ Revenue", value: "revenue.asc" },
+  { key: "↓ Release", value: "primary_release_date.desc" },
+  { key: "↑ Release", value: "primary_release_date.asc" },
+  { key: "↓ Avg Ratings", value: "vote_average.desc" },
+  { key: "↑ Avg Ratings", value: "vote_average.asc" },
 ];
 
 interface IProps {

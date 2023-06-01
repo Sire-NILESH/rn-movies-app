@@ -21,6 +21,7 @@ import {
   TvMediaExtended,
 } from "../../../types/typings";
 import { Alert, Dimensions } from "react-native";
+import Toast from "react-native-toast-message";
 
 export function isMovie(
   media: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended | null
@@ -238,13 +239,22 @@ export function isIDropdownYear(obj: Object): obj is IDropdownYearsObj {
   );
 }
 
-// export function isIGenreSortBy(obj: Object): obj is IGenreSortBy {
-//   return (
-//     obj !== null &&
-//     (obj as IGenreSortBy).key in TGenresSortByKey &&
-//     (obj as IGenreSortBy).code !== undefined
-//   );
-// }
+export const showSuccessToast = (title: string, message: string) => {
+  Toast.show({
+    type: "success",
+    text1: title,
+    text2: message,
+  });
+};
+
+export const showErrorToast = (title?: string, message?: string) => {
+  Toast.show({
+    type: "error",
+    text1: title !== undefined ? title : "Error !",
+    text2:
+      message !== undefined ? message : "Something went wrong. Try again later",
+  });
+};
 
 export const addReleaseAndAirDateFilters = (
   filters: IQueryParams,

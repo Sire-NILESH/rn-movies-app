@@ -10,7 +10,12 @@ import {
   TvMedia,
   TvMediaExtended,
 } from "../../../types/typings";
-import { reduxListMediaObjBuilder } from "../../utils/helpers/helper";
+import {
+  isMovie,
+  reduxListMediaObjBuilder,
+  showErrorToast,
+  showSuccessToast,
+} from "../../utils/helpers/helper";
 import {
   insertMediaToCollection,
   mediaExistsInCollection,
@@ -52,14 +57,36 @@ const WatchedMediaButton: React.FC<IProps> = ({ media, mediaType }) => {
         reduxListMediaObjBuilder(media, mediaType),
         "watched"
       );
-    } catch (err) {}
+      showSuccessToast(
+        "Added !",
+        `'${
+          isMovie(media)
+            ? media.title
+            : media.name
+            ? media.name
+            : media.original_name
+        }' was added to Watched`
+      );
+    } catch (err) {
+      showErrorToast();
+    }
   };
 
   const removeFromDBHandler = async () => {
     try {
       await removeMediaFromCollection(media.id, mediaType, "watched");
+      showSuccessToast(
+        "Removed !",
+        `'${
+          isMovie(media)
+            ? media.title
+            : media.name
+            ? media.name
+            : media.original_name
+        }' was removed from Watched`
+      );
     } catch (err) {
-      // console.log(err);
+      showErrorToast();
     }
   };
 

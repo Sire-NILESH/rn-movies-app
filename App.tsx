@@ -14,6 +14,8 @@ import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persi
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { useState } from "react";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
+import toastConfig from "./src/config/toastMessageConfig";
 
 // Keep the splash screen visible while we fetch resources
 // SplashScreen.preventAutoHideAsync();
@@ -51,8 +53,18 @@ export default function App() {
       );
     } else if (dbInitialized && queryCacheHyderated) {
       return (
-        // RootNavigation
-        <RootNavigator />
+        <>
+          {/* RootNavigation */}
+          <RootNavigator />
+          {/* toast messages */}
+          <Toast
+            config={toastConfig}
+            autoHide={true}
+            position={"bottom"}
+            bottomOffset={50}
+            keyboardOffset={20}
+          />
+        </>
       );
     } else return null;
   }

@@ -22,9 +22,9 @@ const CastAndCrewModal: React.FC<IProps> = (props) => {
     setCurrentView(view);
   };
 
-  //  const resetHandler = () => {
-  //    setReleaseYearConstraint(undefined);
-  //  };
+  const resetViewHandler = () => {
+    setCurrentView("cast");
+  };
 
   return (
     <Modal
@@ -33,7 +33,7 @@ const CastAndCrewModal: React.FC<IProps> = (props) => {
       visible={props.isVisible}
       className="items-center justify-center"
     >
-      <View className="absolute my-[40%] mx-[5%] h-[65%] w-[90%] bg-zinc-900 rounded-xl pb-2 border border-neutral-700/60 [elevation:10] overflow-hidden">
+      <View className="absolute my-[40%] mx-[5%] w-[90%] bg-zinc-900 rounded-xl pb-4 border border-neutral-700/60 [elevation:10] overflow-hidden">
         {/* HEADER */}
         <View className="mt-1 flex-row items-center justify-between h-[42] px-[20]">
           {/* Header Title */}
@@ -49,7 +49,10 @@ const CastAndCrewModal: React.FC<IProps> = (props) => {
           <View className="flex-row justify-between ">
             <View className="rounded-full overflow-hidden">
               <Pressable
-                onPress={props.closeModal}
+                onPress={() => {
+                  resetViewHandler();
+                  props.closeModal();
+                }}
                 className="p-2"
                 android_ripple={{ color: "#eee" }}
               >
@@ -81,70 +84,36 @@ const CastAndCrewModal: React.FC<IProps> = (props) => {
 
         {/* CAST OR CREW VIEW SELECT */}
         <View className="mt-2 flex-row items-center space-x-2 mx-4 py-2">
-          <View className="w-20 rounded-md overflow-hidden">
-            <Pressable
-              onPress={() => {
-                setCurrentViewHandler("cast");
-              }}
-              className="p-2"
-              android_ripple={{ color: "#eee" }}
-            >
-              <View className="space-y-2 h-8">
-                <Text
-                  className="mx-auto font-bold"
-                  style={{
-                    color:
-                      currentView === "cast"
-                        ? Colors.text_primary
-                        : Colors.text_dark,
-                  }}
-                >
-                  Guest
-                </Text>
-                {currentView === "cast" ? (
-                  <View className="rounded-full bg-green-500 h-1 w-full" />
-                ) : null}
-              </View>
-            </Pressable>
-          </View>
-          <View className="w-20 rounded-md overflow-hidden">
-            <Pressable
-              onPress={() => {
-                setCurrentViewHandler("crew");
-              }}
-              className="p-2"
-              android_ripple={{ color: "#eee" }}
-            >
-              <View className="space-y-2 h-8">
-                <Text
-                  className="mx-auto font-bold"
-                  style={{
-                    color:
-                      currentView === "crew"
-                        ? Colors.text_primary
-                        : Colors.text_dark,
-                  }}
-                >
-                  Crew
-                </Text>
-                {currentView === "crew" ? (
-                  <View className="rounded-full bg-green-500 h-1 w-full" />
-                ) : null}
-              </View>
-            </Pressable>
-          </View>
+          <ViewTab
+            title="Cast"
+            currentView={currentView}
+            tabView="cast"
+            setCurrentViewHandler={setCurrentViewHandler}
+          />
+          <ViewTab
+            title="Crew"
+            currentView={currentView}
+            tabView="crew"
+            setCurrentViewHandler={setCurrentViewHandler}
+          />
         </View>
 
         <View>
           {currentView === "cast" ? (
             <EpisodeCastList
               cast={props.castAndCrew?.cast}
-              closeModal={props.closeModal}
+              closeModal={() => {
+                resetViewHandler();
+                props.closeModal();
+              }}
             />
           ) : (
             <EpisodeCrewList
               crew={props.castAndCrew?.crew}
-              closeModal={props.closeModal}
+              closeModal={() => {
+                resetViewHandler();
+                props.closeModal();
+              }}
             />
           )}
         </View>
@@ -154,3 +123,39 @@ const CastAndCrewModal: React.FC<IProps> = (props) => {
 };
 
 export default CastAndCrewModal;
+
+interface ITab {
+  currentView: TViews;
+  tabView: TViews;
+  title: "Cast" | "Crew";
+  setCurrentViewHandler: (view: TViews) => void;
+}
+
+function ViewTab({ title, currentView, tabView, setCurrentViewHandler }: ITab) {
+  return (
+    <View className="w-20 rounded-md overflow-hidden">
+      <Pressable
+        onPress={() => {
+          setCurrentViewHandler(tabView);
+        }}
+        className="p-2"
+        android_ripple={{ color: "#eee" }}
+      >
+        <View className="space-y-2 h-8">
+          <Text
+            className="mx-auto font-bold"
+            style={{
+              color:
+                currentView === "crew" ? Colors.text_primary : Colors.text_dark,
+            }}
+          >
+            {title}
+          </Text>
+          {currentView === tabView ? (
+            <View className="rounded-full bg-green-500 h-1 w-full" />
+          ) : null}
+        </View>
+      </Pressable>
+    </View>
+  );
+}

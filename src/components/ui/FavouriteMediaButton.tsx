@@ -7,7 +7,12 @@ import {
   TvMedia,
   TvMediaExtended,
 } from "../../../types/typings";
-import { reduxListMediaObjBuilder } from "../../utils/helpers/helper";
+import {
+  isMovie,
+  reduxListMediaObjBuilder,
+  showErrorToast,
+  showSuccessToast,
+} from "../../utils/helpers/helper";
 import CustomButton from "./CustomButton";
 import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -58,13 +63,37 @@ const FavouriteMediaButton: React.FC<IProps> = ({
         reduxListMediaObjBuilder(media, mediaType),
         "favourites"
       );
-    } catch (err) {}
+      showSuccessToast(
+        "Added !",
+        `'${
+          isMovie(media)
+            ? media.title
+            : media.name
+            ? media.name
+            : media.original_name
+        }' was added to Favourites`
+      );
+    } catch (err) {
+      showErrorToast();
+    }
   };
 
   const removeFromDBHandler = async () => {
     try {
       await removeMediaFromCollection(media.id, mediaType, "favourites");
-    } catch (err) {}
+      showSuccessToast(
+        "Removed !",
+        `'${
+          isMovie(media)
+            ? media.title
+            : media.name
+            ? media.name
+            : media.original_name
+        }' was removed from Favourites`
+      );
+    } catch (err) {
+      showErrorToast();
+    }
   };
 
   return (

@@ -76,7 +76,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
       {/* Title and date Dock */}
       {!loading && !error && videos && videos.length > 0 && (
-        <View className="w-full bg-tertiary px-4 space-y-1 justify-center items-start py-5 [elevation:5]">
+        <View className="w-full bg-tertiary px-4 space-y-1 justify-center items-start py-5 [elevation:5] border-b border-b-neutral-800">
           <Text className="text-text_primary font-bold" numberOfLines={3}>
             {selectedVideo?.name}
           </Text>

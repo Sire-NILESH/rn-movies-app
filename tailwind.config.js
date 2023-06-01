@@ -20,6 +20,9 @@ module.exports = {
         text_dark: "#a8a29e",
         text_darkest: "#292524",
       },
+      fontFamily: {
+        SourceSansPro: ["SourceSansPro"],
+      },
     },
   },
   plugins: [],

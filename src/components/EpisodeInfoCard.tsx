@@ -53,7 +53,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({
             <View className="flex-row space-x-2 items-center">
               <Ionicons name={"star"} color={Colors.yellow[400]} size={16} />
               <Text
-                className="text-green-500 text-sm"
+                className="text-green-500 text-sm font-semibold"
                 style={{
                   color:
                     Number(episode.vote_average.toFixed(2)) > 4
@@ -93,7 +93,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({
 
       {/* OVERVIEW */}
       <View className="px-4 pt-3">
-        <Text className="text-text_tertiary text-sm">
+        <Text className="text-text_dark text-sm">
           {episode.overview.length > 0
             ? episode.overview
             : "Overview unavailable"}

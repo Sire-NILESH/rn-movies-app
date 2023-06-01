@@ -3,7 +3,6 @@ import "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { persistor, store } from "./src/store/store";
 import { Provider } from "react-redux";
-// import * as SplashScreen from "expo-splash-screen";
 import Loader from "./src/components/ui/Loader";
 import NothingToShow from "./src/components/NothingToShow";
 import useDBInitialize from "./src/hooks/useDBInitialize";
@@ -16,9 +15,7 @@ import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client
 import { useState } from "react";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import toastConfig from "./src/config/toastMessageConfig";
-
-// Keep the splash screen visible while we fetch resources
-// SplashScreen.preventAutoHideAsync();
+// import useLoadMyFonts from "./src/hooks/useLoadMyFonts";
 
 // Create a client
 export const queryClient = new QueryClient({
@@ -32,6 +29,9 @@ export const queryClient = new QueryClient({
 });
 
 export default function App() {
+  // load my custom fonts
+  // useLoadMyFonts();
+
   // DB setup hook
   const { dbInitialized, dbInitError, dbInitLoading } = useDBInitialize();
   const [queryCacheHyderated, setQueryCacheHyderated] = useState(false);

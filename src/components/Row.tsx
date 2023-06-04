@@ -10,9 +10,9 @@ import { Text, View, FlatList } from "react-native";
 import IconButton from "./ui/IconButton";
 import { Colors } from "./../utils/Colors";
 import { Pressable } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
 import { isMovie } from "./../utils/helpers/helper";
+import useNavigateTo from "../hooks/useNavigateTo";
 
 interface Props {
   title: string;
@@ -61,14 +61,9 @@ function renderFlatList(
   playlist: IPlaylist,
   thumbnailQualitySettings?: IImgItemSettingsDB
 ) {
-  const navigation = useNavigation();
-
   // Navigation handler for child components like thumbnail and jumpTo button.
   // So every one of them wont have to calculate them separately.
-  const navigateTo = (screen: string, paramOption: Object) => {
-    // @ts-ignore
-    navigation.push(screen, paramOption);
-  };
+  const { navigateTo } = useNavigateTo();
 
   return (
     <>

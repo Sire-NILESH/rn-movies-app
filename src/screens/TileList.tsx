@@ -14,7 +14,7 @@ import {
 import {
   isMovieArray,
   isTvArray,
-  showErrorAlert,
+  showErrorToast,
 } from "../utils/helpers/helper";
 import { getTileListScreenMedias } from "../utils/requests";
 import GenreTags from "../components/GenreTags";
@@ -137,9 +137,9 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   useEffect(() => {
     // Show alert on error
     if (error && !loadingNewMedias) {
-      showErrorAlert("Something went wrong while loading content.");
+      showErrorToast("Error !", "Something went wrong while loading content.");
     }
-  }, [showErrorAlert, error, loadingNewMedias]);
+  }, [showErrorToast, error, loadingNewMedias]);
 
   // Header settings
   useLayoutEffect(() => {

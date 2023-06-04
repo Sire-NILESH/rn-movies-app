@@ -9,10 +9,11 @@ import SeasonsHeader from "../components/SeasonsHeader";
 import { LinearGradient } from "expo-linear-gradient";
 import EpisodeInfoCard from "../components/EpisodeInfoCard";
 import NothingToShow from "../components/NothingToShow";
-import { dateFormatter, showErrorAlert } from "../utils/helpers/helper";
+import { dateFormatter, showErrorToast } from "../utils/helpers/helper";
 import Loader from "../components/ui/Loader";
 import { useQuery } from "./../../node_modules/@tanstack/react-query";
 import CastAndCrewModal from "../components/ui/CastAndCrewModal";
+import useNavigateTo from "../hooks/useNavigateTo";
 
 const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   IStackScreenProps
@@ -89,9 +90,12 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
     });
   }, [selectedSeason, tvMediaSeasons]);
 
+  // So every one of them wont have to calculate them separately.
+  const { navigateTo } = useNavigateTo();
+
   // Show alert on error
   if (errorLoadingProps && !loadingProps) {
-    showErrorAlert(`Something went wrong while loading content.`);
+    showErrorToast("Error !", "Something went wrong while loading content.");
   }
 
   /* if the season doesnt have a poster we use the old poster that was used in the MoreInfoScreeen which was passed here as tvMediaPosterPathOld */
@@ -209,6 +213,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                 <EpisodeInfoCard
                   episode={episodeObj.item}
                   castandCrewModalHandler={castandCrewModalHandler}
+                  navigateTo={navigateTo}
                 />
               )}
             />

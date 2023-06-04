@@ -8,10 +8,9 @@ const dimensionsForScreen = Dimensions.get("screen");
 
 interface IProps {
   video: Trailer | null;
-  loading: boolean;
 }
 
-type YTState = "playing" | "ended" | "paused" | "buffering" | "unstarted";
+// type YTState = "playing" | "ended" | "paused" | "buffering" | "unstarted";
 
 const YouTubePlayer: React.FC<IProps> = (props) => {
   const [playing, setPlaying] = useState(true);
@@ -53,22 +52,20 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
         zIndex: 0,
       }}
     >
-      {props.loading
-        ? null
-        : props.video?.key && (
-            <View className="justify-center">
-              <YoutubeIframe
-                height={(dimensionsForScreen.width * 9) / 16}
-                width={dimensionsForScreen.width}
-                play={playing}
-                videoId={props.video.key}
-                // onChangeState={onStateChanged}
-                onFullScreenChange={(status) => {
-                  if (status === true) changeScreenOrientation();
-                }}
-              />
-            </View>
-          )}
+      {props.video?.key && (
+        <View className="justify-center">
+          <YoutubeIframe
+            height={(dimensionsForScreen.width * 9) / 16}
+            width={dimensionsForScreen.width}
+            play={playing}
+            videoId={props.video.key}
+            // onChangeState={onStateChanged}
+            onFullScreenChange={(status) => {
+              if (status === true) changeScreenOrientation();
+            }}
+          />
+        </View>
+      )}
     </View>
   );
 };

@@ -1,8 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { View, FlatList, Text } from "react-native";
-import { useLogging } from "../hooks/useLogging";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
-import { Trailer } from "../../types/typings";
+import { IUrlObject, Trailer } from "../../types/typings";
 import { fetchTrailers } from "../utils/requests";
 import NothingToShow from "../components/NothingToShow";
 import Loader from "./../components/ui/Loader";
@@ -12,11 +11,9 @@ import { Colors } from "../utils/Colors";
 import { useQuery } from "./../../node_modules/@tanstack/react-query";
 
 const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
-  const [logging] = useLogging("About Screen");
   const { navigation, route } = props;
 
-  // @ts-ignore
-  const { mediaType, mediaId } = route.params;
+  const trailerReq = route.params as IUrlObject;
 
   const [selectedVideo, setSelectedVideo] = useState<Trailer | null>(null);
 
@@ -27,8 +24,8 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     error: err,
     status,
   } = useQuery({
-    queryKey: ["trailer", mediaType, mediaId],
-    queryFn: () => fetchTrailers(mediaId, mediaType),
+    queryKey: ["trailer", trailerReq],
+    queryFn: () => fetchTrailers(trailerReq),
     staleTime: 1000 * 60 * 60 * 24, //24hours
   });
 
@@ -70,7 +67,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       {/* When some video is available, show the YT player */}
       {!error && videos && videos.length > 0 && status === "success" && (
         <View className="justify-start">
-          <YouTubePlayer video={selectedVideo} loading={loading} />
+          <YouTubePlayer video={selectedVideo} />
         </View>
       )}
 

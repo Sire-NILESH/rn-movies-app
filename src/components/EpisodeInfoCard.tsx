@@ -8,11 +8,13 @@ import { dateFormatter } from "../utils/helpers/helper";
 interface IProps {
   episode: Episode;
   castandCrewModalHandler: (castAndCrew: EpisodeCastAndCrew) => void;
+  navigateTo: (screen: string, paramOption: Object) => void;
 }
 
 const EpisodeInfoCard: React.FC<IProps> = ({
   episode,
   castandCrewModalHandler,
+  navigateTo,
 }) => {
   const directedBy = episode.crew
     .filter((c) => c.job === "Director")
@@ -124,30 +126,40 @@ const EpisodeInfoCard: React.FC<IProps> = ({
             : "--"}
         </Text>
 
-        {/* SHOW MORE BUTTON */}
-        <View className="mt-3 w-[150] rounded-lg overflow-hidden">
-          <Pressable
-            className="px-[1px] items-center justify-center bg-transparent w-[150px] h-[30px]"
-            onPress={() =>
-              castandCrewModalHandler({
-                seasonNumber: episode.season_number,
-                episodeNumber: episode.episode_number,
-                cast: episode.guest_stars,
-                crew: episode.crew,
-                episdodeName: episode.name,
-              })
-            }
-            android_ripple={{ color: "#eee" }}
-          >
-            <View className="flex-row gap-1 items-center">
-              <Ionicons
-                name="information-circle"
-                size={18}
-                color={Colors.stone[400]}
-              />
-              <Text className="font-bold text-blue-400">Show more credits</Text>
-            </View>
-          </Pressable>
+        <View className="flex-row space-x-2">
+          {/* TRAILER BUTTON */}
+          <View className="">
+            <FooterButton
+              text={"Trailer"}
+              iconName={"md-logo-youtube"}
+              onPressHandler={() => {
+                navigateTo("Trailer", {
+                  name: "Trailer Videos",
+                  url: `/tv/${episode.show_id}/season/${episode.season_number}/episode/${episode.episode_number}/videos`,
+                  queryParams: {
+                    language: "en-US",
+                  },
+                });
+              }}
+            />
+          </View>
+
+          {/* SHOW MORE BUTTON */}
+          <View>
+            <FooterButton
+              text={"Show more credits"}
+              iconName={"information-circle"}
+              onPressHandler={() =>
+                castandCrewModalHandler({
+                  seasonNumber: episode.season_number,
+                  episodeNumber: episode.episode_number,
+                  cast: episode.guest_stars,
+                  crew: episode.crew,
+                  episdodeName: episode.name,
+                })
+              }
+            />
+          </View>
         </View>
       </View>
     </View>
@@ -167,6 +179,35 @@ function DataElement({
     <View className="flex-row space-x-2 items-center">
       <Ionicons name={iconName} color={Colors.stone[400]} size={16} />
       <Text className="text-text_primary text-sm">{text}</Text>
+    </View>
+  );
+}
+
+function FooterButton({
+  text,
+  iconName,
+  onPressHandler,
+}: {
+  text: string;
+  iconName: keyof typeof Ionicons.glyphMap;
+  onPressHandler: () => void;
+}) {
+  return (
+    <View className="border border-neutral-800 rounded-full mt-3 overflow-hidden">
+      <Pressable
+        className="h-8 px-3 items-center justify-center"
+        onPress={onPressHandler}
+        android_ripple={{ color: "#eee" }}
+      >
+        <View className="flex-row gap-1 items-center">
+          <Ionicons
+            name={iconName}
+            size={iconName === "md-logo-youtube" ? 15 : 18}
+            color={Colors.stone[400]}
+          />
+          <Text className="font-bold text-blue-400">{text}</Text>
+        </View>
+      </Pressable>
     </View>
   );
 }

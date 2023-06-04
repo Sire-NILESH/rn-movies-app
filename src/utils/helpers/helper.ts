@@ -3,7 +3,6 @@ import {
   ICountry,
   ICreditPerson,
   IDropdownYearsObj,
-  IGenreSortBy,
   IImageItemQualitySetting,
   IImageQuality,
   INetworkIds,
@@ -255,6 +254,10 @@ export const showErrorToast = (title?: string, message?: string) => {
       message !== undefined ? message : "Something went wrong. Try again later",
   });
 };
+
+export function showGenericErrorToast() {
+  showErrorToast("Error !", "Something went wrong, please try again later.");
+}
 
 export const addReleaseAndAirDateFilters = (
   filters: IQueryParams,

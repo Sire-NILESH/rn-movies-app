@@ -5,7 +5,7 @@ import {
   IImageQuality,
   ImageItemTypes,
 } from "../../../types/typings";
-import { showErrorAlert } from "../../utils/helpers/helper";
+import { showErrorToast } from "../../utils/helpers/helper";
 import useImageItemSetting from "../../hooks/useImageItemSetting";
 import { getAllImageConfigForImageType } from "../../config/imgQualityConfig";
 
@@ -37,7 +37,10 @@ const ImageQualityDropdown: React.FC<IProps> = (props) => {
   }, [imgItemsSetting]);
 
   if (errorImgSettings) {
-    showErrorAlert("Failed", "Failed to set image quality. Please try again.");
+    showErrorToast(
+      "Failed !",
+      "Failed to set image quality. Please try again."
+    );
   }
 
   const setDefaultImgQualityOfDB = (item: IImageQuality) => {

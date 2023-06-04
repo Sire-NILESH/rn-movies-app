@@ -2,8 +2,8 @@ import { View, FlatList, Text } from "react-native";
 import React from "react";
 import { ICast } from "../../types/typings";
 import EpisodeCastPersonCard from "./EpisodeCastPersonCard";
-import { useNavigation } from "@react-navigation/native";
 import NothingToShow from "./NothingToShow";
+import useNavigateTo from "../hooks/useNavigateTo";
 
 interface IProps {
   cast: ICast[] | undefined;
@@ -11,13 +11,9 @@ interface IProps {
 }
 
 const EpisodeCastList: React.FC<IProps> = (props) => {
-  const navigation = useNavigation();
-
   // So every one of them wont have to calculate them separately.
-  const navigateTo = (screen: string, paramOption: Object) => {
-    // @ts-ignore
-    navigation.push(screen, paramOption);
-  };
+  const { navigateTo } = useNavigateTo();
+
   return (
     <View className="h-[285px]">
       {props.cast?.length! > 0 ? (

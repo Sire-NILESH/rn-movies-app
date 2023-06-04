@@ -17,10 +17,15 @@ const TrailerButton: React.FC<IProps> = (props) => {
   const onPressHandler = () => {
     // @ts-ignore
     navigation.navigate("Trailer", {
-      mediaType: props.mediaType,
-      mediaId: props.mediaId,
+      name: "Trailer Videos",
+      url: `/${props.mediaType}/${props.mediaId}/videos`,
+      queryParams: {
+        language: "en-US",
+      },
     });
   };
+
+  // ITrailerScreenParams
 
   return (
     <CustomButton

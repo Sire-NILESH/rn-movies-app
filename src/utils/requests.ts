@@ -1,7 +1,6 @@
 import { API_KEY, BASE_URL } from "@env";
 import {
   IGenre,
-  IGenresToShowHomeScreen,
   IQueryParams,
   IUrlObject,
   MediaTypes,
@@ -36,65 +35,6 @@ export const searchRequest = async (
     });
 
   if (data?.results) return { results: data?.results, mediaType: mediaType };
-};
-
-/**
- * Function that calls the API and returns props for the Home screens of `Home`, `TV shows` and `Movies` options of the drawer.
- * Only needs a list of genres that is to be requested.
- *
- * @param getTheseGenreMedias - An array of genre object contaning `id` , `name` and `mediaType` to be fetched.
- * `id` is the id of the genre.
- */
-export const getHomeScreenProps = async (
-  getTheseGenreMedias: IGenresToShowHomeScreen[]
-) => {
-  const data = await Promise.all([
-    ...getTheseGenreMedias.map((genre, i) => {
-      // Real genre ids are > 1
-      if (genre.id >= 1) {
-        return fetchDataFromApi(`/discover/${genre.mediaType}`, {
-          with_genres: String(genre.id),
-          page: 1,
-        })
-          .then((res) => res.data)
-          .catch((err) => {
-            throw err;
-          });
-      }
-
-      // If reached here, we are dealing with a custom genre i.e. < 0
-      else if (genre.id < 1) {
-        let URL;
-        if (genre.mediaType === "movie") {
-          URL =
-            // @ts-ignore
-            customGenreIdToFetcher.customMovieGenresToFetcherURL[
-              String(genre.id)
-            ];
-        }
-
-        if (genre.mediaType === "tv") {
-          URL =
-            // @ts-ignore
-            customGenreIdToFetcher.customTvGenresToFetcherURL[String(genre.id)];
-        }
-
-        if (URL) {
-          return fetch(URL).then((res) => res.json());
-        }
-      }
-    }),
-  ]);
-
-  const results = getTheseGenreMedias.map((genre, i) => {
-    return {
-      genreId: genre.id,
-      genreName: genre.name,
-      genreMedias: data[i].results,
-    };
-  });
-
-  return results;
 };
 
 /**
@@ -243,90 +183,6 @@ export const sendUrlObjApiRequestV2 = async (
 };
 
 /**
- * Is used to load more Genre related media(Movie/Tv) on scroll list end in the Tiles list screen.
- *
- * Currently unused
- *
- * @param getTheseGenreMedias - An array of genres that is to be loaded.
- * @param mediaType - The type of media to be loaded.
- * @param pageNumber - The page number
- */
-export const getGenreMediasProps = async (
-  getTheseGenreMedias: number[],
-  mediaType: MediaTypes,
-  pageNumber: number,
-  networkId?: number,
-  productionCompanyId?: number
-) => {
-  // if the id of the genre is less than 1, it is a custom genre.
-  // console.log(getTheseGenreMedias[0]);
-
-  if (getTheseGenreMedias[0] >= 1) {
-    const commaSeparatedGenres = getTheseGenreMedias.join(",");
-
-    try {
-      const data = await fetchDataFromApi(`/discover/${mediaType}`, {
-        with_genres: commaSeparatedGenres,
-        page: pageNumber,
-      });
-
-      return data.data.results;
-    } catch (err) {
-      return err;
-    }
-  }
-
-  // 0.1111 is a special decided custom genre id that is used to fetch the network-provider/production-companies media list.
-  else if (getTheseGenreMedias[0] === 0.1111) {
-    const companyType =
-      mediaType === "movie"
-        ? { queryParam: "with_companies", queryParamValue: productionCompanyId }
-        : { queryParam: "with_networks", queryParamValue: networkId };
-
-    try {
-      const data = await fetchDataFromApi(`/discover/${mediaType}`, {
-        [companyType.queryParam]: companyType.queryParamValue,
-        include_null_first_air_dates: true,
-        page: pageNumber,
-      });
-
-      return data.data.results;
-    } catch (err) {
-      throw err;
-    }
-  }
-
-  // If reached here, we are dealing with a custom genre.
-  let URL;
-  switch (mediaType) {
-    case "movie" as MediaTypes:
-      URL =
-        // @ts-ignore
-        customGenreIdToFetcher.customMovieGenresToFetcherURL[
-          String(getTheseGenreMedias[0])
-        ] +
-        "&page=" +
-        pageNumber;
-      break;
-
-    case "tv" as MediaTypes:
-      URL =
-        // @ts-ignore
-        customGenreIdToFetcher.customTvGenresToFetcherURL[
-          String(getTheseGenreMedias[0])
-        ] +
-        "&page=" +
-        pageNumber;
-      break;
-  }
-
-  if (URL) {
-    const data = await fetch(URL).then((res) => res.json());
-    return data.results;
-  }
-};
-
-/**
  * Is used to load more  Related/Similar media(Movie/Tv) on scroll list end in the Related tiles list screen.
  *
  * @param relatedToMediaId - Id of the media whose related media is to be loaded.
@@ -383,21 +239,13 @@ export const getTvShowInfo = async (tvMediaId: number) => {
  */
 export const getMediaInfo = async (mediaId: number, mediaType: MediaTypes) => {
   try {
-    const data = await Promise.all([
-      fetchDataFromApi(`/${mediaType}/${mediaId}`, {
-        language: "en-US",
-      }),
-      fetchDataFromApi(`/${mediaType}/${mediaId}/credits`, {
-        language: "en-US",
-      }),
-      fetchDataFromApi(`/${mediaType}/${mediaId}/watch/providers`, {
-        language: "en-US",
-      }),
-    ]);
+    const data = await fetchDataFromApi(`/${mediaType}/${mediaId}`, {
+      language: "en-US",
+      append_to_response: "watch/providers,credits",
+    });
+
     return {
-      media: data[0].data,
-      mediaCredits: data[1].data,
-      mediaWatchProviders: data[2].data.results,
+      media: data.data,
     };
   } catch (err) {
     throw err;
@@ -477,11 +325,15 @@ export const getTvSeasonInfo = async (
  * @param mediaType - The media type of the media, This the distinguishing param from `tv` and `movie`
  * @returns - returns data as an object {`props`}
  */
-export const fetchTrailers = async (mediaId: number, mediaType: MediaTypes) => {
+export const fetchTrailers = async (trailerRequest: IUrlObject) => {
   try {
-    const data = await fetchDataFromApi(`/${mediaType}/${mediaId}/videos`, {
-      language: "en-US",
-    });
+    const data = await fetchDataFromApi(
+      trailerRequest.url,
+      trailerRequest.queryParams
+    );
+    // const data = await fetchDataFromApi(`/${mediaType}/${mediaId}/videos`, {
+    //   language: "en-US",
+    // });
     if (data.data.results) {
       // return { props: data.data?.results };
 
@@ -562,9 +414,7 @@ const REQUESTS = {
   getWatchProviders,
   getTvShowInfo,
   getRelatedMediasProps,
-  getGenreMediasProps,
   getScreenProps,
-  getHomeScreenProps,
   searchRequest,
   getMediaInfo,
 };

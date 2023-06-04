@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
 // @ts-ignore
 import ExpoFastImage from "expo-fast-image";
 
@@ -11,6 +10,7 @@ import {
   Network,
 } from "../../../types/typings";
 import { Colors } from "../../utils/Colors";
+import useNavigateTo from "../../hooks/useNavigateTo";
 
 interface IProps {
   company: IProductionCompany[] | Network[];
@@ -20,13 +20,8 @@ interface IProps {
 }
 
 const CompanyLogoBuilder: React.FC<IProps> = (props) => {
-  const navigation = useNavigation();
-
   // So every one of them wont have to calculate them separately.
-  const navigateTo = (screen: string, paramOption: Object) => {
-    // @ts-ignore
-    navigation.push(screen, paramOption);
-  };
+  const { navigateTo } = useNavigateTo();
 
   const logoImgQuality = props.imgQuality ? props.imgQuality : "300";
 

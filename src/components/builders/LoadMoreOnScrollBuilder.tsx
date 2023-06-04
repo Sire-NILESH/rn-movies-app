@@ -4,7 +4,7 @@ import { MediaTypes, MovieMedia, TvMedia } from "../../../types/typings";
 import { getRelatedMediasProps, searchRequest } from "../../utils/requests";
 import TilesRenderedView from "../TilesRenderedView";
 import NothingToShow from "../NothingToShow";
-import { showErrorAlert } from "../../utils/helpers/helper";
+import { showErrorToast } from "../../utils/helpers/helper";
 import useImageItemSetting from "../../hooks/useImageItemSetting";
 import { useAllowNsfwContentHooks } from "../../hooks/reduxHooks";
 
@@ -89,7 +89,11 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
   // Show alert on error
   if (error && !loadingNewMedias) {
     const alertString = medias?.length > 0 ? "more " : "";
-    showErrorAlert(`Something went wrong while loading ${alertString}content.`);
+
+    showErrorToast(
+      "Error !",
+      `Something went wrong while loading ${alertString}content.`
+    );
   }
 
   return (

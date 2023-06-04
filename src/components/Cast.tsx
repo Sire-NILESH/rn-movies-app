@@ -1,11 +1,9 @@
-import React, { useState } from "react";
-import { View, Text, FlatList, Pressable, Image } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { View, Text, FlatList, Pressable } from "react-native";
 import { ICast, ICrew } from "../../types/typings";
-import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "../utils/Colors";
 import { getGender } from "../utils/helpers/helper";
 import RenderProfileImage from "./RenderProfileImage";
+import useNavigateTo from "../hooks/useNavigateTo";
 
 interface IProps {
   cast: ICast[];
@@ -14,13 +12,8 @@ interface IProps {
 }
 
 const Cast: React.FC<IProps> = (props) => {
-  const navigation = useNavigation();
-
   // So every one of them wont have to calculate them separately.
-  const navigateTo = (screen: string, paramOption: Object) => {
-    // @ts-ignore
-    navigation.push(screen, paramOption);
-  };
+  const { navigateTo } = useNavigateTo();
 
   return (
     <View className="flex-1 ">

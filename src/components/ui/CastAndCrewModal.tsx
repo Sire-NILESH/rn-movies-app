@@ -40,7 +40,7 @@ const CastAndCrewModal: React.FC<IProps> = (props) => {
           <View className="flex-row items-center space-x-2">
             <Text
               className="text-text_highLight text-lg font-bold"
-              numberOfLines={2}
+              numberOfLines={1}
             >
               {props.tvShowName}
             </Text>
@@ -78,7 +78,7 @@ const CastAndCrewModal: React.FC<IProps> = (props) => {
               props.castAndCrew?.seasonNumber === 0
                 ? "Extras"
                 : "Season " + props.castAndCrew?.seasonNumber
-            }  episode ${props.castAndCrew?.episodeNumber}`}
+            }, episode ${props.castAndCrew?.episodeNumber}`}
           </Text>
         </View>
 

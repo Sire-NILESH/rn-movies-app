@@ -1,9 +1,9 @@
 import { View, FlatList, Text } from "react-native";
 import React from "react";
 import { ICrew } from "../../types/typings";
-import { useNavigation } from "@react-navigation/native";
 import EpisodeCrewPersonCard from "./EpisodeCrewPersonCard";
 import NothingToShow from "./NothingToShow";
+import useNavigateTo from "../hooks/useNavigateTo";
 
 interface IProps {
   crew: ICrew[] | undefined;
@@ -11,13 +11,8 @@ interface IProps {
 }
 
 const EpisodeCrewList: React.FC<IProps> = (props) => {
-  const navigation = useNavigation();
-
   // So every one of them wont have to calculate them separately.
-  const navigateTo = (screen: string, paramOption: Object) => {
-    // @ts-ignore
-    navigation.push(screen, paramOption);
-  };
+  const { navigateTo } = useNavigateTo();
 
   const filteredCrewList = props.crew?.filter(
     (c) =>

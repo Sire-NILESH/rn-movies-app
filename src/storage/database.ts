@@ -13,7 +13,6 @@ import {
   allImgItemsType,
   allImgItemsValues,
   defaultImgQualitiesconfig,
-  getAllImageConfigForImageType,
 } from "../config/imgQualityConfig";
 
 export type TValidTableNames =

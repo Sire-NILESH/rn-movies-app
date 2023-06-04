@@ -8,6 +8,7 @@ import { Colors } from "../../utils/Colors";
 import WarningModal from "../ui/WarningModal";
 import SettingsCardWrapper from "./SettingsCardWrapper";
 import IconCardRow from "./IconCardRow";
+import { showErrorToast, showSuccessToast } from "../../utils/helpers/helper";
 
 const DeleteSettings = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -22,14 +23,28 @@ const DeleteSettings = () => {
     setIsModalOpen(state);
   }
 
+  function capitalizeString(str: string) {
+    return str.charAt(0).toUpperCase() + str.substring(1);
+  }
+
   function confirmDeleteHandler() {
     //  and only on confirmation
     deleteCollection(deletingItem)
       .then(() => {
-        // console.log(`Deleted ${deletingItem} 💥`);
+        showSuccessToast(
+          "Deleted !",
+          `Your '${capitalizeString(
+            deletingItem
+          )}' collection was permanently deleted.`
+        );
       })
-      .catch((err) => {
-        // console.log(err);
+      .catch((_err) => {
+        showErrorToast(
+          "Error !",
+          `Something went wrong while deleting your '${capitalizeString(
+            deletingItem
+          )}' collection.`
+        );
       });
   }
 

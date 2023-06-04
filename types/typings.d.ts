@@ -407,6 +407,7 @@ export interface IQueryParams {
   with_watch_providers?: string;
   watch_region?: string;
   sort_by?: TGenresSortByValue;
+  append_to_response?: string;
 
   // for movie
   primary_release_year?: string;
@@ -504,4 +505,24 @@ export type TGenresSortByKey =
 export interface IGenreSortBy {
   key: TGenresSortByKey;
   value: TGenresSortByValue;
+}
+
+export interface MovieMediaHybrid extends MovieMediaExtended {
+  "watch/providers": {
+    results: IAllWatchProviderData;
+  };
+  credits: ICredits;
+}
+
+export interface TvMediaHybrid extends TvMediaExtended {
+  "watch/providers": {
+    results: IAllWatchProviderData;
+  };
+  credits: ICredits;
+}
+
+export interface ITrailerScreenParams {
+  trailerType: "mediaTrailer" | "episodeTrailer";
+  mediaTrailer?: IUrlObject;
+  episodeTrailer?: IUrlObject;
 }

@@ -1,10 +1,9 @@
 import { IImgItemSettingsDB, IReduxListMedia } from "../../types/typings";
 import { Text, View, FlatList } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { getDeviceDimensions } from "../utils/helpers/helper";
-
 import CollectionThumbnail from "./CollectionThumbnail";
 import React from "react";
+import useNavigateTo from "../hooks/useNavigateTo";
 
 interface Props {
   title: string;
@@ -55,14 +54,10 @@ function renderFlatList(
   medias: IReduxListMedia[],
   thumbnailQuality?: IImgItemSettingsDB
 ) {
-  const navigation = useNavigation();
-
   // Navigation handler for child components like thumbnail and jumpTo button.
+
   // So every one of them wont have to calculate them separately.
-  const navigateTo = (screen: string, paramOption: Object) => {
-    // @ts-ignore
-    navigation.push(screen, paramOption);
-  };
+  const { navigateTo } = useNavigateTo();
 
   // Calculate and pass the dimensions from the parent(here) to the thumbnails.
   // So every thumbnail wont have to calculate them separately.

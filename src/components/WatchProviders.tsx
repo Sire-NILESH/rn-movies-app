@@ -10,8 +10,7 @@ import {
 import CountriesDropdown from "./ui/CountriesDropdown";
 import ImageCached from "./ui/ImageCached";
 import { useDefaultRegionHooks } from "../hooks/reduxHooks";
-import { useNavigation } from "@react-navigation/native";
-import Dropdown from "./ui/Dropdown";
+import useNavigateTo from "../hooks/useNavigateTo";
 
 interface IProps {
   mediaId: number;
@@ -31,18 +30,13 @@ const WatchProviders: React.FC<IProps> = ({
     setCurrentCountry(country);
   };
 
-  const navigation = useNavigation();
-
   const watchProviders: WatchProviderForCountry =
     watchProvidersData[currentCountry.code];
 
   const providerImgQuality = imgQuality ? imgQuality : "200";
 
   // So every one of them wont have to calculate them separately.
-  const navigateTo = (screen: string, paramOption: Object) => {
-    // @ts-ignore
-    navigation.push(screen, paramOption);
-  };
+  const { navigateTo } = useNavigateTo();
 
   return (
     <View className="flex-1 mt-10 space-y-5">

@@ -8,9 +8,10 @@ import { IDBCollectionMedia } from "../../types/typings";
 import { getMediasFromCollection } from "../storage/database";
 import NothingToShow from "../components/NothingToShow";
 import useImageItemSetting from "../hooks/useImageItemSetting";
+import useNavigateTo from "../hooks/useNavigateTo";
 
 const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
-  const { navigation, route, collectionType, screenMediaType } = props;
+  const { navigation, collectionType, screenMediaType } = props;
 
   const [medias, setMedias] = useState<IDBCollectionMedia[]>([]);
   const [refresh, setRefresh] = useState(false);
@@ -20,10 +21,8 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
     useImageItemSetting("thumbnail");
 
   // Navigation handler for child components like thumbnail and jumpTo button. So every one of them wont have to calculate them separately.
-  const navigateTo = (screen: string, paramOption: Object) => {
-    // @ts-ignore
-    navigation.push(screen, paramOption);
-  };
+  // So every one of them wont have to calculate them separately.
+  const { navigateTo } = useNavigateTo();
 
   // Calculate and pass the dimensions from the parent(here) to the thumbnails. So every thumbnail wont have to calculate them separately.
   const windowWidth = getDeviceDimensions("window").width;

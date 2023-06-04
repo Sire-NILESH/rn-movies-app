@@ -8,7 +8,6 @@ import { Text, View, FlatList } from "react-native";
 import IconButton from "./ui/IconButton";
 import { Colors } from "./../utils/Colors";
 import { Pressable } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
 import { isMovie } from "./../utils/helpers/helper";
 import { sendUrlObjApiRequest } from "../utils/requests";
@@ -17,6 +16,7 @@ import ThumbnailMemoised from "./ThumbnailMemoised";
 import Thumbnail from "./Thumbnail";
 // import { useQuery } from "@tanstack/react-query";
 import { useQuery } from "./../../node_modules/@tanstack/react-query";
+import useNavigateTo from "../hooks/useNavigateTo";
 
 interface Props {
   title: string;
@@ -93,15 +93,9 @@ function renderFlatList(
   // isLoading: boolean,
   defaultImgQuality?: IImgItemSettingsDB
 ) {
-  const navigation = useNavigation();
-
   // Navigation handler for child components like thumbnail and jumpTo button.
   // So every one of them wont have to calculate them separately.
-  const navigateTo = (screen: string, paramOption: Object) => {
-    // @ts-ignore
-    navigation.push(screen, paramOption);
-  };
-
+  const { navigateTo } = useNavigateTo();
   return (
     <>
       {medias && isMovieArray(medias) ? (

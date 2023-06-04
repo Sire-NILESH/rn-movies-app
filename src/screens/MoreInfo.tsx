@@ -22,8 +22,6 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const mediaType: MediaTypes = // @ts-ignore
     route.params?.mediaType !== undefined ? route.params?.mediaType : "movie";
 
-  let extendedMedia;
-
   const {
     isLoading: loadingProps,
     data: screenProps,
@@ -33,8 +31,6 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     queryFn: () => getMediaInfo(prevMedia.id, mediaType),
     staleTime: 1000 * 60 * 60 * 24, //24hours
   });
-
-  extendedMedia = screenProps?.media;
 
   function getTitle(): string {
     if ("title" in prevMedia) return prevMedia.title;
@@ -60,9 +56,6 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   return (
     <MediaMoreInfo
       media={screenProps?.media}
-      extendedMedia={extendedMedia}
-      credits={screenProps?.mediaCredits}
-      watchProvidersData={screenProps?.mediaWatchProviders}
       mediaType={mediaType}
       errorLoadingProps={errorLoadingProps as Error | null}
       loadingProps={loadingProps}

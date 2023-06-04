@@ -13,8 +13,6 @@ interface IProps {
 }
 
 const RevenueStats: React.FC<IProps> = ({ budget, revenue }) => {
-  const budgetFormatted = formatCurrencyNumbers(budget);
-  const revenueFormatted = formatCurrencyNumbers(revenue);
   const percentGains = calculateProfitOrLoss(budget, revenue);
   const percentGaninsNumber = Number(percentGains.split("%")[0]);
 
@@ -23,7 +21,7 @@ const RevenueStats: React.FC<IProps> = ({ budget, revenue }) => {
       <View className="px-4 mt-0 flex-row items-center justify-between space-x-2 divide-x-[3px] divide-tertiary">
         <View className="flex-1 items-center py-2">
           <Text className="text-text_secondary text-lg font-bold text-center">
-            ${budgetFormatted}
+            {budget === 0 ? "--" : "$" + formatCurrencyNumbers(budget)}
           </Text>
           <View className="mt-1 flex-row items-center space-x-2 justify-center">
             <Ionicons
@@ -37,7 +35,7 @@ const RevenueStats: React.FC<IProps> = ({ budget, revenue }) => {
 
         <View className="flex-1 items-center py-2">
           <Text className="text-text_secondary text-lg font-bold text-center">
-            {revenue === 0 ? "--" : "$" + revenueFormatted}
+            {revenue === 0 ? "--" : "$" + formatCurrencyNumbers(revenue)}
           </Text>
           <View className="mt-1 flex-row items-center space-x-2 justify-center">
             <FontAwesome name="money" size={14} color={Colors.text_dark} />
@@ -51,14 +49,14 @@ const RevenueStats: React.FC<IProps> = ({ budget, revenue }) => {
             className="text-lg font-bold text-center"
             style={{
               color:
-                revenue === 0
+                revenue === 0 || budget === 0
                   ? Colors.text_primary
                   : percentGaninsNumber > 0
                   ? Colors.green[500]
                   : Colors.red[400],
             }}
           >
-            {revenue === 0
+            {revenue === 0 || budget === 0
               ? "--"
               : percentGains.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           </Text>
@@ -66,7 +64,7 @@ const RevenueStats: React.FC<IProps> = ({ budget, revenue }) => {
             <FontAwesome name="line-chart" size={14} color={Colors.text_dark} />
 
             <Text className="text-text_dark text-center">
-              {revenue === 0
+              {revenue === 0 || budget === 0
                 ? "No Info"
                 : percentGaninsNumber > 0
                 ? "Profit"

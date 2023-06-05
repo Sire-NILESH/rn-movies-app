@@ -22,22 +22,27 @@ const SeasonsHeader: React.FC<IProps> = (props) => {
   };
 
   return (
-    <View className="flex-row justify-center bg-secondary py-3">
-      {/* <View className="ml-4 mr-2 bg-stone-800 items-center justify-center px-2 rounded-md"> */}
-      <View className="ml-4 mr-2 items-center justify-center rounded-md">
-        <Pressable onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color={Colors.gray[50]} />
-        </Pressable>
-      </View>
-
+    <View className="flex-row justify-center bg-secondary border-b border-b-neutral-800 py-1">
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
         data={props.tvMediaSeasons}
         keyExtractor={(item) => String(item.id)}
+        ListHeaderComponent={() => {
+          return (
+            <View className="flex-1 overflow-hidden">
+              <Pressable
+                className="flex-1 items-center justify-center pl-4 pr-1"
+                onPress={() => navigation.goBack()}
+              >
+                <Ionicons name="arrow-back" size={24} color={Colors.gray[50]} />
+              </Pressable>
+            </View>
+          );
+        }}
         renderItem={(itemObj) => {
           return (
-            <View className="flex-1 flex-row items-center">
+            <View className="flex-1 flex-row items-center pt-1 pb-2">
               <SeasonTag
                 seasonNumber={itemObj.item.season_number}
                 selectedSeasonNumber={props.selectedSeason.season_number}
@@ -46,7 +51,7 @@ const SeasonsHeader: React.FC<IProps> = (props) => {
 
               {/* Divider */}
               {itemObj.index != props.tvMediaSeasons.length - 1 ? (
-                <View className="border border-stone-700 h-6 w-[1px] rounded-full" />
+                <View className="border border-neutral-800 h-6 w-[1px] rounded-full" />
               ) : null}
             </View>
           );

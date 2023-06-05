@@ -206,62 +206,21 @@ const MediaWizardModal: React.FC<IProps> = ({
         </View>
 
         <View className="flex-1">
-          {/* HEADER */}
+          {/* HEADER TABS */}
           <View className="flex-row items-center space-x-2 mx-4 py-2">
-            <View className="w-20 rounded-md overflow-hidden">
-              <Pressable
-                onPress={() => {
-                  resetHandler();
-                  setCurrentViewHandler("featured_playlists");
-                }}
-                className="p-2"
-                android_ripple={{ color: "#eee" }}
-              >
-                <View className="space-y-2 h-8">
-                  <Text
-                    className="mx-auto font-bold"
-                    style={{
-                      color:
-                        currentView === "featured_playlists"
-                          ? Colors.text_primary
-                          : Colors.text_dark,
-                    }}
-                  >
-                    Playlists
-                  </Text>
-                  {currentView === "featured_playlists" ? (
-                    <View className="rounded-full bg-green-500 h-1 w-full" />
-                  ) : null}
-                </View>
-              </Pressable>
-            </View>
-            <View className="w-20 rounded-md overflow-hidden">
-              <Pressable
-                onPress={() => {
-                  // resetHandler();
-                  setCurrentViewHandler("genres_playlist");
-                }}
-                className="p-2"
-                android_ripple={{ color: "#eee" }}
-              >
-                <View className="space-y-2 h-8">
-                  <Text
-                    className="mx-auto font-bold"
-                    style={{
-                      color:
-                        currentView === "genres_playlist"
-                          ? Colors.text_primary
-                          : Colors.text_dark,
-                    }}
-                  >
-                    Genres
-                  </Text>
-                  {currentView === "genres_playlist" ? (
-                    <View className="rounded-full bg-green-500 h-1 w-full" />
-                  ) : null}
-                </View>
-              </Pressable>
-            </View>
+            <ViewTab
+              title="Playlists"
+              currentView={currentView}
+              tabView="featured_playlists"
+              setCurrentViewHandler={setCurrentViewHandler}
+            />
+
+            <ViewTab
+              title="Genres"
+              currentView={currentView}
+              tabView="genres_playlist"
+              setCurrentViewHandler={setCurrentViewHandler}
+            />
           </View>
 
           <ScrollView className="flex-1">
@@ -296,3 +255,41 @@ const MediaWizardModal: React.FC<IProps> = ({
 };
 
 export default MediaWizardModal;
+
+interface ITab {
+  currentView: TViews;
+  tabView: TViews;
+  title: "Playlists" | "Genres";
+  setCurrentViewHandler: (view: TViews) => void;
+}
+
+function ViewTab({ title, currentView, tabView, setCurrentViewHandler }: ITab) {
+  return (
+    <View className="w-20 rounded-md overflow-hidden">
+      <Pressable
+        onPress={() => {
+          setCurrentViewHandler(tabView);
+        }}
+        className="p-2"
+        android_ripple={{ color: "#eee" }}
+      >
+        <View className="space-y-2 h-8">
+          <Text
+            className="mx-auto font-bold"
+            style={{
+              color:
+                currentView === tabView
+                  ? Colors.text_primary
+                  : Colors.text_dark,
+            }}
+          >
+            {title}
+          </Text>
+          {currentView === tabView ? (
+            <View className="rounded-full bg-green-500 h-1 w-full" />
+          ) : null}
+        </View>
+      </Pressable>
+    </View>
+  );
+}

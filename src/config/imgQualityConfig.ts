@@ -65,7 +65,7 @@ type DefaultImgQualityConfig = {
 
 export const defaultImgQualitiesconfig: DefaultImgQualityConfig = {
   thumbnail: { quality: "Default", value: "300" },
-  banner: { quality: "Default", value: "500" },
+  banner: { quality: "Default", value: "780" },
   watchProviders: { quality: "Default", value: "200" },
   companies: { quality: "Default", value: "200" },
 };

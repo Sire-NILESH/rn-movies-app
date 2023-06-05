@@ -198,7 +198,7 @@ const MediaGenresSelect: React.FC<IProps> = ({
 
       {/* CUSTOM GENRES SELECTS */}
       <View className="mt-4 mb-6 mx-8">
-        <Text className="text-text_dark text-sm">
+        <Text className="text-text_dark text-xs">
           {`Discover eg: All Hindi ${
             mediaListType === "movie" ? "Movies" : "TV shows"
           } released on / before / after 2010. (use as a standalone option)`}

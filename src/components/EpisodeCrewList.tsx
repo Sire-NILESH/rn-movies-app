@@ -1,9 +1,9 @@
 import { View, FlatList, Text } from "react-native";
 import React from "react";
 import { ICrew } from "../../types/typings";
-import EpisodeCrewPersonCard from "./EpisodeCrewPersonCard";
 import NothingToShow from "./NothingToShow";
 import useNavigateTo from "../hooks/useNavigateTo";
+import ProfileCard from "./ProfileCard";
 
 interface IProps {
   crew: ICrew[] | undefined;
@@ -31,22 +31,35 @@ const EpisodeCrewList: React.FC<IProps> = (props) => {
             className="px-2 py-1"
             data={filteredCrewList}
             ListFooterComponent={() => <View className="w-4" />}
-            renderItem={(personObj) => (
-              <View className="ml-1 bg-secondary rounded-md">
-                <EpisodeCrewPersonCard
-                  person={personObj.item}
-                  navigateTo={navigateTo}
-                  closeModal={props.closeModal}
-                />
-              </View>
-            )}
+            renderItem={(personObj) => {
+              const p = personObj.item;
+              return (
+                <View className="mr-1">
+                  <ProfileCard
+                    creditPerson={{
+                      id: p.id,
+                      adult: p.adult,
+                      name: p.name,
+                      profile_path: p.profile_path,
+                      gender: p.gender,
+                      buttonTitle: "Actor",
+                      creditTitle: p.department,
+                    }}
+                    navigateTo={navigateTo}
+                    additionalOnpressHandler={() => {
+                      props.closeModal();
+                    }}
+                  />
+                </View>
+              );
+            }}
             keyExtractor={(media, i) => {
               return `${media.id}-${i}`;
             }}
             horizontal
           />
 
-          <Text className="text-sm text-text_dark ml-4 mt-2">
+          <Text className="text-xs text-text_dark ml-5 mt-2">
             Directing and Writing department in this episode.
           </Text>
         </>

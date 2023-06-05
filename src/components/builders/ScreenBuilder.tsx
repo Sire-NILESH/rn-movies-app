@@ -16,7 +16,6 @@ import {
   movieScreenPlaylists,
   tvScreenPlaylists,
 } from "../../config/homeScreensPlaylistsConfig";
-// import { queryClient } from "../../../App";
 
 interface IProps {
   screenType: ScreenTypes;
@@ -52,23 +51,6 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
     queryKey: ["homeScreens", screenType, playlistsToFetch],
     queryFn: async () => sendUrlObjApiRequestV2(playlistsToFetch),
     staleTime: staleTime, //24hours
-    // cacheTime: 1000 * 60 * 60 * 24, // 24 hours
-    // initialData: () =>
-    //   queryClient.getQueryData([
-    //     JSON.stringify([
-    //       "homeScreens",
-    //       screenType,
-    //       playlistsToFetch.map((p) => p.name),
-    //     ]),
-    //   ]),
-    // initialDataUpdatedAt: () =>
-    //   queryClient.getQueryState([
-    //     JSON.stringify([
-    //       "homeScreens",
-    //       screenType,
-    //       playlistsToFetch.map((p) => p.name),
-    //     ]),
-    //   ])?.dataUpdatedAt,
   });
 
   const getNonEmptyArray = () => {

@@ -12,13 +12,7 @@ import {
   TvMedia,
 } from "../../types/typings";
 import HeaderSearchButton from "./../components/ui/HeaderSearchButton";
-import {
-  isMovie,
-  isMovieArray,
-  isPerson,
-  isTv,
-  isTvArray,
-} from "./../utils/helpers/helper";
+import { isMovie, isPerson, isTv } from "./../utils/helpers/helper";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 import { useAllowNsfwContentHooks } from "../hooks/reduxHooks";

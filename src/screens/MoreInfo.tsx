@@ -26,6 +26,7 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     isLoading: loadingProps,
     data: screenProps,
     error: errorLoadingProps,
+    status,
   } = useQuery({
     queryKey: ["moreInfo", mediaType, prevMedia.id],
     queryFn: () => getMediaInfo(prevMedia.id, mediaType),

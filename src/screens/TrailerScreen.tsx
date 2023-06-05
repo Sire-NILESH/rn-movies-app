@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { View, FlatList, Text } from "react-native";
+import { View, FlatList, Text, StatusBar } from "react-native";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { IUrlObject, Trailer } from "../../types/typings";
 import { fetchTrailers } from "../utils/requests";
@@ -47,84 +47,87 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   }, []);
 
   return (
-    <View className="flex-1 bg-secondary">
-      {/* Loader */}
-      <Loader loading={loading} />
+    <>
+      <StatusBar animated={true} backgroundColor={Colors.tertiary} />
+      <View className="flex-1 bg-secondary">
+        {/* Loader */}
+        <Loader loading={loading} />
 
-      {/* if error show nothing*/}
-      {(err as Error) && (
-        <NothingToShow
-          title={"Something went wrong while loading videos"}
-          problemType="error"
-        />
-      )}
+        {/* if error show nothing*/}
+        {(err as Error) && (
+          <NothingToShow
+            title={"Something went wrong while loading videos"}
+            problemType="error"
+          />
+        )}
 
-      {/* When no videos available for that media */}
-      {videos && videos?.length === 0 && (
-        <NothingToShow title="No Videos available" problemType="nothing" />
-      )}
+        {/* When no videos available for that media */}
+        {videos && videos?.length === 0 && (
+          <NothingToShow title="No Videos available" problemType="nothing" />
+        )}
 
-      {/* When some video is available, show the YT player */}
-      {!error && videos && videos.length > 0 && status === "success" && (
-        <View className="justify-start">
-          <YouTubePlayer video={selectedVideo} />
-        </View>
-      )}
-
-      {/* Title and date Dock */}
-      {!loading && !error && videos && videos.length > 0 && (
-        <View className="w-full bg-tertiary px-4 space-y-1 justify-center items-start py-5 [elevation:5] border-b border-b-neutral-800">
-          <Text className="text-text_primary font-bold" numberOfLines={3}>
-            {selectedVideo?.name}
-          </Text>
-          <View className="flex-row items-center">
-            <Text className="text-text_dark space-x-4">
-              {selectedVideo?.type}
-              {" • "}
-            </Text>
-            <Text className=" text-text_dark text-xs">
-              {selectedVideo?.published_at.substring(0, 10)}
-            </Text>
+        {/* When some video is available, show the YT player */}
+        {!error && videos && videos.length > 0 && status === "success" && (
+          <View className="justify-start">
+            <YouTubePlayer video={selectedVideo} />
           </View>
-        </View>
-      )}
+        )}
 
-      {/* All videos list */}
-      {videos && videos.length > 0 && !error ? (
-        <FlatList
-          data={videos}
-          initialNumToRender={5}
-          className="pt-4 px-2"
-          style={{
-            backgroundColor: Colors.primary,
-          }}
-          contentContainerStyle={{
-            justifyContent: "flex-start",
-          }}
-          keyExtractor={(itemObj) => itemObj.id}
-          ListFooterComponent={() => {
-            return (
-              <View
-                className="h-2 w-full"
-                style={{ backgroundColor: Colors.primary }}
-              ></View>
-            );
-          }}
-          renderItem={(vObj) => {
-            return (
-              <TrailerCardView
-                video={vObj.item}
-                onPressHandler={onPressSetVideoHandler}
-              />
-            );
-          }}
-        />
-      ) : null}
-    </View>
+        {/* Title and date Dock */}
+        {!loading && !error && videos && videos.length > 0 && (
+          <View className="w-full bg-tertiary px-4 space-y-1 justify-center items-start py-5 [elevation:5] border-b border-b-neutral-800">
+            <Text className="text-text_primary font-bold" numberOfLines={3}>
+              {selectedVideo?.name}
+            </Text>
+            <View className="flex-row items-center">
+              <Text className="text-text_dark space-x-4">
+                {selectedVideo?.type}
+                {" • "}
+              </Text>
+              <Text className=" text-text_dark text-xs">
+                {selectedVideo?.published_at.substring(0, 10)}
+              </Text>
+            </View>
+          </View>
+        )}
+
+        {/* All videos list */}
+        {videos && videos.length > 0 && !error ? (
+          <FlatList
+            data={videos}
+            initialNumToRender={5}
+            className="pt-4 px-2"
+            style={{
+              backgroundColor: Colors.primary,
+            }}
+            contentContainerStyle={{
+              justifyContent: "flex-start",
+            }}
+            keyExtractor={(itemObj) => itemObj.id}
+            ListFooterComponent={() => {
+              return (
+                <View
+                  className="h-2 w-full"
+                  style={{ backgroundColor: Colors.primary }}
+                ></View>
+              );
+            }}
+            renderItem={(vObj) => {
+              return (
+                <TrailerCardView
+                  video={vObj.item}
+                  onPressHandler={onPressSetVideoHandler}
+                />
+              );
+            }}
+          />
+        ) : null}
+      </View>
+    </>
   );
 };
 
-export default TrailerScreen;
+export default React.memo(TrailerScreen);
 
 function TrailerCardView(props: {
   video: Trailer;

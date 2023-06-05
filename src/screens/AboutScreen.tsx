@@ -1,4 +1,5 @@
 import React from "react";
+import { Text } from "react-native";
 import { useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { View } from "react-native";
@@ -22,16 +23,6 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
   return (
     <ScrollView className="flex-1 bg-secondary pt-[1px]">
-      <View>
-        <SettingsCardWrapper
-          iconName="information-circle-outline"
-          title="Maven"
-          subtitle={
-            "Maven is a product build as an hobby project. \nThe app allows the users to find movies and tv shows quickly and easily based on 'search', 'genres', 'custom playlists', 'similar', 'actors', 'writers', 'tv channels', 'movie production houses' and even 'watch providers'.\nThe app also provides trailers, 'Featurette', 'Behind the Scenes', 'Clip', 'Trailer' ,'Teaser' for most of the contents so you can get a taste of what content you will be going to watch. You can even mark a content 'Watchlist', 'Favourite' and 'Watched' and is also maintained for you separately as well."
-          }
-        ></SettingsCardWrapper>
-      </View>
-
       <View>
         <SettingsCardWrapper
           iconName="information-circle-outline"
@@ -130,6 +121,45 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               </View>
             </CustomButton>
           </CardRow>
+        </SettingsCardWrapper>
+      </View>
+
+      {/* MAVEN */}
+      <View>
+        <SettingsCardWrapper
+          iconName="information-circle-outline"
+          title="Maven"
+          subtitle={"Maven is an application build as an educational project."}
+        >
+          <View
+            className="justify-between px-4 mt-2 mx-2 bg-neutral-800 rounded-xl py-3 space-y-2"
+            style={{ minHeight: 45 }}
+          >
+            <Text className="text-text_tertiary text-sm">
+              {
+                "The app makes it easier to find movies and tv shows quickly using Search, Genres, Custom playlists, Similar, Actors, Writers, TV channels, Movie production houses and even Watch providers"
+              }
+            </Text>
+            <Text className="text-text_tertiary text-sm">
+              {
+                "You can even mark a content 'Watchlist', 'Favourite' and 'Watched', which is maintained for you locallly on your device."
+              }
+            </Text>
+            <Text className="text-text_tertiary text-sm">
+              {
+                "Maven and nor its creator, own/license any of the content used in the application in anyway whatsoever."
+              }
+            </Text>
+          </View>
+
+          <View
+            className="justify-between px-4 mt-2 mx-2 bg-neutral-800 rounded-xl py-3 space-y-2"
+            style={{ minHeight: 45 }}
+          >
+            <Text className="text-text_tertiary text-sm">
+              {"All Rights Reserved by their Respective Owners."}
+            </Text>
+          </View>
         </SettingsCardWrapper>
       </View>
 

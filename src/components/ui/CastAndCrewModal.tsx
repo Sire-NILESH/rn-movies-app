@@ -146,7 +146,9 @@ function ViewTab({ title, currentView, tabView, setCurrentViewHandler }: ITab) {
             className="mx-auto font-bold"
             style={{
               color:
-                currentView === "crew" ? Colors.text_primary : Colors.text_dark,
+                currentView === tabView
+                  ? Colors.text_primary
+                  : Colors.text_dark,
             }}
           >
             {title}

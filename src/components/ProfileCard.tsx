@@ -1,22 +1,26 @@
 import { View, Text, Pressable } from "react-native";
 import React from "react";
-import { ICast } from "../../types/typings";
 import RenderProfileImage from "./RenderProfileImage";
 import { getGender } from "../utils/helpers/helper";
 
 interface IProps {
-  person: ICast;
+  creditPerson: {
+    id: number;
+    adult: boolean;
+    name: string;
+    profile_path: string | null;
+    gender: 0 | 1 | 2 | 3 | null;
+    buttonTitle: string;
+    creditTitle: string;
+  };
   navigateTo: (screen: string, paramOption: Object) => void;
-  closeModal: () => void;
+  additionalOnpressHandler?: () => void;
 }
 
-const EpisodeCastPersonCard: React.FC<IProps> = ({
-  person: p,
-  navigateTo,
-  closeModal,
-}) => {
+const ProfileCard: React.FC<IProps> = (props) => {
+  const p = props.creditPerson;
   return (
-    <View className="border border-stone-800 space-y-3  w-36 rounded-lg justify-start overflow-hidden">
+    <View className="bg-secondary border border-stone-800 space-y-3 w-36 rounded-lg justify-start overflow-hidden">
       <View className="h-full w-full items-center space-y-2 py-3 px-1">
         <View
           className="rounded-md justify-center"
@@ -32,7 +36,6 @@ const EpisodeCastPersonCard: React.FC<IProps> = ({
         </View>
         <View className="justify-start w-full items-center px-1">
           <Text
-            key={p.id}
             numberOfLines={1}
             className="text-text_primary font-bold text-xs mt-1 text-center"
           >
@@ -53,8 +56,11 @@ const EpisodeCastPersonCard: React.FC<IProps> = ({
               className="h-full w-full flex justify-center items-center"
               android_ripple={{ color: "#eee" }}
               onPress={() => {
-                closeModal();
-                navigateTo("Person Medias", {
+                if (props.additionalOnpressHandler) {
+                  props.additionalOnpressHandler();
+                }
+
+                props.navigateTo("Person Medias", {
                   title: p.name,
                   urlObject: {
                     name: p.name,
@@ -81,7 +87,7 @@ const EpisodeCastPersonCard: React.FC<IProps> = ({
             className="w-[100] mt-4 text-center text-text_tertiary text-xs font-bold"
             numberOfLines={2}
           >
-            {p.character}
+            {p.creditTitle === "" ? "Cast member" : p.creditTitle}
           </Text>
         </View>
       </View>
@@ -89,4 +95,4 @@ const EpisodeCastPersonCard: React.FC<IProps> = ({
   );
 };
 
-export default EpisodeCastPersonCard;
+export default React.memo(ProfileCard);

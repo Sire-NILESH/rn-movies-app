@@ -15,6 +15,7 @@ import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client
 import { useState } from "react";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import toastConfig from "./src/config/toastMessageConfig";
+import { Colors } from "./src/utils/Colors";
 // import useLoadMyFonts from "./src/hooks/useLoadMyFonts";
 
 // Create a client
@@ -71,7 +72,11 @@ export default function App() {
 
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar
+        style="light"
+        animated={true}
+        backgroundColor={Colors.tertiary}
+      />
       <Provider store={store}>
         {/* REDUX persistor */}
         <PersistGate persistor={persistor}>

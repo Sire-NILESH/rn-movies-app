@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import { IPersonMediasTopTabsScreenProps } from "../library/NavigatorScreenProps/PersonMediasTopTabsScreenProps";
 import PersonMediasScreenBuilder from "../components/builders/PersonMediasScreenBuilder";
 

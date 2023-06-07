@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { View } from "react-native";
 import { useState, useEffect } from "react";
 import { MediaTypes, MovieMedia, TvMedia } from "../../../types/typings";
@@ -54,7 +55,7 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
         // For Search screen
         else if (props.screenType === "Search" && props.searchScreenOptions) {
           // @ts-ignore
-          const { results: searchResults } = await searchRequest(
+          moreMedias = await searchRequest(
             props.searchScreenOptions.searchQuery
               ? props.searchScreenOptions.searchQuery
               : "",
@@ -64,12 +65,16 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
             pageNumber,
             allowNsfwContent.nsfw
           );
-          moreMedias = searchResults;
+        }
+
+        // if reached the end of the pages.
+        if (pageNumber === moreMedias.total_pages) {
+          setBlockNewLoads(true);
         }
 
         // if we received some data, then page exists.
-        if (moreMedias.length > 0) {
-          setMedias((prev) => [...prev, ...moreMedias]);
+        if (moreMedias.results.length > 0) {
+          setMedias((prev) => [...prev, ...moreMedias.results]);
         }
 
         // else, no more pages to fetch. Block any further new loads.
@@ -96,6 +101,11 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
     );
   }
 
+  const loadMoreItem = useCallback(() => {
+    // Increase the page number by 1 only if the load new medias is enabled
+    if (!blockNewLoads && !loadingNewMedias) setPageNumber((prev) => prev + 1);
+  }, [blockNewLoads, loadingNewMedias]);
+
   return (
     <View
       className="flex-1 bg-secondary
@@ -113,8 +123,7 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
             <TilesRenderedView
               medias={medias}
               loadingNewMedias={loadingNewMedias}
-              setPageNumber={setPageNumber}
-              blockNewLoads={blockNewLoads}
+              loadMoreItem={loadMoreItem}
               thumbnailQuality={thumbnailQuality}
             />
           ) : (

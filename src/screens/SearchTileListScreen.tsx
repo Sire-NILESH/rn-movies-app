@@ -12,7 +12,6 @@ const SearchTileListScreen: React.FunctionComponent<IStackScreenProps> = (
     title,
   }: {
     title: string;
-    medias: MovieMedia[] | TvMedia[];
     searchCategory: MediaTypes;
   } = route.params;
 

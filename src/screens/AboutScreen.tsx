@@ -129,7 +129,7 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         <SettingsCardWrapper
           iconName="information-circle-outline"
           title="Maven"
-          subtitle={"Maven is an application build as an educational project."}
+          subtitle={"Maven is an application built as an educational project."}
         >
           <View
             className="justify-between px-4 mt-2 mx-2 bg-neutral-800 rounded-xl py-3 space-y-2"

@@ -98,7 +98,6 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         <View className="mr-4">
           <HeaderSearchButton
             gotoList={true}
-            medias={searchQueryResult?.results}
             title={searchQuery}
             searchCategory={searchCategory}
             disabled={searchQuery && searchQuery.length > 0 ? false : true}

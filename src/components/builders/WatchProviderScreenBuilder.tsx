@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   IQueryParams,
   IUrlObject,
@@ -47,10 +47,18 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
           [urlObjectLocal],
           filters
         );
+
+        // if reached the end of the pages.
+        if (pageNumber === moreMedias.total_pages) {
+          setBlockNewLoads(true);
+        }
+
         // if we received some data, then page exists.
         if (moreMedias.medias.length > 0) {
           setMedias((prev) => [...prev, ...moreMedias.medias]);
-        } // else, no more pages to fetch. Block any further new loads.
+        }
+
+        // else, no more pages to fetch. Block any further new loads.
         else {
           setBlockNewLoads(true);
         }
@@ -62,6 +70,11 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
     }
     loadMedias();
   }, [pageNumber]);
+
+  const loadMoreItem = useCallback(() => {
+    // Increase the page number by 1 only if the load new medias is enabled
+    if (!blockNewLoads && !loadingNewMedias) setPageNumber((prev) => prev + 1);
+  }, [blockNewLoads, loadingNewMedias]);
 
   return (
     <View className="flex-1 bg-secondary min-w-full w-full items-center">
@@ -77,8 +90,7 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
             <TilesRenderedView
               medias={medias}
               loadingNewMedias={loadingNewMedias}
-              setPageNumber={setPageNumber}
-              blockNewLoads={blockNewLoads}
+              loadMoreItem={loadMoreItem}
               thumbnailQuality={thumbnailQuality}
             />
             {/* <RenderLoader /> */}

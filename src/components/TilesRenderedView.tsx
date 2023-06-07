@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { View, FlatList, ActivityIndicator } from "react-native";
 import ThumbnailMemoised from "./ThumbnailMemoised";
 import { getDeviceDimensions } from "../utils/helpers/helper";
@@ -8,19 +9,12 @@ import { IImgItemSettingsDB } from "../../types/typings";
 interface IProps {
   medias: any[];
   loadingNewMedias: boolean;
-  blockNewLoads: boolean;
-  setPageNumber: React.Dispatch<React.SetStateAction<number>>;
+  loadMoreItem: () => void;
   thumbnailQuality?: IImgItemSettingsDB;
 }
 
 const TilesRenderedView: React.FC<IProps> = (props) => {
   const navigation = useNavigation();
-
-  const loadMoreItem = () => {
-    // Increase the page number by 1 only if the load new medias is enabled
-    if (!props.blockNewLoads && !props.loadingNewMedias)
-      props.setPageNumber((prev) => prev + 1);
-  };
 
   // Navigation handler for child components like thumbnail and jumpTo button.
   // So every one of them wont have to calculate them separately.
@@ -37,14 +31,29 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
 
   // Footer loader component
   const renderLoader = () => {
-    return props.loadingNewMedias ? (
+    return props.loadingNewMedias === true ? (
       <View className="w-full justify-center my-2">
         <ActivityIndicator size="small" color="#aaa" />
       </View>
     ) : (
-      <View className="h-6"></View>
+      <View className="h-8"></View>
     );
   };
+
+  const renderItem = useCallback(function (media: any) {
+    return (
+      <View className="mx-[2]">
+        <ThumbnailMemoised
+          media={media.item}
+          orientation="portrait"
+          navigateTo={navigateTo}
+          windowWidth={windowWidth}
+          imgType="regular"
+          quality={props.thumbnailQuality?.value}
+        />
+      </View>
+    );
+  }, []);
 
   return (
     <View className="flex-1 relative">
@@ -52,31 +61,17 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
         data={props.medias}
         ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
         contentContainerStyle={{
-          // backgroundColor: "white",
           width: "100%",
           paddingVertical: 8,
         }}
-        renderItem={(media) => {
-          return (
-            <View className="mx-[2]">
-              <ThumbnailMemoised
-                media={media.item}
-                orientation="portrait"
-                navigateTo={navigateTo}
-                windowWidth={windowWidth}
-                imgType="regular"
-                quality={props.thumbnailQuality?.value}
-              />
-            </View>
-          );
-        }}
+        renderItem={(media) => renderItem(media)}
         keyExtractor={(media, i) => {
           return `${media.id}-${i}`;
         }}
         numColumns={3}
         ListFooterComponent={renderLoader}
         onEndReachedThreshold={0.9}
-        onEndReached={loadMoreItem}
+        onEndReached={props.loadMoreItem}
         initialNumToRender={20}
       />
     </View>

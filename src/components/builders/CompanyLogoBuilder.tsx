@@ -14,7 +14,6 @@ import useNavigateTo from "../../hooks/useNavigateTo";
 
 interface IProps {
   company: IProductionCompany[] | Network[];
-  //   navigateTo: (screen: string, paramOption: Object) => void;
   mediaType: MediaTypes;
   imgQuality?: string;
 }

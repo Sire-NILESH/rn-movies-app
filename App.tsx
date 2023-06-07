@@ -89,7 +89,7 @@ export default function App() {
                 setQueryCacheHyderated(true);
               }}
             >
-              <SafeAreaView className="flex-1 bg-tertiary">
+              <SafeAreaView className="flex-1 bg-secondary">
                 {enterApp()}
               </SafeAreaView>
             </PersistQueryClientProvider>

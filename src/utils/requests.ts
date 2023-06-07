@@ -34,7 +34,12 @@ export const searchRequest = async (
       } else throw err;
     });
 
-  if (data?.results) return { results: data?.results, mediaType: mediaType };
+  if (data?.results)
+    return {
+      results: data?.results,
+      mediaType: mediaType,
+      total_pages: data?.total_pages,
+    };
 };
 
 /**
@@ -116,17 +121,13 @@ export const getTileListScreenMedias = async (
 
       return {
         medias: withoutDuplicates,
-        totalPages: data[0].data.total_pages,
+        total_pages: data[0].data.total_pages,
       };
-      // return {
-      //   medias: [...data[0].data.cast, ...data[0].data.crew],
-      //   totalPages: data[0].data.total_pages,
-      // };
     }
 
     return {
       medias: data[0].data.results,
-      totalPages: data[0].data.total_pages,
+      total_pages: data[0].data.total_pages,
     };
   } catch (err) {
     throw err;
@@ -205,7 +206,10 @@ export const getRelatedMediasProps = async (
       }
     );
     // return data.results;
-    return data.data.results;
+    return {
+      total_pages: data.data.total_pages,
+      results: data.data.results,
+    };
   } catch (err) {
     // console.log(err);
     throw err;

@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { View, Text, Pressable } from "react-native";
 import { useLayoutEffect, useState, useEffect } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -84,10 +85,17 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           playlistsToFetch,
           filters
         );
+
+        // if reached the end of the pages.
+        if (pageNumber === moreMedias.total_pages) {
+          setBlockNewLoads(true);
+        }
+
         // if we received some data, then page exists.
         if (moreMedias.medias.length > 0) {
           setMedias((prev) => [...prev, ...moreMedias.medias]);
         }
+
         // else, no more pages to fetch. Block any further new loads.
         else {
           setBlockNewLoads(true);
@@ -133,6 +141,13 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       setBlockNewLoads(false);
     }
   };
+
+  const loadMoreItem = useCallback(() => {
+    // Increase the page number by 1 only if the load new medias is enabled
+    if (!blockNewLoads && !loadingNewMedias) {
+      setPageNumber((prev) => prev + 1);
+    }
+  }, [blockNewLoads, loadingNewMedias]);
 
   useEffect(() => {
     // Show alert on error
@@ -194,15 +209,6 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     });
   }, [userSelectedPlaylists]);
 
-  // Footer loader component
-  // const RenderLoader = () => {
-  //   return loadingNewMedias ? (
-  //     <View className="w-full justify-center my-2">
-  //       <ActivityIndicator size="small" color="#aaa" />
-  //     </View>
-  //   ) : null;
-  // };
-
   return (
     <View className="flex-1 bg-secondary min-w-full w-full items-center">
       {/* Genre Tags Scrollable Row on top, if user selected some genres */}
@@ -230,16 +236,12 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             problemType="error"
           />
         ) : medias?.length > 0 ? (
-          <>
-            <TilesRenderedView
-              medias={medias}
-              loadingNewMedias={loadingNewMedias}
-              setPageNumber={setPageNumber}
-              blockNewLoads={blockNewLoads}
-              thumbnailQuality={thumbnailQuality}
-            />
-            {/* <RenderLoader /> */}
-          </>
+          <TilesRenderedView
+            medias={medias}
+            loadingNewMedias={loadingNewMedias}
+            loadMoreItem={loadMoreItem}
+            thumbnailQuality={thumbnailQuality}
+          />
         ) : (
           !loadingNewMedias && <NothingToShow problemType="nothing" />
         )}

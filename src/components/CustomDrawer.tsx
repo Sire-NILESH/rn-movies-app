@@ -13,15 +13,25 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
-        <View className="mt-0" style={{ width: "100%", aspectRatio: 16 / 9 }}>
+        <View
+          className="mt-0"
+          style={{
+            width: "100%",
+            // aspectRatio: 16 / 9,
+            height: 180,
+          }}
+        >
           <LinearGradient
             colors={[
               "rgba(0,0,0,0)",
               "rgba(0,0,0,0)",
               "rgba(0,0,0,0)",
-              // "rgba(23, 23, 23, 0.2)",
-              "rgba(23, 23, 23, 0.4)",
-              "rgba(23, 23, 23, 8)",
+              "rgba(0,0,0,0)",
+              "rgba(0,0,0,0)",
+              "rgba(0,0,0,0)",
+              "rgba(0,0,0,0)",
+              "rgba(23, 23, 23, 0.8)",
+              "rgba(23, 23, 23, 1)",
             ]}
             style={{
               width: "100%",
@@ -29,7 +39,8 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
             }}
           >
             <ImageBackground //wrapping the main entry screen with this <ImageBackground> component
-              source={require("../../assets/images/drawerImage/maven_main.png")}
+              source={require("../../assets/icon.png")}
+              // source={require("../../assets/images/drawerImage/maven_main.png")}
               resizeMode="cover" //similar to web, "cover", "contain", etc.
               style={{
                 width: "100%",
@@ -43,6 +54,8 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
             ></ImageBackground>
           </LinearGradient>
         </View>
+
+        {/* <View className="h-2" /> */}
 
         <View className="flex-1 pt-2 my-0 px-2">
           <DrawerItemList {...props} />

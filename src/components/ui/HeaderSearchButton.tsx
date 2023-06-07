@@ -7,7 +7,6 @@ import { MediaTypes, MovieMedia, TvMedia } from "../../../types/typings";
 
 interface IProps {
   gotoList?: boolean;
-  medias?: MovieMedia[] | TvMedia[];
   title?: string | null;
   searchCategory?: MediaTypes;
   disabled?: boolean;
@@ -16,7 +15,6 @@ interface IProps {
 export default function HeaderSearchButton({
   gotoList,
   title,
-  medias,
   searchCategory,
   disabled,
 }: IProps) {
@@ -25,7 +23,7 @@ export default function HeaderSearchButton({
   function onPressHandler() {
     if (gotoList === true) {
       // @ts-ignore
-      navigation.push("Search Tiles", { title, medias, searchCategory });
+      navigation.push("Search Tiles", { title, searchCategory });
     } else {
       // @ts-ignore
       navigation.navigate("Search", { searchCategory: searchCategory });

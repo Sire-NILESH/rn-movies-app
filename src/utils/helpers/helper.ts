@@ -472,6 +472,7 @@ export function buildTrendingPlaylist(
     queryParams: {
       language: "en-US",
     },
+    additionalFiltersUnsupported: true,
   };
 }
 
@@ -485,6 +486,7 @@ export function buildPopularPlaylist(
     queryParams: {
       language: "en-US",
     },
+    additionalFiltersUnsupported: true,
   };
 }
 
@@ -498,6 +500,7 @@ export function buildTopRatedPlaylist(
     queryParams: {
       language: "en-US",
     },
+    additionalFiltersUnsupported: true,
   };
 }
 
@@ -511,6 +514,7 @@ export function buildAiringTodayPlaylist(
     queryParams: {
       language: "en-US",
     },
+    additionalFiltersUnsupported: true,
   };
 }
 
@@ -524,6 +528,7 @@ export function buildNowPlayingPlaylist(
     queryParams: {
       language: "en-US",
     },
+    additionalFiltersUnsupported: true,
   };
 }
 
@@ -538,6 +543,7 @@ export function buildUpcomingPlaylist(
       language: "en-US",
       primary_release_year: String(new Date(new Date()).getFullYear()),
     },
+    additionalFiltersUnsupported: true,
   };
 }
 
@@ -552,6 +558,7 @@ export function buildGenrePlaylist(
       with_genres: String(genre.id),
       language: "en-US",
     },
+    additionalFiltersUnsupported: true,
   };
 }
 
@@ -571,6 +578,7 @@ export function buildLanguagePlaylist(
           ? String(releaseYear)
           : String(new Date(Date.now()).getFullYear()),
     },
+    additionalFiltersUnsupported: true,
   };
 }
 

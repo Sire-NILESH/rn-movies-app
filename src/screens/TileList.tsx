@@ -23,12 +23,16 @@ import TilesRenderedView from "../components/TilesRenderedView";
 import NothingToShow from "../components/NothingToShow";
 import MediaWizardModal from "../components/MediaWizardModal/MediaWizardModal";
 import useImageItemSetting from "../hooks/useImageItemSetting";
+import FilterTilesButton from "./../components/ui/FilterTilesButton";
+import TilesFilterModal from "../components/TilesFilterModal";
+import cloneDeep from "lodash.clonedeep";
 
 const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [showGenresModal, setShowGenresModal] = useState<boolean>(false);
   const [userSelectedPlaylists, setUserSelectedPlaylists] = useState<
     IUrlObject[]
   >([]);
+
   const { navigation, route } = props;
   // @ts-ignore
   const {
@@ -39,19 +43,28 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   }: {
     title: string;
     medias: MovieMedia[] | TvMedia[];
-    playlist?: IUrlObject;
+    playlist: IUrlObject;
     noMoreLoads?: boolean;
     currentMediaType?: MediaTypes;
   } = route.params;
+
+  const [currentShowingPlaylists, setCurrentShowingPlaylists] = useState<
+    IUrlObject[]
+  >([pastPlaylist]);
 
   const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>(
     mediaList ? mediaList : []
   );
   const [genreIds, setGenreIds] = useState<number[] | null>();
+  const [genreIdsFromFilter, setGenreIdsFromFilter] = useState<
+    number[] | null
+  >();
   const [loadingNewMedias, setLoadingNewMedias] = useState<boolean>(false);
   const [blockNewLoads, setBlockNewLoads] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [error, setError] = useState<Error | null>(null);
+
+  const [showFilterModal, setShowFilterModal] = useState<boolean>(false);
 
   const currentListType: MediaTypes = currentMediaType
     ? currentMediaType
@@ -68,7 +81,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   // Loading Data
   useEffect(() => {
     async function loadMedias() {
-      if (!pastPlaylist) return;
+      // if (!pastPlaylist) return;
 
       let filters: IQueryParams = {
         page: pageNumber,
@@ -85,6 +98,8 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           playlistsToFetch,
           filters
         );
+
+        setCurrentShowingPlaylists(playlistsToFetch);
 
         // if reached the end of the pages.
         if (pageNumber === moreMedias.total_pages) {
@@ -109,13 +124,20 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     loadMedias();
   }, [mediaList, pageNumber, userSelectedPlaylists]);
 
-  const onShowGenresModal = () => {
-    // setLangAndYearFilter({});
-    setShowGenresModal(true);
-  };
-
   const onCloseGenresModal = () => {
     setShowGenresModal(false);
+  };
+
+  const onCloseFilterModal = () => {
+    setShowFilterModal(false);
+  };
+
+  const onToggleGenresModal = () => {
+    setShowGenresModal((prev) => (prev === true ? false : true));
+  };
+
+  const onToggleFilterModal = () => {
+    setShowFilterModal((prev) => (prev === true ? false : true));
   };
 
   const onCloseWithConfirmGenresModal = (
@@ -123,10 +145,13 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     // langAndYearFilter: IQueryParams
   ) => {
     if (playlists.length > 0) {
+      const playlistDeepCpy: IUrlObject[] = cloneDeep(playlists);
+
       setError(null);
-      setUserSelectedPlaylists(playlists);
+      setUserSelectedPlaylists(playlistDeepCpy);
       setPageNumber(1);
       setMedias([]);
+      setGenreIdsFromFilter([]);
       setShowGenresModal(false);
 
       const genrelist = playlists[0].queryParams.with_genres
@@ -135,6 +160,29 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
       if (genrelist && genrelist?.length > 0) {
         setGenreIds(genrelist);
+      }
+
+      // since we now have new set of playlists, we can unblock new loads
+      setBlockNewLoads(false);
+    }
+  };
+
+  const onCloseWithConfirmFiltersModal = (playlists: IUrlObject[]) => {
+    if (playlists.length > 0) {
+      setError(null);
+      setUserSelectedPlaylists(playlists);
+      setPageNumber(1);
+      setMedias([]);
+      setShowFilterModal(false);
+
+      const genrelist = playlists[0].queryParams.with_genres
+        ?.split(",")
+        .map((g) => Number(g));
+
+      if (genrelist && genrelist?.length > 0) {
+        setGenreIdsFromFilter(genrelist);
+      } else {
+        setGenreIdsFromFilter([]);
       }
 
       // since we now have new set of playlists, we can unblock new loads
@@ -194,7 +242,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               <Pressable
                 className="p-2 items-center justify-center"
                 android_ripple={{ color: "#eee" }}
-                onPress={onShowGenresModal}
+                onPress={onToggleGenresModal}
               >
                 <MaterialCommunityIcons
                   name="drama-masks"
@@ -210,11 +258,18 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   }, [userSelectedPlaylists]);
 
   return (
-    <View className="flex-1 bg-secondary min-w-full w-full items-center">
+    <View className="relative flex-1 bg-secondary min-w-full w-full items-center">
       {/* Genre Tags Scrollable Row on top, if user selected some genres */}
       {genreIds && genreIds.length > 1 ? (
-        <View className="w-full">
+        <View className="w-full h-10 justify-start">
           <GenreTags genreIdList={genreIds} backgroundType="colored" />
+        </View>
+      ) : genreIdsFromFilter && genreIdsFromFilter.length > 0 ? (
+        <View className="w-full h-10 justify-start">
+          <GenreTags
+            genreIdList={genreIdsFromFilter}
+            backgroundType="colored"
+          />
         </View>
       ) : null}
 
@@ -228,23 +283,50 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         />
       ) : null}
 
+      {showFilterModal ? (
+        <TilesFilterModal
+          isVisible={showFilterModal}
+          closeModal={onCloseFilterModal}
+          mediaListType={currentListType}
+          // playlist={currentShowingPlaylists[0]}
+          playlist={
+            userSelectedPlaylists.length > 0
+              ? userSelectedPlaylists[0]
+              : pastPlaylist
+          }
+          closeWithConfirm={onCloseWithConfirmFiltersModal}
+        />
+      ) : null}
+
       {/* Tiles */}
-      <View className="flex-1 relative w-full px-2">
+      <View className="flex-1 w-full px-2">
         {error && medias.length === 0 ? (
           <NothingToShow
             title={"Something went wrong while loading content"}
             problemType="error"
           />
         ) : medias?.length > 0 ? (
-          <TilesRenderedView
-            medias={medias}
-            loadingNewMedias={loadingNewMedias}
-            loadMoreItem={loadMoreItem}
-            thumbnailQuality={thumbnailQuality}
-          />
-        ) : (
-          !loadingNewMedias && <NothingToShow problemType="nothing" />
-        )}
+          <>
+            <TilesRenderedView
+              medias={medias}
+              loadingNewMedias={loadingNewMedias}
+              loadMoreItem={loadMoreItem}
+              thumbnailQuality={thumbnailQuality}
+            />
+
+            {currentShowingPlaylists[0].additionalFiltersUnsupported ? null : (
+              <FilterTilesButton onShowFilterModal={onToggleFilterModal} />
+            )}
+          </>
+        ) : !loadingNewMedias ? (
+          <>
+            <NothingToShow problemType="nothing" />
+
+            {currentShowingPlaylists[0].additionalFiltersUnsupported ? null : (
+              <FilterTilesButton onShowFilterModal={onToggleFilterModal} />
+            )}
+          </>
+        ) : null}
       </View>
     </View>
   );

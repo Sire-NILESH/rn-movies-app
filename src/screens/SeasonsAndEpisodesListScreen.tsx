@@ -39,7 +39,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   function castandCrewModalHandler(castAndCrew: EpisodeCastAndCrew) {
-    setIsModalOpen(true);
+    setIsModalOpen((prev) => (prev === true ? false : true));
     setcastAndCrewForModal(castAndCrew);
   }
 

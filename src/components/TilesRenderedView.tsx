@@ -11,6 +11,11 @@ interface IProps {
   loadingNewMedias: boolean;
   loadMoreItem: () => void;
   thumbnailQuality?: IImgItemSettingsDB;
+  tilesHeader?:
+    | React.ComponentType<any>
+    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    | null
+    | undefined;
 }
 
 const TilesRenderedView: React.FC<IProps> = (props) => {
@@ -64,6 +69,7 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
           width: "100%",
           paddingVertical: 8,
         }}
+        ListHeaderComponent={props.tilesHeader}
         renderItem={(media) => renderItem(media)}
         keyExtractor={(media, i) => {
           return `${media.id}-${i}`;

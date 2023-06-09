@@ -92,6 +92,12 @@ function CollectionThumbnail({
             collectionMedia: media,
           });
         }}
+        onLongPress={() => {
+          navigateTo("Related", {
+            relatedToMediaId: media.mediaId,
+            mediaType: media.mediaType,
+          });
+        }}
       >
         {imgType && imgType === "cached" ? (
           imageURL ? (

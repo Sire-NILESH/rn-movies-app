@@ -14,7 +14,7 @@ interface IProps {
 const GenreTags: React.FC<IProps> = (props) => {
   return (
     <View
-      className="w-full justify-center bg-tertiary pb-2"
+      className="w-full justify-center bg-tertiary h-full"
       style={{
         backgroundColor:
           props.backgroundType === "transparent"
@@ -40,6 +40,7 @@ const GenreTags: React.FC<IProps> = (props) => {
       ) : (
         <FlatList
           horizontal
+          // className="pb-2"
           data={props.genreNames}
           keyExtractor={(item, i) => `${item.name}-${i}`}
           renderItem={(itemObj) => <GerneTag genreName={itemObj.item} />}

@@ -109,7 +109,7 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style="light" backgroundColor={Colors.tertiary} />
       <SafeAreaView className="flex-1 bg-secondary">
         <View className="flex-1 pb-2">
           {/* Search List suggestions */}

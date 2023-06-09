@@ -21,6 +21,7 @@ import {
 import FeaturedPlaylists from "./FeaturedPlaylists";
 import MediaGenresSelect from "./MediaGenresSelect";
 import { addReleaseAndAirDateFilters } from "../../utils/helpers/helper";
+import useFilterSectionHooks from "../../hooks/useFilterSectionHooks";
 
 interface IProps {
   isVisible: boolean;
@@ -37,64 +38,22 @@ const MediaWizardModal: React.FC<IProps> = ({
   mediaListType,
   closeWithConfirm,
 }) => {
-  const { defaultYear } = useDefaultYearHooks();
-  const { defaultLanguage } = useDefaultLanguageHooks();
+  const {
+    setCurrentLangHandler,
+    setCurrentYearHandler,
+    setCurrentGenreSortByHandler,
+    setReleaseYearConstraintHandler,
+    currentYear,
+    filters,
+  } = useFilterSectionHooks({ mediaListType });
+
   const [selectedPlaylists, setSelectedPlaylists] = useState<IUrlObject[]>([]);
-  const [currentYear, setCurrentYear] = useState<number>(defaultYear.year);
-  const [releaseYearConstraint, setReleaseYearConstraint] =
-    useState<TReleaseYearConstraint>();
+
   const [currentView, setCurrentView] = useState<TViews>("featured_playlists");
-  const [currentLang, setCurrentLang] = useState<string>(
-    defaultLanguage.iso_639_1
-  );
-  const [currentGenreSortBy, setCurrentGenreSortBy] = useState<IGenreSortBy>();
-
-  const setCurrentYearHandler = (year: number) => {
-    setCurrentYear(year);
-  };
-
-  const setReleaseYearConstraintHandler = (
-    constraint: TReleaseYearConstraint
-  ) => {
-    setReleaseYearConstraint(constraint);
-  };
-
-  const setCurrentLangHandler = (language: string) => {
-    setCurrentLang(language);
-  };
-
-  const setCurrentGenreSortByHandler = (sortByFilter: IGenreSortBy) => {
-    setCurrentGenreSortBy(sortByFilter);
-  };
 
   const setCurrentViewHandler = (view: TViews) => {
     setCurrentView(view);
   };
-
-  const resetHandler = () => {
-    setReleaseYearConstraint(undefined);
-  };
-
-  const filters: IQueryParams = {
-    with_original_language: currentLang,
-  };
-
-  addReleaseAndAirDateFilters(
-    filters,
-    mediaListType,
-    currentYear,
-    releaseYearConstraint
-  );
-
-  if (currentGenreSortBy !== undefined) {
-    if (currentGenreSortBy.value === undefined) {
-      delete filters.sort_by;
-    } else {
-      filters.sort_by = currentGenreSortBy.value;
-    }
-  } else if (currentGenreSortBy === undefined) {
-    delete filters.sort_by;
-  }
 
   function selectedPlaylistHandlers(
     playlist: IUrlObject,
@@ -112,13 +71,13 @@ const MediaWizardModal: React.FC<IProps> = ({
   }
 
   function onConfirmHandler() {
-    const selectedGenresNames: string[] = [];
+    // const selectedGenresNames: string[] = [];
     const selectedGenresList: string[] = [];
 
     selectedPlaylists.forEach((p) => {
       if (p.queryParams.with_genres) {
         selectedGenresList.push(p.queryParams.with_genres);
-        selectedGenresNames.push(p.name);
+        // selectedGenresNames.push(p.name);
       }
     });
 
@@ -133,6 +92,7 @@ const MediaWizardModal: React.FC<IProps> = ({
           with_genres: commaSeperatedGenresList,
           ...filters,
         },
+        additionalFiltersUnsupported: true,
       };
 
       closeWithConfirm([playlist]);

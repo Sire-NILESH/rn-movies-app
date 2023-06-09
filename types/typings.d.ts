@@ -428,6 +428,7 @@ export interface IUrlObject {
   name: string;
   url: string;
   queryParams: IQueryParams;
+  additionalFiltersUnsupported?: boolean;
 }
 
 export interface IPlaylist extends IUrlObject {}

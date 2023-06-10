@@ -13,6 +13,7 @@ import Loader from "../components/ui/Loader";
 import { useQuery } from "./../../node_modules/@tanstack/react-query";
 import CastAndCrewModal from "../components/ui/CastAndCrewModal";
 import useNavigateTo from "../hooks/useNavigateTo";
+import { episodesScreenCacheConfig } from "../config/requestCacheConfig";
 
 const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   IStackScreenProps
@@ -54,7 +55,8 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   } = useQuery<SeasonDetails>({
     queryKey: ["tv/season", "tv", tvMediaId, selectedSeason?.season_number],
     queryFn: () => fetchSeasonDetails(tvMediaId, selectedSeason?.season_number),
-    staleTime: 1000 * 60 * 60 * 1, //1hour
+    staleTime: episodesScreenCacheConfig.staleTime,
+    cacheTime: episodesScreenCacheConfig.cacheTime,
   });
 
   function setSelectedSeasonHandler(newSelectedSeason: Season) {

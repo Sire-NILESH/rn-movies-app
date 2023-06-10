@@ -26,6 +26,9 @@ import useImageItemSetting from "../hooks/useImageItemSetting";
 import FilterTilesButton from "./../components/ui/FilterTilesButton";
 import TilesFilterModal from "../components/TilesFilterModal";
 import cloneDeep from "lodash.clonedeep";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../components/ui/Loader";
+import { tileScreenCacheConfig } from "../config/requestCacheConfig";
 
 const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [showGenresModal, setShowGenresModal] = useState<boolean>(false);
@@ -59,10 +62,10 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [genreIdsFromFilter, setGenreIdsFromFilter] = useState<
     number[] | null
   >();
-  const [loadingNewMedias, setLoadingNewMedias] = useState<boolean>(false);
   const [blockNewLoads, setBlockNewLoads] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const [error, setError] = useState<Error | null>(null);
+  const [currentShowingFilter, setCurrentShowingFilter] =
+    useState<IQueryParams>({ page: pageNumber });
 
   const [showFilterModal, setShowFilterModal] = useState<boolean>(false);
 
@@ -78,51 +81,50 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const { imgItemsSetting: thumbnailQuality } =
     useImageItemSetting("thumbnail");
 
-  // Loading Data
+  const {
+    data: moreMedias,
+    status,
+    refetch,
+  } = useQuery({
+    queryKey: ["requests", currentShowingPlaylists, currentShowingFilter],
+    queryFn: async () =>
+      getTileListScreenMedias(currentShowingPlaylists, currentShowingFilter),
+    staleTime: tileScreenCacheConfig.staleTime,
+    cacheTime: tileScreenCacheConfig.cacheTime,
+    enabled: false,
+  });
+
+  // Setting the params for the request operation
   useEffect(() => {
-    async function loadMedias() {
-      // if (!pastPlaylist) return;
+    let filters: IQueryParams = {
+      page: pageNumber,
+    };
 
-      let filters: IQueryParams = {
-        page: pageNumber,
-      };
+    const playlistsToFetch =
+      userSelectedPlaylists.length > 0 ? userSelectedPlaylists : [pastPlaylist];
 
-      setLoadingNewMedias(true);
-      try {
-        const playlistsToFetch =
-          userSelectedPlaylists.length > 0
-            ? userSelectedPlaylists
-            : [pastPlaylist];
+    setCurrentShowingPlaylists(playlistsToFetch);
 
-        const moreMedias = await getTileListScreenMedias(
-          playlistsToFetch,
-          filters
-        );
+    setCurrentShowingFilter(filters);
+  }, [pageNumber, userSelectedPlaylists]);
 
-        setCurrentShowingPlaylists(playlistsToFetch);
+  // Request operation
+  useEffect(() => {
+    refetch();
+  }, [currentShowingPlaylists, currentShowingFilter]);
 
-        // if reached the end of the pages.
-        if (pageNumber === moreMedias.total_pages) {
-          setBlockNewLoads(true);
-        }
-
-        // if we received some data, then page exists.
-        if (moreMedias.medias.length > 0) {
-          setMedias((prev) => [...prev, ...moreMedias.medias]);
-        }
-
-        // else, no more pages to fetch. Block any further new loads.
-        else {
-          setBlockNewLoads(true);
-        }
-      } catch (err) {
-        setBlockNewLoads(true);
-        setError(err as Error);
-      }
-      setLoadingNewMedias(false);
+  // Request operation result management
+  useEffect(() => {
+    // if reached the end of the pages.
+    if (pageNumber === moreMedias?.total_pages) {
+      setBlockNewLoads(true);
     }
-    loadMedias();
-  }, [mediaList, pageNumber, userSelectedPlaylists]);
+
+    // if we received some data, then page exists
+    if (status === "success" && moreMedias?.medias.length > 0) {
+      setMedias((prev) => [...prev, ...moreMedias?.medias]);
+    }
+  }, [moreMedias]);
 
   const onCloseGenresModal = () => {
     setShowGenresModal(false);
@@ -147,7 +149,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     if (playlists.length > 0) {
       const playlistDeepCpy: IUrlObject[] = cloneDeep(playlists);
 
-      setError(null);
+      // setError(null);
       setUserSelectedPlaylists(playlistDeepCpy);
       setPageNumber(1);
       setMedias([]);
@@ -169,7 +171,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
   const onCloseWithConfirmFiltersModal = (playlists: IUrlObject[]) => {
     if (playlists.length > 0) {
-      setError(null);
+      // setError(null);
       setUserSelectedPlaylists(playlists);
       setPageNumber(1);
       setMedias([]);
@@ -192,17 +194,17 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
   const loadMoreItem = useCallback(() => {
     // Increase the page number by 1 only if the load new medias is enabled
-    if (!blockNewLoads && !loadingNewMedias) {
+    if (!blockNewLoads && status !== "loading") {
       setPageNumber((prev) => prev + 1);
     }
-  }, [blockNewLoads, loadingNewMedias]);
+  }, [blockNewLoads, status]);
 
   useEffect(() => {
     // Show alert on error
-    if (error && !loadingNewMedias) {
+    if (status === "error") {
       showErrorToast("Error !", "Something went wrong while loading content.");
     }
-  }, [showErrorToast, error, loadingNewMedias]);
+  }, [showErrorToast, status]);
 
   // Header settings
   useLayoutEffect(() => {
@@ -300,7 +302,12 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
       {/* Tiles */}
       <View className="flex-1 w-full px-2">
-        {error && medias.length === 0 ? (
+        {status === "loading" && medias.length === 0 ? (
+          //  Loader
+          <Loader loading={status === "loading" ? true : false} />
+        ) : null}
+
+        {status === "error" && medias.length === 0 ? (
           <NothingToShow
             title={"Something went wrong while loading content"}
             problemType="error"
@@ -309,7 +316,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           <>
             <TilesRenderedView
               medias={medias}
-              loadingNewMedias={loadingNewMedias}
+              loadingNewMedias={status === "loading" ? true : false}
               loadMoreItem={loadMoreItem}
               thumbnailQuality={thumbnailQuality}
             />
@@ -318,7 +325,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               <FilterTilesButton onShowFilterModal={onToggleFilterModal} />
             )}
           </>
-        ) : !loadingNewMedias ? (
+        ) : status !== "loading" ? (
           <>
             <NothingToShow problemType="nothing" />
 

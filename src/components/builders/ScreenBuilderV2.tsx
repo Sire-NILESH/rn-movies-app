@@ -15,6 +15,7 @@ import RowAsync from "../RowAsync";
 import { sendUrlObjApiRequest } from "../../utils/requests";
 import useImageItemSetting from "../../hooks/useImageItemSetting";
 import { useQuery } from "@tanstack/react-query";
+import { homeScreenCacheConfig } from "../../config/requestCacheConfig";
 
 interface IProps {
   screenType: ScreenTypes;
@@ -52,7 +53,8 @@ const ScreenBuilderV2: React.FC<IProps> = ({ screenType }) => {
   } = useQuery({
     queryKey: ["homeScreenFirstRow", playlistsToFetch[0]],
     queryFn: () => sendUrlObjApiRequest([playlistsToFetch[0]], {}),
-    staleTime: 1000 * 60 * 60 * 24, //24hours
+    staleTime: homeScreenCacheConfig.staleTime,
+    cacheTime: homeScreenCacheConfig.cacheTime,
   });
 
   return (

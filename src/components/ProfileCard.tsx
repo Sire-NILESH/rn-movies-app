@@ -77,8 +77,7 @@ const ProfileCard: React.FC<IProps> = (props) => {
                 className="text-text_primary text-xs font-bold"
                 numberOfLines={2}
               >
-                {/* {p.known_for_department} */}
-                Actor
+                {props.creditPerson.buttonTitle}
               </Text>
             </Pressable>
           </View>

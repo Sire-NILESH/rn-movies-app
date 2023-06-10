@@ -9,6 +9,7 @@ import YouTubePlayer from "./../components/YouTubePlayer";
 import TrailerVideoThumbnail from "../components/TrailerVideoThumbnail";
 import { Colors } from "../utils/Colors";
 import { useQuery } from "./../../node_modules/@tanstack/react-query";
+import { trailerScreenCacheConfig } from "../config/requestCacheConfig";
 
 const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const { navigation, route } = props;
@@ -26,7 +27,8 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   } = useQuery({
     queryKey: ["trailer", trailerReq],
     queryFn: () => fetchTrailers(trailerReq),
-    staleTime: 1000 * 60 * 60 * 24, //24hours
+    staleTime: trailerScreenCacheConfig.staleTime,
+    cacheTime: trailerScreenCacheConfig.cacheTime,
   });
 
   useEffect(() => {

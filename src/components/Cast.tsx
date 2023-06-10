@@ -38,7 +38,7 @@ const Cast: React.FC<IProps> = (props) => {
                         name: p.name,
                         profile_path: p.profile_path,
                         gender: p.gender,
-                        buttonTitle: "Actor",
+                        buttonTitle: p.job,
                         creditTitle:
                           p.department === "Writing"
                             ? "Writing department"

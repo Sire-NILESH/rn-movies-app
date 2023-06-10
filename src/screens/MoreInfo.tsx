@@ -12,6 +12,7 @@ import { getMediaInfo } from "../utils/requests";
 import FavouriteMediaButton from "../components/ui/FavouriteMediaButton";
 import MediaMoreInfo from "../components/MediaMoreInfo";
 import { useQuery } from "./../../node_modules/@tanstack/react-query";
+import { moreInfoScreenCacheConfig } from "../config/requestCacheConfig";
 
 const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const { navigation, route } = props;
@@ -26,11 +27,11 @@ const MoreInfoScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     isLoading: loadingProps,
     data: screenProps,
     error: errorLoadingProps,
-    status,
   } = useQuery({
     queryKey: ["moreInfo", mediaType, prevMedia.id],
     queryFn: () => getMediaInfo(prevMedia.id, mediaType),
-    staleTime: 1000 * 60 * 60 * 24, //24hours
+    staleTime: moreInfoScreenCacheConfig.staleTime,
+    cacheTime: moreInfoScreenCacheConfig.cacheTime,
   });
 
   function getTitle(): string {

@@ -5,6 +5,7 @@ import { getMediaInfo } from "../utils/requests";
 import FavouriteMediaButton from "../components/ui/FavouriteMediaButton";
 import MediaMoreInfo from "../components/MediaMoreInfo";
 import { useQuery } from "./../../node_modules/@tanstack/react-query";
+import { moreInfoScreenCacheConfig } from "../config/requestCacheConfig";
 
 const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
   props
@@ -27,7 +28,8 @@ const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
   } = useQuery({
     queryKey: ["moreInfo", mediaType, collectionMedia.mediaId],
     queryFn: () => getMediaInfo(collectionMedia.mediaId, mediaType),
-    staleTime: 1000 * 60 * 60 * 24, //24hours
+    staleTime: moreInfoScreenCacheConfig.staleTime,
+    cacheTime: moreInfoScreenCacheConfig.cacheTime,
   });
 
   extendedMedia = screenProps?.media;
@@ -51,10 +53,7 @@ const CollectionMediaMoreInfo: React.FunctionComponent<IStackScreenProps> = (
   return (
     <MediaMoreInfo
       media={screenProps?.media}
-      extendedMedia={extendedMedia}
-      credits={screenProps?.mediaCredits}
       mediaType={mediaType}
-      watchProvidersData={screenProps?.mediaWatchProviders}
       errorLoadingProps={errorLoadingProps as Error | null}
       loadingProps={loadingProps}
     />

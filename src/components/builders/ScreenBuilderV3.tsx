@@ -17,6 +17,7 @@ import {
   tvScreenPlaylists,
 } from "../../config/homeScreensPlaylistsConfig";
 import { FlatList } from "react-native-gesture-handler";
+import { homeScreenCacheConfig } from "../../config/requestCacheConfig";
 
 interface IProps {
   screenType: ScreenTypes;
@@ -53,7 +54,8 @@ const ScreenBuilderV3: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
   } = useQuery({
     queryKey: ["homeScreens", screenType, playlistsToFetch],
     queryFn: () => sendUrlObjApiRequestV2([...playlistsToFetch], {}),
-    staleTime: 1000 * 60 * 60 * 24, //24hours
+    staleTime: homeScreenCacheConfig.staleTime,
+    cacheTime: homeScreenCacheConfig.cacheTime,
   });
 
   return (

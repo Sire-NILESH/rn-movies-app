@@ -14,6 +14,9 @@ import useImageItemSetting from "../../hooks/useImageItemSetting";
 import FilterTilesButton from "../ui/FilterTilesButton";
 import TilesFilterModal from "../TilesFilterModal";
 import GenreTags from "../GenreTags";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../ui/Loader";
+import { watchProviderScreenCacheConfig } from "../../config/requestCacheConfig";
 
 interface IProps {
   screenMediaType: MediaTypes;
@@ -36,10 +39,10 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
   >([urlObjectLocal]);
 
   const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>([]);
-  const [loadingNewMedias, setLoadingNewMedias] = useState<boolean>(false);
   const [blockNewLoads, setBlockNewLoads] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const [error, setError] = useState<Error | null>(null);
+  const [currentShowingFilter, setCurrentShowingFilter] =
+    useState<IQueryParams>({ page: pageNumber });
 
   const [showFilterModal, setShowFilterModal] = useState<boolean>(false);
   const [genreIdsFromFilter, setGenreIdsFromFilter] = useState<
@@ -50,39 +53,45 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
   const { imgItemsSetting: thumbnailQuality } =
     useImageItemSetting("thumbnail");
 
-  // Loading Data
+  const {
+    data: moreMedias,
+    status,
+    refetch,
+  } = useQuery({
+    queryKey: ["requests", currentShowingPlaylist, currentShowingFilter],
+    queryFn: async () =>
+      getTileListScreenMedias(currentShowingPlaylist, currentShowingFilter),
+    staleTime: watchProviderScreenCacheConfig.staleTime,
+    cacheTime: watchProviderScreenCacheConfig.cacheTime,
+    enabled: false,
+  });
+
+  // Setting the params for the request operation
   useEffect(() => {
-    async function loadMedias() {
-      const filters: IQueryParams = { page: pageNumber };
-      setLoadingNewMedias(true);
-      try {
-        const moreMedias = await getTileListScreenMedias(
-          currentShowingPlaylist,
-          filters
-        );
+    let filters: IQueryParams = {
+      page: pageNumber,
+    };
 
-        // if reached the end of the pages.
-        if (pageNumber === moreMedias.total_pages) {
-          setBlockNewLoads(true);
-        }
+    setCurrentShowingFilter(filters);
+  }, [pageNumber]);
 
-        // if we received some data, then page exists.
-        if (moreMedias.medias.length > 0) {
-          setMedias((prev) => [...prev, ...moreMedias.medias]);
-        }
+  // Request operation
+  useEffect(() => {
+    refetch();
+  }, [currentShowingPlaylist, currentShowingFilter]);
 
-        // else, no more pages to fetch. Block any further new loads.
-        else {
-          setBlockNewLoads(true);
-        }
-      } catch (err) {
-        setBlockNewLoads(true);
-        setError(err as Error);
-      }
-      setLoadingNewMedias(false);
+  // Request operation result management
+  useEffect(() => {
+    // if reached the end of the pages.
+    if (pageNumber === moreMedias?.total_pages) {
+      setBlockNewLoads(true);
     }
-    loadMedias();
-  }, [pageNumber, currentShowingPlaylist]);
+
+    // if we received some data, then page exists
+    if (status === "success" && moreMedias?.medias.length > 0) {
+      setMedias((prev) => [...prev, ...moreMedias?.medias]);
+    }
+  }, [moreMedias]);
 
   const onCloseFilterModal = () => {
     setShowFilterModal(false);
@@ -94,7 +103,7 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
 
   const onCloseWithConfirmFiltersModal = (playlists: IUrlObject[]) => {
     if (playlists.length > 0) {
-      setError(null);
+      // setError(null);
       setCurrentShowingPlaylist(playlists);
       setPageNumber(1);
       setMedias([]);
@@ -117,8 +126,9 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
 
   const loadMoreItem = useCallback(() => {
     // Increase the page number by 1 only if the load new medias is enabled
-    if (!blockNewLoads && !loadingNewMedias) setPageNumber((prev) => prev + 1);
-  }, [blockNewLoads, loadingNewMedias]);
+    if (!blockNewLoads && status !== "loading")
+      setPageNumber((prev) => prev + 1);
+  }, [blockNewLoads, status]);
 
   return (
     <View className="flex-1 relative bg-secondary min-w-full w-full items-center">
@@ -146,7 +156,12 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
 
       {/* Tiles */}
       <View className="flex-1 relative w-full px-2">
-        {error && medias.length === 0 ? (
+        {status === "loading" && medias.length === 0 ? (
+          //  Loader
+          <Loader loading={status === "loading" ? true : false} />
+        ) : null}
+
+        {status === "error" && medias.length === 0 ? (
           <NothingToShow
             title={"Something went wrong while loading content"}
             problemType="error"
@@ -162,7 +177,7 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
                 }
               }}
               medias={medias}
-              loadingNewMedias={loadingNewMedias}
+              loadingNewMedias={status === "loading" ? true : false}
               loadMoreItem={loadMoreItem}
               thumbnailQuality={thumbnailQuality}
             />
@@ -170,7 +185,7 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
 
             <FilterTilesButton onShowFilterModal={onToggleFilterModal} />
           </>
-        ) : !loadingNewMedias ? (
+        ) : status !== "loading" ? (
           <>
             <NothingToShow problemType="nothing" />
 

@@ -8,6 +8,12 @@ import NothingToShow from "../NothingToShow";
 import { showErrorToast } from "../../utils/helpers/helper";
 import useImageItemSetting from "../../hooks/useImageItemSetting";
 import { useAllowNsfwContentHooks } from "../../hooks/reduxHooks";
+import { useQuery } from "@tanstack/react-query";
+import {
+  relatedTilesCacheConfig,
+  searchTilesCacheConfig,
+} from "../../config/requestCacheConfig";
+import Loader from "../ui/Loader";
 
 interface IProps {
   screenType: "Search" | "Related";
@@ -21,12 +27,13 @@ interface IProps {
   };
 }
 
+type TStatus = "loading" | "success" | "error";
+
 const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
   const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>([]);
-  const [loadingNewMedias, setLoadingNewMedias] = useState<boolean>(false);
+  const [status, setStatus] = useState<TStatus>("loading");
   const [blockNewLoads, setBlockNewLoads] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const [error, setError] = useState<Error | null>(null);
 
   const { allowNsfwContent } = useAllowNsfwContentHooks();
 
@@ -34,65 +41,126 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
   const { imgItemsSetting: thumbnailQuality } =
     useImageItemSetting("thumbnail");
 
-  // Loading Data
+  // related media query settings
+  const {
+    data: moreRelatedMedias,
+    status: relatedMediaStatus,
+    refetch: refetchRelatedMedias,
+  } = useQuery({
+    queryKey: [
+      "related",
+      props.relatedScreenOptions?.relatedToMediaId,
+      props.relatedScreenOptions?.mediaType,
+      allowNsfwContent.nsfw,
+      pageNumber,
+    ],
+    queryFn: async () =>
+      getRelatedMediasProps(
+        props.relatedScreenOptions?.relatedToMediaId
+          ? props.relatedScreenOptions?.relatedToMediaId
+          : 1,
+        props.relatedScreenOptions?.mediaType
+          ? props.relatedScreenOptions?.mediaType
+          : "movie",
+        allowNsfwContent.nsfw,
+        pageNumber
+      ),
+    staleTime: relatedTilesCacheConfig.staleTime,
+    cacheTime: relatedTilesCacheConfig.cacheTime,
+    enabled: false,
+  });
+
+  // search media query settings
+  const {
+    data: moreSearchMedias,
+    status: searchMediaStatus,
+    refetch: refetchSearchMedias,
+  } = useQuery({
+    queryKey: [
+      "searchTiles",
+      props.searchScreenOptions?.searchQuery
+        ? props.searchScreenOptions?.searchQuery
+        : "",
+      props.searchScreenOptions?.searchCategory
+        ? props.searchScreenOptions?.searchCategory
+        : "multi",
+      pageNumber,
+      allowNsfwContent.nsfw,
+    ],
+    queryFn: async () =>
+      searchRequest(
+        props.searchScreenOptions?.searchQuery
+          ? props.searchScreenOptions?.searchQuery
+          : "",
+        props.searchScreenOptions?.searchCategory
+          ? props.searchScreenOptions?.searchCategory
+          : "multi",
+        pageNumber,
+        allowNsfwContent.nsfw
+      ),
+    staleTime: searchTilesCacheConfig.staleTime,
+    cacheTime: searchTilesCacheConfig.cacheTime,
+    enabled: false,
+  });
+
+  // Request operation
   useEffect(() => {
-    async function loadMedias() {
-      setLoadingNewMedias(true);
-
-      try {
-        let moreMedias: any;
-
-        // For Related screen
-        if (props.screenType === "Related" && props.relatedScreenOptions) {
-          moreMedias = await getRelatedMediasProps(
-            props.relatedScreenOptions.relatedToMediaId,
-            props.relatedScreenOptions.mediaType,
-            allowNsfwContent.nsfw,
-            pageNumber
-          );
-        }
-
-        // For Search screen
-        else if (props.screenType === "Search" && props.searchScreenOptions) {
-          // @ts-ignore
-          moreMedias = await searchRequest(
-            props.searchScreenOptions.searchQuery
-              ? props.searchScreenOptions.searchQuery
-              : "",
-            props.searchScreenOptions.searchCategory
-              ? props.searchScreenOptions.searchCategory
-              : "multi",
-            pageNumber,
-            allowNsfwContent.nsfw
-          );
-        }
-
-        // if reached the end of the pages.
-        if (pageNumber === moreMedias.total_pages) {
-          setBlockNewLoads(true);
-        }
-
-        // if we received some data, then page exists.
-        if (moreMedias.results.length > 0) {
-          setMedias((prev) => [...prev, ...moreMedias.results]);
-        }
-
-        // else, no more pages to fetch. Block any further new loads.
-        else {
-          setBlockNewLoads(true);
-        }
-      } catch (err) {
-        setBlockNewLoads(true);
-        setError(err as Error);
-      }
-
-      setLoadingNewMedias(false);
+    // For Related screen
+    if (props.screenType === "Related" && props.relatedScreenOptions) {
+      refetchRelatedMedias();
     }
-    loadMedias();
-  }, [pageNumber, getRelatedMediasProps, searchRequest]);
+    // For Search screen
+    else if (props.screenType === "Search" && props.searchScreenOptions) {
+      refetchSearchMedias();
+    }
+  }, [pageNumber]);
+
+  // Related medias request operation's result management
+  useEffect(() => {
+    // if reached the end of the pages.
+    if (pageNumber === moreRelatedMedias?.total_pages) {
+      setBlockNewLoads(true);
+    }
+
+    // if we received some data, then page exists
+    if (
+      relatedMediaStatus === "success" &&
+      moreRelatedMedias?.results.length > 0
+    ) {
+      setMedias((prev) => [...prev, ...moreRelatedMedias?.results]);
+    }
+  }, [moreRelatedMedias]);
+
+  // Search medias request operation's result management
+  useEffect(() => {
+    // if reached the end of the pages.
+    if (pageNumber === moreSearchMedias?.total_pages) {
+      setBlockNewLoads(true);
+    }
+
+    // if we received some data, then page exists
+    if (
+      searchMediaStatus === "success" &&
+      moreSearchMedias?.results.length > 0
+    ) {
+      setMedias((prev) => [...prev, ...moreSearchMedias?.results]);
+    }
+  }, [moreSearchMedias]);
+
+  // Status("loading" | "success" | "error") manager accorfing to the screen type.
+  useEffect(() => {
+    // For Related screen
+    if (props.screenType === "Related" && props.relatedScreenOptions) {
+      setStatus(relatedMediaStatus);
+    }
+    // For Search screen
+    else if (props.screenType === "Search" && props.searchScreenOptions) {
+      setStatus(searchMediaStatus);
+    }
+  }, [relatedMediaStatus, searchMediaStatus]);
 
   // Show alert on error
-  if (error && !loadingNewMedias) {
+  if (status === "error") {
     const alertString = medias?.length > 0 ? "more " : "";
 
     showErrorToast(
@@ -103,15 +171,21 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
 
   const loadMoreItem = useCallback(() => {
     // Increase the page number by 1 only if the load new medias is enabled
-    if (!blockNewLoads && !loadingNewMedias) setPageNumber((prev) => prev + 1);
-  }, [blockNewLoads, loadingNewMedias]);
+    if (!blockNewLoads && status !== "loading")
+      setPageNumber((prev) => prev + 1);
+  }, [blockNewLoads, status]);
 
   return (
     <View
       className="flex-1 bg-secondary
      min-w-full items-center px-2"
     >
-      {error && medias.length === 0 ? (
+      {status === "loading" && medias.length === 0 ? (
+        //  Loader
+        <Loader loading={status === "loading" ? true : false} />
+      ) : null}
+
+      {status === "error" && medias.length === 0 ? (
         <NothingToShow
           title={"Something went wrong while loading content"}
           problemType={"error"}
@@ -122,12 +196,12 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
           {medias?.length > 0 ? (
             <TilesRenderedView
               medias={medias}
-              loadingNewMedias={loadingNewMedias}
+              loadingNewMedias={status === "loading" ? true : false}
               loadMoreItem={loadMoreItem}
               thumbnailQuality={thumbnailQuality}
             />
           ) : (
-            !loadingNewMedias && <NothingToShow problemType="nothing" />
+            status !== "loading" && <NothingToShow problemType="nothing" />
           )}
         </View>
       )}

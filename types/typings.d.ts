@@ -367,6 +367,7 @@ export interface INetworkIds {
   "Disney XD": 44;
   ANIMAX: 171;
   "The CW": 71;
+  "Comedy Central": 47;
 }
 
 export interface IProductionComapnyIds {

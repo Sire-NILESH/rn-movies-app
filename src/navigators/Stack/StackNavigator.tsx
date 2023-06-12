@@ -31,6 +31,7 @@ const StackNavigator = () => {
           headerStyle: {
             backgroundColor: Colors.tertiary,
           },
+          headerTitleStyle: { marginHorizontal: 26 },
           // cardOverlay: () => (
           //   <View
           //     style={{

@@ -25,7 +25,7 @@ const TrailerButton: React.FC<IProps> = (props) => {
     });
   };
 
-  // ITrailerScreenParams
+  // ITrailerScreenParams border border-stone-800/90
 
   return (
     <CustomButton
@@ -34,6 +34,7 @@ const TrailerButton: React.FC<IProps> = (props) => {
       width={"100%"}
       radius={8}
       method={onPressHandler}
+      styledClassName="border border-stone-800/90"
     >
       <Ionicons
         size={16}

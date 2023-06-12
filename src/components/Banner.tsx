@@ -34,11 +34,6 @@ const Banner: React.FC<IProps> = ({ mediaList }) => {
     }
   }, [mediaList]);
 
-  function playButtonPressHandler(): void {
-    // @ts-ignore
-    navigation.navigate("More Info", { media: media });
-  }
-
   function infoButtonPressHandler(): void {
     // @ts-ignore
     navigation.push("More Info", {
@@ -51,11 +46,6 @@ const Banner: React.FC<IProps> = ({ mediaList }) => {
     <View className="flex-1 w-[100%]">
       <View className="h-[60px] w-full"></View>
 
-      {/* {route.name === "Home" ? (
-        <View className="h-[80px] w-full"></View>
-      ) : (
-        <View className="h-[40px] w-full"></View>
-      )} */}
       <View
         className="absolute top-0 left-0 w-[100%] flex-1 h-full"
         style={{
@@ -185,14 +175,17 @@ const Banner: React.FC<IProps> = ({ mediaList }) => {
               />
             </View>
 
-            <View className="mt-5 w-[140]">
+            <View
+              className="mt-5 w-[140]"
+              style={{
+                elevation: 10,
+              }}
+            >
               <CustomButton
                 width={140}
                 height={42}
                 radius={8}
-                // color={Colors.neutral["700"]}
-                // border={1}
-                styledClassName="border-stone-800 bg-neutral-700/60"
+                styledClassName="border border-stone-700 bg-neutral-700/40"
                 method={infoButtonPressHandler}
                 shadow={false}
               >

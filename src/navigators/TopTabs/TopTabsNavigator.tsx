@@ -1,5 +1,4 @@
-import React, { useLayoutEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
+import React from "react";
 import "react-native-gesture-handler";
 
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -15,13 +14,7 @@ interface IProps {
 const TopTabs = createMaterialTopTabNavigator();
 
 const TopTabsNavigator: React.FC<IProps> = (props) => {
-  const navigation = useNavigation();
-
   const screenCollectionType = props.collectionType;
-
-  useLayoutEffect(() => {
-    navigation.setOptions({});
-  }, []);
 
   return (
     <TopTabs.Navigator
@@ -37,7 +30,13 @@ const TopTabsNavigator: React.FC<IProps> = (props) => {
     >
       {/* Laying out all the TopTabs screens from routes */}
       {topTabRoutes.map((r, i) => (
-        <TopTabs.Screen key={i} name={r.name}>
+        <TopTabs.Screen
+          key={i}
+          name={r.name}
+          options={{
+            title: r.screenTitle,
+          }}
+        >
           {(props) => {
             return (
               <r.component

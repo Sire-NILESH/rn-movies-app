@@ -96,6 +96,7 @@ const WatchedMediaButton: React.FC<IProps> = ({ media, mediaType }) => {
       height={42}
       width={"100%"}
       radius={8}
+      styledClassName="border border-stone-800/90"
       method={() => {
         if (isWatched) {
           setIsWatchedHandler();

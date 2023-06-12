@@ -3,13 +3,15 @@ import CollectionTopTabScreen from "../../screens/CollectionTopTabScreen";
 
 export const topTabRoutes: ITopTabsProps[] = [
   {
-    name: "Movies",
+    name: "Collection Movies",
     component: CollectionTopTabScreen,
     screenMediaType: "movie",
+    screenTitle: "Movies",
   },
   {
-    name: "Tv Shows",
+    name: "Collection Shows",
     component: CollectionTopTabScreen,
     screenMediaType: "tv",
+    screenTitle: "TV Shows",
   },
 ];

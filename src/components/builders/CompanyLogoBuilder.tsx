@@ -29,7 +29,7 @@ const CompanyLogoBuilder: React.FC<IProps> = (props) => {
   return (
     <View className="flex-1 space-y-4 mt-8">
       <Text className="ml-4 font-semibold text-text_tertiary">
-        {props.mediaType === "movie" ? "Producers" : "TV Networks"}
+        {props.mediaType === "movie" ? "Production Houses" : "TV Networks"}
       </Text>
       <FlatList
         horizontal

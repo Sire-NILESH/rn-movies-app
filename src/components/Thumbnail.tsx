@@ -136,7 +136,7 @@ function Thumbnail({
             "rgba(28, 25, 23, 0.2)",
             "rgba(28, 25, 23, 0.8)",
           ]}
-          className="absolute  flex-row items-end pb-2 px-2"
+          className="absolute flex-row items-end pb-2 px-2"
           style={{
             borderRadius: 6,
             width: dimensions.imageWidth,

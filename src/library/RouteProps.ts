@@ -24,22 +24,26 @@ export interface ITopTabsProps {
   component: React.FunctionComponent<ITopTabScreenProps>;
   name: string;
   screenMediaType: MediaTypes;
+  screenTitle: string;
 }
 
 export interface ISearchResultsTopTabsProps {
   component: React.FunctionComponent<SearchResultsTopTabScreenProps>;
   name: string;
   screenMediaType: MediaTypes;
+  screenTitle: string;
 }
 
 export interface IPersonMediasTopTabsProps {
   component: React.FunctionComponent<IPersonMediasTopTabsScreenProps>;
   name: string;
   screenMediaType: MediaTypes;
+  screenTitle: string;
 }
 
 export interface IWatchProviderTopTabsProps {
   component: React.FunctionComponent<WatchProviderTopTabsScreenProps>;
   name: string;
   screenMediaType: MediaTypes;
+  screenTitle: string;
 }

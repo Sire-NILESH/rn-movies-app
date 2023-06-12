@@ -28,6 +28,7 @@ import Cast from "./Cast";
 import RevenueStats from "./ui/RevenueStats";
 import useImgSettings from "../hooks/useImgSettings";
 import MoreInfoBackdrop from "./MoreInfoBackdrop";
+import CollectionCard from "./CollectionCard";
 
 interface IProps {
   media: MovieMediaHybrid | TvMediaHybrid;
@@ -163,7 +164,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
                     Produced in :{" "}
                   </Text>
                   {media.production_countries
-                    .map((c, i) => {
+                    .map((c) => {
                       return c.name;
                     })
                     .join(", ")}
@@ -174,19 +175,6 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
 
             {/* Other Info */}
             {isTvExtended(media) && media.next_episode_to_air ? (
-              //   <View className="px-4 space-y-2 mt-5">
-              //     <Text className="font-semibold text-text_tertiary">
-              //       Latest
-              //     </Text>
-              //     <Text className="text-text_dark">{`Episode S${
-              //       media.next_episode_to_air.season_number
-              //     }E${
-              //       media.next_episode_to_air.episode_number
-              //     } is expected to air on ${new Date(
-              //       media.next_episode_to_air.air_date
-              //     ).toDateString()}.`}</Text>
-              // </View>
-
               <View className="flex-row items-start space-x-2 px-4 mt-5">
                 <Text className="text-text_dark" style={{ lineHeight: 20 }}>
                   <Text className="font-semibold text-text_tertiary">
@@ -242,6 +230,15 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
                   imgQuality={allImgItemsSettings?.companies?.value}
                 />
               )}
+
+            {/* Belongs to collection */}
+            {isMovieExtended(media) && media.belongs_to_collection && (
+              <CollectionCard
+                collection={media.belongs_to_collection}
+                genres={media.genres}
+                imgThumbnailQuality={allImgItemsSettings?.thumbnail?.value}
+              />
+            )}
 
             {/* Networks available on */}
             {isTvExtended(media) && media.networks.length > 0 && (

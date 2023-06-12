@@ -42,3 +42,8 @@ export const relatedTilesCacheConfig = {
   staleTime: 1000 * 60 * 60 * 14, //14 hours,
   cacheTime: 1000 * 60 * 60 * 24 * 1, //1 day,
 };
+
+export const franchiseCollectionCacheConfig = {
+  staleTime: 1000 * 60 * 60 * 14, //14 hours,
+  cacheTime: 1000 * 60 * 60 * 24 * 1, //1 day,
+};

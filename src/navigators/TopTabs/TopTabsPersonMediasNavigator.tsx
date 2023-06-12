@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import "react-native-gesture-handler";
 
@@ -19,10 +19,6 @@ const TopTabsPersonMediasNavigator: React.FC<IProps> = (props) => {
 
   const urlObject = props.urlObject;
 
-  useLayoutEffect(() => {
-    navigation.setOptions({});
-  }, []);
-
   return (
     <TopTabs.Navigator
       screenOptions={{
@@ -37,7 +33,13 @@ const TopTabsPersonMediasNavigator: React.FC<IProps> = (props) => {
     >
       {/* Laying out all the TopTabs screens from routes */}
       {personMediasTopTabRoutes.map((r, i) => (
-        <TopTabs.Screen key={i} name={r.name}>
+        <TopTabs.Screen
+          key={i}
+          name={r.name}
+          options={{
+            title: r.screenTitle,
+          }}
+        >
           {(props) => {
             return (
               <r.component

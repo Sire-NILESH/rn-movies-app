@@ -6,10 +6,12 @@ export const searchResultsTopTabRoutes: ISearchResultsTopTabsProps[] = [
     name: "Movies",
     component: SearchResultsTopTabScreen,
     screenMediaType: "movie",
+    screenTitle: "Movies",
   },
   {
     name: "Tv Shows",
     component: SearchResultsTopTabScreen,
     screenMediaType: "tv",
+    screenTitle: "TV SHows",
   },
 ];

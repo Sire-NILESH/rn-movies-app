@@ -1,9 +1,10 @@
-import { View, Text, Image, Pressable } from "react-native";
+import { View, Text, Image } from "react-native";
 import React from "react";
 import { Episode, EpisodeCastAndCrew } from "../../types/typings";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
 import { dateFormatter } from "../utils/helpers/helper";
+import ThemeButton from "./ui/ThemeButton";
 
 interface IProps {
   episode: Episode;
@@ -129,7 +130,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({
         <View className="flex-row space-x-2">
           {/* TRAILER BUTTON */}
           <View className="">
-            <FooterButton
+            <ThemeButton
               text={"Trailer"}
               iconName={"md-logo-youtube"}
               onPressHandler={() => {
@@ -146,7 +147,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({
 
           {/* SHOW MORE BUTTON */}
           <View>
-            <FooterButton
+            <ThemeButton
               text={"Show more credits"}
               iconName={"information-circle"}
               onPressHandler={() =>
@@ -179,35 +180,6 @@ function DataElement({
     <View className="flex-row space-x-2 items-center">
       <Ionicons name={iconName} color={Colors.stone[400]} size={16} />
       <Text className="text-text_primary text-sm">{text}</Text>
-    </View>
-  );
-}
-
-function FooterButton({
-  text,
-  iconName,
-  onPressHandler,
-}: {
-  text: string;
-  iconName: keyof typeof Ionicons.glyphMap;
-  onPressHandler: () => void;
-}) {
-  return (
-    <View className="border border-neutral-800 rounded-full mt-3 overflow-hidden">
-      <Pressable
-        className="h-8 px-3 items-center justify-center"
-        onPress={onPressHandler}
-        android_ripple={{ color: "#eee" }}
-      >
-        <View className="flex-row gap-1 items-center">
-          <Ionicons
-            name={iconName}
-            size={iconName === "md-logo-youtube" ? 15 : 18}
-            color={Colors.stone[400]}
-          />
-          <Text className="font-bold text-blue-400">{text}</Text>
-        </View>
-      </Pressable>
     </View>
   );
 }

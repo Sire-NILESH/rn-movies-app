@@ -224,18 +224,17 @@ export interface IProductionCountry {
   name: string;
 }
 
+export interface IBelongsToCollection {
+  id: number;
+  name: string;
+  poster_path: string;
+  backdrop_path: string;
+}
+
 export interface MovieMediaExtended extends MovieMedia {
-  belongs_to_collection: {
-    id: number;
-    name: string;
-    poster_path: string;
-    backdrop_path: string;
-  };
+  belongs_to_collection: IBelongsToCollection;
   budget: number;
-  genres: {
-    id: number;
-    name: string;
-  }[];
+  genres: IGenre[];
   homepage: string;
   imdb_id: string;
   production_companies: IProductionCompany[];
@@ -527,4 +526,31 @@ export interface ITrailerScreenParams {
   trailerType: "mediaTrailer" | "episodeTrailer";
   mediaTrailer?: IUrlObject;
   episodeTrailer?: IUrlObject;
+}
+
+export interface FranchiseCollection {
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string;
+  backdrop_path: string;
+  parts: Part[];
+}
+
+export interface CollectionPart {
+  adult: boolean;
+  backdrop_path?: string;
+  id: number;
+  title: string;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  poster_path: string;
+  media_type: string;
+  genre_ids: number[];
+  popularity: number;
+  release_date: Date;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
 }

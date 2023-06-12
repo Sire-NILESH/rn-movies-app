@@ -1,5 +1,6 @@
 import AboutScreen from "../../screens/AboutScreen";
 import CollectionMediaMoreInfo from "../../screens/CollectionMediaMoreInfo";
+import FranchiseCollection from "../../screens/FranchiseCollection";
 import MoreInfoScreen from "../../screens/MoreInfo";
 import PersonMediasStackScreen from "../../screens/PersonMediasStackScreen";
 import RelatedTileListScreen from "../../screens/RelatedTileListScreen";
@@ -56,8 +57,8 @@ export const stackRoutes: IStackRouteProps[] = [
     name: "About",
     component: AboutScreen,
   },
-  // {
-  //   name: "Drawer",
-  //   component: DrawerNavigator,
-  // },
+  {
+    name: "FranchiseCollection",
+    component: FranchiseCollection,
+  },
 ];

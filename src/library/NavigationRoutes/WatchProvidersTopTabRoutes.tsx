@@ -3,13 +3,15 @@ import WatchProviderTopTabScreen from "../../screens/WatchProviderTopTabScreen";
 
 export const watchProvidersTopTabRoutes: IWatchProviderTopTabsProps[] = [
   {
-    name: "Person Movies",
+    name: "Provider Movies",
     component: WatchProviderTopTabScreen,
     screenMediaType: "movie",
+    screenTitle: "Movies",
   },
   {
-    name: "Person Tv Shows",
+    name: "Provider TV Shows",
     component: WatchProviderTopTabScreen,
     screenMediaType: "tv",
+    screenTitle: "TV Shows",
   },
 ];

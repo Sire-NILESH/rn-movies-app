@@ -9,7 +9,7 @@ import NothingToShow from "../components/NothingToShow";
 import useImageItemSetting from "../hooks/useImageItemSetting";
 
 const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
-  const { navigation, route, collectionType, screenMediaType } = props;
+  const { navigation, collectionType, screenMediaType } = props;
 
   const [medias, setMedias] = useState<IDBCollectionMedia[]>([]);
   const [refresh, setRefresh] = useState(false);

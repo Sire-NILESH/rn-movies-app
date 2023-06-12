@@ -2,7 +2,7 @@ import React from "react";
 import { IPersonMediasTopTabsScreenProps } from "../library/NavigatorScreenProps/PersonMediasTopTabsScreenProps";
 import PersonMediasScreenBuilder from "../components/builders/PersonMediasScreenBuilder";
 
-const PersonMediasTopTabScreen: React.FC<IPersonMediasTopTabsScreenProps> = ({
+const PersonInfoTopTabScreen: React.FC<IPersonMediasTopTabsScreenProps> = ({
   screenMediaType,
   urlObject,
 }) => {
@@ -14,4 +14,4 @@ const PersonMediasTopTabScreen: React.FC<IPersonMediasTopTabsScreenProps> = ({
   );
 };
 
-export default PersonMediasTopTabScreen;
+export default PersonInfoTopTabScreen;

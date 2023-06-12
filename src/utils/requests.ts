@@ -1,5 +1,6 @@
 import { API_KEY, BASE_URL } from "@env";
 import {
+  FranchiseCollection,
   IGenre,
   IQueryParams,
   IUrlObject,
@@ -323,7 +324,7 @@ export const getTvSeasonInfo = async (
 };
 
 /**
- * Fucntion to fetch for the list of trailers for the given media and its media type.
+ * Function to fetch for the list of trailers for the given media and its media type.
  *
  * @param mediaId - The id of the media
  * @param mediaType - The media type of the media, This the distinguishing param from `tv` and `movie`
@@ -351,6 +352,26 @@ export const fetchTrailers = async (trailerRequest: IUrlObject) => {
         return [];
       }
     }
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
+ * Function to fetch for the list of medias in a collection for the given collection id
+ *
+ * @param collectionId - The id of the collection
+ * @returns - returns data as an object
+ */
+export const fetchCollectionInfo = async (collection: IUrlObject) => {
+  try {
+    const data = await fetchDataFromApi(collection.url, collection.queryParams);
+
+    const franchiseCollection: FranchiseCollection = data.data;
+
+    // console.log(franchiseCollection);
+
+    return { franchiseCollection: franchiseCollection };
   } catch (err) {
     throw err;
   }

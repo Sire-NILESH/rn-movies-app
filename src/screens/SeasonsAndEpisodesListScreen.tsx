@@ -126,7 +126,6 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                       colors={[
                         "rgba(22, 101, 52, 0.5)",
                         "rgba(22, 101, 52, 0.3)",
-                        // "rgba(23, 23, 23, 0.8)",
                         Colors.black,
                       ]}
                       className="flex-row px-4 pt-4 justify-between items-start mb-5"
@@ -155,7 +154,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                           style={{ width: "100%", height: "100%" }}
                         ></Image>
                       </View>
-                      <View className="w-[55%] justify-between">
+                      <View className="w-[60%] justify-between">
                         {/* Title */}
                         <Text className="text-text_highLight text-2xl font-bold">
                           {tvMediaName}

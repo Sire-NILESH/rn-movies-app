@@ -15,8 +15,6 @@ interface IProps {
 const TopTabs = createMaterialTopTabNavigator();
 
 const TopTabsPersonMediasNavigator: React.FC<IProps> = (props) => {
-  const navigation = useNavigation();
-
   const urlObject = props.urlObject;
 
   return (
@@ -29,6 +27,7 @@ const TopTabsPersonMediasNavigator: React.FC<IProps> = (props) => {
         tabBarAndroidRipple: { borderless: false },
         tabBarPressColor: "#e9e9e9",
         tabBarIndicatorStyle: { backgroundColor: Colors.neutral[100] },
+        lazy: true,
       }}
     >
       {/* Laying out all the TopTabs screens from routes */}

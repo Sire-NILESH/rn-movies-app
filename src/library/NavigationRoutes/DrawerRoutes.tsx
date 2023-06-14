@@ -1,5 +1,5 @@
 import IconButton from "../../components/ui/IconButton";
-import FavoritesScreen from "../../screens/Favorite";
+import FavouritesScreen from "../../screens/Favourite";
 import HomeScreen from "../../screens/Home";
 import MoviesScreen from "../../screens/Movies";
 import SettingsScreen from "../../screens/Settings";
@@ -82,7 +82,7 @@ export const drawerRoutes: IDrawerRouteProps[] = [
   },
   {
     name: "Favourites",
-    component: FavoritesScreen,
+    component: FavouritesScreen,
     options: {
       title: "Favourites",
       drawerIcon: (props) => {

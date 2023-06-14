@@ -15,6 +15,7 @@ import {
   MediaTypes,
   MovieMedia,
   MovieMediaExtended,
+  TGenderCodes,
   TReleaseYearConstraint,
   TvMedia,
   TvMediaExtended,
@@ -321,7 +322,7 @@ export function tvMediaType(code: string): string {
   return codes[code];
 }
 
-export function getGender(code: 0 | 1 | 2 | 3): string {
+export function getGender(code: TGenderCodes): string {
   const codes = {
     0: "Not specified",
     1: "Female",
@@ -330,6 +331,23 @@ export function getGender(code: 0 | 1 | 2 | 3): string {
   };
 
   return codes[code];
+}
+
+export function calculateAge(birth: string, death?: string) {
+  const today = death ? new Date(death) : new Date();
+  const birthDate = new Date(birth);
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age--;
+  }
+
+  return age;
 }
 
 export const initialImageQualitiesSettingsObj: IImageItemQualitySetting = {

@@ -9,12 +9,14 @@ import { getMediasFromCollection } from "../storage/database";
 import NothingToShow from "../components/NothingToShow";
 import useImageItemSetting from "../hooks/useImageItemSetting";
 import useNavigateTo from "../hooks/useNavigateTo";
+import Loader from "../components/ui/Loader";
 
 const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
   const { navigation, collectionType, screenMediaType } = props;
 
   const [medias, setMedias] = useState<IDBCollectionMedia[]>([]);
   const [refresh, setRefresh] = useState(false);
+  const [isFirstLoad, setisFirstLoad] = useState(true);
 
   // thumbnail images quality
   const { imgItemsSetting: thumbnailQuality } =
@@ -48,9 +50,20 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
     if (refresh) {
       getMediasFromCollection(screenMediaType, collectionType).then((data) => {
         setMedias(data.rows._array);
+        if (isFirstLoad) {
+          setisFirstLoad(false);
+        }
       });
     }
   }, [refresh]);
+
+  // only on first load, show a loader.
+  if (isFirstLoad) {
+    return (
+      //  Loader
+      <Loader loading={isFirstLoad === true ? true : false} />
+    );
+  }
 
   return (
     <View className="flex-1 bg-secondary">

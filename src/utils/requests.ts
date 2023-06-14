@@ -2,6 +2,7 @@ import { API_KEY, BASE_URL } from "@env";
 import {
   FranchiseCollection,
   IGenre,
+  IPersonInfo,
   IQueryParams,
   IUrlObject,
   MediaTypes,
@@ -114,9 +115,25 @@ export const getTileListScreenMedias = async (
       );
 
       // it would be better to sort the TV medias of a person based upon the episode-count/appearance count of that person for that show.
+      // if (urlObjects[0].url.includes("/tv_credits")) {
+      //   withoutDuplicates.sort(
+      //     (a: any, b: any) => Number(b.episode_count) - Number(a.episode_count)
+      //   );
+      // }
+
+      // it would be better to sort the medias of a person based in descending order of release dates.
       if (urlObjects[0].url.includes("/tv_credits")) {
         withoutDuplicates.sort(
-          (a: any, b: any) => Number(b.episode_count) - Number(a.episode_count)
+          (a: any, b: any) =>
+            Number(b.first_air_date.split("-")[0]) -
+            Number(a.first_air_date.split("-")[0])
+        );
+      }
+      if (urlObjects[0].url.includes("/movie_credits")) {
+        withoutDuplicates.sort(
+          (a: any, b: any) =>
+            Number(b.release_date.split("-")[0]) -
+            Number(a.release_date.split("-")[0])
         );
       }
 
@@ -154,6 +171,24 @@ export const sendUrlObjApiRequest = async (
     ]);
 
     return data[0].data.results;
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
+ * Function that calls the API and returns person info for given person id
+ *
+ *
+ * @param urlObject - An array of the type IUrlObject to be fetched that contains the url and query params object.
+ */
+export const getPersonInfo = async (personUrlObject: IUrlObject) => {
+  try {
+    const data = await fetchDataFromApi(personUrlObject.url, {
+      ...personUrlObject.queryParams,
+    });
+
+    return data.data as IPersonInfo;
   } catch (err) {
     throw err;
   }

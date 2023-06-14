@@ -7,12 +7,14 @@ import { FlatList } from "react-native-gesture-handler";
 import { getMediasFromCollection } from "../storage/database";
 import NothingToShow from "../components/NothingToShow";
 import useImageItemSetting from "../hooks/useImageItemSetting";
+import Loader from "../components/ui/Loader";
 
 const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   const { navigation, collectionType, screenMediaType } = props;
 
   const [medias, setMedias] = useState<IDBCollectionMedia[]>([]);
   const [refresh, setRefresh] = useState(false);
+  const [isFirstLoad, setisFirstLoad] = useState(true);
 
   const currentDate = new Date(Date.now());
   const currentYear = currentDate.getFullYear();
@@ -72,10 +74,21 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
       getMediasFromCollection(screenMediaType, collectionType)
         .then((data) => {
           setMedias(data.rows._array);
+          if (isFirstLoad) {
+            setisFirstLoad(false);
+          }
         })
         .catch((err) => {});
     }
   }, [refresh]);
+
+  // only on first load, show a loader.
+  if (isFirstLoad) {
+    return (
+      //  Loader
+      <Loader loading={isFirstLoad === true ? true : false} />
+    );
+  }
 
   return (
     <View className="flex-1 bg-secondary">
@@ -115,3 +128,8 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
 };
 
 export default memo(CollectionTopTabScreen);
+
+// {status === "loading" ? (
+//   //  Loader
+//   <Loader loading={status === "loading" ? true : false} />
+// ) : null}

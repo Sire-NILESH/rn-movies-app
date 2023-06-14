@@ -52,7 +52,7 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const { allowNsfwContent } = useAllowNsfwContentHooks();
 
   function setSearchQueryHandler(text: string): void {
-    if (text.trim().length > 0) {
+    if (text.toLocaleLowerCase().trim().length > 0) {
       setSearchQuery(text);
     }
   }
@@ -235,8 +235,14 @@ function renderFlatList(
                     ? mediaObj.item.release_date
                       ? "(" + mediaObj.item.release_date.substring(0, 4) + ")"
                       : null
-                    : mediaObj.item.first_air_date
-                    ? "(" + mediaObj.item.first_air_date.substring(0, 4) + ")"
+                    : isPerson(mediaObj.item)
+                    ? mediaObj.item.known_for_department
+                      ? "(" + mediaObj.item.known_for_department + ")"
+                      : null
+                    : isTv(mediaObj.item)
+                    ? mediaObj.item.first_air_date
+                      ? "(" + mediaObj.item.first_air_date.substring(0, 4) + ")"
+                      : null
                     : null}
                 </Text>
               </Text>

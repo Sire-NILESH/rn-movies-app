@@ -101,8 +101,6 @@ function Thumbnail({
           });
         }}
       >
-        {/* https://github.com/dcodeteam/react-native-fast-image-expo */}
-
         {imgType && imgType === "cached" ? (
           imageURL ? (
             <ImageCached
@@ -204,7 +202,7 @@ function ImageView({
           source={{ uri: imageURL }}
           className="h-full w-full"
           resizeMode="cover"
-          fadeDuration={400}
+          // fadeDuration={400}
         />
       )}
     </>

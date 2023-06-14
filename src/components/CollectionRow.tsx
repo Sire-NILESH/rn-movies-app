@@ -39,7 +39,9 @@ function CollectionRow({
       <View className="flex-row space-x-4 mb-1">
         <Text className="pl-5 text-sm font-semibold text-text_primary">
           {titleForRow}
-          <Text className="text-text_dark">{`  |  ${medias.length} contents`}</Text>
+          <Text className="text-text_dark">{`  |  ${medias.length} ${
+            medias.length > 1 ? "contents" : "content"
+          }`}</Text>
         </Text>
       </View>
 

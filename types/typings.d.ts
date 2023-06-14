@@ -251,14 +251,9 @@ export interface MovieMediaExtended extends MovieMedia {
   video: boolean;
 }
 
-interface ICreditPersonGender {
-  0: "Not specified";
-  1: "Female";
-  2: "Male";
-  3: "Non Binary";
-}
+export type TGenderCodes = 0 | 1 | 2 | 3;
 
-interface ICreditPerson {
+export interface ICreditPerson {
   adult: boolean;
   gender: 0 | 1 | 2 | 3 | null;
   id: number;
@@ -553,4 +548,21 @@ export interface CollectionPart {
   video: boolean;
   vote_average: number;
   vote_count: number;
+}
+
+export interface IPersonInfo {
+  adult: boolean;
+  also_known_as: string[];
+  biography: string;
+  birthday: string;
+  deathday: any;
+  gender: number;
+  homepage: any;
+  id: number;
+  imdb_id: string;
+  known_for_department: string;
+  name: string;
+  place_of_birth: string;
+  popularity: number;
+  profile_path: string;
 }

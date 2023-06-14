@@ -75,7 +75,7 @@ const PersonDetailModal: React.FC<IProps> = (props) => {
             <View className="flex-row items-start space-x-5">
               {/* IMAGE CARD */}
               <View
-                className="rounded-xl border border-stone-800 overflow-hidden"
+                className="rounded-xl overflow-hidden"
                 style={{ width: "33%", aspectRatio: 2 / 3 }}
               >
                 <RenderProfileImage

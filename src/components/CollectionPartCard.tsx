@@ -4,7 +4,7 @@ import { CollectionPart, TImgQualityValues } from "../../types/typings";
 import { idToGenresMapped } from "../utils/helpers/helper";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
-import ThemeButton from "./ui/ThemeButton";
+import ThemeCircleButton from "./ui/ThemeCircleButton";
 
 interface IProps {
   collectionPart: CollectionPart;
@@ -99,31 +99,10 @@ const CollectionPartCard: React.FC<IProps> = ({
             </View>
           </View>
 
-          {/* Text data */}
-
           {/* Buttons */}
           <View className="flex-row items-center w-full space-x-4">
-            {/* TRAILER BUTTON */}
-            {/* <View className="">
-              <ThemeButton
-                text={"Trailer"}
-                iconName={"md-logo-youtube"}
-                onPressHandler={() => {
-                  navigateTo("Trailer", {
-                    name: "Trailer Videos",
-                    url: `/movie/${collectionPart.id}/videos`,
-                    queryParams: {
-                      language: "en-US",
-                    },
-                  });
-                }}
-              />
-            </View> */}
-
-            {/* <View className="w-28"> */}
-            <ThemeButton
+            <ThemeCircleButton
               text={"More info"}
-              iconName={"information-circle"}
               onPressHandler={() => {
                 navigateTo("More Info", {
                   mediaType: "movie",
@@ -131,7 +110,6 @@ const CollectionPartCard: React.FC<IProps> = ({
                 });
               }}
             />
-            {/* </View> */}
           </View>
         </View>
       </View>

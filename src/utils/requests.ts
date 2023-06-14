@@ -20,7 +20,7 @@ import { fetchDataFromApi } from "./api";
  */
 export const searchRequest = async (
   searchText: string,
-  mediaType: MediaTypes,
+  mediaType: MediaTypes | "person",
   pageNumber: number,
   allowAdult: boolean = false,
   abortController?: AbortController

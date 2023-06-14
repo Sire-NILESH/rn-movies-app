@@ -5,6 +5,7 @@ import { getDeviceDimensions } from "../utils/helpers/helper";
 import { useNavigation } from "@react-navigation/native";
 import { memo, useMemo } from "react";
 import { IImgItemSettingsDB } from "../../types/typings";
+import SearchPersonCard from "./SearchPersonCard";
 
 interface IProps {
   medias: any[];
@@ -16,6 +17,7 @@ interface IProps {
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
     | null
     | undefined;
+  contentType?: "tiles" | "card";
 }
 
 const TilesRenderedView: React.FC<IProps> = (props) => {
@@ -46,6 +48,14 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
   };
 
   const renderItem = useCallback(function (media: any) {
+    if (props.contentType !== undefined && props.contentType === "card") {
+      return (
+        <View className="mx-2">
+          <SearchPersonCard person={media.item} navigateTo={navigateTo} />
+        </View>
+      );
+    }
+
     return (
       <View className="mx-[2]">
         <ThumbnailMemoised
@@ -64,7 +74,16 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
     <View className="flex-1 relative">
       <FlatList
         data={props.medias}
-        ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
+        ItemSeparatorComponent={() => (
+          <View
+            style={{
+              height:
+                props.contentType !== undefined && props.contentType === "card"
+                  ? 4
+                  : 4,
+            }}
+          />
+        )}
         contentContainerStyle={{
           width: "100%",
           paddingVertical: 8,
@@ -74,7 +93,11 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
         keyExtractor={(media, i) => {
           return `${media.id}-${i}`;
         }}
-        numColumns={3}
+        numColumns={
+          props.contentType !== undefined && props.contentType === "card"
+            ? 1
+            : 3
+        }
         ListFooterComponent={renderLoader}
         onEndReachedThreshold={0.9}
         onEndReached={props.loadMoreItem}

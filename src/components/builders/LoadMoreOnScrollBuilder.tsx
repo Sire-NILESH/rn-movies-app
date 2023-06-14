@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import { useState, useEffect } from "react";
 import { MediaTypes, MovieMedia, TvMedia } from "../../../types/typings";
@@ -16,22 +16,73 @@ import {
 import Loader from "../ui/Loader";
 
 interface IProps {
-  screenType: "Search" | "Related";
+  screenType: "Search" | "Related" | "SearchPerson";
   relatedScreenOptions?: {
     relatedToMediaId: number;
     mediaType: MediaTypes;
   };
   searchScreenOptions?: {
     searchQuery: string;
-    searchCategory: MediaTypes;
+    searchCategory: MediaTypes | "person";
   };
 }
 
-type TStatus = "loading" | "success" | "error";
+const getSearchQueryObject = (props: {
+  searchQuery: string;
+  searchCategory: MediaTypes | "person";
+  nsfw: boolean;
+  pageNumber: number;
+}) => {
+  return {
+    queryKey: [
+      "searchTiles",
+      props.searchQuery ? props.searchQuery : "",
+      props.searchCategory ? props.searchCategory : "multi",
+      props.pageNumber,
+      props.nsfw,
+    ],
+    queryFn: async () =>
+      searchRequest(
+        props.searchQuery ? props.searchQuery : "",
+        props.searchCategory ? props.searchCategory : "multi",
+        props.pageNumber,
+        props.nsfw
+      ),
+    staleTime: searchTilesCacheConfig.staleTime,
+    cacheTime: searchTilesCacheConfig.cacheTime,
+    enabled: false,
+  };
+};
+
+const getRelatedQueryObject = (props: {
+  relatedToMediaId: number;
+  mediaType: MediaTypes;
+  nsfw: boolean;
+  pageNumber: number;
+}) => {
+  return {
+    queryKey: [
+      "related",
+      props.relatedToMediaId,
+      props.mediaType,
+      props.pageNumber,
+      props.nsfw,
+    ],
+    queryFn: async () =>
+      getRelatedMediasProps(
+        props.relatedToMediaId ? props.relatedToMediaId : 1,
+        props.mediaType ? props.mediaType : "movie",
+        props.nsfw,
+        props.pageNumber
+      ),
+    staleTime: relatedTilesCacheConfig.staleTime,
+    cacheTime: relatedTilesCacheConfig.cacheTime,
+    enabled: false,
+  };
+};
 
 const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
   const [medias, setMedias] = useState<MovieMedia[] | TvMedia[]>([]);
-  const [status, setStatus] = useState<TStatus>("loading");
   const [blockNewLoads, setBlockNewLoads] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(1);
 
@@ -41,123 +92,62 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
   const { imgItemsSetting: thumbnailQuality } =
     useImageItemSetting("thumbnail");
 
+  const queryObj = useMemo(() => {
+    if (props.screenType === "Related" && props.relatedScreenOptions) {
+      return getRelatedQueryObject({
+        relatedToMediaId: props.relatedScreenOptions?.relatedToMediaId,
+        mediaType: props.relatedScreenOptions?.mediaType,
+        nsfw: allowNsfwContent.nsfw,
+        pageNumber,
+      });
+    } else if (
+      props.screenType === "Search" &&
+      props.searchScreenOptions &&
+      props.searchScreenOptions.searchCategory
+    ) {
+      return getSearchQueryObject({
+        searchQuery: props.searchScreenOptions?.searchQuery
+          ? props.searchScreenOptions?.searchQuery
+          : "",
+        searchCategory: props.searchScreenOptions?.searchCategory
+          ? props.searchScreenOptions?.searchCategory
+          : "multi",
+        nsfw: allowNsfwContent.nsfw,
+        pageNumber,
+      });
+    }
+  }, [pageNumber]);
+
   // related media query settings
   const {
-    data: moreRelatedMedias,
-    status: relatedMediaStatus,
-    refetch: refetchRelatedMedias,
+    data: moreMedias,
+    status,
+    refetch,
   } = useQuery({
-    queryKey: [
-      "related",
-      props.relatedScreenOptions?.relatedToMediaId,
-      props.relatedScreenOptions?.mediaType,
-      allowNsfwContent.nsfw,
-      pageNumber,
-    ],
-    queryFn: async () =>
-      getRelatedMediasProps(
-        props.relatedScreenOptions?.relatedToMediaId
-          ? props.relatedScreenOptions?.relatedToMediaId
-          : 1,
-        props.relatedScreenOptions?.mediaType
-          ? props.relatedScreenOptions?.mediaType
-          : "movie",
-        allowNsfwContent.nsfw,
-        pageNumber
-      ),
+    queryKey: queryObj?.queryKey,
+    queryFn: queryObj?.queryFn,
     staleTime: relatedTilesCacheConfig.staleTime,
     cacheTime: relatedTilesCacheConfig.cacheTime,
     enabled: false,
   });
 
-  // search media query settings
-  const {
-    data: moreSearchMedias,
-    status: searchMediaStatus,
-    refetch: refetchSearchMedias,
-  } = useQuery({
-    queryKey: [
-      "searchTiles",
-      props.searchScreenOptions?.searchQuery
-        ? props.searchScreenOptions?.searchQuery
-        : "",
-      props.searchScreenOptions?.searchCategory
-        ? props.searchScreenOptions?.searchCategory
-        : "multi",
-      pageNumber,
-      allowNsfwContent.nsfw,
-    ],
-    queryFn: async () =>
-      searchRequest(
-        props.searchScreenOptions?.searchQuery
-          ? props.searchScreenOptions?.searchQuery
-          : "",
-        props.searchScreenOptions?.searchCategory
-          ? props.searchScreenOptions?.searchCategory
-          : "multi",
-        pageNumber,
-        allowNsfwContent.nsfw
-      ),
-    staleTime: searchTilesCacheConfig.staleTime,
-    cacheTime: searchTilesCacheConfig.cacheTime,
-    enabled: false,
-  });
-
   // Request operation
   useEffect(() => {
-    // For Related screen
-    if (props.screenType === "Related" && props.relatedScreenOptions) {
-      refetchRelatedMedias();
-    }
-    // For Search screen
-    else if (props.screenType === "Search" && props.searchScreenOptions) {
-      refetchSearchMedias();
-    }
+    refetch();
   }, [pageNumber]);
 
-  // Related medias request operation's result management
+  // Related/Search medias request operation's result management
   useEffect(() => {
     // if reached the end of the pages.
-    if (pageNumber === moreRelatedMedias?.total_pages) {
+    if (pageNumber === moreMedias?.total_pages) {
       setBlockNewLoads(true);
     }
 
     // if we received some data, then page exists
-    if (
-      relatedMediaStatus === "success" &&
-      moreRelatedMedias?.results.length > 0
-    ) {
-      setMedias((prev) => [...prev, ...moreRelatedMedias?.results]);
+    if (status === "success" && moreMedias?.results.length > 0) {
+      setMedias((prev) => [...prev, ...moreMedias?.results]);
     }
-  }, [moreRelatedMedias]);
-
-  // Search medias request operation's result management
-  useEffect(() => {
-    // if reached the end of the pages.
-    if (pageNumber === moreSearchMedias?.total_pages) {
-      setBlockNewLoads(true);
-    }
-
-    // if we received some data, then page exists
-    if (
-      searchMediaStatus === "success" &&
-      moreSearchMedias?.results.length > 0
-    ) {
-      setMedias((prev) => [...prev, ...moreSearchMedias?.results]);
-    }
-  }, [moreSearchMedias]);
-
-  // Status("loading" | "success" | "error") manager accorfing to the screen type.
-  useEffect(() => {
-    // For Related screen
-    if (props.screenType === "Related" && props.relatedScreenOptions) {
-      setStatus(relatedMediaStatus);
-    }
-    // For Search screen
-    else if (props.screenType === "Search" && props.searchScreenOptions) {
-      setStatus(searchMediaStatus);
-    }
-  }, [relatedMediaStatus, searchMediaStatus]);
+  }, [moreMedias]);
 
   // Show alert on error
   if (status === "error") {
@@ -180,11 +170,6 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
       className="flex-1 bg-secondary
      min-w-full items-center px-2"
     >
-      {status === "loading" && medias.length === 0 ? (
-        //  Loader
-        <Loader loading={status === "loading" ? true : false} />
-      ) : null}
-
       {status === "error" && medias.length === 0 ? (
         <NothingToShow
           title={"Something went wrong while loading content"}
@@ -193,12 +178,23 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
       ) : (
         // Tiles
         <View className="flex-1 relative w-full">
+          {status === "loading" && medias.length === 0 ? (
+            //  Loader
+            <Loader loading={status === "loading" ? true : false} />
+          ) : null}
+
           {medias?.length > 0 ? (
             <TilesRenderedView
               medias={medias}
               loadingNewMedias={status === "loading" ? true : false}
               loadMoreItem={loadMoreItem}
               thumbnailQuality={thumbnailQuality}
+              contentType={
+                props.screenType === "Search" &&
+                props.searchScreenOptions?.searchCategory === "person"
+                  ? "card"
+                  : "tiles"
+              }
             />
           ) : (
             status !== "loading" && <NothingToShow problemType="nothing" />

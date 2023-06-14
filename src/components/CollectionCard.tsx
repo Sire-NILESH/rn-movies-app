@@ -6,7 +6,7 @@ import {
   TImgQualityValues,
 } from "../../types/typings";
 import useNavigateTo from "../hooks/useNavigateTo";
-import ThemeButton from "./ui/ThemeButton";
+import ThemeCircleButton from "./ui/ThemeCircleButton";
 
 interface IProps {
   collection: IBelongsToCollection;
@@ -71,11 +71,9 @@ const CollectionCard: React.FC<IProps> = ({
             </View>
           </View>
 
-          {/* <View className="w-full mt-10"> */}
-          <View className="w-28 ">
-            <ThemeButton
+          <View className="w-28 mt-4">
+            <ThemeCircleButton
               text={"More info"}
-              iconName={"information-circle"}
               onPressHandler={() => {
                 navigateTo("FranchiseCollection", {
                   name: "Collection",

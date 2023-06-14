@@ -1,5 +1,6 @@
 import { ISearchResultsTopTabsProps } from "../RouteProps";
 import SearchResultsTopTabScreen from "../../screens/SearchResultsTopTabScreen";
+import SearchResultsPersonTopTabScreen from "../../screens/SearchResultsPersonTopTabScreen";
 
 export const searchResultsTopTabRoutes: ISearchResultsTopTabsProps[] = [
   {
@@ -13,5 +14,11 @@ export const searchResultsTopTabRoutes: ISearchResultsTopTabsProps[] = [
     component: SearchResultsTopTabScreen,
     screenMediaType: "tv",
     screenTitle: "TV SHows",
+  },
+  {
+    name: "Persons",
+    component: SearchResultsPersonTopTabScreen,
+    screenMediaType: "multi",
+    screenTitle: "Persons",
   },
 ];

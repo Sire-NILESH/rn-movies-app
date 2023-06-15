@@ -9,6 +9,7 @@ import DefaultYearSettings from "../components/settings/DefaultYearSettings";
 import DefaultLangSettings from "../components/settings/DefaultLangSettings";
 import AdultFilterSettings from "../components/settings/AdultFilterSettings";
 import AboutSettings from "../components/settings/AboutSettings";
+import BlurHomeBannerSettings from "../components/settings/BlurHomeBannerSettings";
 
 const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   return (
@@ -34,6 +35,11 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
         <View>
           {/* Set Default Year */}
           <DefaultYearSettings />
+        </View>
+
+        <View>
+          {/* Set Adult Filter */}
+          <BlurHomeBannerSettings />
         </View>
 
         <View>

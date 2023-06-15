@@ -16,6 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import WatchlistButton from "./ui/WatchlistButton";
 import { by639_1 } from "iso-language-codes";
+import { useBlurHomeScreenBannerHooks } from "../hooks/reduxHooks";
 
 interface IProps {
   mediaList: MovieMedia[] | TvMedia[];
@@ -25,6 +26,14 @@ const screenDimensions = Dimensions.get("screen");
 
 const Banner: React.FC<IProps> = ({ mediaList }) => {
   const [media, setMedia] = useState<MovieMedia | TvMedia | null>(null);
+
+  const { isHomeScreenBannerBlur } = useBlurHomeScreenBannerHooks();
+
+  const imgUri = `https://image.tmdb.org/t/p/w1280${media?.backdrop_path}`;
+
+  // const imgUri = `https://image.tmdb.org/t/p/w${
+  //   isHomeScreenBannerBlur.blur ? 300 : 1280
+  // }${media?.backdrop_path}`;
 
   const navigation = useNavigation();
 
@@ -66,11 +75,12 @@ const Banner: React.FC<IProps> = ({ mediaList }) => {
         >
           <ImageBackground //wrapping the main entry screen with this <ImageBackground> component   media?.poster_path || media?.backdrop_path
             source={{
-              uri: `https://image.tmdb.org/t/p/w1280${media?.backdrop_path}`,
+              uri: imgUri,
             }}
             resizeMode="cover" //similar to web, "cover", "contain", etc.
             style={styles.rootScreen} //for View dimensions internally
             imageStyle={styles.backgroundImage} //for Image styles internally.
+            blurRadius={isHomeScreenBannerBlur.blur ? 10 : undefined}
           ></ImageBackground>
         </LinearGradient>
       </View>
@@ -189,7 +199,7 @@ const Banner: React.FC<IProps> = ({ mediaList }) => {
                 method={infoButtonPressHandler}
                 shadow={false}
               >
-                <View className="flex-row  gap-1 items-center">
+                <View className="flex-row gap-1 items-center">
                   <Ionicons
                     name="information-circle"
                     size={18}

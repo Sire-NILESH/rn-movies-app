@@ -46,13 +46,14 @@ const CollectionPartCard: React.FC<IProps> = ({
         <View className="w-[55%] flex-col justify-between">
           <View>
             {/* Title and genres */}
-            <Text className="font-base font-semibold text-text_tertiary">
+            <Text className="text-lg font-base font-semibold text-text_tertiary">
               {collectionPart.title}
             </Text>
             <View className="flex-row items-start space-x-2">
               <Text
                 className="text-text_dark text-xs"
                 style={{ lineHeight: 20 }}
+                numberOfLines={1}
               >
                 {collectionPart.genre_ids
                   .map((g) => {
@@ -64,7 +65,7 @@ const CollectionPartCard: React.FC<IProps> = ({
               </Text>
             </View>
 
-            <View className="mt-2 space-y-2">
+            <View className="space-y-2">
               {/* Stats */}
               <View className="mt-2 space-y-2 items-start">
                 <View className="flex-row items-center space-x-2">

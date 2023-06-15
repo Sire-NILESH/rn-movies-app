@@ -4,7 +4,7 @@ import { Text, View, TextInput, SafeAreaView, Pressable } from "react-native";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { Colors } from "./../utils/Colors";
 import { FlatList } from "react-native-gesture-handler";
-import { searchRequest } from "../utils/requests";
+import { searchRequest, searchRequestV2 } from "../utils/requests";
 import {
   ICreditPerson,
   MediaTypes,
@@ -71,16 +71,70 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       data && setSearchQueryResult(data);
     }
 
-    try {
-      if (searchQuery != null && searchQuery.length >= 2) {
-        fetchSearchQuery();
+    const timer = setTimeout(() => {
+      try {
+        if (searchQuery != null && searchQuery.length >= 0) {
+          fetchSearchQuery();
+        }
+      } catch (err: any) {
+        // console.log(err.message);
       }
-    } catch (err: any) {
-      // console.log(err.message);
-    }
+    }, 100);
 
-    return () => abortController.abort();
+    return () => {
+      abortController.abort();
+      clearTimeout(timer);
+    };
   }, [searchQuery]);
+
+  // useEffect(() => {
+  //   async function fetchSearchQuery() {
+  //     const data = await searchRequestV2(
+  //       searchQuery ? searchQuery : "",
+  //       "multi",
+  //       1,
+  //       allowNsfwContent.nsfw
+  //     );
+  //     data && setSearchQueryResult(data);
+  //   }
+
+  //   const timer = setTimeout(() => {
+  //     try {
+  //       if (searchQuery != null && searchQuery.length >= 0) {
+  //         fetchSearchQuery();
+  //       }
+  //     } catch (err: any) {
+  //       // console.log(err.message);
+  //     }
+  //   }, 100);
+
+  //   return () => clearTimeout(timer);
+  // }, [searchQuery]);
+
+  // useEffect(() => {
+  //   const abortController: AbortController = new AbortController();
+
+  //   async function fetchSearchQuery() {
+  //     const data = await searchRequest(
+  //       searchQuery ? searchQuery : "",
+  //       "multi",
+  //       1,
+  //       allowNsfwContent.nsfw,
+  //       abortController
+  //     );
+  //     data && setSearchQueryResult(data);
+  //   }
+
+  //   try {
+  //     if (searchQuery != null && searchQuery.length >= 2) {
+  //       fetchSearchQuery();
+  //     }
+  //   } catch (err: any) {
+  //     // console.log(err.message);
+  //   }
+
+  //   return () => abortController.abort();
+  // }, [searchQuery]);
 
   // Header settings
   useLayoutEffect(() => {

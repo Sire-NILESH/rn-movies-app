@@ -131,7 +131,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                       className="flex-row px-4 pt-4 justify-between items-start mb-5"
                     >
                       <View
-                        className="border border-stone-800 rounded-md overflow-hidden"
+                        className="border border-stone-700/60 rounded-md overflow-hidden"
                         style={{ width: 133, aspectRatio: 2 / 3 }}
                       >
                         <Image
@@ -154,7 +154,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                           style={{ width: "100%", height: "100%" }}
                         ></Image>
                       </View>
-                      <View className="w-[60%] justify-between">
+                      <View className="w-[58%] justify-between">
                         {/* Title */}
                         <Text className="text-text_highLight text-2xl font-bold">
                           {tvMediaName}

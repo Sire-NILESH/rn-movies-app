@@ -13,7 +13,8 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import persistStore from "redux-persist/es/persistStore";
-import allowNsfwContentSliceReducer from "./allowNsfwContentSlice";
+import allowNsfwContentReducer from "./allowNsfwContentSlice";
+import blurHomeScreenBannerReducer from "./blurHomeScreenBannerSlice";
 
 const persistConfig = {
   key: "root",
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
   defaultRegion: defaultRegionSliceReducer,
   defaultLanguageForMedias: defaultLanguageForMediasReducer,
   defaultYearFilterForMedias: defaultYearFilterForMediasReducer,
-  allowNsfwContent: allowNsfwContentSliceReducer,
+  allowNsfwContent: allowNsfwContentReducer,
+  blurHomeScreenBanner: blurHomeScreenBannerReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

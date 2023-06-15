@@ -30,7 +30,7 @@ const Cast: React.FC<IProps> = (props) => {
             <View className="flex-row ml-4">
               {props.directedBy.map((p, i) => {
                 return (
-                  <View className="mr-2" key={p.id}>
+                  <View className="mr-2" key={`${p.id}-${i}`}>
                     <ProfileCard
                       creditPerson={{
                         id: p.id,

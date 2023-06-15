@@ -45,6 +45,41 @@ export const searchRequest = async (
 };
 
 /**
+ * API call to get the search results for the keywords.
+ *
+ * @param searchText - The search text `keyword` to search.
+ * @param mediaType - The media type of the search, `tv` or `movie`.
+ * @param abortController - The abort controller to abort the search request, meant to be passed from the cleanup method of the `useEffect`.
+ * @param pageNumber - Optional, default is `1` if not provided.
+ */
+export const searchRequestV2 = async (
+  searchText: string,
+  mediaType: MediaTypes | "person",
+  pageNumber: number,
+  allowAdult: boolean = false
+) => {
+  const page = pageNumber ? pageNumber : 1;
+
+  try {
+    const data = await fetchDataFromApi(`/search/${mediaType}`, {
+      query: searchText,
+      language: "en-US",
+      include_adult: allowAdult,
+      page: page,
+    });
+
+    if (data?.data.results)
+      return {
+        results: data?.data.results,
+        mediaType: mediaType,
+        total_pages: data?.data.total_pages,
+      };
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
  * Common function that calls the API and returns screen props for Movies and Tv screens.
  * Requires a list of genres to be fetched and type media type movie/tv.
  *

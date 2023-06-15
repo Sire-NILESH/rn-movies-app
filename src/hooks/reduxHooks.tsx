@@ -11,6 +11,7 @@ import { setDefaultRegion } from "../store/defaultRegionSlice";
 import { setDefaultLanguageForMedias } from "../store/languageForMediasSlice";
 import { setDefaultYearFilterForMedias } from "../store/yearFIlterForMediasSlice";
 import { toggleAllowNsfwContent } from "../store/allowNsfwContentSlice";
+import { toggleBlurHomeScreenBanner } from "../store/blurHomeScreenBannerSlice";
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch: () => AppDispatch = useDispatch;
@@ -77,5 +78,22 @@ export const useAllowNsfwContentHooks = () => {
   return {
     toggleAllowNsfwContentHandler,
     allowNsfwContent,
+  };
+};
+
+export const useBlurHomeScreenBannerHooks = () => {
+  // REDUX TOOLKIT HOOKS
+  const isHomeScreenBannerBlur = useAppSelector(
+    (state) => state.blurHomeScreenBanner
+  );
+  const dispatch = useAppDispatch();
+
+  const toggleBlurHomeScreenBannerHandler = () => {
+    dispatch(toggleBlurHomeScreenBanner());
+  };
+
+  return {
+    toggleBlurHomeScreenBannerHandler,
+    isHomeScreenBannerBlur,
   };
 };

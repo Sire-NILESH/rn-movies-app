@@ -75,7 +75,7 @@ const ProfileCard: React.FC<IProps> = (props) => {
             >
               <Text
                 className="text-text_primary text-xs font-bold"
-                numberOfLines={2}
+                numberOfLines={1}
               >
                 {props.creditPerson.buttonTitle}
               </Text>

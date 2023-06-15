@@ -45,6 +45,7 @@ const MoreInfoBackdrop: React.FC<IProps> = ({
           resizeMode="cover" //similar to web, "cover", "contain", etc.
           style={{ flex: 1 }} //for View dimensions internally
           imageStyle={{ zIndex: -100 }} //for Image styles internally.
+          // blurRadius={10}
         ></ImageBackground>
       </LinearGradient>
     </View>

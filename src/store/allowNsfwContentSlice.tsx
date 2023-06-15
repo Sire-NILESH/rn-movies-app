@@ -12,7 +12,7 @@ const initialState: NSFWContentPermission = {
 
 // Create the Slice
 const allowNsfwContentSlice = createSlice({
-  name: "defaultRegion",
+  name: "allowNsfw",
   initialState: initialState,
   reducers: {
     toggleAllowNsfwContent: (state, action: PayloadAction) => {
@@ -24,5 +24,5 @@ const allowNsfwContentSlice = createSlice({
 
 export const { toggleAllowNsfwContent } = allowNsfwContentSlice.actions;
 
-const allowNsfwContentSliceReducer = allowNsfwContentSlice.reducer;
-export default allowNsfwContentSliceReducer;
+const allowNsfwContentReducer = allowNsfwContentSlice.reducer;
+export default allowNsfwContentReducer;

@@ -82,7 +82,7 @@ const FranchiseCollection: React.FunctionComponent<IStackScreenProps> = (
                     className="flex-row px-4 pt-4 justify-between items-start mb-5"
                   >
                     <View
-                      className="border border-stone-800 rounded-md overflow-hidden"
+                      className="border border-stone-700 rounded-md overflow-hidden"
                       style={{ width: "33%", aspectRatio: 2 / 3 }}
                     >
                       <Image

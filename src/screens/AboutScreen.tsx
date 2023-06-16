@@ -166,9 +166,11 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           >
             <Text className="text-text_tertiary text-sm">
               {`All your requests that are made to the api are cached for a specified amount of time and will be cleared automatically.
+              \nIf you wish to see the most updated content (episodes, tv/movie listing, charts), you can just clear the request cache from the apps settings screen.
+              \nIf you find the app crashing again and again when visiting the trailer screen, you can just clear the request cache from the apps settings screen.
                 \nAll images inside the app is cached to improve app's performance. You can delete them manually by clearing the app's cache from your device's settings app.
                 \nManually clearing the app's cache will only clear the image caches and not the request cache and your collection data. To do that you, can find their respective settings which are available in the settings screen.
-                \nSome ISPs from certain countries have restricted the TMDB API for unknown reasons. So if your find the application always showing error on startup even with a good internet connection, chances are that your ISP has blocked the api.\nTry using a VPN connection or change your DNS to circumvent this restriction.
+                \nIf you find the application always showing error on startup even with a good internet connection, chances are that your ISP has blocked the TMDB API.\nTry using a VPN connection or change your DNS to circumvent this restriction.
                 \nEpisode count that is shown on the thumbnails of TV shows of a person is not just the count of episodes that he/she was involved in as a cast member but the count of his/her involvement in any way as either a cast or a crew member combined.`}
             </Text>
           </View>

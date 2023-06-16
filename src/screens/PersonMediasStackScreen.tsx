@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import TopTabsPersonMediasNavigator from "../navigators/TopTabs/TopTabsPersonMediasNavigator";
-import { Pressable, View } from "react-native";
+import { Pressable, StatusBar, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
 import PersonDetailModal from "../components/ui/PersonDetailModal";
@@ -44,6 +44,8 @@ const PersonMediasStackScreen: React.FunctionComponent<IStackScreenProps> = (
 
   return (
     <>
+      <StatusBar animated={true} backgroundColor={Colors.tertiary} />
+
       <TopTabsPersonMediasNavigator urlObject={urlObjectReceived} />
 
       <PersonDetailModal

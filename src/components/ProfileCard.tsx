@@ -51,7 +51,7 @@ const ProfileCard: React.FC<IProps> = (props) => {
             {p.gender != null && getGender(p.gender)}
           </Text>
 
-          <View className="mt-4 bg-neutral-700/60 h-8 rounded-full w-[100] overflow-hidden">
+          <View className="mt-4 bg-neutral-800 h-8 rounded-full w-[100] overflow-hidden">
             <Pressable
               className="h-full w-full flex justify-center items-center"
               android_ripple={{ color: "#eee" }}

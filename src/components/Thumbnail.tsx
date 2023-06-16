@@ -13,18 +13,20 @@ import {
   ImageStyle,
   Image,
 } from "react-native";
-import { isMovie } from "../utils/helpers/helper";
+import { isIPersonTVMedia, isMovie } from "../utils/helpers/helper";
 import { LinearGradient } from "expo-linear-gradient";
 import ImageCached from "./ui/ImageCached";
 import ImagePlaceholder from "./ui/ImagePlaceholder";
+import React from "react";
 
 export interface IThumbnailProps {
   media: MovieMedia | TvMedia;
   orientation: "portrait" | "landscape";
   windowWidth: number;
+  navigateTo: (screen: string, paramOption: Object) => void;
   imgType?: "cached" | "regular";
   quality?: TImgQualityValues;
-  navigateTo: (screen: string, paramOption: Object) => void;
+  disableText?: boolean;
 }
 
 function Thumbnail({
@@ -34,6 +36,7 @@ function Thumbnail({
   imgType,
   quality,
   navigateTo,
+  disableText,
 }: IThumbnailProps) {
   const thumbnailDimensions = {
     landscape: {
@@ -81,6 +84,8 @@ function Thumbnail({
 
   const mediaType = isMovie(media) ? "movie" : "tv";
 
+  // const { isThumbnailText } = useThumbnailTextSettingHooks();
+
   return (
     <View
       className="relative overflow-hidden bg-neutral-900"
@@ -101,69 +106,71 @@ function Thumbnail({
           });
         }}
       >
-        {imgType && imgType === "cached" ? (
-          imageURL ? (
-            <ImageCached
-              imageURL={imageURL}
-              cacheKey={
-                orientation === "portrait"
-                  ? `${media.id}-${mediaType}-poster`
-                  : `${media.id}-${mediaType}-backdrop`
-              }
-            />
-          ) : (
-            <ImagePlaceholder />
-          )
-        ) : imageURL ? (
+        {imageURL ? (
           <ImageView
             imageURL={imageURL}
-            imgType="regular"
+            imgType={imgType && imgType === "cached" ? "cached" : "regular"}
             mediaId={media.id}
             orientation={orientation}
             mediaType={mediaType}
-          ></ImageView>
+          />
         ) : (
           <ImagePlaceholder />
         )}
 
         {/* Movie Title and date box */}
-        <LinearGradient
-          colors={[
-            "rgba(0,0,0,0)",
-            "rgba(0,0,0,0)",
-            "rgba(28, 25, 23, 0.2)",
-            "rgba(28, 25, 23, 0.8)",
-          ]}
-          className="absolute flex-row items-end pb-2 px-2"
-          style={{
-            borderRadius: 6,
-            width: dimensions.imageWidth,
-            aspectRatio: 2 / 3,
-          }}
-        >
-          <View
-            className="flex-row items-end justify-between w-full"
-            style={[
-              orientation === "portrait"
-                ? { flexDirection: "column", alignItems: "flex-start" }
-                : null,
+        {!disableText ? (
+          <LinearGradient
+            colors={[
+              "rgba(0,0,0,0)",
+              "rgba(0,0,0,0)",
+              "rgba(28, 25, 23, 0.2)",
+              "rgba(28, 25, 23, 0.8)",
             ]}
+            className="absolute flex-row items-end pb-2 px-2"
+            style={{
+              borderRadius: 6,
+              width: dimensions.imageWidth,
+              aspectRatio: 2 / 3,
+            }}
           >
-            <Text
-              className="font-semibold text-text_primary text-xs w-full"
-              numberOfLines={1}
-              style={[orientation === "landscape" ? { lineHeight: 18 } : null]}
+            <View
+              className="flex-row items-end justify-between w-full"
+              style={[
+                orientation === "portrait"
+                  ? { flexDirection: "column", alignItems: "flex-start" }
+                  : null,
+              ]}
             >
-              {media && isMovie(media) ? media.title : media.name}
-            </Text>
+              <Text
+                className="font-semibold text-text_primary text-xs w-full"
+                numberOfLines={1}
+                style={[
+                  orientation === "landscape" ? { lineHeight: 18 } : null,
+                ]}
+              >
+                {media && isMovie(media) ? media.title : media.name}
+              </Text>
 
-            <Text className=" text-text_secondary text-[11px]">
-              {media && isMovie(media)
-                ? media.release_date?.split("-")[0]
-                : media.first_air_date?.split("-")[0]}
-            </Text>
-          </View>
-        </LinearGradient>
+              <Text
+                className={`text-text_secondary text-[11px] ${
+                  isIPersonTVMedia(media) ? "font-semibold" : ""
+                }`}
+              >
+                {media && isMovie(media)
+                  ? media.release_date?.split("-")[0]
+                  : media.first_air_date?.split("-")[0]}{" "}
+                {isIPersonTVMedia(media) && media["episode_count"] !== undefined
+                  ? `| ${media["episode_count"]} ${
+                      Number(media["episode_count"]) > 1
+                        ? "episodes"
+                        : "episode"
+                    }`
+                  : ""}
+              </Text>
+            </View>
+          </LinearGradient>
+        ) : null}
       </Pressable>
     </View>
   );
@@ -194,7 +201,7 @@ function ImageView({
           cacheKey={
             orientation === "portrait"
               ? `${mediaId}-${mediaType === "movie" ? "movie" : "tv"}-poster`
-              : `${mediaId}-${mediaType === "tv" ? "movie" : "tv"}-backdrop`
+              : `${mediaId}-${mediaType === "tv" ? "tv" : "movie"}-backdrop`
           }
         />
       ) : (
@@ -202,7 +209,7 @@ function ImageView({
           source={{ uri: imageURL }}
           className="h-full w-full"
           resizeMode="cover"
-          // fadeDuration={400}
+          fadeDuration={250}
         />
       )}
     </>

@@ -13,6 +13,7 @@ import { Pressable } from "react-native";
 import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
 import { isMovie } from "./../utils/helpers/helper";
 import useNavigateTo from "../hooks/useNavigateTo";
+import { useThumbnailTextSettingHooks } from "../hooks/reduxHooks";
 
 interface Props {
   title: string;
@@ -61,6 +62,8 @@ function renderFlatList(
   playlist: IPlaylist,
   thumbnailQualitySettings?: IImgItemSettingsDB
 ) {
+  const { isThumbnailText } = useThumbnailTextSettingHooks();
+
   // Navigation handler for child components like thumbnail and jumpTo button.
   // So every one of them wont have to calculate them separately.
   const { navigateTo } = useNavigateTo();
@@ -96,6 +99,7 @@ function renderFlatList(
                 windowWidth={windowWidth}
                 imgType="regular"
                 quality={thumbnailQualitySettings?.value}
+                disableText={isThumbnailText.disable}
                 // orientation="landscape"
               />
             </View>
@@ -133,6 +137,7 @@ function renderFlatList(
                 windowWidth={windowWidth}
                 quality={thumbnailQualitySettings?.value}
                 imgType="regular"
+                disableText={isThumbnailText.disable}
                 // orientation="landscape"
               />
             </View>

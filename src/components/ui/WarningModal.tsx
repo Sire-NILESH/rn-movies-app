@@ -1,23 +1,21 @@
 import { View, Text, Modal, Pressable } from "react-native";
 import { Colors } from "../../utils/Colors";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import CustomButton from "./CustomButton";
 
 interface IProps {
   isVisible: boolean;
   closeModal: () => void;
-  deletingItem: string;
-  confirmModal: () => void;
+  onConfirmModal: () => void;
+  text1: string;
+  text2: string;
+  deleteType: "clear" | "delete";
 }
 
 const WarningModal: React.FC<IProps> = (props) => {
-  const deletingItem =
-    props.deletingItem?.charAt(0).toUpperCase() +
-    props.deletingItem.substring(1);
-
   function onConfirmHandler() {
     // TODO: confirm and close modal
-    props.confirmModal();
+    props.onConfirmModal();
     props.closeModal();
   }
 
@@ -60,12 +58,8 @@ const WarningModal: React.FC<IProps> = (props) => {
 
         {/* body */}
         <View className="mt-2 space-y-2">
-          <Text className="text-lg text-text_primary">
-            {`Do you really want to delete "${deletingItem}" ?`}
-          </Text>
-          <Text className="text-text_dark">
-            {`Doing this will permanently delete all your data from "${deletingItem}" and cannot be undone.`}
-          </Text>
+          <Text className="text-lg text-text_primary">{props.text1}</Text>
+          <Text className="text-text_dark">{props.text2}</Text>
         </View>
 
         {/* footer */}
@@ -79,12 +73,22 @@ const WarningModal: React.FC<IProps> = (props) => {
               method={onConfirmHandler}
             >
               <View className="flex-row items-center space-x-2">
-                <Ionicons
-                  name={"trash-outline"}
-                  size={20}
-                  color={Colors.text_primary}
-                />
-                <Text className="text-lg text-text_primary">Delete</Text>
+                {props.deleteType === "delete" ? (
+                  <Ionicons
+                    name={"trash-outline"}
+                    size={20}
+                    color={Colors.text_primary}
+                  />
+                ) : (
+                  <MaterialCommunityIcons
+                    name={"broom"}
+                    size={20}
+                    color={Colors.text_primary}
+                  />
+                )}
+                <Text className="text-lg text-text_primary">
+                  {props.deleteType === "delete" ? "Delete" : "Clear"}
+                </Text>
               </View>
             </CustomButton>
           </View>

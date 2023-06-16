@@ -10,6 +10,8 @@ import DefaultLangSettings from "../components/settings/DefaultLangSettings";
 import AdultFilterSettings from "../components/settings/AdultFilterSettings";
 import AboutSettings from "../components/settings/AboutSettings";
 import BlurHomeBannerSettings from "../components/settings/BlurHomeBannerSettings";
+import ThumbnailTextSettings from "../components/settings/ThumbnailTextSettings";
+import DeleteReqCacheSettings from "../components/settings/DeleteReqCacheSettings";
 
 const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   return (
@@ -38,8 +40,13 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
         </View>
 
         <View>
-          {/* Set Adult Filter */}
+          {/* Set Blur on homescreen banner */}
           <BlurHomeBannerSettings />
+        </View>
+
+        <View>
+          {/* Disable text from thumbnail */}
+          <ThumbnailTextSettings />
         </View>
 
         <View>
@@ -56,6 +63,11 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
           IMPORT/EXPORT
           <ImportExportSettings />
         </View> */}
+
+        <View>
+          {/* CLEAR REQ CACHE */}
+          <DeleteReqCacheSettings />
+        </View>
 
         <View>
           {/* DELETE */}

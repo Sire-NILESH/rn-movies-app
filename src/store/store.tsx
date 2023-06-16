@@ -15,6 +15,7 @@ import {
 import persistStore from "redux-persist/es/persistStore";
 import allowNsfwContentReducer from "./allowNsfwContentSlice";
 import blurHomeScreenBannerReducer from "./blurHomeScreenBannerSlice";
+import thumbnailTextSettingReducer from "./thumbnailTextSettingSlice";
 
 const persistConfig = {
   key: "root",
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   defaultYearFilterForMedias: defaultYearFilterForMediasReducer,
   allowNsfwContent: allowNsfwContentReducer,
   blurHomeScreenBanner: blurHomeScreenBannerReducer,
+  thumbnailTextSetting: thumbnailTextSettingReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

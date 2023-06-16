@@ -138,16 +138,36 @@ export const getTileListScreenMedias = async (
       }),
     ]);
 
-    if (urlObjects[0].url.startsWith("/person/")) {
+    if (urlObjects[0].url.startsWith("/person")) {
       const medias = [...data[0].data.cast, ...data[0].data.crew];
 
-      // some people are credited for cast as well as crew members in some media(same), and since we collect both the cast and crew, we have possibility(proven) of having same media multiple times.
-      const withoutDuplicates = Object.values(
-        medias.reduce((acc, obj) => {
-          acc[obj.id] = obj;
-          return acc;
-        }, {})
-      );
+      let withoutDuplicates: any[] = [];
+
+      if (urlObjects[0].url.includes("/movie_credits")) {
+        // some people are credited for cast as well as crew members in some media(same), and since we collect both the cast and crew, we have possibility(proven) of having same media multiple times.
+        withoutDuplicates = Object.values(
+          medias.reduce((acc, obj) => {
+            acc[obj.id] = obj;
+            return acc;
+          }, {})
+        );
+      }
+
+      if (urlObjects[0].url.includes("/tv_credits")) {
+        const medias = [...data[0].data.cast, ...data[0].data.crew];
+
+        // some people are credited for cast as well as crew members in some media(same), and since we collect both the cast and crew, we have possibility(proven) of having same media multiple times.
+        withoutDuplicates = Object.values(
+          medias.reduce((acc, obj) => {
+            if (acc[obj.id] !== undefined) {
+              acc[obj.id]["episode_count"] = acc[obj.id]["episode_count"] + 1;
+            } else {
+              acc[obj.id] = obj;
+            }
+            return acc;
+          }, {})
+        );
+      }
 
       // it would be better to sort the TV medias of a person based upon the episode-count/appearance count of that person for that show.
       // if (urlObjects[0].url.includes("/tv_credits")) {

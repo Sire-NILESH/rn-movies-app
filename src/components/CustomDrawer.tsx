@@ -5,7 +5,6 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import pjson from "../../package.json";
 
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -64,22 +63,8 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
 
       <View className="p-3 space-y-1">
         <View className="flex-row items-center">
-          <Text className="text-stone-500 text-xs">
-            Version {pjson.version}
-          </Text>
+          <Text className="text-stone-500 text-xs">Version 1.0.0</Text>
         </View>
-        {/* <View className="flex-row items-center">
-          <Text className="text-stone-500 text-xs">
-            Made with <Text className="font-bold text-stone-400">💖</Text> from{" "}
-            <Text className="font-bold text-stone-400">Sire</Text>
-          </Text>
-        </View> */}
-        {/* <View className="flex-row items-center">
-          <Text className="text-stone-500 text-xs">
-            Powered by <Text className="font-bold text-stone-400">TMDB</Text>{" "}
-            and <Text className="font-bold text-stone-400">justWatch</Text>
-          </Text>
-        </View> */}
       </View>
     </View>
   );

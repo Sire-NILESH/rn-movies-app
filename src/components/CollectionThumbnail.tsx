@@ -99,27 +99,14 @@ function CollectionThumbnail({
           });
         }}
       >
-        {imgType && imgType === "cached" ? (
-          imageURL ? (
-            <ImageCached
-              imageURL={imageURL}
-              cacheKey={
-                orientation === "portrait"
-                  ? `${media.mediaId}-${media.mediaType}-poster`
-                  : `${media.mediaId}-${media.mediaType}-backdrop`
-              }
-            />
-          ) : (
-            <ImagePlaceholder />
-          )
-        ) : imageURL ? (
+        {imageURL ? (
           <ImageView
             imageURL={imageURL}
-            imgType="regular"
+            imgType={imgType && imgType === "cached" ? "cached" : "regular"}
             mediaId={media.mediaId}
             orientation={orientation}
             mediaType={media.mediaType}
-          ></ImageView>
+          />
         ) : (
           <ImagePlaceholder />
         )}
@@ -198,7 +185,7 @@ function ImageView({
           source={{ uri: imageURL }}
           className="h-full w-full"
           resizeMode="cover"
-          // fadeDuration={400}
+          fadeDuration={250}
         />
       )}
     </>

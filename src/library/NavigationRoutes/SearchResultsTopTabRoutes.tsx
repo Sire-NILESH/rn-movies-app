@@ -19,6 +19,6 @@ export const searchResultsTopTabRoutes: ISearchResultsTopTabsProps[] = [
     name: "Persons",
     component: SearchResultsPersonTopTabScreen,
     screenMediaType: "multi",
-    screenTitle: "Persons",
+    screenTitle: "People",
   },
 ];

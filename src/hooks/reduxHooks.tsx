@@ -12,6 +12,7 @@ import { setDefaultLanguageForMedias } from "../store/languageForMediasSlice";
 import { setDefaultYearFilterForMedias } from "../store/yearFIlterForMediasSlice";
 import { toggleAllowNsfwContent } from "../store/allowNsfwContentSlice";
 import { toggleBlurHomeScreenBanner } from "../store/blurHomeScreenBannerSlice";
+import { toggleThumbnailText } from "../store/thumbnailTextSettingSlice";
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch: () => AppDispatch = useDispatch;
@@ -95,5 +96,20 @@ export const useBlurHomeScreenBannerHooks = () => {
   return {
     toggleBlurHomeScreenBannerHandler,
     isHomeScreenBannerBlur,
+  };
+};
+
+export const useThumbnailTextSettingHooks = () => {
+  // REDUX TOOLKIT HOOKS
+  const isThumbnailText = useAppSelector((state) => state.thumbnailTextSetting);
+  const dispatch = useAppDispatch();
+
+  const toggleThumbnailTextHandler = () => {
+    dispatch(toggleThumbnailText());
+  };
+
+  return {
+    toggleThumbnailTextHandler,
+    isThumbnailText,
   };
 };

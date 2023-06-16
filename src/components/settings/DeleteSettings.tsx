@@ -8,7 +8,11 @@ import { Colors } from "../../utils/Colors";
 import WarningModal from "../ui/WarningModal";
 import SettingsCardWrapper from "./SettingsCardWrapper";
 import IconCardRow from "./IconCardRow";
-import { showErrorToast, showSuccessToast } from "../../utils/helpers/helper";
+import {
+  capitalizeString,
+  showErrorToast,
+  showSuccessToast,
+} from "../../utils/helpers/helper";
 
 const DeleteSettings = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -21,10 +25,6 @@ const DeleteSettings = () => {
 
   function modalHandler(state: boolean) {
     setIsModalOpen(state);
-  }
-
-  function capitalizeString(str: string) {
-    return str.charAt(0).toUpperCase() + str.substring(1);
   }
 
   function confirmDeleteHandler() {
@@ -88,8 +88,14 @@ const DeleteSettings = () => {
       <WarningModal
         isVisible={isModalOpen}
         closeModal={() => modalHandler(false)}
-        deletingItem={deletingItem}
-        confirmModal={confirmDeleteHandler}
+        onConfirmModal={confirmDeleteHandler}
+        text1={`Do you really want to delete "${capitalizeString(
+          deletingItem
+        )}" ?`}
+        text2={`Doing this will permanently delete all your data from "${capitalizeString(
+          deletingItem
+        )}" and cannot be undone.`}
+        deleteType="delete"
       />
 
       <RenderDeleteRow

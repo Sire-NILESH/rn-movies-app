@@ -1,14 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { blurBannerSettingInitialState } from "../config/blurHomeScreenBanner";
 
-interface BlurHomeScreenBannerPermission {
-  blur: boolean;
-}
-
-// Define the initial state using that type
-const initialState: BlurHomeScreenBannerPermission = {
-  blur: false,
-};
+// Define the initial state
+const initialState = blurBannerSettingInitialState;
 
 // Create the Slice
 const blurHomeScreenBannerSlice = createSlice({

@@ -8,7 +8,7 @@ interface IProps {
 
 const ThemeCircleButton: React.FC<IProps> = ({ text, onPressHandler }) => {
   return (
-    <View className="bg-tertiary h-8 rounded-full w-[100] overflow-hidden">
+    <View className="bg-neutral-800 h-8 rounded-full w-[100] overflow-hidden">
       <Pressable
         className="h-full w-full flex justify-center items-center"
         android_ripple={{ color: "#eee" }}

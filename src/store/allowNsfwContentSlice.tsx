@@ -1,14 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { nsfwSettingInitialState } from "../config/allowNsfw";
 
-interface NSFWContentPermission {
-  nsfw: boolean;
-}
-
-// Define the initial state using that type
-const initialState: NSFWContentPermission = {
-  nsfw: false,
-};
+// Define the initial state
+const initialState = nsfwSettingInitialState;
 
 // Create the Slice
 const allowNsfwContentSlice = createSlice({

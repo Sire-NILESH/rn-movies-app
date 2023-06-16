@@ -6,6 +6,7 @@ import {
   IImageItemQualitySetting,
   IImageQuality,
   INetworkIds,
+  IPersonTVMedia,
   IProductionComapnyIds,
   IQueryParams,
   IReduxListMedia,
@@ -30,9 +31,31 @@ export function isMovie(
 }
 
 export function isTv(
-  media: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended | null
+  media:
+    | MovieMedia
+    | TvMedia
+    | TvMediaExtended
+    | MovieMediaExtended
+    | IPersonTVMedia
+    | null
 ): media is TvMedia {
   return media !== null && (media as TvMedia).name !== undefined;
+}
+
+export function isIPersonTVMedia(
+  media:
+    | MovieMedia
+    | TvMedia
+    | TvMediaExtended
+    | MovieMediaExtended
+    | IPersonTVMedia
+    | null
+): media is IPersonTVMedia {
+  return (
+    media !== null &&
+    (media as IPersonTVMedia)["episode_count"] !== undefined &&
+    isTv(media)
+  );
 }
 
 export function isTvExtended(
@@ -348,6 +371,10 @@ export function calculateAge(birth: string, death?: string) {
   }
 
   return age;
+}
+
+export function capitalizeString(str: string) {
+  return str.charAt(0).toUpperCase() + str.substring(1);
 }
 
 export const initialImageQualitiesSettingsObj: IImageItemQualitySetting = {

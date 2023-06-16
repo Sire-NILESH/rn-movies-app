@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { memo, useMemo } from "react";
 import { IImgItemSettingsDB } from "../../types/typings";
 import SearchPersonCard from "./SearchPersonCard";
+import { useThumbnailTextSettingHooks } from "../hooks/reduxHooks";
 
 interface IProps {
   medias: any[];
@@ -22,6 +23,8 @@ interface IProps {
 
 const TilesRenderedView: React.FC<IProps> = (props) => {
   const navigation = useNavigation();
+
+  const { isThumbnailText } = useThumbnailTextSettingHooks();
 
   // Navigation handler for child components like thumbnail and jumpTo button.
   // So every one of them wont have to calculate them separately.
@@ -65,6 +68,7 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
           windowWidth={windowWidth}
           imgType="regular"
           quality={props.thumbnailQuality?.value}
+          disableText={isThumbnailText.disable}
         />
       </View>
     );

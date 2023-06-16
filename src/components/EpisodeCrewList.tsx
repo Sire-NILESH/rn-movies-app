@@ -18,7 +18,8 @@ const EpisodeCrewList: React.FC<IProps> = (props) => {
     (c) =>
       c.job === "Director" ||
       c.department === "Writing" ||
-      c.department === "Editing"
+      c.department === "Editing" ||
+      c.department === "Production"
   );
 
   return (

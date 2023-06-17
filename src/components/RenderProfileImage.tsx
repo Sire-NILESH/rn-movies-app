@@ -17,7 +17,7 @@ export default function RenderProfileImage({ imgPath }: { imgPath: string }) {
           source={{ uri: imgPath }}
           className="h-full w-full border-2 border-green-500"
           resizeMode="cover"
-          // fadeDuration={400}
+          fadeDuration={350}
           onError={(err) => {
             if (err) {
               setFallbackImagehandler(true);

@@ -1,27 +1,23 @@
 import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import IconCardRow from "./IconCardRow";
-import LanguageDropdown from "../ui/LanguageDropdown";
 import SettingsCardWrapper from "./SettingsCardWrapper";
 import { Colors } from "../../utils/Colors";
+import CustomButton from "../ui/CustomButton";
+import { View } from "react-native";
+import useDBimportExport from "../../hooks/useDBimportExport";
 
 const ImportExportSettings = () => {
+  const { exportDb, importDb } = useDBimportExport();
+
   return (
     <SettingsCardWrapper
       iconName="document-outline"
       title="Import/Export File"
-      subtitle={`You can import/export your file here.`}
+      subtitle={
+        "Caution! For security reasons, only import the untouched/untampered file that was exported from this app."
+      }
     >
-      <RenderRow
-        rowIconNode={
-          <MaterialCommunityIcons
-            name="import"
-            size={18}
-            color={Colors.text_primary}
-          />
-        }
-        rowTitle="Import a file"
-      />
       <RenderRow
         rowIconNode={
           <MaterialCommunityIcons
@@ -30,7 +26,19 @@ const ImportExportSettings = () => {
             color={Colors.text_primary}
           />
         }
-        rowTitle="Export a file"
+        rowTitle="Export a backup"
+        method={exportDb}
+      />
+      <RenderRow
+        rowIconNode={
+          <MaterialCommunityIcons
+            name="import"
+            size={18}
+            color={Colors.text_primary}
+          />
+        }
+        rowTitle="Import a backup"
+        method={importDb}
       />
     </SettingsCardWrapper>
   );
@@ -38,10 +46,26 @@ const ImportExportSettings = () => {
 
 export default ImportExportSettings;
 
-function RenderRow(props: { rowTitle: string; rowIconNode: React.ReactNode }) {
+function RenderRow(props: {
+  rowTitle: string;
+  method: () => Promise<void>;
+  rowIconNode: React.ReactNode;
+}) {
   return (
     <IconCardRow rowTitle={props.rowTitle} rowIconNode={props.rowIconNode}>
-      <LanguageDropdown saveMode="applicationWide" />
+      <CustomButton
+        height={50}
+        width={50}
+        radius={100}
+        color={"transparent"}
+        method={async () => {
+          await props.method();
+        }}
+      >
+        <View className="flex-row space-x-2 items-center">
+          {props.rowIconNode}
+        </View>
+      </CustomButton>
     </IconCardRow>
   );
 }

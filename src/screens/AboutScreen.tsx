@@ -169,7 +169,7 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               \nIf you wish to see the most updated content (episodes, tv/movie listing, charts), you can just clear the request cache from the apps settings screen.
               \nIf you find the app crashing again and again when visiting the trailer screen, you can just clear the request cache from the apps settings screen.
                 \nAll images inside the app is cached to improve app's performance. You can delete them manually by clearing the app's cache from your device's settings app.
-                \nManually clearing the app's cache will only clear the image caches and not the request cache and your collection data. To do that you, can find their respective settings which are available in the settings screen.
+                \nManually clearing the app's cache will only clear the image caches and not the request cache and your collection data. To do that, you can find their respective settings which are available in the settings screen.
                 \nIf you find the application always showing error on startup even with a good internet connection, chances are that your ISP has blocked the TMDB API.\nTry using a VPN connection or change your DNS to circumvent this restriction.
                 \nEpisode count that is shown on the thumbnails of TV shows of a person is not just the count of episodes that he/she was involved in as a cast member but the count of his/her involvement in any way as either a cast or a crew member combined.`}
             </Text>
@@ -181,6 +181,17 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           >
             <Text className="text-text_tertiary text-sm">
               {`Warning! All your "Favourites", "Watched" and "Watchlist" collection is stored on your device locally. Deleting the "Maven" app's 'all data' from your device's settings app will permanently delete them.`}
+            </Text>
+          </View>
+
+          <View
+            className="justify-between px-4 mt-2 mx-2 bg-neutral-800 rounded-xl py-3 space-y-2"
+            style={{ minHeight: 45 }}
+          >
+            <Text className="text-text_tertiary text-sm">
+              {`Warning! For security reasons, only import the untouched/untampered backup file that was exported from this app. Only use this feature if you understand the security implications.
+              \nMaven and nor its creator is responsible for for any damage caused to your device.
+              \nUse it at your own risk.`}
             </Text>
           </View>
         </SettingsCardWrapper>

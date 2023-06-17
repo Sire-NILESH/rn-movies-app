@@ -185,7 +185,7 @@ function ImageView({
           source={{ uri: imageURL }}
           className="h-full w-full"
           resizeMode="cover"
-          fadeDuration={250}
+          fadeDuration={400}
         />
       )}
     </>

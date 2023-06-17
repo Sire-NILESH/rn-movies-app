@@ -84,8 +84,6 @@ function Thumbnail({
 
   const mediaType = isMovie(media) ? "movie" : "tv";
 
-  // const { isThumbnailText } = useThumbnailTextSettingHooks();
-
   return (
     <View
       className="relative overflow-hidden bg-neutral-900"
@@ -209,7 +207,7 @@ function ImageView({
           source={{ uri: imageURL }}
           className="h-full w-full"
           resizeMode="cover"
-          fadeDuration={250}
+          fadeDuration={400}
         />
       )}
     </>

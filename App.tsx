@@ -40,7 +40,7 @@ export default function App() {
   const asyncStoragePersister = createAsyncStoragePersister({
     storage: AsyncStorage,
     // if there are multiple updates within a 4000-millisecond interval, they will be batched together and written to AsyncStorage only once
-    throttleTime: 4000, // Set the throttleTime to 4000 milliseconds
+    // throttleTime: 4000, // Set the throttleTime to 4000 milliseconds
   });
 
   function enterApp() {

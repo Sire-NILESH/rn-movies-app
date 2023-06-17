@@ -12,6 +12,7 @@ import AboutSettings from "../components/settings/AboutSettings";
 import BlurHomeBannerSettings from "../components/settings/BlurHomeBannerSettings";
 import ThumbnailTextSettings from "../components/settings/ThumbnailTextSettings";
 import DeleteReqCacheSettings from "../components/settings/DeleteReqCacheSettings";
+import ImportExportSettings from "../components/settings/ImportExportSettings";
 
 const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   return (
@@ -59,10 +60,10 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
           <ImgQualitySettings />
         </View>
 
-        {/* <View>
-          IMPORT/EXPORT
+        <View>
+          {/* IMPORT/EXPORT */}
           <ImportExportSettings />
-        </View> */}
+        </View>
 
         <View>
           {/* CLEAR REQ CACHE */}

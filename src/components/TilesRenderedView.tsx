@@ -41,17 +41,20 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
 
   // Footer loader component
   const renderLoader = () => {
-    return props.loadingNewMedias === true ? (
-      <View className="w-full justify-center my-2">
-        <ActivityIndicator size="small" color="#aaa" />
+    return (
+      <View className="w-full justify-center items-center h-6">
+        {
+          props.loadingNewMedias === true ? (
+            <ActivityIndicator size="small" color="#aaa" />
+          ) : null
+          // <View className="h-8" />
+        }
       </View>
-    ) : (
-      <View className="h-8"></View>
     );
   };
 
   const renderItem = useCallback(function (media: any) {
-    if (props.contentType !== undefined && props.contentType === "card") {
+    if (props.contentType === "card") {
       return (
         <View className="mx-2">
           <SearchPersonCard person={media.item} navigateTo={navigateTo} />

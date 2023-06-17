@@ -18,7 +18,6 @@ import {
 export type TValidTableNames =
   | "medias"
   | "collection"
-  | "query"
   // | "current_language"
   | "current_region"
   | "image_qualities";

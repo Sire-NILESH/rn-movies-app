@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { initDB } from "../storage/database";
+import { initCollectionDB, initSettingsDB } from "../storage/database";
 
 /**
  * A custom hook to initialize the database for the application
@@ -16,11 +16,15 @@ const useDBInitialize = () => {
   const [dbInitLoading, setDbInitLoading] = useState(false);
 
   const setupDB = useCallback(() => {
-    initDB()
+    initSettingsDB()
+      .then(() => {
+        return initCollectionDB();
+      })
       .then(() => {
         setDbInitialized(true);
       })
-      .catch((_err) => {
+      .catch((err) => {
+        console.log(err);
         setDbInitError(true);
       });
   }, []);

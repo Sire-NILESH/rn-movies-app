@@ -3,7 +3,7 @@ import { useState } from "react";
 import * as Sharing from "expo-sharing";
 import * as FileSystem from "expo-file-system";
 import * as DocumentPicker from "expo-document-picker";
-import { dbClose, dbOpen, initDB } from "../storage/database";
+import { dbClose, dbOpen, initCollectionDB } from "../storage/database";
 import { showErrorToast, showSuccessToast } from "../utils/helpers/helper";
 
 const useDBimportExport = () => {
@@ -113,7 +113,7 @@ const useDBimportExport = () => {
         // now on open, it will open the new database connection to newly imported db
         dbOpen();
         // just check the db id it actually has all the necessary initial tables.
-        await initDB();
+        await initCollectionDB();
         showSuccessToast(
           "Imported !",
           "Your backup was imported successfully."

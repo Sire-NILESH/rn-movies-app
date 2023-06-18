@@ -156,9 +156,16 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
 
       {/* Tiles */}
       <View className="flex-1 relative w-full px-2">
-        {status === "loading" && medias.length === 0 ? (
+        {(status === "loading" && medias.length === 0) ||
+        thumbnailQuality === undefined ? (
           //  Loader
-          <Loader loading={status === "loading" ? true : false} />
+          <Loader
+            loading={
+              status === "loading" || thumbnailQuality === undefined
+                ? true
+                : false
+            }
+          />
         ) : null}
 
         {status === "error" && medias.length === 0 ? (
@@ -166,7 +173,7 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
             title={"Something went wrong while loading content"}
             problemType="error"
           />
-        ) : medias?.length > 0 ? (
+        ) : medias?.length > 0 && thumbnailQuality !== undefined ? (
           <>
             <TilesRenderedView
               tilesHeader={() => {
@@ -185,7 +192,7 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
 
             <FilterTilesButton onShowFilterModal={onToggleFilterModal} />
           </>
-        ) : status !== "loading" ? (
+        ) : status !== "loading" && medias.length === 0 ? (
           <>
             <NothingToShow problemType="nothing" />
 

@@ -178,12 +178,19 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
       ) : (
         // Tiles
         <View className="flex-1 relative w-full">
-          {status === "loading" && medias.length === 0 ? (
+          {(status === "loading" && medias.length === 0) ||
+          thumbnailQuality === undefined ? (
             //  Loader
-            <Loader loading={status === "loading" ? true : false} />
+            <Loader
+              loading={
+                status === "loading" || thumbnailQuality === undefined
+                  ? true
+                  : false
+              }
+            />
           ) : null}
 
-          {medias?.length > 0 ? (
+          {medias?.length > 0 && thumbnailQuality !== undefined ? (
             <TilesRenderedView
               medias={medias}
               loadingNewMedias={status === "loading" ? true : false}
@@ -197,7 +204,8 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
               }
             />
           ) : (
-            status !== "loading" && <NothingToShow problemType="nothing" />
+            status !== "loading" &&
+            medias.length === 0 && <NothingToShow problemType="nothing" />
           )}
         </View>
       )}

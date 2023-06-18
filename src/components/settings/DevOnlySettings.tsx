@@ -56,8 +56,8 @@ const DevOnlySettings = () => {
         onPress={() => {
           try {
             async function showTablesDB() {
-              const data = await getdataFromACollection("current_language");
-              console.log(data);
+              const data = await getdataFromACollection("image_qualities");
+              console.log(data.rows._array);
             }
             showTablesDB();
           } catch (err) {

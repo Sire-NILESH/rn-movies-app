@@ -4,7 +4,10 @@ import {
   IImgItemSettingsDB,
   ImageItemTypes,
 } from "../../types/typings";
-import { addImgItemSetting, getdataFromACollection } from "../storage/database";
+import {
+  addImgItemSetting,
+  getdataFromATableFromDB,
+} from "../storage/database";
 
 type TTempImgSettingsObj = {
   [key in ImageItemTypes]: IImgItemSettingsDB;
@@ -23,7 +26,10 @@ const useImgSettings = () => {
     async function getAllImgSettingsFromDB() {
       try {
         setErrorImgSettings(null);
-        const imgSettings = await getdataFromACollection("image_qualities");
+        const imgSettings = await getdataFromATableFromDB(
+          "image_qualities",
+          "settingsDatabase"
+        );
         if (imgSettings.rows.length > 0) {
           const result = imgSettings.rows._array;
           let temp: TTempImgSettingsObj = {} as TTempImgSettingsObj;

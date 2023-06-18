@@ -156,7 +156,7 @@ export const getTileListScreenMedias = async (
       if (urlObjects[0].url.includes("/tv_credits")) {
         const medias = [...data[0].data.cast, ...data[0].data.crew];
 
-        // some people are credited for cast as well as crew members in some media(same), and since we collect both the cast and crew, we have possibility(proven) of having same media multiple times.
+        // For tv medias a person can apperar in the same show as multiple character or as a crew member and they are all listed seperately. We don't want that, hence combining here.
         withoutDuplicates = Object.values(
           medias.reduce((acc, obj) => {
             if (acc[obj.id] !== undefined) {
@@ -177,20 +177,25 @@ export const getTileListScreenMedias = async (
       // }
 
       // it would be better to sort the medias of a person based in descending order of release dates.
-      if (urlObjects[0].url.includes("/tv_credits")) {
-        withoutDuplicates.sort(
-          (a: any, b: any) =>
-            Number(b.first_air_date.split("-")[0]) -
-            Number(a.first_air_date.split("-")[0])
-        );
-      }
-      if (urlObjects[0].url.includes("/movie_credits")) {
-        withoutDuplicates.sort(
-          (a: any, b: any) =>
-            Number(b.release_date.split("-")[0]) -
-            Number(a.release_date.split("-")[0])
-        );
-      }
+      // if (urlObjects[0].url.includes("/tv_credits")) {
+      //   withoutDuplicates.sort(
+      //     (a: any, b: any) =>
+      //       Number(b.first_air_date.split("-")[0]) -
+      //       Number(a.first_air_date.split("-")[0])
+      //   );
+      // }
+      // if (urlObjects[0].url.includes("/movie_credits")) {
+      //   withoutDuplicates.sort(
+      //     (a: any, b: any) =>
+      //       Number(b.release_date.split("-")[0]) -
+      //       Number(a.release_date.split("-")[0])
+      //   );
+      // }
+
+      // ordered by popularity, for in release date order user can visit the imdb page with the button available on the personal details modal.
+      withoutDuplicates.sort(
+        (a: any, b: any) => Number(b.popularity) - Number(a.popularity)
+      );
 
       return {
         medias: withoutDuplicates,

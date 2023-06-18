@@ -31,7 +31,7 @@ const WarningModal: React.FC<IProps> = (props) => {
       visible={props.isVisible}
       className="items-center justify-center"
     >
-      <View className="absolute mt-[55%] mx-[5%] h-[300] w-[90%] bg-stone-800 rounded-xl pb-2  [elevation:10] px-4 py-4 border border-neutral-700/60">
+      <View className="absolute mt-[55%] mx-[5%]  w-[90%] bg-stone-800 rounded-xl pb-2  [elevation:10] px-4 py-4 border border-neutral-700/60">
         {/* header */}
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center space-x-2">
@@ -59,11 +59,11 @@ const WarningModal: React.FC<IProps> = (props) => {
         {/* body */}
         <View className="mt-2 space-y-2">
           <Text className="text-lg text-text_primary">{props.text1}</Text>
-          <Text className="text-text_dark">{props.text2}</Text>
+          <Text className="text-text_dark text-sm">{props.text2}</Text>
         </View>
 
         {/* footer */}
-        <View className="mt-auto flex-row space-x-4 mb-1">
+        <View className="mt-10 flex-row space-x-4 mb-1">
           <View className="flex-1">
             <CustomButton
               radius={8}

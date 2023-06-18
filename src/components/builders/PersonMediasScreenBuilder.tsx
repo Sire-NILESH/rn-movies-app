@@ -42,9 +42,15 @@ const PersonMediasScreenBuilder: React.FC<IProps> = ({
     <View className="flex-1 bg-secondary min-w-full w-full items-center">
       {/* Tiles */}
       <View className="flex-1 relative w-full px-2">
-        {status === "loading" ? (
+        {status === "loading" || thumbnailQuality === undefined ? (
           //  Loader
-          <Loader loading={status === "loading" ? true : false} />
+          <Loader
+            loading={
+              status === "loading" || thumbnailQuality === undefined
+                ? true
+                : false
+            }
+          />
         ) : null}
 
         {status === "error" && moreMedias?.medias?.length === 0 ? (
@@ -52,7 +58,7 @@ const PersonMediasScreenBuilder: React.FC<IProps> = ({
             title={"Something went wrong while loading content"}
             problemType="error"
           />
-        ) : moreMedias?.medias?.length > 0 ? (
+        ) : moreMedias?.medias?.length > 0 && thumbnailQuality !== undefined ? (
           <TilesRenderedView
             medias={moreMedias?.medias}
             loadingNewMedias={status === "loading" ? true : false}
@@ -60,7 +66,10 @@ const PersonMediasScreenBuilder: React.FC<IProps> = ({
             thumbnailQuality={thumbnailQuality}
           />
         ) : (
-          status !== "loading" && <NothingToShow problemType="nothing" />
+          status !== "loading" &&
+          moreMedias?.medias?.length === 0 && (
+            <NothingToShow problemType="nothing" />
+          )
         )}
       </View>
     </View>

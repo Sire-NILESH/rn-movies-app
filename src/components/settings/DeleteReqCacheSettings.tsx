@@ -43,7 +43,7 @@ const DeleteReqCacheSettings = () => {
         onConfirmModal={confirmDeleteHandler}
         text1={"Do you really want to clear all request cache?"}
         text2={
-          "Do it if you find the application behaving unexpectedly or if you wish to see latest content."
+          "Do it if you find the application behaving unexpectedly or if you wish to see latest content. \nRequires an application restart."
         }
         deleteType="clear"
       />

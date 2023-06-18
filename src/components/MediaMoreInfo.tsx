@@ -66,7 +66,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
   return (
     <View className="flex-1 bg-secondary">
       {/* Loader */}
-      <Loader loading={loadingProps} />
+      <Loader loading={loadingProps || allImgItemsSettings === undefined} />
 
       {/* {Error } */}
       {errorLoadingProps ? (

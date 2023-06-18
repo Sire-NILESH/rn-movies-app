@@ -42,13 +42,10 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
   // Footer loader component
   const renderLoader = () => {
     return (
-      <View className="w-full justify-center items-center h-6">
-        {
-          props.loadingNewMedias === true ? (
-            <ActivityIndicator size="small" color="#aaa" />
-          ) : null
-          // <View className="h-8" />
-        }
+      <View className="w-full justify-center pt-2 h-6">
+        {props.loadingNewMedias === true ? (
+          <ActivityIndicator size="small" color="#aaa" />
+        ) : null}
       </View>
     );
   };
@@ -109,9 +106,17 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
         onEndReachedThreshold={0.9}
         onEndReached={props.loadMoreItem}
         initialNumToRender={20}
+        // extraData={{
+        //   loadingNewMedias: props.loadingNewMedias,
+        //   loadMoreItem: props.loadMoreItem,
+        //   contentType: props.contentType,
+        // }}
+        progressViewOffset={50}
+        refreshing={props.loadingNewMedias}
       />
     </View>
   );
 };
 
-export default memo(TilesRenderedView);
+export default TilesRenderedView;
+// export default memo(TilesRenderedView);

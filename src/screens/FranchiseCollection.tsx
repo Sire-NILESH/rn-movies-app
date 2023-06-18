@@ -119,11 +119,19 @@ const FranchiseCollection: React.FunctionComponent<IStackScreenProps> = (
                       <Text className="text-text_tertiary text-sm">
                         {data.franchiseCollection.overview}
                       </Text>
+                      <Text className=" text-text_dark text-sm">
+                        {"Parts listed in order of release year."}
+                      </Text>
                     </View>
                   ) : null}
                 </View>
               }
-              data={data.franchiseCollection.parts}
+              // String(a.release_date).split("-")[0]
+              data={data.franchiseCollection.parts.sort(
+                (a, b) =>
+                  Number(String(a.release_date).split("-")[0]) -
+                  Number(String(b.release_date).split("-")[0])
+              )}
               className=""
               keyExtractor={(part) => String(part.id)}
               maxToRenderPerBatch={4}

@@ -302,9 +302,16 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
       {/* Tiles */}
       <View className="flex-1 w-full px-2">
-        {status === "loading" && medias.length === 0 ? (
+        {(status === "loading" && medias.length === 0) ||
+        thumbnailQuality === undefined ? (
           //  Loader
-          <Loader loading={status === "loading" ? true : false} />
+          <Loader
+            loading={
+              status === "loading" || thumbnailQuality === undefined
+                ? true
+                : false
+            }
+          />
         ) : null}
 
         {status === "error" && medias.length === 0 ? (
@@ -312,7 +319,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             title={"Something went wrong while loading content"}
             problemType="error"
           />
-        ) : medias?.length > 0 ? (
+        ) : medias?.length > 0 && thumbnailQuality !== undefined ? (
           <>
             <TilesRenderedView
               medias={medias}
@@ -325,7 +332,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               <FilterTilesButton onShowFilterModal={onToggleFilterModal} />
             )}
           </>
-        ) : status !== "loading" ? (
+        ) : status !== "loading" && medias.length === 0 ? (
           <>
             <NothingToShow problemType="nothing" />
 

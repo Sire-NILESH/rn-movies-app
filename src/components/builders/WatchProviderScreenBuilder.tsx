@@ -53,17 +53,12 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
   const { imgItemsSetting: thumbnailQuality } =
     useImageItemSetting("thumbnail");
 
-  const {
-    data: moreMedias,
-    status,
-    refetch,
-  } = useQuery({
+  const { data: moreMedias, status } = useQuery({
     queryKey: ["requests", currentShowingPlaylist, currentShowingFilter],
     queryFn: async () =>
       getTileListScreenMedias(currentShowingPlaylist, currentShowingFilter),
     staleTime: watchProviderScreenCacheConfig.staleTime,
     cacheTime: watchProviderScreenCacheConfig.cacheTime,
-    enabled: false,
   });
 
   // Setting the params for the request operation
@@ -74,11 +69,6 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
 
     setCurrentShowingFilter(filters);
   }, [pageNumber]);
-
-  // Request operation
-  useEffect(() => {
-    refetch();
-  }, [currentShowingPlaylist, currentShowingFilter]);
 
   // Request operation result management
   useEffect(() => {

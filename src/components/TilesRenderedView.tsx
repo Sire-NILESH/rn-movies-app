@@ -40,7 +40,7 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
   const windowWidth = getDeviceDimensions("window").width;
 
   // Footer loader component
-  const renderLoader = () => {
+  const renderLoader = useCallback(() => {
     return (
       <View className="w-full justify-center pt-2 h-6">
         {props.loadingNewMedias === true ? (
@@ -48,7 +48,7 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
         ) : null}
       </View>
     );
-  };
+  }, [props.loadingNewMedias]);
 
   const renderItem = useCallback(function (media: any) {
     if (props.contentType === "card") {
@@ -112,7 +112,7 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
         //   contentType: props.contentType,
         // }}
         progressViewOffset={50}
-        refreshing={props.loadingNewMedias}
+        // refreshing={props.loadingNewMedias}
       />
     </View>
   );

@@ -81,17 +81,12 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const { imgItemsSetting: thumbnailQuality } =
     useImageItemSetting("thumbnail");
 
-  const {
-    data: moreMedias,
-    status,
-    refetch,
-  } = useQuery({
+  const { data: moreMedias, status } = useQuery({
     queryKey: ["requests", currentShowingPlaylists, currentShowingFilter],
     queryFn: async () =>
       getTileListScreenMedias(currentShowingPlaylists, currentShowingFilter),
     staleTime: tileScreenCacheConfig.staleTime,
     cacheTime: tileScreenCacheConfig.cacheTime,
-    enabled: false,
   });
 
   // Setting the params for the request operation
@@ -107,11 +102,6 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
     setCurrentShowingFilter(filters);
   }, [pageNumber, userSelectedPlaylists]);
-
-  // Request operation
-  useEffect(() => {
-    refetch();
-  }, [currentShowingPlaylists, currentShowingFilter]);
 
   // Request operation result management
   useEffect(() => {

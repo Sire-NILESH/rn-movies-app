@@ -180,6 +180,15 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             style={{ minHeight: 45 }}
           >
             <Text className="text-text_tertiary text-sm">
+              {`Tip! You can long press on the thumbnails to jump to recommended/similar content screen.`}
+            </Text>
+          </View>
+
+          <View
+            className="justify-between px-4 mt-2 mx-2 bg-neutral-800 rounded-xl py-3 space-y-2"
+            style={{ minHeight: 45 }}
+          >
+            <Text className="text-text_tertiary text-sm">
               {`Warning! All your "Favourites", "Watched" and "Watchlist" collection is stored on your device locally. Deleting the "Maven" app's 'all data' from your device's settings app will permanently delete them.`}
             </Text>
           </View>

@@ -5,15 +5,21 @@ import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
 import { dateFormatter } from "../utils/helpers/helper";
 import ThemeButton from "./ui/ThemeButton";
+import WatchedEpisodeButton from "./ui/WatchedEpisodeButton";
 
 interface IProps {
   episode: Episode;
+  seasonId: number;
+  // isWatched: (episodeId: number) => boolean;
+  isWatched: boolean;
   castandCrewModalHandler: (castAndCrew: EpisodeCastAndCrew) => void;
   navigateTo: (screen: string, paramOption: Object) => void;
 }
 
 const EpisodeInfoCard: React.FC<IProps> = ({
   episode,
+  seasonId,
+  isWatched,
   castandCrewModalHandler,
   navigateTo,
 }) => {
@@ -128,6 +134,15 @@ const EpisodeInfoCard: React.FC<IProps> = ({
         </Text>
 
         <View className="flex-row space-x-2">
+          {/* WATCHED BUTTON */}
+          <View className="w-28 justify-end">
+            <WatchedEpisodeButton
+              isWatched={isWatched}
+              episode={episode}
+              seasonId={seasonId}
+            />
+          </View>
+
           {/* TRAILER BUTTON */}
           <View className="">
             <ThemeButton
@@ -167,7 +182,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({
   );
 };
 
-export default EpisodeInfoCard;
+export default React.memo(EpisodeInfoCard);
 
 function DataElement({
   text,

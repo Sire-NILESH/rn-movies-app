@@ -66,7 +66,8 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
   return (
     <View className="flex-1 bg-secondary">
       {/* Loader */}
-      <Loader loading={loadingProps || allImgItemsSettings === undefined} />
+      {/* <Loader loading={loadingProps || allImgItemsSettings === undefined} /> */}
+      <Loader loading={loadingProps} />
 
       {/* {Error } */}
       {errorLoadingProps ? (
@@ -121,7 +122,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
               <View className="w-full h-10 flex-row items-center mt-5">
                 <GenreTags
                   headerComponent={() => (
-                    <View className="mr-2 ml-3 bg-neutral-800/40 border border-stone-600/50 px-4 h-8 rounded-xl items-center justify-center">
+                    <View className="mr-2 ml-3 bg-neutral-800/80 border border-stone-600/50 px-4 h-8 rounded-xl items-center justify-center">
                       <Text className="text-text_highLight">
                         {media.status}
                         {/* {console.log(media.status)} */}

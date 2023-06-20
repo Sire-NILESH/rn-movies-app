@@ -24,7 +24,7 @@ const CollectionCard: React.FC<IProps> = ({
   const imgQuality = imgThumbnailQuality ? imgThumbnailQuality : "300";
 
   return (
-    <View className="flex-1 space-y-4 mt-10 mx-2">
+    <View className="flex-1 space-y-4 mt-12 mx-2">
       {/* Divider */}
       {/* <View className="w-[90%] border border-tertiary" /> */}
       <Text className="ml-4 font-semibold text-text_tertiary">

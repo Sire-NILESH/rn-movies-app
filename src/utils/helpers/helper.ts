@@ -1,7 +1,9 @@
 import {
+  Episode,
   Genre,
   ICountry,
   ICreditPerson,
+  IDBEpisode,
   IDropdownYearsObj,
   IImageItemQualitySetting,
   IImageQuality,
@@ -172,27 +174,22 @@ export const reduxListMediaObjBuilder = (
   };
 };
 
-// /**
-//  * A helper function to converts reduxList meida object to regular media object suitable for `MoreInfo` screen.
-//  *
-//  * @param media a media object of the form `IReduxListMedia`
-//  * @param mediaType media type of the media object
-//  * @returns {IReduxListMedia} reduxListMedia object
-//  */
-// export const reduxListMediaObjToRegularMediaObj = (
-//   media: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended,
-//   mediaType: MediaTypes
-// ): IReduxListMedia => {
-//   return {
-//     mediaId: media.id,
-//     dateAdded: Date.now(),
-//     poster_path: media.poster_path,
-//     backdrop_path: media.backdrop_path,
-//     mediaType: mediaType,
-//     mediaDate: isMovie(media) ? media.release_date : media.first_air_date,
-//     mediaTitle: isMovie(media) ? media.title : media.name,
-//   };
-// };
+/**
+ * A helper function to build episode object suitable for storing into the db.
+ *
+ * @param episode a episode object of the form `Episode`
+ */
+export const watchedEpisodeObjBuilder = (
+  episode: Episode,
+  seasonId: number
+): IDBEpisode => {
+  return {
+    episodeId: episode.id,
+    seasonId: seasonId,
+    tvShowId: episode.show_id,
+    watchedDate: Date.now(),
+  };
+};
 
 export function isMovieArray(
   medias: MovieMedia[] | TvMedia[]

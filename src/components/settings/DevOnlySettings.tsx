@@ -3,8 +3,9 @@ import React from "react";
 import {
   deleteAllTables,
   getAllFromCollection,
-  getdataFromACollection,
-  initDB,
+  getAllWatchedEpisoesOfShowsSeason,
+  // getdataFromACollection,
+  // initDB,
   showAllTablesInDb,
 } from "../../storage/database";
 
@@ -12,6 +13,19 @@ const DevOnlySettings = () => {
   return (
     <View className="mt-20 items-center justify-center flex-row flex-wrap">
       <Button
+        title="All Watchwed Episodes Data"
+        color={"black"}
+        onPress={() => {
+          getAllWatchedEpisoesOfShowsSeason(1399, 3624)
+            .then((_data) => {
+              console.log(_data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }}
+      />
+      {/* <Button
         title="All table Data"
         color={"black"}
         onPress={() => {
@@ -21,8 +35,8 @@ const DevOnlySettings = () => {
               console.log(err);
             });
         }}
-      />
-      <Button
+      /> */}
+      {/* <Button
         title="Create table"
         color={"black"}
         onPress={() => {
@@ -35,8 +49,8 @@ const DevOnlySettings = () => {
             console.log(err);
           }
         }}
-      />
-      <Button
+      /> */}
+      {/* <Button
         title="Show table"
         color={"black"}
         onPress={() => {
@@ -49,8 +63,8 @@ const DevOnlySettings = () => {
             console.log(err);
           }
         }}
-      />
-      <Button
+      /> */}
+      {/* <Button
         title="Show Lang table"
         color={"black"}
         onPress={() => {
@@ -64,8 +78,8 @@ const DevOnlySettings = () => {
             console.log(err);
           }
         }}
-      />
-      <Button
+      /> */}
+      {/* <Button
         title="Delete tables"
         color={"black"}
         onPress={() => {
@@ -78,7 +92,7 @@ const DevOnlySettings = () => {
             console.log(err);
           }
         }}
-      />
+      /> */}
     </View>
   );
 };

@@ -24,7 +24,7 @@ const useDBInitialize = () => {
         setDbInitialized(true);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         setDbInitError(true);
       });
   }, []);

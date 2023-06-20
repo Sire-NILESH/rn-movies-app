@@ -32,8 +32,8 @@ const MoreInfoBackdrop: React.FC<IProps> = ({
       <LinearGradient
         colors={[
           "rgba(0,0,0,0)",
-          "rgba(28, 25, 23, 0.4)",
-          "rgba(28, 25, 23, 0.8)",
+          "rgba(28, 25, 23, 0.3)",
+          "rgba(0,0,0,0.9)",
           Colors.black,
         ]}
         className="flex-1"

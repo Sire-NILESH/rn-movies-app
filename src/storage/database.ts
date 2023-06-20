@@ -1,5 +1,6 @@
 import * as SQlite from "expo-sqlite";
 import {
+  IDBEpisode,
   IImageItemSettingsValue,
   IReduxListMedia,
   ImageItemTypes,
@@ -195,7 +196,7 @@ export async function initCollectionDB() {
       query: `CREATE TABLE IF NOT EXISTS medias (
       mediaId REAL NOT NULL,
       mediaType TEXT NOT NULL,
-      mediaTitle REAL NULL,
+      mediaTitle TEXT NULL,
       mediaDate REAL NULL,
       poster_path TEXT NULL,
       backdrop_path TEXT NULL,
@@ -205,6 +206,33 @@ export async function initCollectionDB() {
       successMessage: "...checked media table STATUS: FINE",
       rowsAffectedSuccess: "...media table was CREATED into the database ✨",
       errorMessage: "Error creating media table",
+    },
+    // WATCHED EPISODES TABLE
+    {
+      query: `CREATE TABLE IF NOT EXISTS watched_episodes (
+      episodeId REAL NOT NULL,
+      seasonId REAL NOT NULL,
+      tvShowId REAL NOT NULL,
+      watchedDate REAL NULL,
+      PRIMARY KEY (episodeId)
+     ) `,
+      arguments: [],
+      successMessage: "...checked watched_episodes table STATUS: FINE",
+      rowsAffectedSuccess:
+        "...watched_episodes table was CREATED into the database ✨",
+      errorMessage: "Error creating watched_episodes table",
+    },
+    // WATCHED INDICES TABLE FOR EPISODES TABLE FOR FASTER LOOKUP.
+    {
+      query: `CREATE INDEX IF NOT EXISTS
+      idx_season_with_show
+      ON watched_episodes (tvShowId, seasonId); 
+      `,
+      arguments: [],
+      successMessage: "...checked idx_tvShowId_seasonId table STATUS: FINE",
+      rowsAffectedSuccess:
+        "...idx_tvShowId_seasonId table was CREATED into the database ✨",
+      errorMessage: "Error creating idx_tvShowId_seasonId table",
     },
     // COLLECTION TABLE
     {
@@ -619,6 +647,106 @@ export function getdataFromATableFromDB(
         FROM ${tableName}
         `,
         [],
+        (_, results) => {
+          // console.log("Got data from table");
+          resolve(results);
+        },
+        (_, err) => {
+          // console.log(
+          //   "error retrieveing data from table, from database.js\n",
+          //   err
+          // );
+          reject(err);
+          return true;
+        }
+      );
+    });
+  });
+
+  return promise;
+}
+
+export function insertEpisode(episode: IDBEpisode) {
+  const promise = new Promise<void>((resolve, reject) => {
+    collectionDatabase.transaction((tx) => {
+      tx.executeSql(
+        `
+      INSERT INTO watched_episodes (
+        episodeId, 
+        seasonId, 
+        tvShowId, 
+        watchedDate
+      ) VALUES (?, ?, ?, ?);`,
+        [
+          episode.episodeId,
+          episode.seasonId,
+          episode.tvShowId,
+          episode.watchedDate,
+        ],
+        () => {
+          // console.log(
+          //   `Inserted episode ${episode.episodeId} into watched_episodes`
+          // );
+          resolve();
+        },
+        (_tx, err) => {
+          // console.log(
+          //   `Error INSERTING episode ${episode.episodeId} into the watched_episodes`
+          // );
+          reject(err);
+          return true;
+        }
+      );
+    });
+  });
+
+  return promise;
+}
+
+export function removeEpisode(episodeId: number) {
+  const promise = new Promise<void>((resolve, reject) => {
+    collectionDatabase.transaction((tx) => {
+      tx.executeSql(
+        `
+      DELETE FROM watched_episodes
+      WHERE episodeId = ?
+      `,
+        [episodeId],
+        // SUCCESS CASE LEVEL 1
+        () => {
+          // console.log(
+          //   `DELETEed episode ${episodeId} from watched_episodes table`
+          // );
+          resolve();
+        },
+        // ERROR CASE
+        (_tx, err) => {
+          // console.log(
+          //   `Error DELETING episode ${episodeId} from the $watched_episodes database.js`
+          // );
+          reject(err);
+          return true;
+        }
+      );
+    });
+  });
+
+  return promise;
+}
+
+export function getAllWatchedEpisoesOfShowsSeason(
+  tvShowId: number,
+  seasonId: number
+) {
+  const promise = new Promise<SQlite.SQLResultSet>((resolve, reject) => {
+    collectionDatabase.transaction((tx) => {
+      tx.executeSql(
+        `SELECT * 
+        FROM watched_episodes
+        WHERE tvShowId = ?
+        AND seasonId = ?
+        `,
+        [tvShowId, seasonId],
         (_, results) => {
           // console.log("Got data from table");
           resolve(results);

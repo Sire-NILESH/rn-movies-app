@@ -119,22 +119,12 @@ const LoadMoreOnScrollBuilder: React.FC<IProps> = (props) => {
   }, [pageNumber]);
 
   // related media query settings
-  const {
-    data: moreMedias,
-    status,
-    refetch,
-  } = useQuery({
+  const { data: moreMedias, status } = useQuery({
     queryKey: queryObj?.queryKey,
     queryFn: queryObj?.queryFn,
     staleTime: relatedTilesCacheConfig.staleTime,
     cacheTime: relatedTilesCacheConfig.cacheTime,
-    enabled: false,
   });
-
-  // Request operation
-  useEffect(() => {
-    refetch();
-  }, [pageNumber]);
 
   // Related/Search medias request operation's result management
   useEffect(() => {

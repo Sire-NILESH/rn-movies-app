@@ -316,6 +316,17 @@ export type TCollectionToTReduxCollection = {
   [key in TCollectionType]: keyof RootState;
 };
 
+export interface IDBEpisode {
+  episodeId: number;
+  seasonId: number;
+  tvShowId: number;
+  watchedDate: number;
+}
+
+export interface IWatchedEpisodesLookup {
+  [key: number]: IDBEpisode;
+}
+
 export interface ISOLang {
   name: string;
   nativeName: string;

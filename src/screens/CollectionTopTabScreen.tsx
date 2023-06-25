@@ -1,5 +1,5 @@
-import React, { useEffect, memo, useState } from "react";
-import { View } from "react-native";
+import React, { useEffect, memo, useState, useCallback } from "react";
+import { ListRenderItemInfo, View } from "react-native";
 import { ITopTabScreenProps } from "../library/NavigatorScreenProps/TopTabScreenProps";
 import { IDBCollectionMedia } from "../../types/typings";
 import CollectionRow from "../components/CollectionRow";
@@ -82,6 +82,26 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
     }
   }, [refresh]);
 
+  const renderItem = useCallback(
+    function (dateKeyObj: ListRenderItemInfo<string>) {
+      const dateKey = dateKeyObj.item;
+      if (dateCollection[dateKey]?.length > 0) {
+        return (
+          <CollectionRow
+            key={dateKey}
+            title={dateKey}
+            medias={dateCollection[dateKey]}
+            currentYear={currentYear}
+            today={today}
+            yesterday={yesterday}
+            thumbnailQuality={thumbnailQuality}
+          />
+        );
+      } else return null;
+    },
+    [dateCollection]
+  );
+
   // only on first load, show a loader.
   if (isFirstLoad) {
     return (
@@ -102,22 +122,7 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
             initialNumToRender={1}
             data={Object.keys(dateCollection)}
             keyExtractor={(dateKey) => dateKey}
-            renderItem={(dateKeyObj) => {
-              const dateKey = dateKeyObj.item;
-              if (dateCollection[dateKey].length > 0) {
-                return (
-                  <CollectionRow
-                    key={dateKey}
-                    title={dateKey}
-                    medias={dateCollection[dateKey]}
-                    currentYear={currentYear}
-                    today={today}
-                    yesterday={yesterday}
-                    thumbnailQuality={thumbnailQuality}
-                  />
-                );
-              } else return null;
-            }}
+            renderItem={(dateKeyObj) => renderItem(dateKeyObj)}
           />
         ) : (
           <NothingToShow problemType="nothing" />

@@ -1,8 +1,8 @@
 import { IImgItemSettingsDB, IReduxListMedia } from "../../types/typings";
-import { Text, View, FlatList } from "react-native";
+import { Text, View, FlatList, ListRenderItemInfo } from "react-native";
 import { getDeviceDimensions } from "../utils/helpers/helper";
 import CollectionThumbnail from "./CollectionThumbnail";
-import React from "react";
+import React, { useCallback } from "react";
 import useNavigateTo from "../hooks/useNavigateTo";
 
 interface Props {
@@ -13,6 +13,10 @@ interface Props {
   yesterday: string;
   thumbnailQuality?: IImgItemSettingsDB;
 }
+
+// Calculate and pass the dimensions from the parent(here) to the thumbnails.
+// So every thumbnail wont have to calculate them separately.
+const windowWidth = getDeviceDimensions("window").width;
 
 function CollectionRow({
   title,
@@ -61,9 +65,21 @@ function renderFlatList(
   // So every one of them wont have to calculate them separately.
   const { navigateTo } = useNavigateTo();
 
-  // Calculate and pass the dimensions from the parent(here) to the thumbnails.
-  // So every thumbnail wont have to calculate them separately.
-  const windowWidth = getDeviceDimensions("window").width;
+  const renderItem = useCallback(
+    (media: ListRenderItemInfo<IReduxListMedia>) => (
+      <View className="ml-1">
+        <CollectionThumbnail
+          media={media.item ? media.item : media.item}
+          orientation="portrait"
+          navigateTo={navigateTo}
+          windowWidth={windowWidth}
+          quality={thumbnailQuality?.value}
+          // orientation="landscape"
+        />
+      </View>
+    ),
+    []
+  );
 
   return (
     <>
@@ -79,18 +95,7 @@ function renderFlatList(
             width: "100%",
           }}
           data={medias}
-          renderItem={(media) => (
-            <View className="ml-1">
-              <CollectionThumbnail
-                media={media.item ? media.item : media.item}
-                orientation="portrait"
-                navigateTo={navigateTo}
-                windowWidth={windowWidth}
-                quality={thumbnailQuality?.value}
-                // orientation="landscape"
-              />
-            </View>
-          )}
+          renderItem={(media) => renderItem(media)}
           keyExtractor={(media, i) => {
             return `${media.mediaId}-${i}`;
           }}

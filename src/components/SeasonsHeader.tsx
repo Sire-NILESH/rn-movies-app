@@ -1,5 +1,11 @@
-import { View, Text, FlatList, Pressable } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  Pressable,
+  ListRenderItemInfo,
+} from "react-native";
+import React, { useCallback } from "react";
 import { Season } from "../../types/typings";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
@@ -21,6 +27,26 @@ const SeasonsHeader: React.FC<IProps> = (props) => {
     props.setNewSelectedSeason(season);
   };
 
+  const renderItem = useCallback(
+    (itemObj: ListRenderItemInfo<Season>) => {
+      return (
+        <View className="flex-1 flex-row items-center pt-1 pb-2">
+          <SeasonTag
+            seasonNumber={itemObj.item.season_number}
+            selectedSeasonNumber={props.selectedSeason.season_number}
+            onPressHandler={onPresshandler}
+          />
+
+          {/* Divider */}
+          {itemObj.index != props.tvMediaSeasons.length - 1 ? (
+            <View className="border border-neutral-800 h-6 w-[1px] rounded-full" />
+          ) : null}
+        </View>
+      );
+    },
+    [props.selectedSeason.season_number]
+  );
+
   return (
     <View className="flex-row justify-center bg-secondary border-b border-b-neutral-800 py-1">
       <FlatList
@@ -40,22 +66,7 @@ const SeasonsHeader: React.FC<IProps> = (props) => {
             </View>
           );
         }}
-        renderItem={(itemObj) => {
-          return (
-            <View className="flex-1 flex-row items-center pt-1 pb-2">
-              <SeasonTag
-                seasonNumber={itemObj.item.season_number}
-                selectedSeasonNumber={props.selectedSeason.season_number}
-                onPressHandler={onPresshandler}
-              />
-
-              {/* Divider */}
-              {itemObj.index != props.tvMediaSeasons.length - 1 ? (
-                <View className="border border-neutral-800 h-6 w-[1px] rounded-full" />
-              ) : null}
-            </View>
-          );
-        }}
+        renderItem={(itemObj) => renderItem(itemObj)}
       />
     </View>
   );
@@ -77,7 +88,13 @@ function SeasonTag(props: ISeasonTagProps) {
         android_ripple={{ color: "#e9e9e9" }}
         className="px-4 py-2"
       >
-        <Text className="text-text_highLight uppercase tracking-[2px] font-semibold px-1">
+        <Text
+          className={`text-text_highLight uppercase tracking-[2px] font-semibold px-1 ${
+            props.selectedSeasonNumber === props.seasonNumber
+              ? "text-text_highLight"
+              : "text-text_dark"
+          }`}
+        >
           {props.seasonNumber === 0 ? "Extras" : `Season ${props.seasonNumber}`}
         </Text>
         {/* Underline of selected tag */}

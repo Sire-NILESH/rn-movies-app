@@ -46,7 +46,7 @@ const CollectionPartCard: React.FC<IProps> = ({
         <View className="w-[55%] flex-col justify-between">
           <View>
             {/* Title and genres */}
-            <Text className="text-lg font-base font-semibold text-text_tertiary">
+            <Text className="w-[95%] text-lg font-base font-semibold text-text_tertiary">
               {collectionPart.title}
             </Text>
             <View className="flex-row items-start space-x-2">
@@ -72,6 +72,7 @@ const CollectionPartCard: React.FC<IProps> = ({
                   <Ionicons name="star" size={16} color={Colors.yellow[300]} />
                   <Text className=" text-text_secondary tracking-widest">
                     <Text
+                      className="font-semibold"
                       style={{
                         color:
                           collectionPart.vote_average > 4.0
@@ -86,16 +87,23 @@ const CollectionPartCard: React.FC<IProps> = ({
                 </View>
               </View>
 
+              {/* Year */}
+              <View className="flex-row items-center space-x-2">
+                <Ionicons
+                  name="calendar-outline"
+                  size={16}
+                  color={Colors.text_secondary}
+                />
+                <Text className="text-text_tertiary font-semibold">
+                  {collectionPart.release_date
+                    ? `${String(collectionPart.release_date).split("-")[0]}`
+                    : "--"}
+                </Text>
+              </View>
+
               {/* Part */}
               <Text className="text-sm text-text_tertiary font-semibold">
                 {`Part ${order + 1} `}{" "}
-              </Text>
-
-              {/* Year */}
-              <Text className="text-text_dark font-semibold">
-                {collectionPart.release_date
-                  ? `${String(collectionPart.release_date).split("-")[0]}`
-                  : "--"}
               </Text>
             </View>
           </View>

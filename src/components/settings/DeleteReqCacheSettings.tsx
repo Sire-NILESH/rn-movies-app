@@ -19,7 +19,10 @@ const DeleteReqCacheSettings = () => {
   async function confirmDeleteHandler() {
     try {
       await AsyncStorage.removeItem("REACT_QUERY_OFFLINE_CACHE");
-      showSuccessToast("Cleared !", "Your request cache was cleared.");
+      showSuccessToast(
+        "Cleared !",
+        "Your request cache was cleared, please restart."
+      );
     } catch (error) {
       showErrorToast(
         "Error !",

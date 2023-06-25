@@ -1,8 +1,7 @@
-import React, { useEffect, useState, memo } from "react";
-import { View } from "react-native";
+import React, { useEffect, useState, memo, useCallback } from "react";
+import { View, FlatList, ListRenderItemInfo } from "react-native";
 import { ITopTabScreenProps } from "../library/NavigatorScreenProps/TopTabScreenProps";
 import { getDeviceDimensions } from "../utils/helpers/helper";
-import { FlatList } from "react-native-gesture-handler";
 import CollectionThumbnail from "../components/CollectionThumbnail";
 import { IDBCollectionMedia } from "../../types/typings";
 import { getMediasFromCollection } from "../storage/database";
@@ -10,6 +9,9 @@ import NothingToShow from "../components/NothingToShow";
 import useImageItemSetting from "../hooks/useImageItemSetting";
 import useNavigateTo from "../hooks/useNavigateTo";
 import Loader from "../components/ui/Loader";
+
+// Calculate and pass the dimensions from the parent(here) to the thumbnails. So every thumbnail wont have to calculate them separately.
+const windowWidth = getDeviceDimensions("window").width;
 
 const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
   const { navigation, collectionType, screenMediaType } = props;
@@ -25,9 +27,6 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
   // Navigation handler for child components like thumbnail and jumpTo button. So every one of them wont have to calculate them separately.
   // So every one of them wont have to calculate them separately.
   const { navigateTo } = useNavigateTo();
-
-  // Calculate and pass the dimensions from the parent(here) to the thumbnails. So every thumbnail wont have to calculate them separately.
-  const windowWidth = getDeviceDimensions("window").width;
 
   // Check if the screen is in focus/in-front-of-the-user, and then accordingly change the state to whether refresh(re-exe) the screen or not.
   useEffect(() => {
@@ -57,6 +56,23 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
     }
   }, [refresh]);
 
+  const renderItem = useCallback(function (
+    media: ListRenderItemInfo<IDBCollectionMedia>
+  ) {
+    return (
+      <View className="mx-[2]">
+        <CollectionThumbnail
+          media={media.item}
+          orientation="portrait"
+          navigateTo={navigateTo}
+          windowWidth={windowWidth}
+          quality={thumbnailQuality?.value}
+        />
+      </View>
+    );
+  },
+  []);
+
   // only on first load, show a loader.
   if (isFirstLoad) {
     return (
@@ -77,19 +93,7 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
               minWidth: "96%",
               paddingVertical: 8,
             }}
-            renderItem={(media) => {
-              return (
-                <View className="mx-[2]">
-                  <CollectionThumbnail
-                    media={media.item}
-                    orientation="portrait"
-                    navigateTo={navigateTo}
-                    windowWidth={windowWidth}
-                    quality={thumbnailQuality?.value}
-                  />
-                </View>
-              );
-            }}
+            renderItem={(media) => renderItem(media)}
             keyExtractor={(media) => {
               return String(media.mediaId);
             }}

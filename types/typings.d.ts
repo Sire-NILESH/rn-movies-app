@@ -514,11 +514,42 @@ export interface IGenreSortBy {
   value: TGenresSortByValue;
 }
 
+export interface IMovieReleaseAndCertificate {
+  // id: number;
+  results: IMovieRegionAndRelease[];
+}
+
+export interface IMovieRegionAndRelease {
+  iso_3166_1: string;
+  release_dates: IMovieReleaseDate[];
+}
+
+export interface IMovieReleaseDate {
+  certification: string;
+  descriptors: string[];
+  iso_639_1: string;
+  note: string;
+  release_date: string;
+  type: number;
+}
+
+export interface ITVContentRatingList {
+  results: ITVContentRating[];
+  // id: number;
+}
+
+export interface ITVContentRating {
+  descriptors: any[];
+  iso_3166_1: string;
+  rating: string;
+}
+
 export interface MovieMediaHybrid extends MovieMediaExtended {
   "watch/providers": {
     results: IAllWatchProviderData;
   };
   credits: ICredits;
+  release_dates: IMovieReleaseAndCertificate;
 }
 
 export interface TvMediaHybrid extends TvMediaExtended {
@@ -526,21 +557,13 @@ export interface TvMediaHybrid extends TvMediaExtended {
     results: IAllWatchProviderData;
   };
   credits: ICredits;
+  content_ratings: ITVContentRatingList;
 }
 
 export interface ITrailerScreenParams {
   trailerType: "mediaTrailer" | "episodeTrailer";
   mediaTrailer?: IUrlObject;
   episodeTrailer?: IUrlObject;
-}
-
-export interface FranchiseCollection {
-  id: number;
-  name: string;
-  overview: string;
-  poster_path: string;
-  backdrop_path: string;
-  parts: Part[];
 }
 
 export interface CollectionPart {
@@ -559,6 +582,15 @@ export interface CollectionPart {
   video: boolean;
   vote_average: number;
   vote_count: number;
+}
+
+export interface FranchiseCollection {
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string;
+  backdrop_path: string;
+  parts: CollectionPart[];
 }
 
 export interface IPersonInfo {

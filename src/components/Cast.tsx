@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, FlatList } from "react-native";
+import React, { useCallback } from "react";
+import { View, Text, FlatList, ListRenderItemInfo } from "react-native";
 import { ICast, ICrew } from "../../types/typings";
 import useNavigateTo from "../hooks/useNavigateTo";
 import ProfileCard from "./ProfileCard";
@@ -13,6 +13,27 @@ interface IProps {
 const Cast: React.FC<IProps> = (props) => {
   // So every one of them wont have to calculate them separately.
   const { navigateTo } = useNavigateTo();
+
+  const renderCast = useCallback((itemObj: ListRenderItemInfo<ICast>) => {
+    const p = itemObj.item;
+
+    return (
+      <View className="mr-2">
+        <ProfileCard
+          creditPerson={{
+            id: p.id,
+            adult: p.adult,
+            name: p.name,
+            profile_path: p.profile_path,
+            gender: p.gender,
+            buttonTitle: "Actor",
+            creditTitle: p.character,
+          }}
+          navigateTo={navigateTo}
+        />
+      </View>
+    );
+  }, []);
 
   return (
     <View className="flex-1 ">
@@ -52,26 +73,7 @@ const Cast: React.FC<IProps> = (props) => {
             </View>
           );
         }}
-        renderItem={(itemObj) => {
-          const p = itemObj.item;
-
-          return (
-            <View className="mr-2">
-              <ProfileCard
-                creditPerson={{
-                  id: p.id,
-                  adult: p.adult,
-                  name: p.name,
-                  profile_path: p.profile_path,
-                  gender: p.gender,
-                  buttonTitle: "Actor",
-                  creditTitle: p.character,
-                }}
-                navigateTo={navigateTo}
-              />
-            </View>
-          );
-        }}
+        renderItem={renderCast}
       />
     </View>
   );

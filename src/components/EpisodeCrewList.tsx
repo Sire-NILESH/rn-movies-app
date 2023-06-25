@@ -1,5 +1,5 @@
-import { View, FlatList, Text } from "react-native";
-import React from "react";
+import { View, FlatList, Text, ListRenderItemInfo } from "react-native";
+import React, { useCallback } from "react";
 import { ICrew } from "../../types/typings";
 import NothingToShow from "./NothingToShow";
 import useNavigateTo from "../hooks/useNavigateTo";
@@ -22,6 +22,29 @@ const EpisodeCrewList: React.FC<IProps> = (props) => {
       c.department === "Production"
   );
 
+  const renderItem = useCallback((personObj: ListRenderItemInfo<ICrew>) => {
+    const p = personObj.item;
+    return (
+      <View className="mr-1">
+        <ProfileCard
+          creditPerson={{
+            id: p.id,
+            adult: p.adult,
+            name: p.name,
+            profile_path: p.profile_path,
+            gender: p.gender,
+            buttonTitle: "Actor",
+            creditTitle: p.department,
+          }}
+          navigateTo={navigateTo}
+          additionalOnpressHandler={() => {
+            props.closeModal();
+          }}
+        />
+      </View>
+    );
+  }, []);
+
   return (
     <View className="h-[285px]">
       {filteredCrewList!.length > 0 ? (
@@ -32,28 +55,7 @@ const EpisodeCrewList: React.FC<IProps> = (props) => {
             className="px-2 py-1"
             data={filteredCrewList}
             ListFooterComponent={() => <View className="w-4" />}
-            renderItem={(personObj) => {
-              const p = personObj.item;
-              return (
-                <View className="mr-1">
-                  <ProfileCard
-                    creditPerson={{
-                      id: p.id,
-                      adult: p.adult,
-                      name: p.name,
-                      profile_path: p.profile_path,
-                      gender: p.gender,
-                      buttonTitle: "Actor",
-                      creditTitle: p.department,
-                    }}
-                    navigateTo={navigateTo}
-                    additionalOnpressHandler={() => {
-                      props.closeModal();
-                    }}
-                  />
-                </View>
-              );
-            }}
+            renderItem={(personObj) => renderItem(personObj)}
             keyExtractor={(media, i) => {
               return `${media.id}-${i}`;
             }}

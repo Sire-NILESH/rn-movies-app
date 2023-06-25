@@ -171,7 +171,8 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
                 \nAll images inside the app is cached to improve app's performance. You can delete them manually by clearing the app's cache from your device's settings app.
                 \nManually clearing the app's cache will only clear the image caches and not the request cache and your collection data. To do that, you can find their respective settings which are available in the settings screen.
                 \nIf you find the application always showing error on startup even with a good internet connection, chances are that your ISP has blocked the TMDB API.\nTry using a VPN connection or change your DNS to circumvent this restriction.
-                \nEpisode count that is shown on the thumbnails of TV shows of a person is not just the count of episodes that he/she was involved in as a cast member but the count of his/her involvement in any way as either a cast or a crew member combined.`}
+                \nEpisode count that is shown on the thumbnails of TV shows of a person is not just the count of episodes that he/she was involved in as a cast member but the count of his/her involvement in any way as either a cast or a crew member combined.
+                \nMedia certificates shown are by default for United States region only.`}
             </Text>
           </View>
 

@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Pressable, Linking } from "react-native";
 import React from "react";
 import {
   MediaTypes,
@@ -29,6 +29,9 @@ import RevenueStats from "./ui/RevenueStats";
 import useImgSettings from "../hooks/useImgSettings";
 import MoreInfoBackdrop from "./MoreInfoBackdrop";
 import CollectionCard from "./CollectionCard";
+import { Ionicons } from "@expo/vector-icons";
+import { Colors } from "../utils/Colors";
+import MediaStats from "./ui/MediaStats";
 
 interface IProps {
   media: MovieMediaHybrid | TvMediaHybrid;
@@ -44,6 +47,8 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
 
   // img setttings state
   const { allImgItemsSettings } = useImgSettings();
+
+  // console.log(isMovie(media) ? media.release_dates : media.content_ratings);
 
   const credits = media?.credits;
   const cast = credits?.cast;
@@ -142,6 +147,9 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
               imgQuality={allImgItemsSettings?.banner?.value}
             />
 
+            {/* POPULARITY AND MEDIATYPE INFO */}
+            <MediaStats media={media} />
+
             {isMovieExtended(media) && (media.budget || media.revenue) ? (
               <RevenueStats budget={media.budget} revenue={media.revenue} />
             ) : null}
@@ -149,10 +157,15 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             {/* DESCRIPTION */}
             {media.overview ? (
               <View className="px-4 mt-5 space-y-2">
-                <Text className="font-semibold text-text_tertiary">
+                {/* <Text className="font-semibold text-text_tertiary">
                   Overview
+                </Text> */}
+                <Text className="text-text_dark text-sm">
+                  <Text className="font-semibold text-text_tertiary">
+                    {"Overview :  "}
+                  </Text>
+                  {media.overview}
                 </Text>
-                <Text className="text-text_dark">{media.overview}</Text>
               </View>
             ) : null}
 
@@ -189,6 +202,30 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
                 </Text>
               </View>
             ) : null}
+
+            {/* SOURCE TMDB */}
+            <View className="pt-3 px-4 flex-row gap-1 items-center justify-start">
+              <Text className="text-sm text-text_tertiary font-semibold">
+                {"More info : "}{" "}
+                <Text className="text-text_dark">{"TMDB"}</Text>
+              </Text>
+
+              <View className="rounded-full overflow-hidden">
+                <Pressable
+                  className="h-10 w-10 items-center justify-center space-x-2 rounded-full"
+                  onPress={() => {
+                    Linking.openURL(
+                      `https://www.themoviedb.org/${
+                        isMovie(media) ? "movie" : "tv"
+                      }/${media.id}/`
+                    );
+                  }}
+                  android_ripple={{ color: "#eee" }}
+                >
+                  <Ionicons name="link" size={20} color={Colors.blue[500]} />
+                </Pressable>
+              </View>
+            </View>
           </View>
 
           {/* BUTTONS CONTAINER */}

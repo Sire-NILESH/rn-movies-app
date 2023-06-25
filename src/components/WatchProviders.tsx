@@ -1,5 +1,5 @@
 import { View, Text, FlatList, Pressable } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   IAllWatchProviderData,
   ICountry,
@@ -30,8 +30,10 @@ const WatchProviders: React.FC<IProps> = ({
     setCurrentCountry(country);
   };
 
-  const watchProviders: WatchProviderForCountry =
-    watchProvidersData[currentCountry.code];
+  const watchProviders: WatchProviderForCountry = useMemo(
+    () => watchProvidersData[currentCountry.code],
+    [currentCountry]
+  );
 
   const providerImgQuality = imgQuality ? imgQuality : "200";
 

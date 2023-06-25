@@ -1,12 +1,12 @@
-import { useCallback } from "react";
-import { View, FlatList, ActivityIndicator } from "react-native";
-import ThumbnailMemoised from "./ThumbnailMemoised";
+import { useCallback, useMemo } from "react";
+import { View, ActivityIndicator } from "react-native";
 import { getDeviceDimensions } from "../utils/helpers/helper";
 import { useNavigation } from "@react-navigation/native";
-import { memo, useMemo } from "react";
 import { IImgItemSettingsDB } from "../../types/typings";
 import SearchPersonCard from "./SearchPersonCard";
 import { useThumbnailTextSettingHooks } from "../hooks/reduxHooks";
+import { FlashList } from "@shopify/flash-list";
+import Thumbnail from "./Thumbnail";
 
 interface IProps {
   medias: any[];
@@ -21,6 +21,10 @@ interface IProps {
   contentType?: "tiles" | "card";
 }
 
+// Calculate and pass the dimensioins from the parent(here) to the thumbnails.
+// So every thumbnail wont have to calculate them separately.
+const windowWidth = getDeviceDimensions("window").width;
+
 const TilesRenderedView: React.FC<IProps> = (props) => {
   const navigation = useNavigation();
 
@@ -34,10 +38,6 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
       navigation.push(screen, paramOption);
     };
   }, [navigation]);
-
-  // Calculate and pass the dimensioins from the parent(here) to the thumbnails.
-  // So every thumbnail wont have to calculate them separately.
-  const windowWidth = getDeviceDimensions("window").width;
 
   // Footer loader component
   const renderLoader = useCallback(() => {
@@ -61,7 +61,7 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
 
     return (
       <View className="mx-[2]">
-        <ThumbnailMemoised
+        <Thumbnail
           media={media.item}
           orientation="portrait"
           navigateTo={navigateTo}
@@ -76,7 +76,7 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
 
   return (
     <View className="flex-1 relative">
-      <FlatList
+      <FlashList
         data={props.medias}
         ItemSeparatorComponent={() => (
           <View
@@ -88,8 +88,8 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
             }}
           />
         )}
+        className="w-full"
         contentContainerStyle={{
-          width: "100%",
           paddingVertical: 8,
         }}
         ListHeaderComponent={props.tilesHeader}
@@ -103,20 +103,13 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
             : 3
         }
         ListFooterComponent={renderLoader}
-        onEndReachedThreshold={0.9}
+        // could have gone higher but it is better to not flood the server with too many requests when user is scrolling really fast.
+        onEndReachedThreshold={2}
         onEndReached={props.loadMoreItem}
-        initialNumToRender={20}
-        // extraData={{
-        //   loadingNewMedias: props.loadingNewMedias,
-        //   loadMoreItem: props.loadMoreItem,
-        //   contentType: props.contentType,
-        // }}
-        progressViewOffset={50}
-        // refreshing={props.loadingNewMedias}
+        estimatedItemSize={(windowWidth * 0.31 * 3) / 2}
       />
     </View>
   );
 };
 
 export default TilesRenderedView;
-// export default memo(TilesRenderedView);

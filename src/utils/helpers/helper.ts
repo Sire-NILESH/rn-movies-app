@@ -18,10 +18,12 @@ import {
   MediaTypes,
   MovieMedia,
   MovieMediaExtended,
+  MovieMediaHybrid,
   TGenderCodes,
   TReleaseYearConstraint,
   TvMedia,
   TvMediaExtended,
+  TvMediaHybrid,
 } from "../../../types/typings";
 import { Alert, Dimensions } from "react-native";
 import Toast from "react-native-toast-message";
@@ -30,6 +32,16 @@ export function isMovie(
   media: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended | null
 ): media is MovieMedia {
   return media !== null && (media as MovieMedia).title !== undefined;
+}
+
+export function isMovieMediaHybrid(
+  media: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended | null
+): media is MovieMediaHybrid {
+  return (
+    media !== null &&
+    (media as MovieMediaHybrid).credits !== undefined &&
+    (media as MovieMediaHybrid).release_dates !== undefined
+  );
 }
 
 export function isTv(
@@ -42,6 +54,16 @@ export function isTv(
     | null
 ): media is TvMedia {
   return media !== null && (media as TvMedia).name !== undefined;
+}
+
+export function isTvMediaHybrid(
+  media: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended | null
+): media is TvMediaHybrid {
+  return (
+    media !== null &&
+    (media as TvMediaHybrid).credits !== undefined &&
+    (media as TvMediaHybrid).content_ratings !== undefined
+  );
 }
 
 export function isIPersonTVMedia(
@@ -71,6 +93,74 @@ export function isPerson(obj: any): obj is ICreditPerson {
     obj !== null &&
     (obj as ICreditPerson).known_for_department !== undefined &&
     (obj as ICreditPerson).name !== undefined
+  );
+}
+
+export function isMovieArray(
+  medias: MovieMedia[] | TvMedia[]
+): medias is MovieMedia[] {
+  return medias !== null && (medias as MovieMedia[])[0].title !== undefined;
+}
+
+export function isTvArray(
+  medias: MovieMedia[] | TvMedia[]
+): medias is TvMedia[] {
+  return medias !== null && (medias as TvMedia[])[0].name !== undefined;
+}
+
+export function isReduxCollectionMediaList(
+  medias: MovieMedia[] | TvMedia[] | IReduxListMedia[]
+): medias is IReduxListMedia[] {
+  return (
+    medias !== null && (medias as IReduxListMedia[])[0].dateAdded !== undefined
+  );
+}
+
+export function isReduxCollectionMedia(
+  medias: MovieMedia | TvMedia | IReduxListMedia
+): medias is IReduxListMedia {
+  return medias !== null && (medias as IReduxListMedia).dateAdded !== undefined;
+}
+
+export function isISOLang(obj: Object): obj is ISOLang {
+  return (
+    obj !== null &&
+    (obj as ISOLang).iso639_1 !== undefined &&
+    (obj as ISOLang).iso639_2T !== undefined &&
+    (obj as ISOLang).iso639_2B !== undefined
+  );
+}
+
+export function isSupportedLang(obj: Object): obj is ISupportedLang {
+  return (
+    obj !== null &&
+    (obj as ISupportedLang).iso_639_1 !== undefined &&
+    (obj as ISupportedLang).english_name !== undefined &&
+    (obj as ISupportedLang).name !== undefined
+  );
+}
+
+export function isIImageQuality(obj: Object): obj is IImageQuality {
+  return (
+    obj !== null &&
+    (obj as IImageQuality).quality !== undefined &&
+    (obj as IImageQuality).value !== undefined
+  );
+}
+
+export function isICountry(obj: Object): obj is ICountry {
+  return (
+    obj !== null &&
+    (obj as ICountry).name !== undefined &&
+    (obj as ICountry).code !== undefined
+  );
+}
+
+export function isIDropdownYear(obj: Object): obj is IDropdownYearsObj {
+  return (
+    obj !== null &&
+    (obj as IDropdownYearsObj).year !== undefined &&
+    (obj as IDropdownYearsObj).value !== undefined
   );
 }
 
@@ -191,71 +281,11 @@ export const watchedEpisodeObjBuilder = (
   };
 };
 
-export function isMovieArray(
-  medias: MovieMedia[] | TvMedia[]
-): medias is MovieMedia[] {
-  return medias !== null && (medias as MovieMedia[])[0].title !== undefined;
-}
-
-export function isTvArray(
-  medias: MovieMedia[] | TvMedia[]
-): medias is TvMedia[] {
-  return medias !== null && (medias as TvMedia[])[0].name !== undefined;
-}
-
-export function isReduxCollectionMediaList(
-  medias: MovieMedia[] | TvMedia[] | IReduxListMedia[]
-): medias is IReduxListMedia[] {
-  return (
-    medias !== null && (medias as IReduxListMedia[])[0].dateAdded !== undefined
-  );
-}
-
-export function isReduxCollectionMedia(
-  medias: MovieMedia | TvMedia | IReduxListMedia
-): medias is IReduxListMedia {
-  return medias !== null && (medias as IReduxListMedia).dateAdded !== undefined;
-}
-
-export function isISOLang(obj: Object): obj is ISOLang {
-  return (
-    obj !== null &&
-    (obj as ISOLang).iso639_1 !== undefined &&
-    (obj as ISOLang).iso639_2T !== undefined &&
-    (obj as ISOLang).iso639_2B !== undefined
-  );
-}
-
-export function isSupportedLang(obj: Object): obj is ISupportedLang {
-  return (
-    obj !== null &&
-    (obj as ISupportedLang).iso_639_1 !== undefined &&
-    (obj as ISupportedLang).english_name !== undefined &&
-    (obj as ISupportedLang).name !== undefined
-  );
-}
-
-export function isIImageQuality(obj: Object): obj is IImageQuality {
-  return (
-    obj !== null &&
-    (obj as IImageQuality).quality !== undefined &&
-    (obj as IImageQuality).value !== undefined
-  );
-}
-
-export function isICountry(obj: Object): obj is ICountry {
-  return (
-    obj !== null &&
-    (obj as ICountry).name !== undefined &&
-    (obj as ICountry).code !== undefined
-  );
-}
-
-export function isIDropdownYear(obj: Object): obj is IDropdownYearsObj {
-  return (
-    obj !== null &&
-    (obj as IDropdownYearsObj).year !== undefined &&
-    (obj as IDropdownYearsObj).value !== undefined
+export function showErrorAlert(title?: string, message?: string) {
+  Alert.alert(
+    "Error!",
+    title ? title : "Something went wrong, please try again later",
+    [{ text: "Okay", style: "destructive" }]
   );
 }
 
@@ -308,14 +338,6 @@ export const addReleaseAndAirDateFilters = (
     }
   }
 };
-
-export function showErrorAlert(title?: string, message?: string) {
-  Alert.alert(
-    "Error!",
-    title ? title : "Something went wrong, please try again later",
-    [{ text: "Okay", style: "destructive" }]
-  );
-}
 
 export function toHoursAndMinutes(totalMinutes: number) {
   const hours = Math.floor(totalMinutes / 60);
@@ -625,55 +647,6 @@ export function buildLanguagePlaylist(
   };
 }
 
-// deprecated
-export const movieGenres = [
-  // Custom Genres
-  [
-    // { id: 0.345783442, name: "Netflix Movies" },
-    { id: 0.788734, name: "Trending" },
-    { id: 0.2345646, name: "Popular" },
-    { id: 0.985633, name: "Top Rated" },
-    { id: 0.132323, name: "Now Playing" },
-    { id: 0.6754435, name: "New HD Releases" },
-    { id: 0.65436456, name: "Lucasfilm" },
-    { id: 0.9876854, name: "HBO Movies" },
-    { id: 0.2344565, name: "Warner Bros. Entertainment" },
-    { id: 0.214545, name: "Paramount" },
-    { id: 0.89733, name: "Columbia Pictures" },
-    { id: 0.243468, name: "Village Roadshow Pictures" },
-    { id: 0.213775, name: "Miramax" },
-    { id: 0.745635, name: "Pixar Movies" },
-    { id: 0.324786, name: "DreamWorks" },
-    { id: 0.3425567, name: "Metro-Goldwyn-Mayer" },
-    { id: 0.9874323, name: "20th Century Fox" },
-    { id: 0.768343, name: "Universal Pictures" },
-    { id: 0.9805434, name: "Lions Gate Films" },
-    { id: 0.786576, name: "Sony Pictures" },
-  ],
-  // Actual Genres below
-  [
-    { id: 28, name: "Action" },
-    { id: 12, name: "Adventure" },
-    { id: 16, name: "Animation" },
-    { id: 35, name: "Comedy" },
-    { id: 80, name: "Crime" },
-    { id: 99, name: "Documentary" },
-    { id: 18, name: "Drama" },
-    { id: 10751, name: "Family" },
-    { id: 14, name: "Fantasy" },
-    { id: 36, name: "History" },
-    { id: 27, name: "Horror" },
-    { id: 10402, name: "Music" },
-    { id: 9648, name: "Mystery" },
-    { id: 10749, name: "Romance" },
-    { id: 878, name: "Science Fiction" },
-    { id: 10770, name: "TV Movie" },
-    { id: 53, name: "Thriller" },
-    { id: 10752, name: "War" },
-    { id: 37, name: "Western" },
-  ],
-];
-
 export const tvGenresList: Genre[] = [
   { id: 10759, name: "Action & Adventure" },
   { id: 16, name: "Animation" },
@@ -715,88 +688,18 @@ export const movieGenresList: Genre[] = [
   { id: 37, name: "Western" },
 ];
 
-// deprecated
-export const tvGenres = [
-  // Custom Genres below
-  [
-    { id: 0.97756, name: "Trending" },
-    { id: 0.63465, name: "Popular" },
-    { id: 0.54364, name: "Top Rated" },
-    { id: 0.63546, name: "Airing Today" },
-    { id: 0.345457, name: "Netflix Shows" },
-    { id: 0.567456, name: "HBO Shows" },
-    { id: 0.85345435, name: "FOX" },
-    { id: 0.23454545, name: "HULU Shows" },
-    { id: 0.324778, name: "Amazon Prime Shows" },
-    { id: 0.87908, name: "Disney+ Shows" },
-    { id: 0.7786455, name: "Apple TV+ Shows" },
-    { id: 0.9765434, name: "Adult Swim Shows" },
-    { id: 0.235456, name: "AMC" },
-    { id: 0.6556346, name: "ABC" },
-    { id: 0.54633, name: "Cartoon Network Shows" },
-    { id: 0.2324356, name: "Nickelodeon Shows" },
-    // { id: 0.234578, name: "Toon Disney Shows" },
-    { id: 0.34546989, name: "Disney XD Shows" },
-    { id: 0.889763, name: "ANIMAX Shows" },
-    { id: 0.83546345, name: "PBS Shows" },
-    { id: 0.6673423, name: "CBS Shows" },
-    { id: 0.234867865, name: "ShowTime" },
-    { id: 0.5575343, name: "BBC 1" },
-    { id: 0.2234787, name: "BBC 2" },
-    { id: 0.4544342, name: "Sky Atlantic" },
-    { id: 0.9823874, name: "History Tv" },
-    { id: 0.346546, name: "Curiosity stream" },
-    { id: 0.56754623, name: "National Geographic" },
-    { id: 0.952455, name: "Discovery" },
-    // { id: 0.45678886, name: "Discover" },
-  ],
-  // Actual Genres below
-  [
-    { id: 10759, name: "Action & Adventure" },
-    { id: 16, name: "Animation" },
-    { id: 35, name: "Comedy" },
-    { id: 80, name: "Crime" },
-    { id: 99, name: "Documentary" },
-    { id: 18, name: "Drama" },
-    { id: 10751, name: "Family" },
-    { id: 10762, name: "Kids" },
-    { id: 9648, name: "Mystery" },
-    { id: 10763, name: "News" },
-    { id: 10764, name: "Reality" },
-    { id: 10765, name: "Sci-Fi & Fantasy" },
-    { id: 10766, name: "Soap" },
-    { id: 10767, name: "Talk" },
-    { id: 10768, name: "War & Politics" },
-    { id: 37, name: "Western" },
-  ],
-];
-
 export let idToGenresMapped = {};
 
-// // Custom TV genres
-// for (let i = 0; i < tvGenres[0].length; i++) {
-//   const genreObj = tvGenres[0][i];
-//   // @ts-ignore
-//   idToGenresMapped[String(genreObj.id)] = genreObj.name;
-// }
-
 // Default TV genres
-for (let i = 0; i < tvGenres[1].length; i++) {
-  const genreObj = tvGenres[1][i];
+for (let i = 0; i < tvGenresList.length; i++) {
+  const genreObj = tvGenresList[i];
   // @ts-ignore
   idToGenresMapped[String(genreObj.id)] = genreObj.name;
 }
 
-// Custom Movie genres
-// for (let i = 0; i < movieGenres[0].length; i++) {
-//   const genreObj = movieGenres[0][i];
-//   // @ts-ignore
-//   idToGenresMapped[String(genreObj.id)] = genreObj.name;
-// }
-
 // Default Movie genres
-for (let i = 0; i < movieGenres[1].length; i++) {
-  const genreObj = movieGenres[1][i];
+for (let i = 0; i < movieGenresList.length; i++) {
+  const genreObj = movieGenresList[i];
   // @ts-ignore
   idToGenresMapped[String(genreObj.id)] = genreObj.name;
 }

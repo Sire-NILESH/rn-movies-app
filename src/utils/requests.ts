@@ -341,7 +341,13 @@ export const getMediaInfo = async (mediaId: number, mediaType: MediaTypes) => {
   try {
     const data = await fetchDataFromApi(`/${mediaType}/${mediaId}`, {
       language: "en-US",
-      append_to_response: "watch/providers,credits",
+      append_to_response: `watch/providers,credits${
+        mediaType === "tv"
+          ? ",content_ratings"
+          : mediaType === "movie"
+          ? ",release_dates"
+          : ""
+      }`,
     });
 
     return {
@@ -463,8 +469,6 @@ export const fetchCollectionInfo = async (collection: IUrlObject) => {
     const data = await fetchDataFromApi(collection.url, collection.queryParams);
 
     const franchiseCollection: FranchiseCollection = data.data;
-
-    // console.log(franchiseCollection);
 
     return { franchiseCollection: franchiseCollection };
   } catch (err) {

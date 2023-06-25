@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   IImgItemSettingsDB,
   IPlaylist,
@@ -6,7 +6,7 @@ import {
   TvMedia,
 } from "../../types/typings";
 import Thumbnail from "./Thumbnail";
-import { Text, View, FlatList } from "react-native";
+import { Text, View, FlatList, ListRenderItemInfo } from "react-native";
 import IconButton from "./ui/IconButton";
 import { Colors } from "./../utils/Colors";
 import { Pressable } from "react-native";
@@ -68,6 +68,24 @@ function renderFlatList(
   // So every one of them wont have to calculate them separately.
   const { navigateTo } = useNavigateTo();
 
+  const renderItem = useCallback(
+    (media: ListRenderItemInfo<MovieMedia | TvMedia>) => (
+      <View className="ml-1 bg-tertiary rounded-md">
+        <Thumbnail
+          media={isMovie(media.item) ? media.item : media.item}
+          orientation="portrait"
+          navigateTo={navigateTo}
+          windowWidth={windowWidth}
+          quality={thumbnailQualitySettings?.value}
+          imgType="regular"
+          disableText={isThumbnailText.disable}
+          // orientation="landscape"
+        />
+      </View>
+    ),
+    []
+  );
+
   return (
     <>
       {medias && isMovieArray(medias) ? (
@@ -90,20 +108,7 @@ function renderFlatList(
               offset: rowItemWidth * index,
             };
           }}
-          renderItem={(media) => (
-            <View className="ml-1 bg-tertiary rounded-md">
-              <Thumbnail
-                media={isMovie(media.item) ? media.item : media.item}
-                orientation="portrait"
-                navigateTo={navigateTo}
-                windowWidth={windowWidth}
-                imgType="regular"
-                quality={thumbnailQualitySettings?.value}
-                disableText={isThumbnailText.disable}
-                // orientation="landscape"
-              />
-            </View>
-          )}
+          renderItem={(media) => renderItem(media)}
           keyExtractor={(media, i) => {
             return `${media.id}-${i}`;
           }}
@@ -128,20 +133,7 @@ function renderFlatList(
               offset: rowItemWidth * index,
             };
           }}
-          renderItem={(media) => (
-            <View className="ml-1 bg-tertiary rounded-md">
-              <Thumbnail
-                media={isMovie(media.item) ? media.item : media.item}
-                orientation="portrait"
-                navigateTo={navigateTo}
-                windowWidth={windowWidth}
-                quality={thumbnailQualitySettings?.value}
-                imgType="regular"
-                disableText={isThumbnailText.disable}
-                // orientation="landscape"
-              />
-            </View>
-          )}
+          renderItem={(media) => renderItem(media)}
           keyExtractor={(media, i) => {
             return `${media.id}-${i}`;
           }}

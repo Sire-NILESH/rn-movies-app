@@ -68,7 +68,6 @@ const Banner: React.FC<IProps> = ({ mediaList }) => {
             "rgba(23, 23, 23, 0.7)",
             "rgba(23, 23, 23, 0.7)",
             "rgba(23, 23, 23, 0.7)",
-            // "rgba(23, 23, 23, 0.9)",
             Colors.secondary,
           ]}
           style={styles.rootScreen}
@@ -193,9 +192,9 @@ const Banner: React.FC<IProps> = ({ mediaList }) => {
             >
               <CustomButton
                 width={140}
-                height={42}
+                height={40}
                 radius={8}
-                styledClassName="border border-stone-700 bg-neutral-700/40"
+                styledClassName="bg-neutral-700"
                 method={infoButtonPressHandler}
                 shadow={false}
               >

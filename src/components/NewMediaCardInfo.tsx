@@ -1,21 +1,29 @@
 import { View, Text, Image, StyleSheet } from "react-native";
-import React from "react";
-import { MovieMedia, TvMedia, TvMediaExtended } from "../../types/typings";
+import React, { useMemo } from "react";
+import {
+  MovieMedia,
+  MovieMediaExtended,
+  MovieMediaHybrid,
+  TvMedia,
+  TvMediaExtended,
+  TvMediaHybrid,
+} from "../../types/typings";
 import {
   dateFormatter,
   isMovie,
   isMovieExtended,
+  isMovieMediaHybrid,
   isTvExtended,
+  isTvMediaHybrid,
   toHoursAndMinutes,
 } from "../utils/helpers/helper";
 import { LinearGradient } from "expo-linear-gradient";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Colors } from "./../utils/Colors";
 import ImagePlaceholder from "./ui/ImagePlaceholder";
-import { by639_1 } from "iso-language-codes";
 
 interface IProps {
-  media: MovieMedia | TvMedia | TvMediaExtended;
+  media: MovieMedia | TvMedia | MovieMediaHybrid | TvMediaHybrid;
   imgQuality?: string;
 }
 
@@ -25,6 +33,22 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
   const imageUrl = media.backdrop_path
     ? `https://image.tmdb.org/t/p/w${posterImgQuality}${media.backdrop_path}`
     : `https://image.tmdb.org/t/p/w${posterImgQuality}${media.poster_path}`;
+
+  const mediaCertificate = useMemo(() => {
+    let certification;
+
+    if (isMovieMediaHybrid(media) && media.release_dates) {
+      certification = media.release_dates.results
+        .find((releaseDate) => releaseDate.iso_3166_1 === "US")
+        ?.release_dates.find((rd) => rd.certification !== "")?.certification;
+    } else if (isTvMediaHybrid(media) && media.content_ratings) {
+      certification = media.content_ratings.results.find(
+        (contentRating) => contentRating.iso_3166_1 === "US"
+      )?.rating;
+    }
+
+    return certification;
+  }, []);
 
   return (
     <View className="mt-5 mx-3 justify-between rounded-2xl border border-stone-800/80 overflow-hidden">
@@ -52,17 +76,17 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
           // "rgba(0, 0, 0, 0)",
           // "rgba(0, 0, 0, 0)",
 
-          "rgba(15, 15, 15, 0.5)",
-          "rgba(15, 15, 15, 0.5)",
-          "rgba(15, 15, 15, 0.4)",
-          "rgba(15, 15, 15, 0.3)",
-          "rgba(15, 15, 15, 0.1)",
+          "rgba(0, 0, 0, 0.5)",
+          "rgba(0, 0, 0, 0.5)",
+          "rgba(0, 0, 0, 0.4)",
+          "rgba(0, 0, 0, 0.3)",
+          "rgba(0, 0, 0, 0.1)",
         ]}
         start={{ x: 0.0, y: 1 }}
         style={{ width: "100%", aspectRatio: 16 / 9 }}
-        className="absolute bg-stone-900/10 rounded-l-2xl py-6 flex-row items-center justify-between"
+        className="absolute bg-stone-900/10 rounded-l-2xl py-2 flex-row items-center justify-between"
       >
-        <View className="space-y-4">
+        <View className="h-full justify-around items-start">
           <View className="flex-row items-center space-x-2 px-4">
             <Ionicons name="star" size={18} color={Colors.yellow[300]} />
             <Text
@@ -86,20 +110,6 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
 
           <View className="flex-row items-center space-x-2 px-4">
             <Ionicons
-              name={isMovie(media) ? "film-outline" : "tv-outline"}
-              size={18}
-              color={Colors.text_primary}
-            />
-            <Text
-              className="text-text_highLight font-bold"
-              style={styles.textShadow}
-            >
-              {isMovie(media) ? "Movie" : "TV"}
-            </Text>
-          </View>
-
-          <View className="flex-row items-center space-x-2 px-4">
-            <Ionicons
               name="calendar-outline"
               size={18}
               color={Colors.text_primary}
@@ -116,23 +126,43 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
             </Text>
           </View>
 
-          {media.original_language ? (
-            <View className="flex-row items-center space-x-2 px-4">
-              <Ionicons
-                name="language-outline"
-                size={18}
-                color={Colors.text_primary}
-              />
+          <View className="flex-row items-center space-x-2 px-4">
+            <Ionicons
+              name={"flag-outline"}
+              size={18}
+              color={Colors.text_primary}
+            />
+            <Text
+              className="text-text_highLight font-bold"
+              style={styles.textShadow}
+            >
+              {isMovieExtended(media)
+                ? media.status
+                : isTvExtended(media)
+                ? media.status
+                : "--"}
+            </Text>
+          </View>
+
+          <View className="flex-row items-center space-x-2 px-4">
+            <MaterialCommunityIcons
+              name="file-certificate-outline"
+              size={22}
+              color={Colors.text_primary}
+            />
+            <View className="min-w-[28px] border border-green-50 px-1 rounded-sm items-center">
               <Text
-                className="text-text_highLight font-bold"
+                className="text-xs text-text_highLight font-bold"
                 style={styles.textShadow}
               >
-                {by639_1[media.original_language]?.name
-                  ? by639_1[media.original_language]?.name
-                  : media.original_language}
+                {mediaCertificate
+                  ? mediaCertificate
+                  : media.adult
+                  ? "ADULT"
+                  : "--"}
               </Text>
             </View>
-          ) : null}
+          </View>
 
           {isMovieExtended(media) && (
             <View className="flex-row items-center space-x-2 px-4">

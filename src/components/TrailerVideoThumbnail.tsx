@@ -52,8 +52,8 @@ const TrailerVideoThumbnail: React.FC<IProps> = (props) => {
           colors={[
             "rgba(0,0,0,0)",
             "rgba(0,0,0,0)",
-            "rgba(28, 25, 23, 0)",
-            "rgba(28, 25, 23, 0.8)",
+            "rgba(0,0,0, 0.6)",
+            "rgba(0,0,0, 1)",
           ]}
           className="absolute flex-row items-end pb-2 px-2 rounded-2xl overflow-hidden"
           style={{

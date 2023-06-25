@@ -1,10 +1,18 @@
-import { useEffect } from "react";
-import { View, Text, Image, FlatList, StatusBar } from "react-native";
+import { useCallback } from "react";
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  StatusBar,
+  ListRenderItemInfo,
+} from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import {
+  Episode,
   EpisodeCastAndCrew,
-  IWatchedEpisodesLookup,
+  // IWatchedEpisodesLookup,
   Season,
   SeasonDetails,
 } from "../../types/typings";
@@ -21,7 +29,7 @@ import CastAndCrewModal from "../components/ui/CastAndCrewModal";
 import useNavigateTo from "../hooks/useNavigateTo";
 import { episodesScreenCacheConfig } from "../config/requestCacheConfig";
 import ThemeButton from "../components/ui/ThemeButton";
-import { getAllWatchedEpisoesOfShowsSeason } from "../storage/database";
+// import { getAllWatchedEpisoesOfShowsSeason } from "../storage/database";
 
 const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   IStackScreenProps
@@ -43,14 +51,14 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   const [selectedSeason, setSelectedSeason] = useState<Season>(
     tvMediaSeasons[0]
   );
-  const [watchedEpisodes, setWatchedEpisodes] = useState<
-    IWatchedEpisodesLookup | undefined
-  >(undefined);
+  // const [watchedEpisodes, setWatchedEpisodes] = useState<
+  //   IWatchedEpisodesLookup | undefined
+  // >(undefined);
+  // const [isLoadingWatchedEps, setIsLoadingWatchedEps] =
+  // useState<boolean>(false);
   const [castAndCrewForModal, setcastAndCrewForModal] =
     useState<EpisodeCastAndCrew>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isLoadingWatchedEps, setIsLoadingWatchedEps] =
-    useState<boolean>(false);
 
   function castandCrewModalHandler(castAndCrew: EpisodeCastAndCrew) {
     setIsModalOpen((prev) => (prev === true ? false : true));
@@ -77,29 +85,30 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
     setSelectedSeason(newSelectedSeason);
   }
 
-  useEffect(() => {
-    const loadWatchedEpisodes = async () => {
-      setIsLoadingWatchedEps(true);
-      try {
-        const data = await getAllWatchedEpisoesOfShowsSeason(
-          tvMediaId,
-          selectedSeason.id
-        );
+  // FETCHING ALL WATCHED EPISODES OF A SEASON IN BULK
+  // useEffect(() => {
+  //   const loadWatchedEpisodes = async () => {
+  //     setIsLoadingWatchedEps(true);
+  //     try {
+  //       const data = await getAllWatchedEpisoesOfShowsSeason(
+  //         tvMediaId,
+  //         selectedSeason.id
+  //       );
 
-        setWatchedEpisodes((_prev) => {
-          return data.rows._array.reduce((acc, watchedEpisode) => {
-            acc[watchedEpisode.episodeId] = watchedEpisode;
-            return acc;
-          }, {});
-        });
-      } catch (err) {
-        showErrorToast("Something went wrong while loading watched episodes");
-      }
-      setIsLoadingWatchedEps(false);
-    };
+  //       setWatchedEpisodes((_prev) => {
+  //         return data.rows._array.reduce((acc, watchedEpisode) => {
+  //           acc[watchedEpisode.episodeId] = watchedEpisode;
+  //           return acc;
+  //         }, {});
+  //       });
+  //     } catch (err) {
+  //       showErrorToast("Something went wrong while loading watched episodes");
+  //     }
+  //     setIsLoadingWatchedEps(false);
+  //   };
 
-    loadWatchedEpisodes();
-  }, [selectedSeason]);
+  //   loadWatchedEpisodes();
+  // }, [selectedSeason]);
 
   // Header Settings
   useLayoutEffect(() => {
@@ -124,6 +133,28 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
     showErrorToast("Error !", "Something went wrong while loading content.");
   }
 
+  const renderItem = useCallback(
+    (episodeObj: ListRenderItemInfo<Episode>) => {
+      if (seasonDetails) {
+        return (
+          <EpisodeInfoCard
+            episode={episodeObj.item}
+            seasonId={seasonDetails.id}
+            // isWatched={
+            //   watchedEpisodes[episodeObj.item.id] !== undefined
+            //     ? true
+            //     : false
+            // }
+            castandCrewModalHandler={castandCrewModalHandler}
+            navigateTo={navigateTo}
+          />
+        );
+      }
+      return null;
+    },
+    [seasonDetails]
+  );
+
   /* if the season doesnt have a poster we use the old poster that was used in the MoreInfoScreeen which was passed here as tvMediaPosterPathOld */
 
   return (
@@ -132,17 +163,9 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
 
       <View className="flex-1 bg-secondary">
         {/* Loader */}
-        {loadingProps ||
-        isLoadingWatchedEps ||
-        watchedEpisodes === undefined ? (
+        {loadingProps ? (
           <View className="h-full z-40">
-            <Loader
-              loading={
-                loadingProps ||
-                isLoadingWatchedEps ||
-                watchedEpisodes === undefined
-              }
-            />
+            <Loader loading={loadingProps} />
           </View>
         ) : null}
 
@@ -153,9 +176,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
               problemType="error"
             />
           </View>
-        ) : status === "success" &&
-          !isLoadingWatchedEps &&
-          watchedEpisodes !== undefined ? (
+        ) : status === "success" ? (
           <View className="flex-1">
             <CastAndCrewModal
               isVisible={isModalOpen}
@@ -171,9 +192,15 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                 <View className="mb-5">
                   <LinearGradient
                     colors={[
-                      "rgba(22, 101, 52, 0.5)",
-                      "rgba(22, 101, 52, 0.3)",
+                      // "rgba(147, 51, 234, 0.5)",
+                      // "rgba(147, 51, 234, 0.3)",
+                      // Colors.black,
+                      "rgba(163, 163, 163, 0.5)",
+                      "rgba(163, 163, 163, 0.3)",
                       Colors.black,
+                      // "rgba(22, 101, 52, 0.5)",
+                      // "rgba(22, 101, 52, 0.3)",
+                      // Colors.black,
                     ]}
                     className="flex-row px-4 pt-4 justify-between items-start mb-5"
                   >
@@ -263,21 +290,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
               ItemSeparatorComponent={() => (
                 <View className="border border-b-stone-800 mx-10 my-4" />
               )}
-              renderItem={(episodeObj) => (
-                <EpisodeInfoCard
-                  episode={episodeObj.item}
-                  seasonId={seasonDetails.id}
-                  // isWatched={isEpisodeWatchedLookup}
-                  isWatched={
-                    watchedEpisodes[episodeObj.item.id] !== undefined
-                      ? true
-                      : false
-                  }
-                  castandCrewModalHandler={castandCrewModalHandler}
-                  navigateTo={navigateTo}
-                />
-              )}
-              // extraData={{ isEpisodeWatchedLookup }}
+              renderItem={(episodeObj) => renderItem(episodeObj)}
             />
           </View>
         ) : null}

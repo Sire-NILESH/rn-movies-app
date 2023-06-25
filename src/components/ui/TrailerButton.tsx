@@ -25,12 +25,10 @@ const TrailerButton: React.FC<IProps> = (props) => {
     });
   };
 
-  // ITrailerScreenParams border border-stone-800/90
-
   return (
     <CustomButton
       color={Colors.stone[900]}
-      height={42}
+      height={38}
       width={"100%"}
       radius={8}
       method={onPressHandler}

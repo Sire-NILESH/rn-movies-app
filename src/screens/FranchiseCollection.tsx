@@ -1,7 +1,7 @@
-import { View, Text, FlatList, Image } from "react-native";
-import React, { useLayoutEffect } from "react";
+import { View, Text, FlatList, Image, ListRenderItemInfo } from "react-native";
+import React, { useLayoutEffect, useCallback } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
-import { IUrlObject } from "../../types/typings";
+import { CollectionPart, IUrlObject } from "../../types/typings";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCollectionInfo } from "../utils/requests";
 import { franchiseCollectionCacheConfig } from "../config/requestCacheConfig";
@@ -44,6 +44,18 @@ const FranchiseCollection: React.FunctionComponent<IStackScreenProps> = (
     });
   }, []);
 
+  const renderItem = useCallback(
+    (partObj: ListRenderItemInfo<CollectionPart>) => (
+      <CollectionPartCard
+        collectionPart={partObj.item}
+        order={partObj.index}
+        navigateTo={navigateTo}
+        imgThumbnailQuality={imgQuality}
+      />
+    ),
+    []
+  );
+
   return (
     <View className="flex-1 bg-secondary">
       {/* Loader */}
@@ -82,7 +94,7 @@ const FranchiseCollection: React.FunctionComponent<IStackScreenProps> = (
                     className="flex-row px-4 pt-4 justify-between items-start mb-5"
                   >
                     <View
-                      className="border border-stone-700 rounded-md overflow-hidden"
+                      className="border border-stone-700/50 rounded-md overflow-hidden"
                       style={{ width: "33%", aspectRatio: 2 / 3 }}
                     >
                       <Image
@@ -126,12 +138,22 @@ const FranchiseCollection: React.FunctionComponent<IStackScreenProps> = (
                   ) : null}
                 </View>
               }
-              // String(a.release_date).split("-")[0]
-              data={data.franchiseCollection.parts.sort(
-                (a, b) =>
-                  Number(String(a.release_date).split("-")[0]) -
-                  Number(String(b.release_date).split("-")[0])
-              )}
+              data={data.franchiseCollection.parts
+                .filter(
+                  (part) =>
+                    Number(String(part.release_date).split("-")[0]) !== 0
+                )
+                .sort((a, b) => {
+                  let first = Number(String(a.release_date).split("-")[0]);
+                  let second = Number(String(b.release_date).split("-")[0]);
+                  return first - second;
+                })
+                .concat(
+                  data.franchiseCollection.parts.filter(
+                    (part) =>
+                      Number(String(part.release_date).split("-")[0]) === 0
+                  )
+                )}
               className=""
               keyExtractor={(part) => String(part.id)}
               maxToRenderPerBatch={4}
@@ -139,14 +161,7 @@ const FranchiseCollection: React.FunctionComponent<IStackScreenProps> = (
               ItemSeparatorComponent={() => (
                 <View className="border border-b-stone-800 mx-10 my-4" />
               )}
-              renderItem={(partObj) => (
-                <CollectionPartCard
-                  collectionPart={partObj.item}
-                  order={partObj.index}
-                  navigateTo={navigateTo}
-                  imgThumbnailQuality={imgQuality}
-                />
-              )}
+              renderItem={(partObj) => renderItem(partObj)}
             />
           </View>
         )

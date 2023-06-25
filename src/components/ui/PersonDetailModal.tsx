@@ -46,7 +46,7 @@ const PersonDetailModal: React.FC<IProps> = (props) => {
               className="text-text_highLight text-lg font-bold"
               numberOfLines={1}
             >
-              {"Personal info"}
+              {"Personal Info"}
             </Text>
           </View>
           {/* Header Buttons */}
@@ -179,10 +179,32 @@ const PersonDetailModal: React.FC<IProps> = (props) => {
               ) : null}
             </View>
 
-            <View className="mt-6">
+            <View className="mt-6 mb-3">
               <Text className="text-sm text-text_tertiary">
                 {personInfo.biography}
               </Text>
+            </View>
+
+            {/* SOURCE TMDB */}
+            <View className="mb-1 flex-row gap-2 items-center justify-start">
+              <Text className="text-sm text-text_dark">
+                {"Source: "}{" "}
+                <Text className="font-bold text-text_highLight">{"TMDB"}</Text>
+              </Text>
+
+              <View className="rounded-full overflow-hidden">
+                <Pressable
+                  className="h-10 w-10 items-center justify-center space-x-2 rounded-full"
+                  onPress={() => {
+                    Linking.openURL(
+                      `https://www.themoviedb.org/person/${personInfo.id}/`
+                    );
+                  }}
+                  android_ripple={{ color: "#eee" }}
+                >
+                  <Ionicons name="link" size={20} color={Colors.blue[500]} />
+                </Pressable>
+              </View>
             </View>
           </ScrollView>
         ) : null}

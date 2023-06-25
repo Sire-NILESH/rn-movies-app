@@ -13,7 +13,6 @@ import BlurHomeBannerSettings from "../components/settings/BlurHomeBannerSetting
 import ThumbnailTextSettings from "../components/settings/ThumbnailTextSettings";
 import DeleteReqCacheSettings from "../components/settings/DeleteReqCacheSettings";
 import ImportExportSettings from "../components/settings/ImportExportSettings";
-import DevOnlySettings from "../components/settings/DevOnlySettings";
 
 const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   return (
@@ -81,10 +80,10 @@ const SettingsScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
           <AboutSettings />
         </View>
 
-        <View>
-          {/* DEVELOPMENT ONLY SETTINGS */}
+        {/* <View>
+          DEVELOPMENT ONLY SETTINGS
           <DevOnlySettings />
-        </View>
+        </View> */}
         <View className="h-24" />
       </ScrollView>
     </View>

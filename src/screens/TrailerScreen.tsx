@@ -1,5 +1,16 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { View, FlatList, Text, StatusBar } from "react-native";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
+import {
+  View,
+  FlatList,
+  Text,
+  StatusBar,
+  ListRenderItemInfo,
+} from "react-native";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { IUrlObject, Trailer } from "../../types/typings";
 import { fetchTrailers } from "../utils/requests";
@@ -46,6 +57,15 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     navigation.setOptions({
       title: "Trailers",
     });
+  }, []);
+
+  const renderItem = useCallback((vObj: ListRenderItemInfo<Trailer>) => {
+    return (
+      <TrailerCardView
+        video={vObj.item}
+        onPressHandler={onPressSetVideoHandler}
+      />
+    );
   }, []);
 
   return (
@@ -114,14 +134,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
                 ></View>
               );
             }}
-            renderItem={(vObj) => {
-              return (
-                <TrailerCardView
-                  video={vObj.item}
-                  onPressHandler={onPressSetVideoHandler}
-                />
-              );
-            }}
+            renderItem={(vObj) => renderItem(vObj)}
           />
         ) : null}
       </View>
@@ -129,7 +142,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   );
 };
 
-export default React.memo(TrailerScreen);
+export default TrailerScreen;
 
 function TrailerCardView(props: {
   video: Trailer;

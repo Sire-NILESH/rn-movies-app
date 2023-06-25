@@ -172,7 +172,8 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
                 \nManually clearing the app's cache will only clear the image caches and not the request cache and your collection data. To do that, you can find their respective settings which are available in the settings screen.
                 \nIf you find the application always showing error on startup even with a good internet connection, chances are that your ISP has blocked the TMDB API.\nTry using a VPN connection or change your DNS to circumvent this restriction.
                 \nEpisode count that is shown on the thumbnails of TV shows of a person is not just the count of episodes that he/she was involved in as a cast member but the count of his/her involvement in any way as either a cast or a crew member combined.
-                \nMedia certificates shown are by default for United States region only.`}
+                \nMedia certificates shown are by default for United States region only.
+                \nPopularity stat is a fairly important metric on TMDB. It helps boost search results and adds an incredibly useful sort value for discover. You can think of popularity as being a "lifetime" popularity score that is impacted by the amount of user interactions with the media.`}
             </Text>
           </View>
 

@@ -147,7 +147,7 @@ const PersonDetailModal: React.FC<IProps> = (props) => {
 
             {/* Extra Rows */}
 
-            <View className="mt-6 space-y-4">
+            <View className="mt-6 space-y-3">
               <View>
                 <RenderRow
                   text1="Known for department"
@@ -179,7 +179,7 @@ const PersonDetailModal: React.FC<IProps> = (props) => {
               ) : null}
             </View>
 
-            <View className="mt-6 mb-3">
+            <View className="mt-5 mb-3">
               <Text className="text-sm text-text_tertiary">
                 {personInfo.biography}
               </Text>

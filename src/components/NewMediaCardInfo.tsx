@@ -2,10 +2,8 @@ import { View, Text, Image, StyleSheet } from "react-native";
 import React, { useMemo } from "react";
 import {
   MovieMedia,
-  MovieMediaExtended,
   MovieMediaHybrid,
   TvMedia,
-  TvMediaExtended,
   TvMediaHybrid,
 } from "../../types/typings";
 import {
@@ -86,7 +84,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
         style={{ width: "100%", aspectRatio: 16 / 9 }}
         className="absolute bg-stone-900/10 rounded-l-2xl py-2 flex-row items-center justify-between"
       >
-        <View className="h-full justify-around items-start">
+        <View className="h-full justify-around items-start flex-wrap">
           <View className="flex-row items-center space-x-2 px-4">
             <Ionicons name="star" size={18} color={Colors.yellow[300]} />
             <Text

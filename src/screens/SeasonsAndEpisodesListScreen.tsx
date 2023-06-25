@@ -1,13 +1,6 @@
 import { useCallback } from "react";
-import {
-  View,
-  Text,
-  Image,
-  FlatList,
-  StatusBar,
-  ListRenderItemInfo,
-} from "react-native";
-import React, { useLayoutEffect, useState } from "react";
+import { View, Text, Image, StatusBar } from "react-native";
+import React, { useLayoutEffect, useState, useRef } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import {
   Episode,
@@ -29,6 +22,7 @@ import CastAndCrewModal from "../components/ui/CastAndCrewModal";
 import useNavigateTo from "../hooks/useNavigateTo";
 import { episodesScreenCacheConfig } from "../config/requestCacheConfig";
 import ThemeButton from "../components/ui/ThemeButton";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 // import { getAllWatchedEpisoesOfShowsSeason } from "../storage/database";
 
 const SeasonsAndEpisodesListScreen: React.FunctionComponent<
@@ -59,6 +53,10 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   const [castAndCrewForModal, setcastAndCrewForModal] =
     useState<EpisodeCastAndCrew>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  // const listRef = useRef<LegacyRef<FlashList<Episode>> | undefined>(null);
+  const listRef = useRef<React.LegacyRef<FlashList<Episode>> | undefined>(
+    undefined
+  );
 
   function castandCrewModalHandler(castAndCrew: EpisodeCastAndCrew) {
     setIsModalOpen((prev) => (prev === true ? false : true));
@@ -68,6 +66,13 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   function modalHandler(state: boolean) {
     setIsModalOpen(state);
   }
+
+  const scrollToTopList = () => {
+    if (listRef !== undefined) {
+      // @ts-ignore
+      listRef.current?.scrollToOffset({ animated: true, offset: 0 });
+    }
+  };
 
   const {
     isLoading: loadingProps,
@@ -119,6 +124,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
           tvMediaId={tvMediaId}
           tvMediaSeasons={tvMediaSeasons}
           selectedSeason={selectedSeason}
+          setScrollToTop={scrollToTopList}
           setNewSelectedSeason={setSelectedSeasonHandler}
         />
       ),
@@ -187,7 +193,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
               tvShowName={tvMediaName}
               castAndCrew={castAndCrewForModal}
             />
-            <FlatList
+            <FlashList
               ListHeaderComponent={
                 <View className="mb-5">
                   <LinearGradient
@@ -206,7 +212,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                   >
                     <View
                       className="border border-stone-700/60 rounded-md overflow-hidden"
-                      style={{ width: 133, aspectRatio: 2 / 3 }}
+                      style={{ width: "33%", aspectRatio: 2 / 3 }}
                     >
                       <Image
                         source={
@@ -228,7 +234,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                         style={{ width: "100%", height: "100%" }}
                       ></Image>
                     </View>
-                    <View className="w-[58%] justify-between">
+                    <View className="w-[61%] justify-between">
                       {/* Title */}
                       <Text className="text-text_highLight text-2xl font-bold">
                         {tvMediaName}
@@ -283,10 +289,10 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                 </View>
               }
               data={seasonDetails.episodes}
-              className=""
+              // @ts-ignore
+              ref={listRef}
               keyExtractor={(episode) => String(episode.id)}
-              maxToRenderPerBatch={4}
-              initialNumToRender={4}
+              estimatedItemSize={420}
               ItemSeparatorComponent={() => (
                 <View className="border border-b-stone-800 mx-10 my-4" />
               )}

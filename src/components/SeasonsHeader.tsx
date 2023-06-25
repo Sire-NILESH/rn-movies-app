@@ -15,6 +15,7 @@ interface IProps {
   tvMediaId: number;
   tvMediaSeasons: Season[];
   selectedSeason: Season;
+  setScrollToTop: () => void;
   setNewSelectedSeason: (newSelectedSeason: Season) => void;
 }
 
@@ -24,6 +25,10 @@ const SeasonsHeader: React.FC<IProps> = (props) => {
     const [season] = props.tvMediaSeasons.filter(
       (s) => s.season_number === seasonNumber
     );
+    if (season === props.selectedSeason) {
+      props.setScrollToTop();
+      return;
+    }
     props.setNewSelectedSeason(season);
   };
 

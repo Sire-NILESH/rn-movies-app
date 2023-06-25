@@ -109,7 +109,7 @@ const FranchiseCollection: React.FunctionComponent<IStackScreenProps> = (
                         style={{ width: "100%", height: "100%" }}
                       ></Image>
                     </View>
-                    <View className="w-[63%] justify-between">
+                    <View className="w-[61%] justify-between">
                       {/* Title */}
                       <Text className="text-text_highLight text-2xl font-bold">
                         {data.franchiseCollection.name}

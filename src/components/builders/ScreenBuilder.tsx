@@ -5,7 +5,6 @@ import {
   ScreenTypes,
 } from "../../../types/typings";
 import Banner from "../Banner";
-import Row from "../Row";
 import NothingToShow from "../NothingToShow";
 import Loader from "../ui/Loader";
 import React from "react";
@@ -17,6 +16,7 @@ import {
   tvScreenPlaylists,
 } from "../../config/homeScreensPlaylistsConfig";
 import { homeScreenCacheConfig } from "../../config/requestCacheConfig";
+import RowV2 from "../RowV2";
 
 interface IProps {
   screenType: ScreenTypes;
@@ -82,7 +82,7 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
                 {playlistsToFetch.map((p, i) => {
                   if (screenProps[i]?.length > 0) {
                     return (
-                      <Row
+                      <RowV2
                         key={p.name}
                         title={p.name}
                         medias={screenProps[i]}

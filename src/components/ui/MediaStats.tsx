@@ -43,7 +43,7 @@ const MediaStats: React.FC<IProps> = ({ media }) => {
       {/* STAT 2 */}
       <View className="flex-1 items-center py-2">
         <Text className="text-text_secondary text-lg font-bold text-center">
-          {isMovie(media) ? "Movie" : "TV show"}
+          {isMovie(media) ? "Movie" : "TV Show"}
         </Text>
         <View className="mt-1 flex-row items-center space-x-2 justify-center">
           <Ionicons

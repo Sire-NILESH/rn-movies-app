@@ -1,12 +1,7 @@
 import React, { useCallback } from "react";
-import {
-  IImgItemSettingsDB,
-  IPlaylist,
-  MovieMedia,
-  TvMedia,
-} from "../../types/typings";
+import { IImgItemSettingsDB, IPlaylist, Media } from "../../types/typings";
 import Thumbnail from "./Thumbnail";
-import { Text, View, FlatList, ListRenderItemInfo } from "react-native";
+import { Text, View, ListRenderItemInfo } from "react-native";
 import IconButton from "./ui/IconButton";
 import { Colors } from "./../utils/Colors";
 import { Pressable } from "react-native";
@@ -14,10 +9,12 @@ import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
 import { isMovie } from "./../utils/helpers/helper";
 import useNavigateTo from "../hooks/useNavigateTo";
 import { useThumbnailTextSettingHooks } from "../hooks/reduxHooks";
+import { FlashList } from "@shopify/flash-list";
+import { ThumbnailTextPermission } from "../config/disableThumbnailText";
 
 interface Props {
   title: string;
-  medias: TvMedia[] | MovieMedia[];
+  medias: Media[];
   playlist: IPlaylist;
   thumbnailQualitySettings?: IImgItemSettingsDB;
 }
@@ -28,48 +25,47 @@ const windowWidth = getDeviceDimensions("window").width;
 
 const rowItemWidth = windowWidth * 0.31 + 4;
 
-function Row({ title, medias, playlist, thumbnailQualitySettings }: Props) {
+function RowV2({ title, medias, playlist, thumbnailQualitySettings }: Props) {
+  const { isThumbnailText } = useThumbnailTextSettingHooks();
+
   return (
-    <View className="space-y-1 mb-5">
-      <View className="flex-row space-x-4 mb-1">
+    <View className="space-y-1 mb-6">
+      <View className="flex-row space-x-4 mb-2">
         <Text className="pl-5 text-sm font-semibold text-text_primary">
           {title}
         </Text>
       </View>
 
-      {isMovieArray(medias)
-        ? renderFlatList(
-            medias as MovieMedia[],
-            title,
-            playlist,
-            thumbnailQualitySettings
-          )
-        : renderFlatList(
-            medias as TvMedia[],
-            title,
-            playlist,
-            thumbnailQualitySettings
-          )}
+      <View className="pl-2">
+        {renderFlatList(
+          medias,
+          title,
+          playlist,
+          isThumbnailText,
+          thumbnailQualitySettings
+        )}
+      </View>
     </View>
   );
 }
 
-export default Row;
+export default RowV2;
 
 function renderFlatList(
-  medias: MovieMedia[] | TvMedia[],
+  medias: Media[],
   title: string,
   playlist: IPlaylist,
+  isThumbnailText: ThumbnailTextPermission,
   thumbnailQualitySettings?: IImgItemSettingsDB
 ) {
-  const { isThumbnailText } = useThumbnailTextSettingHooks();
+  //   const { isThumbnailText } = useThumbnailTextSettingHooks();
 
   // Navigation handler for child components like thumbnail and jumpTo button.
   // So every one of them wont have to calculate them separately.
   const { navigateTo } = useNavigateTo();
 
   const renderItem = useCallback(
-    (media: ListRenderItemInfo<MovieMedia | TvMedia>) => (
+    (media: ListRenderItemInfo<any>) => (
       <View className="ml-1 bg-tertiary rounded-md">
         <Thumbnail
           media={isMovie(media.item) ? media.item : media.item}
@@ -87,67 +83,28 @@ function renderFlatList(
   );
 
   return (
-    <>
-      {medias && isMovieArray(medias) ? (
-        <FlatList
-          maxToRenderPerBatch={20}
-          initialNumToRender={6}
-          ListFooterComponent={renderFooterItemFunction(
-            medias,
-            title,
-            playlist,
-            navigateTo
-          )}
-          bounces
-          className="pl-2 py-1"
-          data={medias}
-          getItemLayout={(_data, index) => {
-            return {
-              index: index,
-              length: rowItemWidth,
-              offset: rowItemWidth * index,
-            };
-          }}
-          renderItem={(media) => renderItem(media)}
-          keyExtractor={(media, i) => {
-            return `${media.id}-${i}`;
-          }}
-          horizontal
-          extraData={isThumbnailText}
-        />
-      ) : (
-        <FlatList
-          maxToRenderPerBatch={20}
-          initialNumToRender={6}
-          ListFooterComponent={renderFooterItemFunction(
-            medias,
-            title,
-            playlist,
-            navigateTo
-          )}
-          className="px-2 py-1"
-          data={medias}
-          getItemLayout={(_data, index) => {
-            return {
-              index: index,
-              length: rowItemWidth,
-              offset: rowItemWidth * index,
-            };
-          }}
-          renderItem={(media) => renderItem(media)}
-          keyExtractor={(media, i) => {
-            return `${media.id}-${i}`;
-          }}
-          horizontal
-          extraData={isThumbnailText}
-        />
+    <FlashList
+      ListFooterComponent={renderFooterItemFunction(
+        medias,
+        title,
+        playlist,
+        navigateTo
       )}
-    </>
+      bounces
+      data={medias}
+      estimatedItemSize={rowItemWidth}
+      renderItem={(media) => renderItem(media as any)}
+      keyExtractor={(media, i) => {
+        return `${media.id}-${i}`;
+      }}
+      horizontal
+      extraData={isThumbnailText}
+    />
   );
 }
 
 function renderFooterItemFunction(
-  medias: MovieMedia[] | TvMedia[],
+  medias: any[],
   title: string,
   playlist: IPlaylist,
   navigateTo: (screen: string, paramOption: Object) => void

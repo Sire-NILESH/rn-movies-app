@@ -1,9 +1,10 @@
 import { IImgItemSettingsDB, IReduxListMedia } from "../../types/typings";
-import { Text, View, FlatList, ListRenderItemInfo } from "react-native";
+import { Text, View } from "react-native";
 import { getDeviceDimensions } from "../utils/helpers/helper";
 import CollectionThumbnail from "./CollectionThumbnail";
 import React, { useCallback } from "react";
 import useNavigateTo from "../hooks/useNavigateTo";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 
 interface Props {
   title: string;
@@ -84,22 +85,21 @@ function renderFlatList(
   return (
     <>
       {medias.length > 0 ? (
-        <FlatList
-          numColumns={3}
-          bounces
-          className="pl-2 py-1"
-          maxToRenderPerBatch={4}
-          initialNumToRender={4}
-          ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
-          contentContainerStyle={{
-            width: "100%",
-          }}
-          data={medias}
-          renderItem={(media) => renderItem(media)}
-          keyExtractor={(media, i) => {
-            return `${media.mediaId}-${i}`;
-          }}
-        />
+        <View
+          className="w-full px-2 py-1"
+          style={{ minHeight: 12 + (windowWidth * 0.31 * 3) / 2 }}
+        >
+          <FlashList
+            numColumns={3}
+            ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
+            data={medias}
+            estimatedItemSize={(windowWidth * 0.31 * 3) / 2}
+            renderItem={(media) => renderItem(media)}
+            keyExtractor={(media, i) => {
+              return `${media.mediaId}-${i}`;
+            }}
+          />
+        </View>
       ) : null}
     </>
   );

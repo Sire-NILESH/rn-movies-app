@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from "react";
-import { View, Dimensions } from "react-native";
+import React, { useState, useCallback, memo } from "react";
+import { View, Dimensions, Platform } from "react-native";
 import * as ScreenOrientation from "expo-screen-orientation";
 import YoutubeIframe from "react-native-youtube-iframe";
 import { Trailer } from "../../types/typings";
@@ -13,7 +13,15 @@ interface IProps {
 // type YTState = "playing" | "ended" | "paused" | "buffering" | "unstarted";
 
 const YouTubePlayer: React.FC<IProps> = (props) => {
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState<boolean>(true);
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setPlaying(true);
+  //   }, 200);
+
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   const changeScreenOrientation = useCallback(async () => {
     await ScreenOrientation.lockAsync(
@@ -53,12 +61,19 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
       }}
     >
       {props.video?.key && (
-        <View className="justify-center">
+        <View className="">
           <YoutubeIframe
             height={(dimensionsForScreen.width * 9) / 16}
             width={dimensionsForScreen.width}
             play={playing}
             videoId={props.video.key}
+            webViewProps={{
+              androidLayerType:
+                Platform.OS === "android" && Platform.Version <= 22
+                  ? "hardware"
+                  : "none",
+            }}
+            webViewStyle={{ opacity: 0.99 }}
             // onChangeState={onStateChanged}
             onFullScreenChange={(status) => {
               if (status === true) changeScreenOrientation();
@@ -70,4 +85,4 @@ const YouTubePlayer: React.FC<IProps> = (props) => {
   );
 };
 
-export default YouTubePlayer;
+export default memo(YouTubePlayer);

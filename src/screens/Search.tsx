@@ -87,55 +87,6 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     };
   }, [searchQuery]);
 
-  // useEffect(() => {
-  //   async function fetchSearchQuery() {
-  //     const data = await searchRequestV2(
-  //       searchQuery ? searchQuery : "",
-  //       "multi",
-  //       1,
-  //       allowNsfwContent.nsfw
-  //     );
-  //     data && setSearchQueryResult(data);
-  //   }
-
-  //   const timer = setTimeout(() => {
-  //     try {
-  //       if (searchQuery != null && searchQuery.length >= 0) {
-  //         fetchSearchQuery();
-  //       }
-  //     } catch (err: any) {
-  //       // console.log(err.message);
-  //     }
-  //   }, 100);
-
-  //   return () => clearTimeout(timer);
-  // }, [searchQuery]);
-
-  // useEffect(() => {
-  //   const abortController: AbortController = new AbortController();
-
-  //   async function fetchSearchQuery() {
-  //     const data = await searchRequest(
-  //       searchQuery ? searchQuery : "",
-  //       "multi",
-  //       1,
-  //       allowNsfwContent.nsfw,
-  //       abortController
-  //     );
-  //     data && setSearchQueryResult(data);
-  //   }
-
-  //   try {
-  //     if (searchQuery != null && searchQuery.length >= 2) {
-  //       fetchSearchQuery();
-  //     }
-  //   } catch (err: any) {
-  //     // console.log(err.message);
-  //   }
-
-  //   return () => abortController.abort();
-  // }, [searchQuery]);
-
   // Header settings
   useLayoutEffect(() => {
     navigation.setOptions({

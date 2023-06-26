@@ -1,5 +1,5 @@
 import React, { useEffect, useState, memo, useCallback } from "react";
-import { View, FlatList, ListRenderItemInfo } from "react-native";
+import { View } from "react-native";
 import { ITopTabScreenProps } from "../library/NavigatorScreenProps/TopTabScreenProps";
 import { getDeviceDimensions } from "../utils/helpers/helper";
 import CollectionThumbnail from "../components/CollectionThumbnail";
@@ -9,6 +9,7 @@ import NothingToShow from "../components/NothingToShow";
 import useImageItemSetting from "../hooks/useImageItemSetting";
 import useNavigateTo from "../hooks/useNavigateTo";
 import Loader from "../components/ui/Loader";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 
 // Calculate and pass the dimensions from the parent(here) to the thumbnails. So every thumbnail wont have to calculate them separately.
 const windowWidth = getDeviceDimensions("window").width;
@@ -84,24 +85,32 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
   return (
     <View className="flex-1 bg-secondary">
       <View className="flex-1 items-center">
-        {medias?.length > 0 && thumbnailQuality ? (
-          <FlatList
-            bounces
-            data={medias}
-            ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
-            contentContainerStyle={{
-              minWidth: "96%",
-              paddingVertical: 8,
-            }}
-            renderItem={(media) => renderItem(media)}
-            keyExtractor={(media) => {
-              return String(media.mediaId);
-            }}
-            numColumns={3}
-          />
-        ) : (
-          <NothingToShow problemType="nothing" />
-        )}
+        <View
+          style={{
+            minWidth: "96%",
+            paddingVertical: 8,
+          }}
+        >
+          {medias?.length > 0 && thumbnailQuality ? (
+            <FlashList
+              bounces
+              data={medias}
+              ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
+              // contentContainerStyle={{
+              //   minWidth: "96%",
+              //   paddingVertical: 8,
+              // }}
+              estimatedItemSize={(windowWidth * 0.31 * 3) / 2}
+              renderItem={(media) => renderItem(media)}
+              keyExtractor={(media) => {
+                return String(media.mediaId);
+              }}
+              numColumns={3}
+            />
+          ) : (
+            <NothingToShow problemType="nothing" />
+          )}
+        </View>
       </View>
     </View>
   );

@@ -211,8 +211,8 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                     className="flex-row px-4 pt-4 justify-between items-start mb-5"
                   >
                     <View
-                      className="border border-stone-700/60 rounded-md overflow-hidden"
-                      style={{ width: "33%", aspectRatio: 2 / 3 }}
+                      className="border border-stone-700/40 rounded-lg overflow-hidden"
+                      style={{ width: "35%", aspectRatio: 2 / 3 }}
                     >
                       <Image
                         source={

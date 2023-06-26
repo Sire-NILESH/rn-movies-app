@@ -1,13 +1,16 @@
 import React, { useEffect, memo, useState, useCallback } from "react";
-import { ListRenderItemInfo, View } from "react-native";
+import { View } from "react-native";
 import { ITopTabScreenProps } from "../library/NavigatorScreenProps/TopTabScreenProps";
 import { IDBCollectionMedia } from "../../types/typings";
 import CollectionRow from "../components/CollectionRow";
-import { FlatList } from "react-native-gesture-handler";
 import { getMediasFromCollection } from "../storage/database";
 import NothingToShow from "../components/NothingToShow";
 import useImageItemSetting from "../hooks/useImageItemSetting";
 import Loader from "../components/ui/Loader";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
+import { getDeviceDimensions } from "../utils/helpers/helper";
+
+const windowWidth = getDeviceDimensions("window").width;
 
 const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   const { navigation, collectionType, screenMediaType } = props;
@@ -112,16 +115,18 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
 
   return (
     <View className="flex-1 bg-secondary">
-      <View className="flex-1">
+      <View
+        className="flex-1"
+        style={{ minHeight: 36 + (windowWidth * 0.31 * 3) / 2 }}
+      >
         {dateCollection &&
         medias.length > 0 &&
         thumbnailQuality !== undefined ? (
-          <FlatList
+          <FlashList
             className=""
-            maxToRenderPerBatch={1}
-            initialNumToRender={1}
             data={Object.keys(dateCollection)}
             keyExtractor={(dateKey) => dateKey}
+            estimatedItemSize={260}
             renderItem={(dateKeyObj) => renderItem(dateKeyObj)}
           />
         ) : (

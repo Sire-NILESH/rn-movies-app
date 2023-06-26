@@ -4,13 +4,7 @@ import React, {
   useLayoutEffect,
   useState,
 } from "react";
-import {
-  View,
-  FlatList,
-  Text,
-  StatusBar,
-  ListRenderItemInfo,
-} from "react-native";
+import { View, Text, StatusBar } from "react-native";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { IUrlObject, Trailer } from "../../types/typings";
 import { fetchTrailers } from "../utils/requests";
@@ -21,6 +15,7 @@ import TrailerVideoThumbnail from "../components/TrailerVideoThumbnail";
 import { Colors } from "../utils/Colors";
 import { useQuery } from "./../../node_modules/@tanstack/react-query";
 import { trailerScreenCacheConfig } from "../config/requestCacheConfig";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 
 const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const { navigation, route } = props;
@@ -61,10 +56,12 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
   const renderItem = useCallback((vObj: ListRenderItemInfo<Trailer>) => {
     return (
-      <TrailerCardView
-        video={vObj.item}
-        onPressHandler={onPressSetVideoHandler}
-      />
+      <View className="mb-3 mx-2">
+        <TrailerVideoThumbnail
+          video={vObj.item}
+          onPressHandler={onPressSetVideoHandler}
+        />
+      </View>
     );
   }, []);
 
@@ -88,54 +85,41 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           <NothingToShow title="No Videos available" problemType="nothing" />
         )}
 
-        {/* When some video is available, show the YT player */}
-        {!error && videos && videos.length > 0 && status === "success" && (
-          <View className="justify-start">
-            <YouTubePlayer video={selectedVideo} />
-          </View>
-        )}
-
-        {/* Title and date Dock */}
-        {!loading && !error && videos && videos.length > 0 && (
-          <View className="w-full bg-tertiary px-4 space-y-1 justify-center items-start py-5 [elevation:5] border-b border-b-neutral-800">
-            <Text className="text-text_primary font-bold" numberOfLines={3}>
-              {selectedVideo?.name}
-            </Text>
-            <View className="flex-row items-center">
-              <Text className="text-text_dark space-x-4">
-                {selectedVideo?.type}
-                {" • "}
-              </Text>
-              <Text className=" text-text_dark text-xs">
-                {selectedVideo?.published_at.substring(0, 10)}
-              </Text>
-            </View>
-          </View>
-        )}
-
         {/* All videos list */}
-        {videos && videos.length > 0 && !error ? (
-          <FlatList
-            data={videos}
-            initialNumToRender={5}
-            className="pt-4 px-2"
-            style={{
-              backgroundColor: Colors.primary,
-            }}
-            contentContainerStyle={{
-              justifyContent: "flex-start",
-            }}
-            keyExtractor={(itemObj) => itemObj.id}
-            ListFooterComponent={() => {
-              return (
-                <View
-                  className="h-2 w-full"
-                  style={{ backgroundColor: Colors.primary }}
-                ></View>
-              );
-            }}
-            renderItem={(vObj) => renderItem(vObj)}
-          />
+        {videos && videos.length > 0 && status === "success" ? (
+          <>
+            {/* YT Player */}
+            <View className="" style={{ width: "100%", aspectRatio: 16 / 9 }}>
+              <YouTubePlayer video={selectedVideo} />
+            </View>
+
+            {/* Title and date Dock */}
+            <View className="w-full bg-primary px-4 space-y-1 justify-center items-start py-5 [elevation:5] border-b border-b-neutral-800">
+              <Text className="text-text_primary font-bold" numberOfLines={3}>
+                {selectedVideo?.name}
+              </Text>
+              <View className="flex-row items-center">
+                <Text className="text-text_dark space-x-4">
+                  {selectedVideo?.type}
+                  {" • "}
+                </Text>
+                <Text className=" text-text_dark text-xs">
+                  {selectedVideo?.published_at.substring(0, 10)}
+                </Text>
+              </View>
+            </View>
+
+            <View className="flex-1 bg-secondary">
+              <FlashList
+                data={videos}
+                estimatedItemSize={200}
+                ListHeaderComponent={() => <View className="pt-3" />}
+                // contentContainerStyle={{ paddingVertical: 4 }}
+                keyExtractor={(itemObj) => itemObj.id}
+                renderItem={(vObj) => renderItem(vObj)}
+              />
+            </View>
+          </>
         ) : null}
       </View>
     </>
@@ -143,17 +127,3 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 };
 
 export default TrailerScreen;
-
-function TrailerCardView(props: {
-  video: Trailer;
-  onPressHandler: (video: Trailer) => void;
-}) {
-  return (
-    <View className="mb-3 mx-1">
-      <TrailerVideoThumbnail
-        video={props.video}
-        onPressHandler={props.onPressHandler}
-      />
-    </View>
-  );
-}

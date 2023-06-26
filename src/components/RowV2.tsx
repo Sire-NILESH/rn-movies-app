@@ -36,7 +36,7 @@ function RowV2({ title, medias, playlist, thumbnailQualitySettings }: Props) {
         </Text>
       </View>
 
-      <View className="pl-2">
+      <View className="">
         {renderFlatList(
           medias,
           title,
@@ -92,6 +92,7 @@ function renderFlatList(
       )}
       bounces
       data={medias}
+      ListHeaderComponent={() => <View className="pl-2 w-0" />}
       estimatedItemSize={rowItemWidth}
       renderItem={(media) => renderItem(media as any)}
       keyExtractor={(media, i) => {

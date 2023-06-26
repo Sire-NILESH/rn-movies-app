@@ -181,7 +181,9 @@ const PersonDetailModal: React.FC<IProps> = (props) => {
 
             <View className="mt-5 mb-3">
               <Text className="text-sm text-text_tertiary">
-                {personInfo.biography}
+                {personInfo.biography
+                  ? personInfo.biography
+                  : "Biography information unavailable"}
               </Text>
             </View>
 

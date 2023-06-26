@@ -20,7 +20,12 @@ interface IProps {
 const ProfileCard: React.FC<IProps> = (props) => {
   const p = props.creditPerson;
   return (
-    <View className="bg-secondary border border-neutral-800/80 space-y-3 w-36 rounded-lg justify-start overflow-hidden">
+    <View
+      className="bg-secondary border border-neutral-800/80 space-y-3 w-36 rounded-lg justify-start overflow-hidden"
+      style={{
+        aspectRatio: 9 / 15.8,
+      }}
+    >
       <View className="h-full w-full items-center space-y-2 py-3 px-1">
         <View
           className="rounded-md justify-center"

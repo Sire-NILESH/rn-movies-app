@@ -37,7 +37,7 @@ const CastAndCrewModal: React.FC<IProps> = (props) => {
         {/* HEADER */}
         <View className="mt-1 flex-row items-center justify-between h-[42] px-[20]">
           {/* Header Title */}
-          <View className="flex-row items-center space-x-2">
+          <View className="w-[78%] flex-row items-center space-x-2">
             <Text
               className="text-text_highLight text-lg font-bold"
               numberOfLines={1}
@@ -46,7 +46,7 @@ const CastAndCrewModal: React.FC<IProps> = (props) => {
             </Text>
           </View>
           {/* Header Buttons */}
-          <View className="flex-row justify-between ">
+          <View className="w-[15%] flex-row justify-end ">
             <View className="rounded-full overflow-hidden">
               <Pressable
                 onPress={() => {

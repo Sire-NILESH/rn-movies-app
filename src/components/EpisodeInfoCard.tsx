@@ -13,6 +13,7 @@ interface IProps {
   // isWatched: boolean;
   castandCrewModalHandler: (castAndCrew: EpisodeCastAndCrew) => void;
   navigateTo: (screen: string, paramOption: Object) => void;
+  isLast: boolean;
 }
 
 const EpisodeInfoCard: React.FC<IProps> = ({
@@ -21,6 +22,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({
   // isWatched,
   castandCrewModalHandler,
   navigateTo,
+  isLast,
 }) => {
   const directedBy = episode.crew
     .filter((c) => c.job === "Director")
@@ -29,7 +31,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({
     .join(",  ");
 
   return (
-    <View className="py-3 justify-between">
+    <View className="justify-between">
       {/* TITLE AND EPISODE NUMBER */}
       <View className="flex-row items-center mx-3 space-x-2 mb-3">
         <Text className="ml-2 text-text_highLight w-[90%]">
@@ -177,6 +179,13 @@ const EpisodeInfoCard: React.FC<IProps> = ({
           </View>
         </View>
       </View>
+
+      {/* DIVIDER */}
+      {
+        <View
+          className={`${!isLast ? "border border-b-stone-800" : ""} mx-10 my-6`}
+        />
+      }
     </View>
   );
 };

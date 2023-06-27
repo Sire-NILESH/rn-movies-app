@@ -94,7 +94,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             </View>
 
             {/* Title and date Dock */}
-            <View className="w-full bg-primary px-4 space-y-1 justify-center items-start py-5 [elevation:5] border-b border-b-neutral-800">
+            <View className="w-full bg-tertiary px-4 space-y-1 justify-center items-start py-5 [elevation:5] border-b border-b-neutral-800">
               <Text className="text-text_primary font-bold" numberOfLines={3}>
                 {selectedVideo?.name}
               </Text>
@@ -109,7 +109,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               </View>
             </View>
 
-            <View className="flex-1 bg-secondary">
+            <View className="flex-1 bg-primary">
               <FlashList
                 data={videos}
                 estimatedItemSize={200}

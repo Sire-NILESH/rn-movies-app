@@ -109,9 +109,12 @@ const FranchiseCollection: React.FunctionComponent<IStackScreenProps> = (
                         style={{ width: "100%", height: "100%" }}
                       ></Image>
                     </View>
-                    <View className="w-[61%] justify-between">
+                    <View className="w-[59%] justify-between">
                       {/* Title */}
-                      <Text className="text-text_highLight text-2xl font-bold">
+                      <Text
+                        className="text-text_highLight text-2xl font-bold"
+                        numberOfLines={3}
+                      >
                         {data.franchiseCollection.name}
                       </Text>
                       <View className="mt-2">

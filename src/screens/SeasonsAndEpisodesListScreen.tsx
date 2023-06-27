@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { View, Text, Image, StatusBar } from "react-native";
 import React, { useLayoutEffect, useState, useRef } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
@@ -90,6 +90,10 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
     setSelectedSeason(newSelectedSeason);
   }
 
+  // useEffect(() => {
+  //   scrollToTopList();
+  // }, [seasonDetails]);
+
   // FETCHING ALL WATCHED EPISODES OF A SEASON IN BULK
   // useEffect(() => {
   //   const loadWatchedEpisodes = async () => {
@@ -153,6 +157,11 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
             // }
             castandCrewModalHandler={castandCrewModalHandler}
             navigateTo={navigateTo}
+            isLast={
+              episodeObj.index === seasonDetails.episodes.length - 1
+                ? true
+                : false
+            }
           />
         );
       }
@@ -195,7 +204,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
             />
             <FlashList
               ListHeaderComponent={
-                <View className="mb-5">
+                <View className="mb-8">
                   <LinearGradient
                     colors={[
                       // "rgba(147, 51, 234, 0.5)",
@@ -234,9 +243,12 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
                         style={{ width: "100%", height: "100%" }}
                       ></Image>
                     </View>
-                    <View className="w-[61%] justify-between">
+                    <View className="w-[59%] justify-between">
                       {/* Title */}
-                      <Text className="text-text_highLight text-2xl font-bold">
+                      <Text
+                        className="text-text_highLight text-2xl font-bold"
+                        numberOfLines={3}
+                      >
                         {tvMediaName}
                       </Text>
                       <View className="mt-2">
@@ -293,10 +305,12 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
               ref={listRef}
               keyExtractor={(episode) => String(episode.id)}
               estimatedItemSize={420}
-              ItemSeparatorComponent={() => (
-                <View className="border border-b-stone-800 mx-10 my-4" />
-              )}
+              // ItemSeparatorComponent={() => (
+              //   <View className="border border-b-stone-800 mx-10 my-4" />
+              // )}
               renderItem={(episodeObj) => renderItem(episodeObj)}
+              ListFooterComponent={() => <View className="mt-1 h-0 w-full" />}
+              sc
             />
           </View>
         ) : null}

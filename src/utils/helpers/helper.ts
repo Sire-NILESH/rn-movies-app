@@ -509,6 +509,7 @@ export function buildDiscoverPlaylist(
     queryParams: {
       language: "en-US",
     },
+    additionalFiltersUnsupported: true,
   };
 }
 

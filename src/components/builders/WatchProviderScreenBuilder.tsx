@@ -124,7 +124,7 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
     <View className="flex-1 relative bg-secondary min-w-full w-full items-center">
       {/* Genre Tags Scrollable Row on top, if user selected some genres */}
       {genreIdsFromFilter && genreIdsFromFilter.length > 0 ? (
-        <View className="absolute z-50 rounded-xl my-2 w-[96%] py-2 bg-neutral-900/90 overflow-hidden border border-neutral-700/80">
+        <View className="absolute z-50 rounded-xl my-2 w-[97%] py-2 bg-neutral-900/90 overflow-hidden border border-neutral-700/50">
           <View>
             <GenreTags
               genreIdList={genreIdsFromFilter}

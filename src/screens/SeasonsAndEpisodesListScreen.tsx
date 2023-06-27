@@ -1,9 +1,7 @@
-import { useCallback, useEffect } from "react";
-import { View, Text, Image, StatusBar } from "react-native";
+import { View, StatusBar } from "react-native";
 import React, { useLayoutEffect, useState, useRef } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import {
-  Episode,
   EpisodeCastAndCrew,
   // IWatchedEpisodesLookup,
   Season,
@@ -12,17 +10,13 @@ import {
 import { fetchSeasonDetails } from "../utils/requests";
 import { Colors } from "../utils/Colors";
 import SeasonsHeader from "../components/SeasonsHeader";
-import { LinearGradient } from "expo-linear-gradient";
-import EpisodeInfoCard from "../components/EpisodeInfoCard";
 import NothingToShow from "../components/NothingToShow";
-import { dateFormatter, showErrorToast } from "../utils/helpers/helper";
+import { showErrorToast } from "../utils/helpers/helper";
 import Loader from "../components/ui/Loader";
 import { useQuery } from "./../../node_modules/@tanstack/react-query";
 import CastAndCrewModal from "../components/ui/CastAndCrewModal";
-import useNavigateTo from "../hooks/useNavigateTo";
 import { episodesScreenCacheConfig } from "../config/requestCacheConfig";
-import ThemeButton from "../components/ui/ThemeButton";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
+import EpisodeList from "../components/EpisodeList";
 // import { getAllWatchedEpisoesOfShowsSeason } from "../storage/database";
 
 const SeasonsAndEpisodesListScreen: React.FunctionComponent<
@@ -54,9 +48,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
     useState<EpisodeCastAndCrew>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   // const listRef = useRef<LegacyRef<FlashList<Episode>> | undefined>(null);
-  const listRef = useRef<React.LegacyRef<FlashList<Episode>> | undefined>(
-    undefined
-  );
+  const listRef = useRef<any>(undefined);
 
   function castandCrewModalHandler(castAndCrew: EpisodeCastAndCrew) {
     setIsModalOpen((prev) => (prev === true ? false : true));
@@ -135,40 +127,10 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
     });
   }, [selectedSeason, tvMediaSeasons]);
 
-  // So every one of them wont have to calculate them separately.
-  const { navigateTo } = useNavigateTo();
-
   // Show alert on error
   if (errorLoadingProps && !loadingProps) {
     showErrorToast("Error !", "Something went wrong while loading content.");
   }
-
-  const renderItem = useCallback(
-    (episodeObj: ListRenderItemInfo<Episode>) => {
-      if (seasonDetails) {
-        return (
-          <EpisodeInfoCard
-            episode={episodeObj.item}
-            seasonId={seasonDetails.id}
-            // isWatched={
-            //   watchedEpisodes[episodeObj.item.id] !== undefined
-            //     ? true
-            //     : false
-            // }
-            castandCrewModalHandler={castandCrewModalHandler}
-            navigateTo={navigateTo}
-            isLast={
-              episodeObj.index === seasonDetails.episodes.length - 1
-                ? true
-                : false
-            }
-          />
-        );
-      }
-      return null;
-    },
-    [seasonDetails]
-  );
 
   /* if the season doesnt have a poster we use the old poster that was used in the MoreInfoScreeen which was passed here as tvMediaPosterPathOld */
 
@@ -202,115 +164,14 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
               tvShowName={tvMediaName}
               castAndCrew={castAndCrewForModal}
             />
-            <FlashList
-              ListHeaderComponent={
-                <View className="mb-8">
-                  <LinearGradient
-                    colors={[
-                      // "rgba(147, 51, 234, 0.5)",
-                      // "rgba(147, 51, 234, 0.3)",
-                      // Colors.black,
-                      "rgba(163, 163, 163, 0.5)",
-                      "rgba(163, 163, 163, 0.3)",
-                      Colors.black,
-                      // "rgba(22, 101, 52, 0.5)",
-                      // "rgba(22, 101, 52, 0.3)",
-                      // Colors.black,
-                    ]}
-                    className="flex-row px-4 pt-4 justify-between items-start mb-5"
-                  >
-                    <View
-                      className="border border-stone-700/40 rounded-lg overflow-hidden"
-                      style={{ width: "35%", aspectRatio: 2 / 3 }}
-                    >
-                      <Image
-                        source={
-                          tvMediaSeasons[selectedSeason.season_number]
-                            ?.poster_path
-                            ? {
-                                uri: `https://image.tmdb.org/t/p/w500${
-                                  tvMediaSeasons[selectedSeason.season_number]
-                                    ?.poster_path
-                                }`,
-                              }
-                            : tvMediaPosterPathOld
-                            ? {
-                                uri: `https://image.tmdb.org/t/p/w500${tvMediaPosterPathOld}`,
-                              }
-                            : require("../../assets/images/placeholders/posterPlaceHolder.png")
-                        }
-                        resizeMode="cover" //similar to web, "cover", "contain", etc.
-                        style={{ width: "100%", height: "100%" }}
-                      ></Image>
-                    </View>
-                    <View className="w-[59%] justify-between">
-                      {/* Title */}
-                      <Text
-                        className="text-text_highLight text-2xl font-bold"
-                        numberOfLines={3}
-                      >
-                        {tvMediaName}
-                      </Text>
-                      <View className="mt-2">
-                        <Text className="text-text_secondary text-lg font-semibold">
-                          Season{" "}
-                          {seasonDetails.season_number === 0
-                            ? "Extras"
-                            : seasonDetails.season_number}
-                        </Text>
-                      </View>
-                      <View className="flex-row space-x-2 items-center mt-auto">
-                        <Text className="text-text_tertiary text">
-                          {seasonDetails.episodes.length} Episodes,
-                        </Text>
-                        <Text className="text-text_tertiary text">
-                          {dateFormatter(seasonDetails.air_date)}
-                        </Text>
-                      </View>
-
-                      <View className="flex-1 justify-end w-28">
-                        <ThemeButton
-                          text={"Trailer"}
-                          iconName={"md-logo-youtube"}
-                          // /tv/{series_id}/season/{season_number}/videos
-                          onPressHandler={() => {
-                            navigateTo("Trailer", {
-                              name: "Trailer Videos",
-                              url: `/tv/${seasonDetails.episodes[0].show_id}/season/${seasonDetails.season_number}/videos`,
-                              queryParams: {
-                                language: "en-US",
-                              },
-                            });
-                          }}
-                        />
-                      </View>
-                    </View>
-                  </LinearGradient>
-
-                  {/* Overview */}
-                  {seasonDetails.overview ? (
-                    <View className="mb-2 px-4 space-y-2">
-                      <Text className="text-text_primary font-bold">
-                        Overview:{" "}
-                      </Text>
-                      <Text className="text-text_tertiary text-sm">
-                        {seasonDetails.overview}
-                      </Text>
-                    </View>
-                  ) : null}
-                </View>
-              }
-              data={seasonDetails.episodes}
-              // @ts-ignore
-              ref={listRef}
-              keyExtractor={(episode) => String(episode.id)}
-              estimatedItemSize={420}
-              // ItemSeparatorComponent={() => (
-              //   <View className="border border-b-stone-800 mx-10 my-4" />
-              // )}
-              renderItem={(episodeObj) => renderItem(episodeObj)}
-              ListFooterComponent={() => <View className="mt-1 h-0 w-full" />}
-              sc
+            <EpisodeList
+              seasonDetails={seasonDetails}
+              selectedSeason={selectedSeason}
+              tvMediaName={tvMediaName}
+              tvMediaPosterPathOld={tvMediaPosterPathOld}
+              tvMediaSeasons={tvMediaSeasons}
+              castandCrewModalHandler={castandCrewModalHandler}
+              listRef={listRef}
             />
           </View>
         ) : null}

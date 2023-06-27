@@ -84,6 +84,11 @@ function Thumbnail({
 
   const mediaType = isMovie(media) ? "movie" : "tv";
 
+  const mediaDate =
+    media && isMovie(media)
+      ? media.release_date?.split("-")[0]
+      : media.first_air_date?.split("-")[0];
+
   return (
     <View
       className="relative overflow-hidden bg-neutral-900"
@@ -155,11 +160,9 @@ function Thumbnail({
                   isIPersonTVMedia(media) ? "font-semibold" : ""
                 }`}
               >
-                {media && isMovie(media)
-                  ? media.release_date?.split("-")[0]
-                  : media.first_air_date?.split("-")[0]}{" "}
+                {media && mediaDate}{" "}
                 {isIPersonTVMedia(media) && media["episode_count"] !== undefined
-                  ? `| ${media["episode_count"]} ${
+                  ? `${mediaDate && "| "}${media["episode_count"]} ${
                       Number(media["episode_count"]) > 1
                         ? "episodes"
                         : "episode"

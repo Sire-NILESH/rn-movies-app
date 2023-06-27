@@ -2,25 +2,14 @@ import { View, Text, Modal, Pressable, ScrollView } from "react-native";
 import { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Colors } from "../../utils/Colors";
-import {
-  IGenreSortBy,
-  IQueryParams,
-  IUrlObject,
-  MediaTypes,
-  TReleaseYearConstraint,
-} from "../../../types/typings";
+import { IUrlObject, MediaTypes } from "../../../types/typings";
 import {
   moviePlaylist,
   tvPlaylist,
 } from "../../config/customPlaylistsAndGenresList";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import {
-  useDefaultLanguageHooks,
-  useDefaultYearHooks,
-} from "../../hooks/reduxHooks";
 import FeaturedPlaylists from "./FeaturedPlaylists";
 import MediaGenresSelect from "./MediaGenresSelect";
-import { addReleaseAndAirDateFilters } from "../../utils/helpers/helper";
 import useFilterSectionHooks from "../../hooks/useFilterSectionHooks";
 
 interface IProps {

@@ -27,7 +27,7 @@ const TopTabsPersonMediasNavigator: React.FC<IProps> = (props) => {
         tabBarAndroidRipple: { borderless: false },
         tabBarPressColor: "#e9e9e9",
         tabBarIndicatorStyle: { backgroundColor: Colors.neutral[100] },
-        // lazy: true,
+        lazy: true,
       }}
     >
       {/* Laying out all the TopTabs screens from routes */}

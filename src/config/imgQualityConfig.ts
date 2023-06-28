@@ -1,9 +1,45 @@
 import {
+  IImageItemQualitySetting,
   IImageQuality,
   ImageItemTypes,
   TImgQualities,
   TImgQualityValues,
 } from "../../types/typings";
+
+export const initialImageQualitiesSettingsObj: IImageItemQualitySetting = {
+  thumbnail: {
+    //  name: "Thumbnail",
+    key: "thumbnail",
+    imgQuality: {
+      quality: "Very high",
+      value: "500",
+    },
+  },
+  watchProviders: {
+    //  name: "Watch Providers",
+    key: "watchProviders",
+    imgQuality: {
+      quality: "Very high",
+      value: "500",
+    },
+  },
+  banner: {
+    //  name: "Banner",
+    key: "banner",
+    imgQuality: {
+      quality: "Very high",
+      value: "500",
+    },
+  },
+  companies: {
+    //  name: "TV Network/Producers",
+    key: "companies",
+    imgQuality: {
+      quality: "Very high",
+      value: "500",
+    },
+  },
+};
 
 export const allImgItemsType: ImageItemTypes[] = [
   "banner",

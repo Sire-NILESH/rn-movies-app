@@ -4,6 +4,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { Colors } from "../../utils/Colors";
 import { IUrlObject } from "../../../types/typings";
 import { watchProvidersTopTabRoutes } from "../../library/NavigationRoutes/WatchProvidersTopTabRoutes";
+import { Ionicons } from "@expo/vector-icons";
 
 interface IProps {
   urlObject: IUrlObject;

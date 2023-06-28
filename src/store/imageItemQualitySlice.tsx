@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { IImageItemQualitySetting } from "../../types/typings";
-import { initialImageQualitiesSettingsObj } from "../utils/helpers/helper";
+import { initialImageQualitiesSettingsObj } from "../config/imgQualityConfig";
 
 // Create the Slice
 const imageQualitySlice = createSlice({

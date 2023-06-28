@@ -5,7 +5,6 @@ import {
   ICreditPerson,
   IDBEpisode,
   IDropdownYearsObj,
-  IImageItemQualitySetting,
   IImageQuality,
   INetworkIds,
   IPersonTVMedia,
@@ -44,6 +43,7 @@ export function isMovieMediaHybrid(
   );
 }
 
+// ----------------- TS infer --------------------
 export function isTv(
   media:
     | MovieMedia
@@ -184,6 +184,7 @@ export function isMovieExtended(
   );
 }
 
+// ----------------- Utility functions --------------------
 export function formatCurrencyNumbers(num: number): string {
   if (num >= 1000000000) {
     return (
@@ -224,12 +225,6 @@ export function calculateProfitOrLoss(
     return "";
   }
 }
-
-// export function isTrailer(
-//   media: MovieMedia | TvMedia | null
-// ): media is MovieMedia {
-//   return media !== null && (media as MovieMedia).title !== undefined;
-// }
 
 // Getting the history/last screen
 // const routes = navigation.getState()?.routes;
@@ -280,35 +275,6 @@ export const watchedEpisodeObjBuilder = (
     watchedDate: Date.now(),
   };
 };
-
-export function showErrorAlert(title?: string, message?: string) {
-  Alert.alert(
-    "Error!",
-    title ? title : "Something went wrong, please try again later",
-    [{ text: "Okay", style: "destructive" }]
-  );
-}
-
-export const showSuccessToast = (title: string, message: string) => {
-  Toast.show({
-    type: "success",
-    text1: title,
-    text2: message,
-  });
-};
-
-export const showErrorToast = (title?: string, message?: string) => {
-  Toast.show({
-    type: "error",
-    text1: title !== undefined ? title : "Error !",
-    text2:
-      message !== undefined ? message : "Something went wrong. Try again later",
-  });
-};
-
-export function showGenericErrorToast() {
-  showErrorToast("Error !", "Something went wrong, please try again later.");
-}
 
 export const addReleaseAndAirDateFilters = (
   filters: IQueryParams,
@@ -396,41 +362,37 @@ export function capitalizeString(str: string) {
   return str.charAt(0).toUpperCase() + str.substring(1);
 }
 
-export const initialImageQualitiesSettingsObj: IImageItemQualitySetting = {
-  thumbnail: {
-    //  name: "Thumbnail",
-    key: "thumbnail",
-    imgQuality: {
-      quality: "Very high",
-      value: "500",
-    },
-  },
-  watchProviders: {
-    //  name: "Watch Providers",
-    key: "watchProviders",
-    imgQuality: {
-      quality: "Very high",
-      value: "500",
-    },
-  },
-  banner: {
-    //  name: "Banner",
-    key: "banner",
-    imgQuality: {
-      quality: "Very high",
-      value: "500",
-    },
-  },
-  companies: {
-    //  name: "TV Network/Producers",
-    key: "companies",
-    imgQuality: {
-      quality: "Very high",
-      value: "500",
-    },
-  },
+// ----------------- TOAST AND ALERTS --------------------
+export function showErrorAlert(title?: string, message?: string) {
+  Alert.alert(
+    "Error!",
+    title ? title : "Something went wrong, please try again later",
+    [{ text: "Okay", style: "destructive" }]
+  );
+}
+
+export const showSuccessToast = (title: string, message: string) => {
+  Toast.show({
+    type: "success",
+    text1: title,
+    text2: message,
+  });
 };
 
+export const showErrorToast = (title?: string, message?: string) => {
+  Toast.show({
+    type: "error",
+    text1: title !== undefined ? title : "Error !",
+    text2:
+      message !== undefined ? message : "Something went wrong. Try again later",
+  });
+};
+
+export function showGenericErrorToast() {
+  showErrorToast("Error !", "Something went wrong, please try again later.");
+}
+
+// ----------------- CONSTANTS AND BUILDERS --------------------
 export const networkIds: INetworkIds = {
   Netflix: 213,
   HBO: 49,
@@ -484,6 +446,7 @@ export const productionComapnyIds = {
   // ],
 };
 
+// ----------------- PLAYLIST BUILDERS --------------------
 export function buildTvPlaylist(
   name: string,
   networkId: keyof INetworkIds

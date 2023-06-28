@@ -17,7 +17,7 @@ const TopTabsTileListNavigator: React.FC<IProps> = (props) => {
   return (
     <TopTabs.Navigator
       screenOptions={{
-        tabBarLabelStyle: { fontSize: 12 },
+        tabBarLabelStyle: { fontSize: 12, fontWeight: "500", letterSpacing: 1 },
         tabBarStyle: { backgroundColor: Colors.tertiary },
         tabBarActiveTintColor: Colors.text_primary,
         tabBarInactiveTintColor: Colors.text_dark,

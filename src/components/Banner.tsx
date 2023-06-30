@@ -10,7 +10,7 @@ import {
 import CustomButton from "./ui/CustomButton";
 import { Colors } from "./../utils/Colors";
 import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { dateFormatter, isMovie } from "./../utils/helpers/helper";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";

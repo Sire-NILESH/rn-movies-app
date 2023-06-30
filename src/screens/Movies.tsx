@@ -4,11 +4,21 @@ import { IDrawerScreenProps } from "../library/NavigatorScreenProps/DrawerScreen
 import { View } from "react-native";
 import useImageItemSetting from "../hooks/useImageItemSetting";
 import ScreenBuilder from "../components/builders/ScreenBuilder";
-import HeaderWrapperV2 from "../components/Header/HeaderWrapper";
+import HeaderWrapper from "../components/Header/HeaderWrapper";
+import {
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from "react-native-reanimated";
 
 const MoviesScreen: React.FC<IDrawerScreenProps> = (props) => {
   const { navigation } = props;
   const { imgItemsSetting } = useImageItemSetting("thumbnail");
+
+  const scrollY = useSharedValue(0);
+
+  const scrollHandler = useAnimatedScrollHandler((event) => {
+    scrollY.value = event.contentOffset.y;
+  });
 
   // Header settings
   useLayoutEffect(() => {
@@ -22,18 +32,24 @@ const MoviesScreen: React.FC<IDrawerScreenProps> = (props) => {
       header: () => {
         // return <Header translateY={translateY} />;
         return (
-          <HeaderWrapperV2 title={"Movies"}>
+          <HeaderWrapper title={"Movies"} scrollY={scrollY}>
             <View className="">
               <HeaderSearchButton searchCategory="movie" />
             </View>
-          </HeaderWrapperV2>
+          </HeaderWrapper>
         );
       },
       headerTransparent: true,
     });
-  }, []);
+  }, [scrollY]);
 
-  return <ScreenBuilder screenType="movie" imgItemsSetting={imgItemsSetting} />;
+  return (
+    <ScreenBuilder
+      screenType="movie"
+      imgItemsSetting={imgItemsSetting}
+      scrollHandler={scrollHandler}
+    />
+  );
   // return <ScreenBuilderV2 screenType="movie" />;
 };
 

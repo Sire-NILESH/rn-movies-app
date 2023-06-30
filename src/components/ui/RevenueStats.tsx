@@ -17,7 +17,10 @@ const RevenueStats: React.FC<IProps> = ({ budget, revenue }) => {
   const percentGaninsNumber = Number(percentGains.split("%")[0]);
 
   return (
-    <View className="border border-stone-800/80 rounded-xl bg-stone-900/70 mx-4 mt-4 flex-row items-center justify-between space-x-2 divide-x-[3px] divide-stone-800/60">
+    <View
+      className="border border-stone-800/80 rounded-xl mx-4 mt-4 flex-row items-center justify-between space-x-2 divide-x-[3px] divide-stone-800/60"
+      style={{ backgroundColor: "rgb(20, 18, 16)" }}
+    >
       {/* STAT 1 */}
       <View className="flex-1 items-center py-3">
         <Text className="text-text_secondary text-lg font-bold text-center">

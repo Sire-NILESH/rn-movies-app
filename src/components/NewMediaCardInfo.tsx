@@ -1,5 +1,5 @@
 import { View, Text, Image, StyleSheet } from "react-native";
-import React, { useMemo } from "react";
+import React from "react";
 import {
   MovieMedia,
   MovieMediaHybrid,
@@ -10,15 +10,14 @@ import {
   dateFormatter,
   isMovie,
   isMovieExtended,
-  isMovieMediaHybrid,
   isTvExtended,
-  isTvMediaHybrid,
   toHoursAndMinutes,
 } from "../utils/helpers/helper";
 import { LinearGradient } from "expo-linear-gradient";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "./../utils/Colors";
 import ImagePlaceholder from "./ui/ImagePlaceholder";
+import { by639_1 } from "iso-language-codes";
 
 interface IProps {
   media: MovieMedia | TvMedia | MovieMediaHybrid | TvMediaHybrid;
@@ -31,22 +30,6 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
   const imageUrl = media.backdrop_path
     ? `https://image.tmdb.org/t/p/w${posterImgQuality}${media.backdrop_path}`
     : `https://image.tmdb.org/t/p/w${posterImgQuality}${media.poster_path}`;
-
-  const mediaCertificate = useMemo(() => {
-    let certification;
-
-    if (isMovieMediaHybrid(media) && media.release_dates) {
-      certification = media.release_dates.results
-        .find((releaseDate) => releaseDate.iso_3166_1 === "US")
-        ?.release_dates.find((rd) => rd.certification !== "")?.certification;
-    } else if (isTvMediaHybrid(media) && media.content_ratings) {
-      certification = media.content_ratings.results.find(
-        (contentRating) => contentRating.iso_3166_1 === "US"
-      )?.rating;
-    }
-
-    return certification;
-  }, []);
 
   return (
     <View className="mt-5 mx-3 justify-between rounded-2xl border border-stone-800/80 overflow-hidden">
@@ -142,25 +125,23 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
             </Text>
           </View>
 
-          <View className="flex-row items-center space-x-2 px-4">
-            <MaterialCommunityIcons
-              name="file-certificate-outline"
-              size={22}
-              color={Colors.text_primary}
-            />
-            <View className="min-w-[28px] border border-green-50 px-1 rounded-sm items-center">
+          {media.original_language ? (
+            <View className="flex-row items-center space-x-2 px-4">
+              <Ionicons
+                name="language-outline"
+                size={18}
+                color={Colors.text_primary}
+              />
               <Text
-                className="text-xs text-text_highLight font-bold"
+                className="text-text_highLight font-bold"
                 style={styles.textShadow}
               >
-                {mediaCertificate
-                  ? mediaCertificate
-                  : media.adult
-                  ? "ADULT"
-                  : "--"}
+                {by639_1[media.original_language]?.name
+                  ? by639_1[media.original_language]?.name
+                  : media.original_language}
               </Text>
             </View>
-          </View>
+          ) : null}
 
           {isMovieExtended(media) && (
             <View className="flex-row items-center space-x-2 px-4">

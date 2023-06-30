@@ -35,7 +35,7 @@ const CollectionCard: React.FC<IProps> = ({
       <View className="flex-row items-start space-x-5">
         {/* IMAGE CARD */}
         <View
-          className="ml-2 rounded-xl border border-stone-800 overflow-hidden"
+          className="ml-2 rounded-lg border border-stone-800 overflow-hidden"
           style={{ width: "33%", aspectRatio: 2 / 3 }}
         >
           <Image

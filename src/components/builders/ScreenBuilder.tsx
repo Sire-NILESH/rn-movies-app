@@ -17,10 +17,12 @@ import {
 } from "../../config/homeScreensPlaylistsConfig";
 import { homeScreenCacheConfig } from "../../config/requestCacheConfig";
 import RowV2 from "../RowV2";
+import Animated from "react-native-reanimated";
 
 interface IProps {
   screenType: ScreenTypes;
   imgItemsSetting: IImgItemSettingsDB | undefined;
+  scrollHandler?: any;
 }
 
 function getPlaylistsToFetch(screenType: ScreenTypes) {
@@ -43,7 +45,11 @@ function getPlaylistsToFetch(screenType: ScreenTypes) {
   return playlistsToFetch;
 }
 
-const ScreenBuilder: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
+const ScreenBuilder: React.FC<IProps> = ({
+  screenType,
+  imgItemsSetting,
+  scrollHandler,
+}) => {
   const playlistsToFetch = getPlaylistsToFetch(screenType);
 
   const { data: screenProps, status } = useQuery({
@@ -75,7 +81,11 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
         //   when no error and props
         <View className="flex-1">
           {screenProps ? (
-            <ScrollView className="space-y-10">
+            <Animated.ScrollView
+              className="space-y-10"
+              onScroll={scrollHandler}
+              scrollEventThrottle={16}
+            >
               <Banner mediaList={getNonEmptyArray()} />
 
               <View className="pt-4">
@@ -93,7 +103,7 @@ const ScreenBuilder: React.FC<IProps> = ({ screenType, imgItemsSetting }) => {
                   } else null;
                 })}
               </View>
-            </ScrollView>
+            </Animated.ScrollView>
           ) : null}
         </View>
       ) : null}

@@ -15,12 +15,14 @@ import useNavigateTo from "../hooks/useNavigateTo";
 interface IProps {
   mediaId: number;
   mediaType: MediaTypes;
+  mediaTitle: string;
   watchProvidersData: IAllWatchProviderData;
   imgQuality?: string;
 }
 
 const WatchProviders: React.FC<IProps> = ({
   watchProvidersData,
+  mediaTitle,
   imgQuality,
 }) => {
   const { defaultRegion } = useDefaultRegionHooks();
@@ -117,9 +119,18 @@ const WatchProviders: React.FC<IProps> = ({
       ) : null}
 
       {!watchProviders && (
-        <View className="flex-1 justify-center px-4">
-          <Text className="text-text_dark text-base text-center">
-            Currently no providers for this content in {currentCountry.name}
+        <View
+          className="items-center justify-center px-4 mx-2 rounded-xl h-[150]"
+          // style={{ backgroundColor: "rgb(16, 16, 16)" }}
+        >
+          <Text className="w-[60%] text-text_secondary text-base text-center font-bold mb-2">
+            Nothing to show...
+          </Text>
+          <Text
+            className="w-[85%] text-text_dark text-xs text-center"
+            style={{ lineHeight: 20 }}
+          >
+            {` Currently no known providers for '${mediaTitle}' was found for ${currentCountry.name} region`}
           </Text>
         </View>
       )}

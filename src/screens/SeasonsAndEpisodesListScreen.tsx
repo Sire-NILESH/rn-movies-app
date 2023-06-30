@@ -165,6 +165,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
               castAndCrew={castAndCrewForModal}
             />
             <EpisodeList
+              // key={selectedSeason.id}
               seasonDetails={seasonDetails}
               selectedSeason={selectedSeason}
               tvMediaName={tvMediaName}

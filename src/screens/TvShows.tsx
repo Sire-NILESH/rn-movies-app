@@ -5,18 +5,28 @@ import { IDrawerScreenProps } from "../library/NavigatorScreenProps/DrawerScreen
 import { View } from "react-native";
 import useImageItemSetting from "../hooks/useImageItemSetting";
 import HeaderWrapper from "../components/Header/HeaderWrapper";
+import {
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from "react-native-reanimated";
 
 const TvShowsScreen: React.FC<IDrawerScreenProps> = (props) => {
   const { navigation } = props;
   const { imgItemsSetting } = useImageItemSetting("thumbnail");
+
+  const scrollY = useSharedValue(0);
+
+  const scrollHandler = useAnimatedScrollHandler((event) => {
+    scrollY.value = event.contentOffset.y;
+  });
 
   // Header Settings
   useLayoutEffect(() => {
     navigation.setOptions({
       header: () => {
         return (
-          <HeaderWrapper title={"TV Shows"}>
-            <View className="mr-2">
+          <HeaderWrapper title={"TV Shows"} scrollY={scrollY}>
+            <View className="">
               <HeaderSearchButton searchCategory="tv" />
             </View>
           </HeaderWrapper>
@@ -24,9 +34,15 @@ const TvShowsScreen: React.FC<IDrawerScreenProps> = (props) => {
       },
       headerTransparent: true,
     });
-  }, []);
+  }, [scrollY]);
 
-  return <ScreenBuilder screenType="tv" imgItemsSetting={imgItemsSetting} />;
+  return (
+    <ScreenBuilder
+      screenType="tv"
+      imgItemsSetting={imgItemsSetting}
+      scrollHandler={scrollHandler}
+    />
+  );
 };
 
 export default memo(TvShowsScreen);

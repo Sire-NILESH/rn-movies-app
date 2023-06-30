@@ -142,13 +142,17 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             ) : null}
 
             {/* MEDIA IMAGE WITH STATS */}
-            <NewMediaCardInfo
-              media={media}
-              imgQuality={allImgItemsSettings?.banner?.value}
-            />
+            <View>
+              <NewMediaCardInfo
+                media={media}
+                imgQuality={allImgItemsSettings?.banner?.value}
+              />
+            </View>
 
             {/* POPULARITY AND MEDIATYPE INFO */}
-            <MediaStats media={media} />
+            <View className="h-[85px]">
+              <MediaStats media={media} />
+            </View>
 
             {isMovieExtended(media) && (media.budget || media.revenue) ? (
               <RevenueStats budget={media.budget} revenue={media.revenue} />
@@ -287,11 +291,14 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             )}
 
             {/* Platforms available on */}
-            <WatchProviders
-              mediaId={media.id}
-              mediaType={mediaType}
-              watchProvidersData={media["watch/providers"].results}
-            />
+            <View className="min-h-[250px]">
+              <WatchProviders
+                mediaId={media.id}
+                mediaType={mediaType}
+                mediaTitle={getTitle()}
+                watchProvidersData={media["watch/providers"].results}
+              />
+            </View>
           </View>
 
           {/* Footer, contains 'Similar' and 'Seasons and episodes' bttons */}

@@ -14,6 +14,10 @@ const WatchProviderStackScreen: React.FunctionComponent<IStackScreenProps> = (
   useLayoutEffect(() => {
     navigation.setOptions({
       title: urlObjectReceived.name,
+      headerShown: true,
+      // headerStyle: {
+      //   transform: [{ translateY: -60 }],
+      // },
     });
   }, []);
 

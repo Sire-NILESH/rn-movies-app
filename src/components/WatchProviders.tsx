@@ -124,13 +124,13 @@ const WatchProviders: React.FC<IProps> = ({
           // style={{ backgroundColor: "rgb(16, 16, 16)" }}
         >
           <Text className="w-[60%] text-text_secondary text-base text-center font-bold mb-2">
-            Nothing to show...
+            No Providers...
           </Text>
           <Text
             className="w-[85%] text-text_dark text-xs text-center"
             style={{ lineHeight: 20 }}
           >
-            {` Currently no known providers for '${mediaTitle}' was found for ${currentCountry.name} region`}
+            {` Currently no known providers for '${mediaTitle}' is available in ${currentCountry.name} region`}
           </Text>
         </View>
       )}

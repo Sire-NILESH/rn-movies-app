@@ -1,10 +1,6 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Pressable } from "react-native";
 import React from "react";
-import {
-  buildGenrePlaylist,
-  buildTrendingPlaylist,
-} from "../../utils/helpers/helper";
-import HeaderWrapperV2 from "./HeaderWrapper";
+import { buildTrendingPlaylist } from "../../utils/helpers/helper";
 import { useNavigation } from "@react-navigation/native";
 import { DrawerNavigationOptions } from "@react-navigation/drawer";
 import { Ionicons } from "@expo/vector-icons";
@@ -46,11 +42,12 @@ const HomeHeader = () => {
       navigateTo: () => {
         // @ts-ignore
         navigation.push("Tiles", {
-          title: "Sci-Fi & Fantasy",
-          playlist: buildGenrePlaylist("tv", {
-            id: 10765,
-            name: "Sci-Fi & Fantasy",
-          }),
+          title: "Trending TV Shows",
+          playlist: buildTrendingPlaylist("Trending", "tv"),
+          // playlist: buildGenrePlaylist("tv", {
+          //   id: 10765,
+          //   name: "Sci-Fi & Fantasy",
+          // }),
           currentMediaType: "tv",
         });
       },
@@ -73,7 +70,7 @@ const HomeHeader = () => {
         >
           <Ionicons
             name={props.link.iconName}
-            size={18}
+            size={19}
             color={Colors.text_secondary}
           />
           {/* <Text className="text-text_tertiary text text-center font-semibold px-1">

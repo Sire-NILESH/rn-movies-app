@@ -176,7 +176,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             {/* PRODUCED IN */}
             {(isTvExtended(media) || isMovieExtended(media)) &&
             media.production_countries?.length > 0 ? (
-              <View className="flex-row items-start space-x-2 px-4 mt-5">
+              <View className="flex-row items-start space-x-2 px-4 mt-4">
                 <Text className="text-text_dark" style={{ lineHeight: 20 }}>
                   <Text className="font-semibold text-text_tertiary">
                     Produced in :{" "}
@@ -193,7 +193,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
 
             {/* Other Info */}
             {isTvExtended(media) && media.next_episode_to_air ? (
-              <View className="flex-row items-start space-x-2 px-4 mt-5">
+              <View className="flex-row items-start space-x-2 px-4 mt-4">
                 <Text className="text-text_dark" style={{ lineHeight: 20 }}>
                   <Text className="font-semibold text-text_tertiary">
                     Latest :{" "}
@@ -208,7 +208,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             ) : null}
 
             {/* SOURCE TMDB */}
-            <View className="pt-3 px-4 flex-row gap-1 items-center justify-start">
+            <View className="pt-1 px-4 flex-row gap-1 items-center justify-start">
               <Text className="text-sm text-text_tertiary font-semibold">
                 {"More info : "}{" "}
                 <Text className="text-text_dark">{"TMDB"}</Text>

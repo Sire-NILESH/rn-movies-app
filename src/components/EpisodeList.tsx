@@ -64,8 +64,9 @@ const EpisodeList: React.FC<IProps> = ({
   );
   //   key={seasonDetails.id}
   return (
-    <View className="flex-1">
+    <View className="flex-1" key={seasonDetails.id}>
       <FlashList
+        // key={seasonDetails.id}
         ListHeaderComponent={
           <View className="mb-8">
             <LinearGradient

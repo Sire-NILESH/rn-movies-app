@@ -4,7 +4,7 @@ import useImageItemSetting from "../hooks/useImageItemSetting";
 import ScreenBuilder from "../components/builders/ScreenBuilder";
 import HomeHeader from "../components/Header/HomeHeader";
 import HeaderWrapper from "../components/Header/HeaderWrapper";
-import {
+import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from "react-native-reanimated";
@@ -24,7 +24,7 @@ const HomeScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
     navigation.setOptions({
       header: () => {
         return (
-          <HeaderWrapper title="Home" scrollY={scrollY}>
+          <HeaderWrapper title="Maven" scrollY={scrollY}>
             <HomeHeader />
           </HeaderWrapper>
         );

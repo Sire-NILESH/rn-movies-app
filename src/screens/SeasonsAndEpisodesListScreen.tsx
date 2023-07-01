@@ -62,7 +62,8 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   const scrollToTopList = () => {
     if (listRef !== undefined) {
       // @ts-ignore
-      listRef.current?.scrollToOffset({ animated: true, offset: 0 });
+      listRef.current?.scrollToOffset({ offset: 0 });
+      // listRef.current?.scrollToOffset({ animated: true, offset: 0 });
     }
   };
 
@@ -82,7 +83,7 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
     setSelectedSeason(newSelectedSeason);
   }
 
-  // useEffect(() => {
+  // React.useEffect(() => {
   //   scrollToTopList();
   // }, [seasonDetails]);
 

@@ -41,7 +41,7 @@ const MediaStats: React.FC<IProps> = ({ media }) => {
   }, []);
 
   return (
-    <View className="ml-14 mr-12 mb-2 mt-4 flex-row items-center justify-evenly">
+    <View className="mx-12 mt-4 flex-row items-center justify-evenly">
       {/* STAT 1 */}
       <View className="flex-1 items-center py-2">
         <Text className="text-lg font-bold text-text_highLight tracking-widest">

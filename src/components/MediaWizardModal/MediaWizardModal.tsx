@@ -11,6 +11,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import FeaturedPlaylists from "./FeaturedPlaylists";
 import MediaGenresSelect from "./MediaGenresSelect";
 import useFilterSectionHooks from "../../hooks/useFilterSectionHooks";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 interface IProps {
   isVisible: boolean;
@@ -19,7 +20,9 @@ interface IProps {
   closeWithConfirm: (playlists: IUrlObject[]) => void;
 }
 
-type TViews = "featured_playlists" | "genres_playlist";
+const TopTabs = createMaterialTopTabNavigator();
+
+const TAB_WIDTH = 80;
 
 const MediaWizardModal: React.FC<IProps> = ({
   isVisible,
@@ -37,12 +40,6 @@ const MediaWizardModal: React.FC<IProps> = ({
   } = useFilterSectionHooks({ mediaListType });
 
   const [selectedPlaylists, setSelectedPlaylists] = useState<IUrlObject[]>([]);
-
-  const [currentView, setCurrentView] = useState<TViews>("featured_playlists");
-
-  const setCurrentViewHandler = (view: TViews) => {
-    setCurrentView(view);
-  };
 
   function selectedPlaylistHandlers(
     playlist: IUrlObject,
@@ -105,7 +102,7 @@ const MediaWizardModal: React.FC<IProps> = ({
   const playlists = mediaListType === "movie" ? moviePlaylist : tvPlaylist;
 
   return (
-    <Modal animationType="slide" transparent={true} visible={isVisible}>
+    <Modal animationType="fade" transparent={true} visible={isVisible}>
       <View className="absolute my-[25%] mx-[5%] h-[85%] w-[90%] bg-neutral-800 rounded-xl pb-2 border border-neutral-700/60 [elevation:10]">
         {/* HEADER */}
         <View className="flex-row items-center justify-between h-[42] bg-tertiary rounded-t-xl px-[20]">
@@ -155,48 +152,95 @@ const MediaWizardModal: React.FC<IProps> = ({
         </View>
 
         <View className="flex-1">
-          {/* HEADER TABS */}
-          <View className="flex-row items-center space-x-2 mx-4 py-2">
-            <ViewTab
-              title="Playlists"
-              currentView={currentView}
-              tabView="featured_playlists"
-              setCurrentViewHandler={setCurrentViewHandler}
-            />
+          {/* TABS */}
+          <View className="flex-1 pt-2 py-1">
+            <TopTabs.Navigator
+              screenOptions={{
+                tabBarLabelStyle: {
+                  fontSize: 15,
+                  fontWeight: "600",
+                  letterSpacing: 0.8,
+                  textTransform: "none",
+                },
+                tabBarScrollEnabled: true,
+                tabBarStyle: {
+                  elevation: 0,
+                  shadowOpacity: 0,
+                  marginLeft: 20,
+                  backgroundColor: Colors.neutral[800],
+                },
+                tabBarActiveTintColor: Colors.green[50],
+                tabBarInactiveTintColor: Colors.text_dark,
+                tabBarAndroidRipple: { borderless: false },
+                tabBarGap: 10,
+                tabBarPressColor: "#e9e9e9",
+                tabBarItemStyle: {
+                  width: TAB_WIDTH,
+                  paddingHorizontal: 2,
+                },
+                tabBarIndicatorStyle: {
+                  width: TAB_WIDTH,
+                  height: 3,
+                  borderRadius: 999,
+                  backgroundColor: Colors.green[500],
+                },
+                // lazy: true,
+              }}
+            >
+              {/* Laying out all the TopTabs components for tabs */}
+              <TopTabs.Screen
+                name={"featured_playlists"}
+                options={{
+                  title: "Playlists",
+                }}
+              >
+                {(props) => {
+                  return (
+                    <View className="flex-1 pt-2 bg-neutral-800">
+                      <ScrollView className="flex-1">
+                        <FeaturedPlaylists
+                          playlists={playlists[0]}
+                          onConfirmPlaylist={onConfirmPlaylist}
+                          {...props}
+                        />
+                      </ScrollView>
+                    </View>
+                  );
+                }}
+              </TopTabs.Screen>
 
-            <ViewTab
-              title="Genres"
-              currentView={currentView}
-              tabView="genres_playlist"
-              setCurrentViewHandler={setCurrentViewHandler}
-            />
+              <TopTabs.Screen
+                name={"genres_playlist"}
+                options={{
+                  title: "Genres",
+                }}
+              >
+                {(props) => {
+                  return (
+                    <View className="flex-1 pt-3 bg-neutral-800">
+                      <ScrollView className="flex-1">
+                        <MediaGenresSelect
+                          mediaListType={mediaListType}
+                          genrePlaylists={playlists[1]}
+                          selectedPlaylistHandlers={selectedPlaylistHandlers}
+                          setCurrentLangHandler={setCurrentLangHandler}
+                          setCurrentYearHandler={setCurrentYearHandler}
+                          setCurrentGenreSortByHandler={
+                            setCurrentGenreSortByHandler
+                          }
+                          setReleaseYearConstraintHandler={
+                            setReleaseYearConstraintHandler
+                          }
+                          currentYear={currentYear}
+                          {...props}
+                        />
+                      </ScrollView>
+                    </View>
+                  );
+                }}
+              </TopTabs.Screen>
+            </TopTabs.Navigator>
           </View>
-
-          <ScrollView className="flex-1">
-            {/* CUSTOM PLAYLIST */}
-            {currentView === "featured_playlists" ? (
-              <FeaturedPlaylists
-                playlists={playlists[0]}
-                onConfirmPlaylist={onConfirmPlaylist}
-              />
-            ) : null}
-
-            {/* FILTER AND CUSTOM GENRES SELECTS*/}
-            {currentView === "genres_playlist" ? (
-              <MediaGenresSelect
-                mediaListType={mediaListType}
-                genrePlaylists={playlists[1]}
-                selectedPlaylistHandlers={selectedPlaylistHandlers}
-                setCurrentLangHandler={setCurrentLangHandler}
-                setCurrentYearHandler={setCurrentYearHandler}
-                setCurrentGenreSortByHandler={setCurrentGenreSortByHandler}
-                setReleaseYearConstraintHandler={
-                  setReleaseYearConstraintHandler
-                }
-                currentYear={currentYear}
-              />
-            ) : null}
-          </ScrollView>
         </View>
       </View>
     </Modal>
@@ -204,41 +248,3 @@ const MediaWizardModal: React.FC<IProps> = ({
 };
 
 export default MediaWizardModal;
-
-interface ITab {
-  currentView: TViews;
-  tabView: TViews;
-  title: "Playlists" | "Genres";
-  setCurrentViewHandler: (view: TViews) => void;
-}
-
-function ViewTab({ title, currentView, tabView, setCurrentViewHandler }: ITab) {
-  return (
-    <View className="w-20 rounded-md overflow-hidden">
-      <Pressable
-        onPress={() => {
-          setCurrentViewHandler(tabView);
-        }}
-        className="p-2"
-        android_ripple={{ color: "#eee" }}
-      >
-        <View className="space-y-2 h-8">
-          <Text
-            className="mx-auto font-bold"
-            style={{
-              color:
-                currentView === tabView
-                  ? Colors.text_primary
-                  : Colors.text_dark,
-            }}
-          >
-            {title}
-          </Text>
-          {currentView === tabView ? (
-            <View className="rounded-full bg-green-500 h-1 w-full" />
-          ) : null}
-        </View>
-      </Pressable>
-    </View>
-  );
-}

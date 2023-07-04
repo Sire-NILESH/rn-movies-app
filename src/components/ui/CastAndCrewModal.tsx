@@ -70,10 +70,7 @@ const CastAndCrewModal: React.FC<IProps> = (props) => {
           >
             {props.castAndCrew?.episdodeName}
           </Text>
-          <Text
-            className="text-text_dark text-base font-semibold"
-            numberOfLines={2}
-          >
+          <Text className="text-text_dark text-sm" numberOfLines={2}>
             {`${
               props.castAndCrew?.seasonNumber === 0
                 ? "Extras"
@@ -98,7 +95,7 @@ const CastAndCrewModal: React.FC<IProps> = (props) => {
           />
         </View>
 
-        <View>
+        <View className="h-[300]">
           {currentView === "cast" ? (
             <EpisodeCastList
               cast={props.castAndCrew?.cast}
@@ -133,17 +130,17 @@ interface ITab {
 
 function ViewTab({ title, currentView, tabView, setCurrentViewHandler }: ITab) {
   return (
-    <View className="w-20 rounded-md overflow-hidden">
+    <View className="w-20 h-12 rounded-sm overflow-hidden">
       <Pressable
         onPress={() => {
           setCurrentViewHandler(tabView);
         }}
-        className="p-2"
+        className="px-2 pt-2"
         android_ripple={{ color: "#eee" }}
       >
         <View className="space-y-2 h-8">
           <Text
-            className="mx-auto font-bold"
+            className="mx-auto font-semibold text-base"
             style={{
               color:
                 currentView === tabView
@@ -154,7 +151,7 @@ function ViewTab({ title, currentView, tabView, setCurrentViewHandler }: ITab) {
             {title}
           </Text>
           {currentView === tabView ? (
-            <View className="rounded-full bg-green-500 h-1 w-full" />
+            <View className="rounded-full bg-green-500 h-[3px] w-full" />
           ) : null}
         </View>
       </Pressable>

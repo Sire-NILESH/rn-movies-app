@@ -271,16 +271,46 @@ export interface ICast extends ICreditPerson {
   order: number;
 }
 
+export interface ICastAggregate extends ICreditPerson {
+  roles: Role[];
+  total_episode_count: number;
+  order: number;
+}
+
+export interface Role {
+  credit_id: string;
+  character: string;
+  episode_count: number;
+}
+
 export interface ICrew extends ICreditPerson {
   credit_id: string;
   department: string;
   job: string;
 }
 
+export interface ICrewAggregate extends ICreditPerson {
+  jobs: CrewJob[];
+  department: string;
+  total_episode_count: number;
+}
+
+export interface CrewJob {
+  credit_id: string;
+  job: string;
+  episode_count: number;
+}
+
 export interface ICredits {
   id: number;
   cast: ICast[];
   crew: ICrew[];
+}
+
+export interface ICreditsAggregate {
+  id: number;
+  cast: ICastAggregate[];
+  crew: ICrewAggregate[];
 }
 
 export interface EpisodeCastAndCrew {
@@ -557,6 +587,7 @@ export interface TvMediaHybrid extends TvMediaExtended {
     results: IAllWatchProviderData;
   };
   credits: ICredits;
+  aggregate_credits: ICreditsAggregate;
   content_ratings: ITVContentRatingList;
 }
 

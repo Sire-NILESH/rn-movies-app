@@ -50,18 +50,16 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
 
   // console.log(isMovie(media) ? media.release_dates : media.content_ratings);
 
-  const credits = media?.credits;
+  const credits =
+    media && isMovie(media) ? media?.credits : media?.aggregate_credits;
   const cast = credits?.cast;
-  const directedBy = credits?.crew.filter((c) => {
+
+  const directedBy = media?.credits.crew.filter((c) => {
     if (mediaType === "tv") {
       return c.job === "Director" || c.department === "Writing";
     }
     return c.job === "Director" || c.job === "Novel";
   });
-  const people = [];
-
-  if (directedBy && directedBy.length > 0) people.push(directedBy);
-  if (cast && cast.length > 0) people.push(cast);
 
   function getTitle(): string {
     if (media && "title" in media) return media.title;
@@ -150,7 +148,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             </View>
 
             {/* POPULARITY AND MEDIATYPE INFO */}
-            <View className="h-[85px]">
+            <View className="h-[82px]">
               <MediaStats media={media} />
             </View>
 
@@ -160,7 +158,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
 
             {/* DESCRIPTION */}
             {media.overview ? (
-              <View className="px-4 mt-5 space-y-2">
+              <View className="px-4 mt-4 space-y-2">
                 {/* <Text className="font-semibold text-text_tertiary">
                   Overview
                 </Text> */}
@@ -208,7 +206,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             ) : null}
 
             {/* SOURCE TMDB */}
-            <View className="pt-1 px-4 flex-row gap-1 items-center justify-start">
+            <View className="px-4 flex-row gap-1 items-center justify-start mt-[3px]">
               <Text className="text-sm text-text_tertiary font-semibold">
                 {"More info : "}{" "}
                 <Text className="text-text_dark">{"TMDB"}</Text>
@@ -233,7 +231,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
           </View>
 
           {/* BUTTONS CONTAINER */}
-          <View className="w-full flex-row space-between gap-3 pl-4 mt-4">
+          <View className="w-full flex-row space-between gap-3 pl-4 mt-2">
             {/* TRAILER BUTTON */}
             <View className="flex-1">
               <TrailerButton mediaType={mediaType} mediaId={media.id} />
@@ -257,7 +255,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
               // <View className="h-[195]">
               <View className="h-72">
                 <Cast
-                  cast={cast}
+                  cast={mediaType === "tv" ? cast.slice(0, 25) : cast}
                   directedBy={directedBy}
                   title="Behind the scenes"
                 />
@@ -329,7 +327,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
                   } episodes`}
                   onPressHandler={() => {
                     // @ts-ignore
-                    navigation.push("Season and Episodes", {
+                    navigation.push("SeasonsStackScreen", {
                       tvMediaId: isTvExtended(media) && media.id,
                       tvMediaSeasons: isTvExtended(media) && media.seasons,
                       tvMediaPosterPath: mediaPosterPath,

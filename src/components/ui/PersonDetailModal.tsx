@@ -103,9 +103,16 @@ const PersonDetailModal: React.FC<IProps> = (props) => {
                   <View>
                     <RenderRow
                       text1="Age"
-                      text2={String(
-                        calculateAge(personInfo.birthday, personInfo.deathday)
-                      )}
+                      text2={
+                        personInfo.birthday
+                          ? String(
+                              calculateAge(
+                                personInfo.birthday,
+                                personInfo.deathday
+                              )
+                            )
+                          : "--"
+                      }
                     />
                   </View>
                 </View>
@@ -158,14 +165,20 @@ const PersonDetailModal: React.FC<IProps> = (props) => {
               <View>
                 <RenderRow
                   text1="Birthday"
-                  text2={dateFormatter(personInfo.birthday)}
+                  text2={
+                    personInfo.birthday
+                      ? dateFormatter(personInfo.birthday)
+                      : "--"
+                  }
                 />
               </View>
 
               <View>
                 <RenderRow
                   text1="Birth place"
-                  text2={personInfo.place_of_birth}
+                  text2={
+                    personInfo.place_of_birth ? personInfo.place_of_birth : "--"
+                  }
                 />
               </View>
 
@@ -190,7 +203,7 @@ const PersonDetailModal: React.FC<IProps> = (props) => {
             {/* SOURCE TMDB */}
             <View className="mb-1 flex-row gap-2 items-center justify-start">
               <Text className="text-sm text-text_dark">
-                {"Source: "}{" "}
+                {"Timeline: "}{" "}
                 <Text className="font-bold text-text_highLight">{"TMDB"}</Text>
               </Text>
 

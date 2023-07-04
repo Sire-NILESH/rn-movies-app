@@ -1,12 +1,18 @@
 import React, { useCallback } from "react";
 import { View, Text, FlatList, ListRenderItemInfo } from "react-native";
-import { ICast, ICrew } from "../../types/typings";
+import {
+  ICast,
+  ICastAggregate,
+  ICrew,
+  ICrewAggregate,
+} from "../../types/typings";
 import useNavigateTo from "../hooks/useNavigateTo";
 import ProfileCard from "./ProfileCard";
+import { isICast, isICrew } from "../utils/helpers/helper";
 
 interface IProps {
-  cast: ICast[];
-  directedBy: ICrew[];
+  cast: ICast[] | ICastAggregate[];
+  directedBy: (ICrew | ICrewAggregate)[];
   title: string;
 }
 
@@ -14,26 +20,29 @@ const Cast: React.FC<IProps> = (props) => {
   // So every one of them wont have to calculate them separately.
   const { navigateTo } = useNavigateTo();
 
-  const renderCast = useCallback((itemObj: ListRenderItemInfo<ICast>) => {
-    const p = itemObj.item;
+  const renderCast = useCallback(
+    (itemObj: ListRenderItemInfo<ICast | ICastAggregate>) => {
+      const p = itemObj.item;
 
-    return (
-      <View className="mr-2">
-        <ProfileCard
-          creditPerson={{
-            id: p.id,
-            adult: p.adult,
-            name: p.name,
-            profile_path: p.profile_path,
-            gender: p.gender,
-            buttonTitle: "Actor",
-            creditTitle: p.character,
-          }}
-          navigateTo={navigateTo}
-        />
-      </View>
-    );
-  }, []);
+      return (
+        <View className="mr-2">
+          <ProfileCard
+            creditPerson={{
+              id: p.id,
+              adult: p.adult,
+              name: p.name,
+              profile_path: p.profile_path,
+              gender: p.gender,
+              buttonTitle: "Actor",
+              creditTitle: isICast(p) ? p.character : p.roles[0].character,
+            }}
+            navigateTo={navigateTo}
+          />
+        </View>
+      );
+    },
+    []
+  );
 
   return (
     <View className="flex-1 ">
@@ -43,7 +52,7 @@ const Cast: React.FC<IProps> = (props) => {
       <FlatList
         horizontal
         initialNumToRender={5}
-        data={props.cast}
+        data={props.cast as any}
         className=""
         keyExtractor={(person, i) => `${person.id}-${i}`}
         ListHeaderComponent={() => {
@@ -59,7 +68,7 @@ const Cast: React.FC<IProps> = (props) => {
                         name: p.name,
                         profile_path: p.profile_path,
                         gender: p.gender,
-                        buttonTitle: p.job,
+                        buttonTitle: isICrew(p) ? p.job : p.jobs[0].job,
                         creditTitle:
                           p.department === "Writing"
                             ? "Writing department"

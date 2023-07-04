@@ -26,12 +26,12 @@ const WarningModal: React.FC<IProps> = (props) => {
 
   return (
     <Modal
-      animationType="slide"
+      animationType="fade"
       transparent={true}
       visible={props.isVisible}
       className="items-center justify-center"
     >
-      <View className="absolute mt-[55%] mx-[5%]  w-[90%] bg-stone-800 rounded-xl pb-2  [elevation:10] px-4 py-4 border border-neutral-700/60">
+      <View className="absolute mt-[55%] mx-[5%] w-[90%] bg-stone-800 rounded-xl pb-2  [elevation:10] px-4 py-4 border border-neutral-700/60">
         {/* header */}
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center space-x-2">

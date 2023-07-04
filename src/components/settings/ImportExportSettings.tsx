@@ -15,7 +15,7 @@ const ImportExportSettings = () => {
       iconName="document-outline"
       title="Import/Export File"
       subtitle={
-        "Caution! For security reasons, only import the untouched/untampered file that was exported from this app."
+        "Caution! For security reasons, only import the untampered file that was exported from this app."
       }
     >
       <RenderRow

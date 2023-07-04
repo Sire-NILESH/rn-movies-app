@@ -24,7 +24,6 @@ const HEADER_HEIGHT: number = 60;
 const HeaderWrapper: React.FC<TProps> = (props) => {
   const navigation = useNavigation<DrawerNavigationOptions>();
 
-  // const headerY = Animated.interpolateColors()
   const progress = useDerivedValue(() => {
     return props.scrollY.value > HEADER_HEIGHT ? withTiming(1) : withTiming(0);
   }, [props.scrollY.value]);
@@ -34,7 +33,6 @@ const HeaderWrapper: React.FC<TProps> = (props) => {
       progress.value,
       [0, 1],
       [Colors.transparent, Colors.tertiary]
-      // [Colors.transparent, "rgba(0, 0, 0, 0.7)"]
     );
 
     return { backgroundColor };

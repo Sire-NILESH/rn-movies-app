@@ -1,44 +1,28 @@
-import { View, StatusBar } from "react-native";
-import React, { useLayoutEffect, useState, useRef } from "react";
-import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
-import {
-  EpisodeCastAndCrew,
-  // IWatchedEpisodesLookup,
-  Season,
-  SeasonDetails,
-} from "../../types/typings";
-import { fetchSeasonDetails } from "../utils/requests";
-import { Colors } from "../utils/Colors";
-import SeasonsHeader from "../components/SeasonsHeader";
-import NothingToShow from "../components/NothingToShow";
-import { showErrorToast } from "../utils/helpers/helper";
-import Loader from "../components/ui/Loader";
-import { useQuery } from "./../../node_modules/@tanstack/react-query";
-import CastAndCrewModal from "../components/ui/CastAndCrewModal";
-import { episodesScreenCacheConfig } from "../config/requestCacheConfig";
+import { View, Text, StatusBar } from "react-native";
+import React, { useRef, useState } from "react";
+import { ITopTabEpisodeListScreenProps } from "../library/NavigatorScreenProps/TopTabEpisodeListScreenProps";
 import EpisodeList from "../components/EpisodeList";
-// import { getAllWatchedEpisoesOfShowsSeason } from "../storage/database";
+import CastAndCrewModal from "../components/ui/CastAndCrewModal";
+import { useQuery } from "@tanstack/react-query";
+import { EpisodeCastAndCrew, SeasonDetails } from "../../types/typings";
+import { fetchSeasonDetails } from "../utils/requests";
+import { episodesScreenCacheConfig } from "../config/requestCacheConfig";
+import { showErrorToast } from "../utils/helpers/helper";
+import { Colors } from "../utils/Colors";
+import Loader from "../components/ui/Loader";
+import NothingToShow from "../components/NothingToShow";
 
-const SeasonsAndEpisodesListScreen: React.FunctionComponent<
-  IStackScreenProps
-> = (props) => {
-  const { navigation, route } = props;
-  // @ts-ignore
-  const {
-    tvMediaId,
-    tvMediaSeasons,
-    tvMediaPosterPath: tvMediaPosterPathOld,
-    tvMediaName,
-  }: {
-    tvMediaId: number;
-    tvMediaSeasons: Season[];
-    tvMediaPosterPath: String;
-    tvMediaName: string;
-  } = route.params;
-
-  const [selectedSeason, setSelectedSeason] = useState<Season>(
-    tvMediaSeasons[0]
-  );
+const TopTabEpisodeListScreen: React.FC<ITopTabEpisodeListScreenProps> = ({
+  // name,
+  // navigation,
+  // route,
+  tvMediaId,
+  season: selectedSeason,
+  tvMediaSeasons,
+  tvMediaPosterPathOld,
+  tvMediaName,
+  // castandCrewModalHandler,
+}) => {
   // const [watchedEpisodes, setWatchedEpisodes] = useState<
   //   IWatchedEpisodesLookup | undefined
   // >(undefined);
@@ -59,13 +43,13 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
     setIsModalOpen(state);
   }
 
-  const scrollToTopList = () => {
-    if (listRef !== undefined) {
-      // @ts-ignore
-      listRef.current?.scrollToOffset({ offset: 0 });
-      // listRef.current?.scrollToOffset({ animated: true, offset: 0 });
-    }
-  };
+  // const scrollToTopList = () => {
+  //   if (listRef !== undefined) {
+  //     // @ts-ignore
+  //     listRef.current?.scrollToOffset({ offset: 0 });
+  //     // listRef.current?.scrollToOffset({ animated: true, offset: 0 });
+  //   }
+  // };
 
   const {
     isLoading: loadingProps,
@@ -78,10 +62,6 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
     staleTime: episodesScreenCacheConfig.staleTime,
     cacheTime: episodesScreenCacheConfig.cacheTime,
   });
-
-  function setSelectedSeasonHandler(newSelectedSeason: Season) {
-    setSelectedSeason(newSelectedSeason);
-  }
 
   // React.useEffect(() => {
   //   scrollToTopList();
@@ -111,22 +91,6 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
 
   //   loadWatchedEpisodes();
   // }, [selectedSeason]);
-
-  // Header Settings
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: true,
-      header: (props) => (
-        <SeasonsHeader
-          tvMediaId={tvMediaId}
-          tvMediaSeasons={tvMediaSeasons}
-          selectedSeason={selectedSeason}
-          setScrollToTop={scrollToTopList}
-          setNewSelectedSeason={setSelectedSeasonHandler}
-        />
-      ),
-    });
-  }, [selectedSeason, tvMediaSeasons]);
 
   // Show alert on error
   if (errorLoadingProps && !loadingProps) {
@@ -166,7 +130,6 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
               castAndCrew={castAndCrewForModal}
             />
             <EpisodeList
-              // key={selectedSeason.id}
               seasonDetails={seasonDetails}
               selectedSeason={selectedSeason}
               tvMediaName={tvMediaName}
@@ -182,4 +145,4 @@ const SeasonsAndEpisodesListScreen: React.FunctionComponent<
   );
 };
 
-export default SeasonsAndEpisodesListScreen;
+export default TopTabEpisodeListScreen;

@@ -102,8 +102,10 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
               {isMovie(media)
                 ? media.release_date
                   ? dateFormatter(media.release_date)
-                  : null
-                : dateFormatter(media.first_air_date)}
+                  : "--"
+                : media.first_air_date
+                ? dateFormatter(media.first_air_date)
+                : "--"}
             </Text>
           </View>
 

@@ -6,7 +6,7 @@ import PersonMediasStackScreen from "../../screens/PersonMediasStackScreen";
 import RelatedTileListScreen from "../../screens/RelatedTileListScreen";
 import SearchScreen from "../../screens/Search";
 import SearchTileListScreen from "../../screens/SearchTileListScreen";
-import SeasonsAndEpisodesListScreen from "../../screens/SeasonsAndEpisodesListScreen";
+import SeasonsStackScreen from "../../screens/SeasonsStackScreen";
 import TileListScreen from "../../screens/TileList";
 import TrailerScreen from "../../screens/TrailerScreen";
 import WatchProviderStackScreen from "../../screens/WatchProviderStackScreen";
@@ -42,10 +42,6 @@ export const stackRoutes: IStackRouteProps[] = [
     component: TrailerScreen,
   },
   {
-    name: "Season and Episodes",
-    component: SeasonsAndEpisodesListScreen,
-  },
-  {
     name: "Person Medias",
     component: PersonMediasStackScreen,
   },
@@ -60,5 +56,9 @@ export const stackRoutes: IStackRouteProps[] = [
   {
     name: "FranchiseCollection",
     component: FranchiseCollection,
+  },
+  {
+    name: "SeasonsStackScreen",
+    component: SeasonsStackScreen,
   },
 ];

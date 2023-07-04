@@ -4,7 +4,7 @@ import { Text, View, TextInput, SafeAreaView, Pressable } from "react-native";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { Colors } from "./../utils/Colors";
 import { FlatList } from "react-native-gesture-handler";
-import { searchRequest, searchRequestV2 } from "../utils/requests";
+import { searchRequest } from "../utils/requests";
 import {
   ICreditPerson,
   MediaTypes,
@@ -52,8 +52,9 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const { allowNsfwContent } = useAllowNsfwContentHooks();
 
   function setSearchQueryHandler(text: string): void {
-    if (text.toLocaleLowerCase().trim().length > 0) {
-      setSearchQuery(text);
+    const enteredQuery = text.toLocaleLowerCase().trim();
+    if (enteredQuery.length > 0) {
+      setSearchQuery(enteredQuery);
     }
   }
 

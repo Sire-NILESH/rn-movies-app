@@ -94,7 +94,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({
           ) : null}
           <View>
             <DataElement
-              text={dateFormatter(episode.air_date)}
+              text={episode.air_date ? dateFormatter(episode.air_date) : "--"}
               iconName="calendar"
             />
           </View>

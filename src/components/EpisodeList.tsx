@@ -64,9 +64,8 @@ const EpisodeList: React.FC<IProps> = ({
   );
   //   key={seasonDetails.id}
   return (
-    <View className="flex-1" key={seasonDetails.id}>
+    <View className="flex-1">
       <FlashList
-        // key={seasonDetails.id}
         ListHeaderComponent={
           <View className="mb-8">
             <LinearGradient
@@ -127,7 +126,9 @@ const EpisodeList: React.FC<IProps> = ({
                     {seasonDetails.episodes.length} Episodes,
                   </Text>
                   <Text className="text-text_tertiary text">
-                    {dateFormatter(seasonDetails.air_date)}
+                    {seasonDetails.air_date
+                      ? dateFormatter(seasonDetails.air_date)
+                      : null}
                   </Text>
                 </View>
 

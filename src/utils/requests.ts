@@ -343,7 +343,7 @@ export const getMediaInfo = async (mediaId: number, mediaType: MediaTypes) => {
       language: "en-US",
       append_to_response: `watch/providers,credits${
         mediaType === "tv"
-          ? ",content_ratings"
+          ? ",aggregate_credits,content_ratings"
           : mediaType === "movie"
           ? ",release_dates"
           : ""

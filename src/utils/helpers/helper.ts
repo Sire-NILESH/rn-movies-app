@@ -1,8 +1,12 @@
 import {
   Episode,
   Genre,
+  ICast,
+  ICastAggregate,
   ICountry,
   ICreditPerson,
+  ICrew,
+  ICrewAggregate,
   IDBEpisode,
   IDropdownYearsObj,
   IImageQuality,
@@ -61,8 +65,49 @@ export function isTvMediaHybrid(
 ): media is TvMediaHybrid {
   return (
     media !== null &&
-    (media as TvMediaHybrid).credits !== undefined &&
+    (media as TvMediaHybrid).aggregate_credits !== undefined &&
     (media as TvMediaHybrid).content_ratings !== undefined
+  );
+}
+
+export function isICrewAggregate(
+  crew: ICrewAggregate | ICrew | null
+): crew is ICrewAggregate {
+  return (
+    crew !== null &&
+    (crew as ICrewAggregate).jobs !== undefined &&
+    (crew as ICrewAggregate).department !== undefined &&
+    (crew as ICrewAggregate).total_episode_count !== undefined
+  );
+}
+
+export function isICrew(crew: ICrewAggregate | ICrew | null): crew is ICrew {
+  return (
+    crew !== null &&
+    (crew as ICrew).credit_id !== undefined &&
+    (crew as ICrew).department !== undefined &&
+    (crew as ICrew).job !== undefined
+  );
+}
+
+export function isICastAggregate(
+  cast: ICastAggregate | ICast | null
+): cast is ICastAggregate {
+  return (
+    cast !== null &&
+    (cast as ICastAggregate).roles !== undefined &&
+    (cast as ICastAggregate).order !== undefined &&
+    (cast as ICastAggregate).total_episode_count !== undefined
+  );
+}
+
+export function isICast(cast: ICastAggregate | ICast | null): cast is ICast {
+  return (
+    cast !== null &&
+    (cast as ICast).cast_id !== undefined &&
+    (cast as ICast).order !== undefined &&
+    (cast as ICast).credit_id !== undefined &&
+    (cast as ICast).character !== undefined
   );
 }
 

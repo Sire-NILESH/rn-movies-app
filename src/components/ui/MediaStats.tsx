@@ -65,7 +65,7 @@ const MediaStats: React.FC<IProps> = ({ media }) => {
       </View>
 
       {/* DIVIDER */}
-      <View className="h-[80%] w-[3px] bg-tertiary rounded-full mx-2" />
+      <View className="h-[80%] w-[3px] bg-neutral-800 rounded-full mx-2" />
 
       {/* STAT 2 */}
       <View className="flex-1 items-center py-2">
@@ -84,7 +84,7 @@ const MediaStats: React.FC<IProps> = ({ media }) => {
       </View>
 
       {/* DIVIDER */}
-      <View className="h-[80%] w-[3px] bg-tertiary rounded-full mx-2" />
+      <View className="h-[80%] w-[3px] bg-neutral-800 rounded-full mx-2" />
 
       {/* STAT 3 */}
       <View className="flex-1 items-center py-2">

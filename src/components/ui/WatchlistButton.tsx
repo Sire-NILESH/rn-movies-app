@@ -104,14 +104,14 @@ const WatchlistButton: React.FC<IProps> = ({
           ? Colors.stone[50]
           : isBannerButton && isBannerButton
           ? Colors.stone[300]
-          : Colors.stone[900]
+          : Colors.neutral[800]
       }
       height={isBannerButton ? 40 : 38}
       width={"100%"}
       radius={8}
       styledClassName={`border ${
         !isBannerButton && !isWatchListed
-          ? "border-stone-800/90"
+          ? "border-neutral-800"
           : !isBannerButton && isWatchListed
           ? "border-stone-50"
           : isBannerButton && isWatchListed

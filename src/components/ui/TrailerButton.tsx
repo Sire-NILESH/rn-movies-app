@@ -27,19 +27,19 @@ const TrailerButton: React.FC<IProps> = (props) => {
 
   return (
     <CustomButton
-      color={Colors.stone[900]}
+      color={Colors.neutral[800]}
       height={38}
       width={"100%"}
       radius={8}
       method={onPressHandler}
-      styledClassName="border border-stone-800/90"
+      styledClassName="border border-neutral-800"
     >
       <Ionicons
         size={16}
         name="md-logo-youtube"
         color={Colors.stone[500]}
       ></Ionicons>
-      <Text className="text-green-100 ml-1">Trailer</Text>
+      <Text className="text-green-100 ml-2">Trailer</Text>
     </CustomButton>
   );
 };

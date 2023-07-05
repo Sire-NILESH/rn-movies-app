@@ -8,6 +8,8 @@ import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from "react-native-reanimated";
+import { View } from "react-native";
+import HeaderSearchButton from "../components/ui/HeaderSearchButton";
 
 const HomeScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
   const { navigation } = props;
@@ -24,9 +26,14 @@ const HomeScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
     navigation.setOptions({
       header: () => {
         return (
-          <HeaderWrapper title="Maven" scrollY={scrollY}>
-            <HomeHeader />
+          <HeaderWrapper title={"Maven"} scrollY={scrollY}>
+            <View className="">
+              <HeaderSearchButton searchCategory="multi" />
+            </View>
           </HeaderWrapper>
+          // <HeaderWrapper title="Maven" scrollY={scrollY}>
+          //   <HomeHeader />
+          // </HeaderWrapper>
         );
       },
       headerTransparent: true,

@@ -1,5 +1,11 @@
 import React, { useCallback } from "react";
-import { IImgItemSettingsDB, IPlaylist, Media } from "../../types/typings";
+import {
+  IImgItemSettingsDB,
+  IPlaylist,
+  Media,
+  MovieMedia,
+  TvMedia,
+} from "../../types/typings";
 import Thumbnail from "./Thumbnail";
 import { Text, View, ListRenderItemInfo } from "react-native";
 import IconButton from "./ui/IconButton";
@@ -11,6 +17,7 @@ import useNavigateTo from "../hooks/useNavigateTo";
 import { useThumbnailTextSettingHooks } from "../hooks/reduxHooks";
 import { FlashList } from "@shopify/flash-list";
 import { ThumbnailTextPermission } from "../config/disableThumbnailText";
+import { MaterialIcons } from "@expo/vector-icons";
 
 interface Props {
   title: string;
@@ -28,13 +35,56 @@ const rowItemWidth = windowWidth * 0.31 + 4;
 function RowV2({ title, medias, playlist, thumbnailQualitySettings }: Props) {
   const { isThumbnailText } = useThumbnailTextSettingHooks();
 
+  // Navigation handler for child components like thumbnail and jumpTo button.
+  // So every one of them wont have to calculate them separately.
+  const { navigateTo } = useNavigateTo();
+
   return (
     <View className="space-y-1 mb-6">
-      <View className="flex-row space-x-4 mb-2">
+      <View className="flex-row space-x-4 mb-1 items-center">
         <Text className="pl-5 text-sm font-semibold text-text_primary">
           {title}
         </Text>
+        <View className="h-6 w-6 rounded-full overflow-hidden">
+          <Pressable
+            className="flex-1 items-center justify-center"
+            android_ripple={{ color: "#eee" }}
+            onPress={() => {
+              if (isMovieArray(medias as MovieMedia[] | TvMedia[])) {
+                navigateTo("Tiles", {
+                  title,
+                  playlist,
+                  currentMediaType: "movie",
+                });
+              } else {
+                {
+                  navigateTo("Tiles", {
+                    title,
+                    playlist,
+                    currentMediaType: "tv",
+                  });
+                }
+              }
+            }}
+          >
+            <MaterialIcons
+              name="arrow-forward-ios"
+              size={12}
+              color={Colors.neutral[100]}
+            />
+            {/* <Ionicons
+            name={"arrow-forward-circle-outline"}
+            size={18}
+            color={Colors.neutral[100]}
+          /> */}
+          </Pressable>
+        </View>
       </View>
+      {/* <View className="flex-row space-x-4 mb-2">
+        <Text className="pl-5 text-sm font-semibold text-text_primary">
+          {title}
+        </Text>
+      </View> */}
 
       <View className="">
         {renderFlatList(
@@ -42,6 +92,7 @@ function RowV2({ title, medias, playlist, thumbnailQualitySettings }: Props) {
           title,
           playlist,
           isThumbnailText,
+          navigateTo,
           thumbnailQualitySettings
         )}
       </View>
@@ -56,13 +107,10 @@ function renderFlatList(
   title: string,
   playlist: IPlaylist,
   isThumbnailText: ThumbnailTextPermission,
+  navigateTo: (screen: string, paramOption: Object) => void,
   thumbnailQualitySettings?: IImgItemSettingsDB
 ) {
   //   const { isThumbnailText } = useThumbnailTextSettingHooks();
-
-  // Navigation handler for child components like thumbnail and jumpTo button.
-  // So every one of them wont have to calculate them separately.
-  const { navigateTo } = useNavigateTo();
 
   const renderItem = useCallback(
     (media: ListRenderItemInfo<any>) => (

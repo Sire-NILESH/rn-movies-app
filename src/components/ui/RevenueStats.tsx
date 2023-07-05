@@ -18,10 +18,10 @@ const RevenueStats: React.FC<IProps> = ({ budget, revenue }) => {
 
   return (
     <View
-      className="border rounded-xl mx-4 mt-4 mb-1 flex-row items-center justify-between divide-x-[3px] divide-stone-800/60"
+      className="border rounded-xl mx-4 mt-4 mb-1 flex-row items-center justify-between divide-x-[3px] divide-stone-800  border-stone-800"
       style={{
         backgroundColor: "rgb(20, 18, 16)",
-        borderColor: "rgb(31, 28, 27)",
+        // borderColor: "rgb(31, 28, 27)",
       }}
     >
       {/* STAT 1 */}

@@ -16,10 +16,10 @@ const MoreInfoFooterButton: React.FC<IProps> = (props) => {
     <LinearGradient
       className="h-32 rounded-xl overflow-hidden border border-stone-800"
       colors={[
-        "rgba(28, 25, 23, 0.4)",
-        "rgba(41, 37, 36, 0.5)",
-        "rgba(28, 25, 23, 0.8)",
         "rgba(28, 25, 23, 0.5)",
+        "rgba(41, 37, 36, 0.5)",
+        "rgba(28, 25, 23, 0.9)",
+        "rgba(28, 25, 23, 0.6)",
         Colors.black,
       ]}
       start={{ x: 0.1, y: 0.2 }}

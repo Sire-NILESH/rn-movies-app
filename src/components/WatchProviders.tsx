@@ -45,7 +45,7 @@ const WatchProviders: React.FC<IProps> = ({
   return (
     <View className="flex-1 mt-10 space-y-5">
       <View
-        className="flex-row  items-center justify-between px-4 mt-2 mx-2 bg-accent rounded-xl"
+        className="flex-row items-center justify-between px-4 mt-2 mx-2 rounded-xl"
         style={{ backgroundColor: "rgb(4, 20, 10)" }}
       >
         <Text className="text-text_tertiary mx-4">
@@ -150,7 +150,7 @@ function renderFlatlist(
   const baseImgUrl = `https://image.tmdb.org/t/p/w${providerImgQuality}`;
 
   return (
-    <View className="space-y-3 py-4 mx-2 rounded-xl bg-accent">
+    <View className="space-y-3 py-4 mx-2 rounded-xl bg-accent border border-stone-800">
       <Text className="font-bold text-text_highLight uppercase tracking-[2px] ml-4">
         {availableType}
       </Text>

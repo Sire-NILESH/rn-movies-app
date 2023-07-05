@@ -60,7 +60,7 @@ const MediaStats: React.FC<IProps> = ({ media }) => {
         <View className="mt-1 flex-row items-center space-x-2 justify-center">
           {/* <Ionicons name="people" size={14} color={Colors.yellow[300]} /> */}
           <FontAwesome name="line-chart" size={14} color={Colors.yellow[300]} />
-          <Text className="text-text_dark text-center">Popularity</Text>
+          <Text className="text-text_dark text-center mr-1">Popularity</Text>
         </View>
       </View>
 

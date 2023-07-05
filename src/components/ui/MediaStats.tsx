@@ -72,7 +72,7 @@ const MediaStats: React.FC<IProps> = ({ media }) => {
         <Text className="text-text_secondary text-lg font-bold text-center">
           {isMovie(media) ? "Movie" : "TV Show"}
         </Text>
-        <View className="mt-1 flex-row items-center space-x-2 justify-center">
+        <View className="mt-[6px] flex-row items-center space-x-2 justify-center">
           <Ionicons
             name={isMovie(media) ? "film-outline" : "tv-outline"}
             size={16}

@@ -12,6 +12,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import CollectionPartCard from "../components/CollectionPartCard";
 import useNavigateTo from "../hooks/useNavigateTo";
 import useImgSettings from "../hooks/useImgSettings";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 const FranchiseCollection: React.FunctionComponent<IStackScreenProps> = (
   props
@@ -112,14 +113,44 @@ const FranchiseCollection: React.FunctionComponent<IStackScreenProps> = (
                     <View className="w-[59%] justify-between">
                       {/* Title */}
                       <Text
-                        className="text-text_highLight text-2xl font-bold"
+                        className="text-text_primary text-xl font-bold"
                         numberOfLines={3}
                       >
                         {data.franchiseCollection.name}
                       </Text>
-                      <View className="mt-2">
-                        <Text className="text-text_secondary text-lg font-semibold">
-                          {`Total ${data.franchiseCollection.parts.length} parts`}
+                      <View className="mt-1 flex-row items-center space-x-2">
+                        {/* <MaterialIcons
+                          name="format-list-numbered"
+                          size={16}
+                          color={Colors.text_secondary}
+                        /> */}
+
+                        <Text className="text-text_secondary text-lg font-base">
+                          {`Includes ${data.franchiseCollection.parts.length} Parts`}
+                        </Text>
+                      </View>
+
+                      {/* START DATE */}
+                      <View className="mt-2 flex-row items-center space-x-2">
+                        <Ionicons
+                          name="calendar-outline"
+                          size={16}
+                          color={Colors.text_secondary}
+                        />
+                        <Text className="text-text_tertiary font-semibold">
+                          {data.franchiseCollection.parts[0].release_date
+                            ? `${
+                                String(
+                                  data.franchiseCollection.parts[0].release_date
+                                ).split("-")[0]
+                              } - ${
+                                String(
+                                  data.franchiseCollection.parts[
+                                    data.franchiseCollection.parts.length - 1
+                                  ].release_date
+                                ).split("-")[0]
+                              }`
+                            : "--"}
                         </Text>
                       </View>
                     </View>

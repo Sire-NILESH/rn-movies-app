@@ -46,7 +46,10 @@ const CollectionPartCard: React.FC<IProps> = ({
         <View className="w-[55%] flex-col justify-between">
           <View>
             {/* Title and genres */}
-            <Text className="w-[95%] text-lg font-base font-semibold text-text_tertiary">
+            <Text
+              className="w-[97%] text-base font-base font-semibold text-text_tertiary"
+              numberOfLines={2}
+            >
               {collectionPart.title}
             </Text>
             <View className="flex-row items-start space-x-2">

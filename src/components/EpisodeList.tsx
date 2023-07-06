@@ -108,20 +108,20 @@ const EpisodeList: React.FC<IProps> = ({
               <View className="w-[59%] justify-between">
                 {/* Title */}
                 <Text
-                  className="text-text_highLight text-2xl font-bold"
+                  className="text-text_highLight text-xl font-bold"
                   numberOfLines={3}
                 >
                   {tvMediaName}
                 </Text>
-                <View className="mt-2">
-                  <Text className="text-text_secondary text-lg font-semibold">
+                <View className="mt-1">
+                  <Text className="text-text_secondary text-base font-semibold">
                     Season{" "}
                     {seasonDetails.season_number === 0
                       ? "Extras"
                       : seasonDetails.season_number}
                   </Text>
                 </View>
-                <View className="flex-row space-x-2 items-center mt-auto">
+                <View className="flex-row space-x-2 items-center mt-1">
                   <Text className="text-text_tertiary text">
                     {seasonDetails.episodes.length} Episodes,
                   </Text>

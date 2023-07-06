@@ -2,9 +2,9 @@ import React, { useLayoutEffect, memo } from "react";
 import { IDrawerScreenProps } from "../library/NavigatorScreenProps/DrawerScreenProps";
 import useImageItemSetting from "../hooks/useImageItemSetting";
 import ScreenBuilder from "../components/builders/ScreenBuilder";
-import HomeHeader from "../components/Header/HomeHeader";
+// import HomeHeader from "../components/Header/HomeHeader";
 import HeaderWrapper from "../components/Header/HeaderWrapper";
-import Animated, {
+import {
   useAnimatedScrollHandler,
   useSharedValue,
 } from "react-native-reanimated";
@@ -26,7 +26,7 @@ const HomeScreen: React.FunctionComponent<IDrawerScreenProps> = (props) => {
     navigation.setOptions({
       header: () => {
         return (
-          <HeaderWrapper title={"Maven"} scrollY={scrollY}>
+          <HeaderWrapper title={"MAVEN"} scrollY={scrollY}>
             <View className="">
               <HeaderSearchButton searchCategory="multi" />
             </View>

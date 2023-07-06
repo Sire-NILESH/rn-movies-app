@@ -70,7 +70,10 @@ const PersonDetailModal: React.FC<IProps> = (props) => {
 
         {/* BODY */}
         {personInfoStatus === "success" ? (
-          <ScrollView className="mb-4 mx-4">
+          <ScrollView
+            className="mb-4 mx-4"
+            showsVerticalScrollIndicator={false}
+          >
             {/* Person Card */}
             <View className="flex-row items-start space-x-5">
               {/* IMAGE CARD */}

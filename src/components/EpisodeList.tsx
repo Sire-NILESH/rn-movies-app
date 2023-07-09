@@ -1,5 +1,5 @@
 import { View, Text, Image } from "react-native";
-import React, { useCallback } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { LinearGradient } from "expo-linear-gradient";
 import { Colors } from "../utils/Colors";
@@ -11,8 +11,11 @@ import {
   Season,
   SeasonDetails,
 } from "../../types/typings";
-import { dateFormatter } from "../utils/helpers/helper";
+import { dateFormatter, showSuccessToast } from "../utils/helpers/helper";
 import EpisodeInfoCard from "./EpisodeInfoCard";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import FlashlistSCrollButtonGrp from "./ui/FlashlistSCrollButtonGrp";
+import CustomButton from "./ui/CustomButton";
 
 interface IProps {
   tvMediaSeasons: Season[];
@@ -21,7 +24,6 @@ interface IProps {
   tvMediaName: string;
   seasonDetails: SeasonDetails;
   castandCrewModalHandler(castAndCrew: EpisodeCastAndCrew): void;
-  listRef: any;
 }
 
 const EpisodeList: React.FC<IProps> = ({
@@ -31,10 +33,19 @@ const EpisodeList: React.FC<IProps> = ({
   tvMediaName,
   seasonDetails,
   castandCrewModalHandler,
-  listRef,
 }) => {
   // So every one of them wont have to calculate them separately.
   const { navigateTo } = useNavigateTo();
+  const listRef = useRef();
+  const [invertList, setnvertList] = useState(false);
+
+  function toggleInvertList() {
+    setnvertList((prev) => !prev);
+    showSuccessToast(
+      "Inverted !",
+      `Showing ${!invertList ? "Latest" : "Oldest"} added items first`
+    );
+  }
 
   const renderItem = useCallback(
     (episodeObj: ListRenderItemInfo<Episode>) => {
@@ -62,7 +73,7 @@ const EpisodeList: React.FC<IProps> = ({
     },
     [seasonDetails]
   );
-  //   key={seasonDetails.id}
+
   return (
     <View className="flex-1">
       <FlashList
@@ -132,21 +143,43 @@ const EpisodeList: React.FC<IProps> = ({
                   </Text>
                 </View>
 
-                <View className="flex-1 justify-end w-28">
-                  <ThemeButton
-                    text={"Trailer"}
-                    iconName={"md-logo-youtube"}
-                    // /tv/{series_id}/season/{season_number}/videos
-                    onPressHandler={() => {
-                      navigateTo("Trailer", {
-                        name: "Trailer Videos",
-                        url: `/tv/${seasonDetails.episodes[0].show_id}/season/${seasonDetails.season_number}/videos`,
-                        queryParams: {
-                          language: "en-US",
-                        },
-                      });
-                    }}
-                  />
+                <View className="flex-1 justify-end w-full">
+                  <View className="w-full flex-row items-center space-x-2">
+                    <CustomButton
+                      height={32}
+                      width={32}
+                      styledClassName="rounded-full bg-neutral-900 border border-neutral-800"
+                      method={toggleInvertList}
+                    >
+                      <View className="flex-1 items-center justify-center">
+                        <MaterialCommunityIcons
+                          style={{
+                            transform: [{ rotateZ: "90deg" }],
+                          }}
+                          name="rotate-3d-variant"
+                          size={20}
+                          color={Colors.green[200]}
+                        />
+                      </View>
+                    </CustomButton>
+
+                    <View>
+                      <ThemeButton
+                        text={"Trailer"}
+                        iconName={"md-logo-youtube"}
+                        // /tv/{series_id}/season/{season_number}/videos
+                        onPressHandler={() => {
+                          navigateTo("Trailer", {
+                            name: "Trailer Videos",
+                            url: `/tv/${seasonDetails.episodes[0].show_id}/season/${seasonDetails.season_number}/videos`,
+                            queryParams: {
+                              language: "en-US",
+                            },
+                          });
+                        }}
+                      />
+                    </View>
+                  </View>
                 </View>
               </View>
             </LinearGradient>
@@ -162,7 +195,11 @@ const EpisodeList: React.FC<IProps> = ({
             ) : null}
           </View>
         }
-        data={seasonDetails.episodes}
+        data={
+          invertList
+            ? seasonDetails.episodes.slice().reverse()
+            : seasonDetails.episodes
+        }
         // @ts-ignore
         ref={listRef}
         keyExtractor={(episode) => String(episode.id)}
@@ -173,6 +210,9 @@ const EpisodeList: React.FC<IProps> = ({
         renderItem={(episodeObj) => renderItem(episodeObj)}
         ListFooterComponent={() => <View className="mt-1 h-0 w-full" />}
       />
+
+      {/* SCOLL TOP/BOTTOM BUTTONS GRP */}
+      <FlashlistSCrollButtonGrp listRef={listRef} />
     </View>
   );
 };

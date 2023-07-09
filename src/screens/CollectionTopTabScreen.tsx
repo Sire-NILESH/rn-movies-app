@@ -1,4 +1,4 @@
-import React, { useEffect, memo, useState, useCallback } from "react";
+import React, { useEffect, memo, useState, useCallback, useMemo } from "react";
 import { View } from "react-native";
 import { ITopTabScreenProps } from "../library/NavigatorScreenProps/TopTabScreenProps";
 import { IDBCollectionMedia } from "../../types/typings";
@@ -8,7 +8,10 @@ import NothingToShow from "../components/NothingToShow";
 import useImageItemSetting from "../hooks/useImageItemSetting";
 import Loader from "../components/ui/Loader";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
-import { getDeviceDimensions } from "../utils/helpers/helper";
+import { getDeviceDimensions, showSuccessToast } from "../utils/helpers/helper";
+import FloatingButton from "../components/ui/FloatingButton";
+import { Colors } from "../utils/Colors";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const windowWidth = getDeviceDimensions("window").width;
 
@@ -18,6 +21,7 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   const [medias, setMedias] = useState<IDBCollectionMedia[]>([]);
   const [refresh, setRefresh] = useState(false);
   const [isFirstLoad, setisFirstLoad] = useState(true);
+  const [invertList, setnvertList] = useState(false);
 
   const currentDate = new Date(Date.now());
   const currentYear = currentDate.getFullYear();
@@ -25,6 +29,14 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   const yesterday = new Date(
     currentDate.setDate(currentDate.getDate() - 1)
   ).toDateString();
+
+  function toggleInvertList() {
+    setnvertList((prev) => !prev);
+    showSuccessToast(
+      "Inverted !",
+      `Showing ${invertList ? "Latest" : "Oldest"} added items first`
+    );
+  }
 
   // thumbnail images quality
   const { imgItemsSetting: thumbnailQuality } =
@@ -74,7 +86,11 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
 
   useEffect(() => {
     if (refresh) {
-      getMediasFromCollection(screenMediaType, collectionType)
+      getMediasFromCollection(
+        screenMediaType,
+        collectionType
+        // invertList ? "ASC" : "DESC"
+      )
         .then((data) => {
           setMedias(data.rows._array);
           if (isFirstLoad) {
@@ -105,6 +121,15 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
     [dateCollection]
   );
 
+  const pass = useMemo(
+    function () {
+      return (
+        dateCollection && medias.length > 0 && thumbnailQuality !== undefined
+      );
+    },
+    [dateCollection, medias, thumbnailQuality]
+  );
+
   // only on first load, show a loader.
   if (isFirstLoad) {
     return (
@@ -119,27 +144,41 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
         className="flex-1"
         style={{ minHeight: 36 + (windowWidth * 0.31 * 3) / 2 }}
       >
-        {dateCollection &&
-        medias.length > 0 &&
-        thumbnailQuality !== undefined ? (
-          <FlashList
-            className=""
-            data={Object.keys(dateCollection)}
-            keyExtractor={(dateKey) => dateKey}
-            estimatedItemSize={260}
-            renderItem={(dateKeyObj) => renderItem(dateKeyObj)}
-          />
+        {pass ? (
+          <View className="flex-1">
+            <FlashList
+              className=""
+              // data={Object.keys(dateCollection)}
+              data={
+                invertList
+                  ? Object.keys(dateCollection).slice().reverse()
+                  : Object.keys(dateCollection)
+              }
+              keyExtractor={(dateKey) => dateKey}
+              estimatedItemSize={260}
+              renderItem={(dateKeyObj) => renderItem(dateKeyObj)}
+            />
+          </View>
         ) : (
           <NothingToShow problemType="nothing" />
         )}
       </View>
+
+      {/* INVERT ORDER FLOATING BUTTON */}
+      {pass && (
+        <FloatingButton onClickHandler={toggleInvertList}>
+          <MaterialCommunityIcons
+            style={{
+              transform: [{ rotateZ: "90deg" }],
+            }}
+            name="rotate-3d-variant"
+            size={24}
+            color={Colors.gray[200]}
+          />
+        </FloatingButton>
+      )}
     </View>
   );
 };
 
 export default memo(CollectionTopTabScreen);
-
-// {status === "loading" ? (
-//   //  Loader
-//   <Loader loading={status === "loading" ? true : false} />
-// ) : null}

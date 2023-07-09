@@ -1,5 +1,5 @@
-import { View, Text, StatusBar } from "react-native";
-import React, { useRef, useState } from "react";
+import { View, StatusBar } from "react-native";
+import React, { useState } from "react";
 import { ITopTabEpisodeListScreenProps } from "../library/NavigatorScreenProps/TopTabEpisodeListScreenProps";
 import EpisodeList from "../components/EpisodeList";
 import CastAndCrewModal from "../components/ui/CastAndCrewModal";
@@ -32,7 +32,6 @@ const TopTabEpisodeListScreen: React.FC<ITopTabEpisodeListScreenProps> = ({
     useState<EpisodeCastAndCrew>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   // const listRef = useRef<LegacyRef<FlashList<Episode>> | undefined>(null);
-  const listRef = useRef<any>(undefined);
 
   function castandCrewModalHandler(castAndCrew: EpisodeCastAndCrew) {
     setIsModalOpen((prev) => (prev === true ? false : true));
@@ -136,7 +135,6 @@ const TopTabEpisodeListScreen: React.FC<ITopTabEpisodeListScreenProps> = ({
               tvMediaPosterPathOld={tvMediaPosterPathOld}
               tvMediaSeasons={tvMediaSeasons}
               castandCrewModalHandler={castandCrewModalHandler}
-              listRef={listRef}
             />
           </View>
         ) : null}

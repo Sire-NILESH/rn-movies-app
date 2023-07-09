@@ -1,7 +1,14 @@
-import React, { useEffect, useState, memo, useCallback } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  memo,
+  useCallback,
+  useMemo,
+} from "react";
 import { View } from "react-native";
 import { ITopTabScreenProps } from "../library/NavigatorScreenProps/TopTabScreenProps";
-import { getDeviceDimensions } from "../utils/helpers/helper";
+import { getDeviceDimensions, showSuccessToast } from "../utils/helpers/helper";
 import CollectionThumbnail from "../components/CollectionThumbnail";
 import { IDBCollectionMedia } from "../../types/typings";
 import { getMediasFromCollection } from "../storage/database";
@@ -10,6 +17,9 @@ import useImageItemSetting from "../hooks/useImageItemSetting";
 import useNavigateTo from "../hooks/useNavigateTo";
 import Loader from "../components/ui/Loader";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
+import FloatingButton from "../components/ui/FloatingButton";
+import { Colors } from "../utils/Colors";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 // Calculate and pass the dimensions from the parent(here) to the thumbnails. So every thumbnail wont have to calculate them separately.
 const windowWidth = getDeviceDimensions("window").width;
@@ -20,6 +30,16 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
   const [medias, setMedias] = useState<IDBCollectionMedia[]>([]);
   const [refresh, setRefresh] = useState(false);
   const [isFirstLoad, setisFirstLoad] = useState(true);
+  const listRef = useRef();
+  const [invertList, setnvertList] = useState(false);
+
+  function toggleInvertList() {
+    setnvertList((prev) => !prev);
+    showSuccessToast(
+      "Inverted !",
+      `Showing ${invertList ? "Latest" : "Oldest"} added items first`
+    );
+  }
 
   // thumbnail images quality
   const { imgItemsSetting: thumbnailQuality } =
@@ -74,6 +94,13 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
   },
   []);
 
+  const pass = useMemo(
+    function () {
+      return medias?.length > 0 && thumbnailQuality;
+    },
+    [medias, thumbnailQuality]
+  );
+
   // only on first load, show a loader.
   if (isFirstLoad) {
     return (
@@ -91,27 +118,45 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
             paddingVertical: 8,
           }}
         >
-          {medias?.length > 0 && thumbnailQuality ? (
-            <FlashList
-              bounces
-              data={medias}
-              ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
-              // contentContainerStyle={{
-              //   minWidth: "96%",
-              //   paddingVertical: 8,
-              // }}
-              estimatedItemSize={(windowWidth * 0.31 * 3) / 2}
-              renderItem={(media) => renderItem(media)}
-              keyExtractor={(media) => {
-                return String(media.mediaId);
-              }}
-              numColumns={3}
-            />
+          {pass ? (
+            <View className="flex-1">
+              <FlashList
+                bounces
+                // @ts-ignore
+                ref={listRef}
+                data={invertList ? medias.slice().reverse() : medias}
+                ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
+                // contentContainerStyle={{
+                //   minWidth: "96%",
+                //   paddingVertical: 8,
+                // }}
+                estimatedItemSize={(windowWidth * 0.31 * 3) / 2}
+                renderItem={(media) => renderItem(media)}
+                keyExtractor={(media) => {
+                  return String(media.mediaId);
+                }}
+                numColumns={3}
+              />
+            </View>
           ) : (
             <NothingToShow problemType="nothing" />
           )}
         </View>
       </View>
+
+      {/* INVERT LIST FLOATING BUTTON */}
+      {pass && (
+        <FloatingButton onClickHandler={toggleInvertList}>
+          <MaterialCommunityIcons
+            style={{
+              transform: [{ rotateZ: "90deg" }],
+            }}
+            name="rotate-3d-variant"
+            size={24}
+            color={Colors.gray[200]}
+          />
+        </FloatingButton>
+      )}
     </View>
   );
 };

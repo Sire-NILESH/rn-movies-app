@@ -541,7 +541,8 @@ export function mediaExistsInCollection(
 // gets all the medias of a specified mediatype from specified collection/category
 export function getMediasFromCollection(
   mediaType: MediaTypes,
-  collectionType: TCollectionType
+  collectionType: TCollectionType,
+  sort?: "ASC" | "DESC"
 ) {
   const collectionColumn = mapper[collectionType];
 
@@ -564,7 +565,7 @@ export function getMediasFromCollection(
          AND m.mediaType = c.mediaType
          AND c.mediaType = ?
          WHERE c.collection = ?
-         ORDER BY c.dateAdded DESC;
+         ORDER BY c.dateAdded ${sort ? sort : "DESC"};
         `,
         [mediaType, collectionColumn],
         // [mediaType, collectionColumn],

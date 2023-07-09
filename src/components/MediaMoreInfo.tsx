@@ -10,6 +10,7 @@ import Loader from "./ui/Loader";
 import NothingToShow from "./NothingToShow";
 import { ScrollView } from "react-native-gesture-handler";
 import {
+  getDeviceDimensions,
   isMovie,
   isMovieExtended,
   isTv,
@@ -39,6 +40,8 @@ interface IProps {
   loadingProps: boolean;
   errorLoadingProps: Error | null;
 }
+
+const windowHeight = getDeviceDimensions("window").height;
 
 const MediaMoreInfo: React.FC<IProps> = (props) => {
   const { media, mediaType, loadingProps, errorLoadingProps } = props;
@@ -86,10 +89,13 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             // allImgQualities={allImgItemsSettings}
           />
 
-          {/* Content Title/name and original title/name  */}
-          <View className="mt-64 flex-1 pt-6">
+          {/* Content Title/name and original title/name mt-64 */}
+          <View className="flex-1 pt-6">
             {/* Title */}
-            <View className="px-4 w-[100%]">
+            <View
+              className="px-4 w-[100%]"
+              style={{ marginTop: windowHeight * 0.33 }}
+            >
               <Text className="text-[40px] font-bold text-text_highLight object-cover">
                 {getTitle()}
               </Text>

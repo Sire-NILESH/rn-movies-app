@@ -134,7 +134,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({
             : "--"}
         </Text>
 
-        <View className="flex-row space-x-2">
+        <View className="mt-3 flex-row space-x-2">
           {/* WATCHED BUTTON */}
           {/* <View className="w-28 justify-end">
             <WatchedEpisodeButton

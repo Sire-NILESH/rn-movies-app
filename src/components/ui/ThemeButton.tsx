@@ -11,7 +11,7 @@ interface IProps {
 
 const ThemeButton: React.FC<IProps> = ({ text, iconName, onPressHandler }) => {
   return (
-    <View className="border border-stone-800/90 rounded-lg bg-stone-900 mt-3 overflow-hidden">
+    <View className="border border-stone-800/90 rounded-lg bg-stone-900 overflow-hidden">
       <Pressable
         className="h-8 px-3 items-center justify-center"
         onPress={onPressHandler}

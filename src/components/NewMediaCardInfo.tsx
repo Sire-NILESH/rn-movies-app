@@ -140,6 +140,8 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
               >
                 {by639_1[media.original_language]?.name
                   ? by639_1[media.original_language]?.name
+                  : media.original_language === "cn"
+                  ? "Cantonese"
                   : media.original_language}
               </Text>
             </View>

@@ -37,6 +37,11 @@ export const supportedLangs: ISupportedLang[] = [
     name: "한국어/조선말",
   },
   {
+    iso_639_1: "zh",
+    english_name: "Mandarin",
+    name: "普通话",
+  },
+  {
     iso_639_1: "cn",
     english_name: "Cantonese",
     name: "广州话 / 廣州話",
@@ -578,11 +583,6 @@ export const supportedLangs: ISupportedLang[] = [
     iso_639_1: "mt",
     english_name: "Maltese",
     name: "Malti",
-  },
-  {
-    iso_639_1: "zh",
-    english_name: "Mandarin",
-    name: "普通话",
   },
   {
     iso_639_1: "gv",

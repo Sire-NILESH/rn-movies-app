@@ -15,7 +15,7 @@ const BlurHomeBannerSettings = () => {
       iconName="image"
       title="Blur Banner Image"
       subtitle={
-        "Adds a blur effect on top of the image banner of Home, Movies and TV Shows screen."
+        "Adds a blur effect on top of the banner image of Home, Movies and TV Shows screen."
       }
     >
       <CardRow rowTitle="Enable Blur">

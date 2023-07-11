@@ -738,6 +738,7 @@ export const countries: ICountry[] = [
   { name: "Malaysia", code: "MY" },
   { name: "Mexico", code: "MX" },
   { name: "New Zealand", code: "NZ" },
+  { name: "Pakistan", code: "PK" },
   { name: "Philippines", code: "PH" },
   { name: "Poland", code: "PL" },
   { name: "Qatar", code: "QA" },

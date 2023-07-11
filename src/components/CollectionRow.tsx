@@ -68,8 +68,8 @@ function renderFlatList(
   const { navigateTo } = useNavigateTo();
 
   const renderItem = useCallback(
-    (media: IReduxListMedia) => (
-      <View className="ml-1" key={media.mediaId}>
+    (media: IReduxListMedia, i: number) => (
+      <View className="ml-1" key={`${media.mediaId}-${i}`}>
         <CollectionThumbnail
           media={media ? media : media}
           orientation="portrait"
@@ -91,8 +91,8 @@ function renderFlatList(
           style={{ minHeight: 12 + THUMBNAIL_HEIGHT }}
         >
           <View className="w-[98%] flex-row flex-wrap gap-y-1 ">
-            {medias.map((m) => {
-              return renderItem(m);
+            {medias.map((m, i) => {
+              return renderItem(m, i);
             })}
           </View>
         </View>

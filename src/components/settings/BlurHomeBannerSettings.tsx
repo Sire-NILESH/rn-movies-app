@@ -13,9 +13,9 @@ const BlurHomeBannerSettings = () => {
   return (
     <SettingsCardWrapper
       iconName="image"
-      title="Blur Homescreen Banner"
+      title="Blur Banner Image"
       subtitle={
-        "Enable this if you have trouble reading texts on the banner or if you find the images too distracting."
+        "Adds a blur effect on top of the image banner of Home, Movies and TV Shows screen."
       }
     >
       <CardRow rowTitle="Enable Blur">

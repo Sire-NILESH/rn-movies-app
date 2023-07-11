@@ -14,6 +14,7 @@ import { Colors } from "../utils/Colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const windowWidth = getDeviceDimensions("window").width;
+const THUMBNAIL_HEIGHT = (windowWidth * 0.31 * 3) / 2;
 
 const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   const { navigation, collectionType, screenMediaType } = props;
@@ -33,8 +34,10 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   function toggleInvertList() {
     setnvertList((prev) => !prev);
     showSuccessToast(
-      "Inverted !",
-      `Showing ${invertList ? "Latest" : "Oldest"} added items first`
+      "List Reversed !",
+      `Now showing ${invertList ? "Latest" : "Oldest"} to ${
+        !invertList ? "Latest" : "Oldest"
+      } items in the list`
     );
   }
 
@@ -59,7 +62,7 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   }, [navigation]);
 
   // Prepare all the heavylifting/building data for the render only when screen was focused/in-front-of-the-user. With the above useEffect setup it will take care of the medias. So memoizing this with media set as dependency will ensure that this will be built only when screen is focused.
-  const dateCollection = React.useMemo(() => {
+  const { dateCollection, dateCollectionList } = React.useMemo(() => {
     // A collection medias according to the dates they were added.
     const dateCollectionTemp: { [key: string]: IDBCollectionMedia[] } = {};
 
@@ -78,7 +81,9 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
       else dateCollectionTemp[date].push(media);
     });
 
-    return dateCollectionTemp;
+    const dateCollectionList = Object.keys(dateCollectionTemp) as string[];
+
+    return { dateCollection: dateCollectionTemp, dateCollectionList };
   }, [medias]);
 
   // It is also important to memoize the render item function for better performance.
@@ -106,15 +111,18 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
       const dateKey = dateKeyObj.item;
       if (dateCollection[dateKey]?.length > 0) {
         return (
-          <CollectionRow
-            key={dateKey}
-            title={dateKey}
-            medias={dateCollection[dateKey]}
-            currentYear={currentYear}
-            today={today}
-            yesterday={yesterday}
-            thumbnailQuality={thumbnailQuality}
-          />
+          <View>
+            <CollectionRow
+              key={dateKey}
+              title={dateKey}
+              medias={dateCollection[dateKey]}
+              currentYear={currentYear}
+              today={today}
+              yesterday={yesterday}
+              thumbnailQuality={thumbnailQuality}
+            />
+            <View className="h-8 w-full" />
+          </View>
         );
       } else return null;
     },
@@ -140,23 +148,27 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
 
   return (
     <View className="flex-1 bg-secondary">
-      <View
-        className="flex-1"
-        style={{ minHeight: 36 + (windowWidth * 0.31 * 3) / 2 }}
-      >
+      <View className="flex-1" style={{ minHeight: 36 + THUMBNAIL_HEIGHT }}>
         {pass ? (
           <View className="flex-1">
             <FlashList
-              className=""
+              // className=""
               // data={Object.keys(dateCollection)}
               data={
                 invertList
-                  ? Object.keys(dateCollection).slice().reverse()
-                  : Object.keys(dateCollection)
+                  ? dateCollectionList.slice().reverse()
+                  : dateCollectionList
               }
-              keyExtractor={(dateKey) => dateKey}
-              estimatedItemSize={260}
+              keyExtractor={(dateKey, index) => `${dateKey}-${index}`}
+              // estimatedItemSize={80}
+              estimatedItemSize={315}
+              overrideItemLayout={(layout, item) => {
+                const numRows = Math.ceil(dateCollection[item].length / 3);
+                layout.size =
+                  32 + 28 + (numRows - 1) * 4 + 12 + numRows * THUMBNAIL_HEIGHT;
+              }}
               renderItem={(dateKeyObj) => renderItem(dateKeyObj)}
+              ListHeaderComponent={<View className="w-full h-8" />}
             />
           </View>
         ) : (

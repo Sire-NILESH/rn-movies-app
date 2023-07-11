@@ -81,7 +81,7 @@ function CollectionThumbnail({
 
   return (
     <View
-      className="relative overflow-hidden"
+      className="relative overflow-hidden bg-tertiary"
       style={containerStyles.containerView}
     >
       <Pressable

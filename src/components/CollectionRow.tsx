@@ -4,7 +4,6 @@ import { getDeviceDimensions } from "../utils/helpers/helper";
 import CollectionThumbnail from "./CollectionThumbnail";
 import React, { useCallback } from "react";
 import useNavigateTo from "../hooks/useNavigateTo";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 
 interface Props {
   title: string;
@@ -18,6 +17,8 @@ interface Props {
 // Calculate and pass the dimensions from the parent(here) to the thumbnails.
 // So every thumbnail wont have to calculate them separately.
 const windowWidth = getDeviceDimensions("window").width;
+
+const THUMBNAIL_HEIGHT = (windowWidth * 0.31 * 3) / 2;
 
 function CollectionRow({
   title,
@@ -40,8 +41,8 @@ function CollectionRow({
   }
 
   return (
-    <View className="space-y-1 mt-8">
-      <View className="flex-row space-x-4 mb-1">
+    <View className="">
+      <View className="flex-row space-x-4 h-7">
         <Text className="pl-5 text-sm font-semibold text-text_primary">
           {titleForRow}
           <Text className="text-text_dark">{`  |  ${medias.length} ${
@@ -67,10 +68,10 @@ function renderFlatList(
   const { navigateTo } = useNavigateTo();
 
   const renderItem = useCallback(
-    (media: ListRenderItemInfo<IReduxListMedia>) => (
-      <View className="ml-1">
+    (media: IReduxListMedia) => (
+      <View className="ml-1" key={media.mediaId}>
         <CollectionThumbnail
-          media={media.item ? media.item : media.item}
+          media={media ? media : media}
           orientation="portrait"
           navigateTo={navigateTo}
           windowWidth={windowWidth}
@@ -86,19 +87,14 @@ function renderFlatList(
     <>
       {medias.length > 0 ? (
         <View
-          className="w-full px-2 py-1"
-          style={{ minHeight: 12 + (windowWidth * 0.31 * 3) / 2 }}
+          className="w-full py-1 items-center"
+          style={{ minHeight: 12 + THUMBNAIL_HEIGHT }}
         >
-          <FlashList
-            numColumns={3}
-            ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
-            data={medias}
-            estimatedItemSize={(windowWidth * 0.31 * 3) / 2}
-            renderItem={(media) => renderItem(media)}
-            keyExtractor={(media, i) => {
-              return `${media.mediaId}-${i}`;
-            }}
-          />
+          <View className="w-[98%] flex-row flex-wrap gap-y-1 ">
+            {medias.map((m) => {
+              return renderItem(m);
+            })}
+          </View>
         </View>
       ) : null}
     </>

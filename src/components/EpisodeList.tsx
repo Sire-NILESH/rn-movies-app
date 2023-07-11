@@ -14,7 +14,7 @@ import {
 import { dateFormatter, showSuccessToast } from "../utils/helpers/helper";
 import EpisodeInfoCard from "./EpisodeInfoCard";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import FlashlistSCrollButtonGrp from "./ui/FlashlistSCrollButtonGrp";
+import FlashlistScrollButtonGrp from "./ui/FlashlistScrollButtonGrp";
 import CustomButton from "./ui/CustomButton";
 
 interface IProps {
@@ -42,8 +42,10 @@ const EpisodeList: React.FC<IProps> = ({
   function toggleInvertList() {
     setnvertList((prev) => !prev);
     showSuccessToast(
-      "Inverted !",
-      `Showing ${!invertList ? "Latest" : "Oldest"} added items first`
+      "List Reversed !",
+      `Now showing ${!invertList ? "Latest" : "Oldest"} to ${
+        invertList ? "Latest" : "Oldest"
+      } episodes in the list`
     );
   }
 
@@ -212,7 +214,7 @@ const EpisodeList: React.FC<IProps> = ({
       />
 
       {/* SCOLL TOP/BOTTOM BUTTONS GRP */}
-      <FlashlistSCrollButtonGrp listRef={listRef} />
+      <FlashlistScrollButtonGrp listRef={listRef} />
     </View>
   );
 };

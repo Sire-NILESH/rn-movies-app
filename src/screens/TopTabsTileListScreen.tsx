@@ -36,8 +36,10 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
   function toggleInvertList() {
     setnvertList((prev) => !prev);
     showSuccessToast(
-      "Inverted !",
-      `Showing ${invertList ? "Latest" : "Oldest"} added items first`
+      "List Reversed !",
+      `Now showing ${invertList ? "Latest" : "Oldest"} to ${
+        !invertList ? "Latest" : "Oldest"
+      } items in the list`
     );
   }
 

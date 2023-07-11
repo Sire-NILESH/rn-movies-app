@@ -8,7 +8,7 @@ interface IProps {
   listRef: React.MutableRefObject<any>;
 }
 
-const FlashlistSCrollButtonGrp: React.FC<IProps> = ({ listRef }) => {
+const FlashlistScrollButtonGrp: React.FC<IProps> = ({ listRef }) => {
   function scrollToTop() {
     // @ts-ignore
     listRef.current?.scrollToOffset({ offset: 0 });
@@ -39,4 +39,4 @@ const FlashlistSCrollButtonGrp: React.FC<IProps> = ({ listRef }) => {
   );
 };
 
-export default FlashlistSCrollButtonGrp;
+export default FlashlistScrollButtonGrp;

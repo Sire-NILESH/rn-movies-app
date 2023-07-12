@@ -31,9 +31,9 @@ const SeasonsStackScreen: React.FunctionComponent<IStackScreenProps> = (
 
   const GoBackButton = useCallback(() => {
     return (
-      <View className="absolute top-[1] left-0 z-50 bg-secondary w-[BACK_BTN_WIDTH] h-12 overflow-hidden border-b border-b-neutral-800 pl-4 pr-1">
+      <View className="absolute top-[1] left-0 z-10 bg-secondary w-[BACK_BTN_WIDTH] h-12 overflow-hidden border-b border-b-neutral-800">
         <Pressable
-          className="flex-1 justify-center"
+          className="flex-1 justify-center pl-4 pr-1"
           onPress={() => navigation.goBack()}
         >
           <Ionicons name="arrow-back" size={24} color={Colors.gray[50]} />

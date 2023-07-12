@@ -35,7 +35,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({
       {/* TITLE AND EPISODE NUMBER */}
       <View className="flex-row items-center mx-3 space-x-2 mb-3">
         <Text className="ml-2 text-text_highLight w-[90%]">
-          <Text className="text-xl font-semibold">{`EP ${episode.episode_number}: ${episode.name}`}</Text>
+          <Text className="text-xl font-semibold">{`${episode.episode_number}: ${episode.name}`}</Text>
         </Text>
       </View>
 

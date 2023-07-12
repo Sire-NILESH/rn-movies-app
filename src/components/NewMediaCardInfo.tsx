@@ -138,10 +138,12 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
                 className="text-text_highLight font-bold"
                 style={styles.textShadow}
               >
-                {by639_1[media.original_language]?.name
-                  ? by639_1[media.original_language]?.name
-                  : media.original_language === "cn"
+                {media.original_language === "cn"
                   ? "Cantonese"
+                  : media.original_language === "zh"
+                  ? "Mandarin"
+                  : by639_1[media.original_language]?.name
+                  ? by639_1[media.original_language]?.name
                   : media.original_language}
               </Text>
             </View>

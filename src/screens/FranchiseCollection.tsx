@@ -125,7 +125,7 @@ const FranchiseCollection: React.FunctionComponent<IStackScreenProps> = (
                           color={Colors.text_secondary}
                         /> */}
 
-                        <Text className="text-text_secondary text-lg font-base">
+                        <Text className="text-text_secondary text-lg">
                           {`Includes ${data.franchiseCollection.parts.length} Parts`}
                         </Text>
                       </View>

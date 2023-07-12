@@ -127,7 +127,7 @@ const EpisodeList: React.FC<IProps> = ({
                   {tvMediaName}
                 </Text>
                 <View className="mt-1">
-                  <Text className="text-text_secondary text-base font-semibold">
+                  <Text className="text-text_secondary text-lg">
                     Season{" "}
                     {seasonDetails.season_number === 0
                       ? "Extras"
@@ -135,10 +135,10 @@ const EpisodeList: React.FC<IProps> = ({
                   </Text>
                 </View>
                 <View className="flex-row space-x-2 items-center mt-1">
-                  <Text className="text-text_tertiary text">
+                  <Text className="text-text_tertiary">
                     {seasonDetails.episodes.length} Episodes,
                   </Text>
-                  <Text className="text-text_tertiary text">
+                  <Text className="text-text_tertiary">
                     {seasonDetails.air_date
                       ? dateFormatter(seasonDetails.air_date)
                       : null}

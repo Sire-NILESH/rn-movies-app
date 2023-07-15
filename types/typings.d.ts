@@ -694,3 +694,9 @@ export interface IPersonTVMedia {
   credit_id: string;
   episode_count: number;
 }
+
+export interface ISearchHistoryItem {
+  id: string;
+  itemName: string;
+  itemType: "searchHistory";
+}

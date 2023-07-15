@@ -16,6 +16,7 @@ import persistStore from "redux-persist/es/persistStore";
 import allowNsfwContentReducer from "./allowNsfwContentSlice";
 import blurHomeScreenBannerReducer from "./blurHomeScreenBannerSlice";
 import thumbnailTextSettingReducer from "./thumbnailTextSettingSlice";
+import searchHistorySliceReducer from "./searchHistorySlice";
 
 const persistConfig = {
   key: "root",
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   allowNsfwContent: allowNsfwContentReducer,
   blurHomeScreenBanner: blurHomeScreenBannerReducer,
   thumbnailTextSetting: thumbnailTextSettingReducer,
+  searchHistory: searchHistorySliceReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

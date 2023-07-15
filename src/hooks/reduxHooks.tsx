@@ -4,6 +4,7 @@ import type { RootState, AppDispatch } from "../store/store";
 import {
   ICountry,
   IDropdownYearsObj,
+  ISearchHistoryItem,
   ISupportedLang,
 } from "../../types/typings";
 
@@ -13,6 +14,10 @@ import { setDefaultYearFilterForMedias } from "../store/yearFIlterForMediasSlice
 import { toggleAllowNsfwContent } from "../store/allowNsfwContentSlice";
 import { toggleBlurHomeScreenBanner } from "../store/blurHomeScreenBannerSlice";
 import { toggleThumbnailText } from "../store/thumbnailTextSettingSlice";
+import {
+  addSearchHistoryItem,
+  removeSearchHistoryItem,
+} from "../store/searchHistorySlice";
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch: () => AppDispatch = useDispatch;
@@ -111,5 +116,29 @@ export const useThumbnailTextSettingHooks = () => {
   return {
     toggleThumbnailTextHandler,
     isThumbnailText,
+  };
+};
+
+export const useSearchHistoryHooks = () => {
+  // REDUX TOOLKIT HOOKS
+  const searchHistory = useAppSelector((state) => state.searchHistory);
+  const dispatch = useAppDispatch();
+
+  const addSearchHistoryItemHandler = (
+    seachHistoryItem: ISearchHistoryItem
+  ) => {
+    dispatch(addSearchHistoryItem(seachHistoryItem));
+  };
+
+  const removeSearchHistoryItemHandler = (
+    seachHistoryItem: ISearchHistoryItem
+  ) => {
+    dispatch(removeSearchHistoryItem(seachHistoryItem));
+  };
+
+  return {
+    searchHistory,
+    addSearchHistoryItemHandler,
+    removeSearchHistoryItemHandler,
   };
 };

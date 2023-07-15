@@ -3,13 +3,19 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import IconButton from "./IconButton";
 import { Colors } from "./../../utils/Colors";
-import { MediaTypes, MovieMedia, TvMedia } from "../../../types/typings";
+import {
+  ISearchHistoryItem,
+  MediaTypes,
+  MovieMedia,
+  TvMedia,
+} from "../../../types/typings";
 
 interface IProps {
   gotoList?: boolean;
   title?: string | null;
   searchCategory?: MediaTypes;
   disabled?: boolean;
+  addSearchHistoryItemHandler?: (seachHistoryItem: ISearchHistoryItem) => void;
 }
 
 export default function HeaderSearchButton({
@@ -17,11 +23,21 @@ export default function HeaderSearchButton({
   title,
   searchCategory,
   disabled,
+  addSearchHistoryItemHandler,
 }: IProps) {
   const navigation = useNavigation();
 
   function onPressHandler() {
     if (gotoList === true) {
+      // add to the search history
+      if (addSearchHistoryItemHandler) {
+        addSearchHistoryItemHandler({
+          id: title ? title : "",
+          itemName: title ? title : "",
+          itemType: "searchHistory",
+        });
+      }
+
       // @ts-ignore
       navigation.push("Search Tiles", { title, searchCategory });
     } else {

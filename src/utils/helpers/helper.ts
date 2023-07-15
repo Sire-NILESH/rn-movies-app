@@ -16,6 +16,7 @@ import {
   IQueryParams,
   IReduxListMedia,
   ISOLang,
+  ISearchHistoryItem,
   ISupportedLang,
   IUrlObject,
   MediaTypes,
@@ -198,6 +199,14 @@ export function isICountry(obj: Object): obj is ICountry {
     obj !== null &&
     (obj as ICountry).name !== undefined &&
     (obj as ICountry).code !== undefined
+  );
+}
+
+export function isISearchHistoryItem(obj: Object): obj is ISearchHistoryItem {
+  return (
+    obj !== null &&
+    (obj as ISearchHistoryItem).itemName !== undefined &&
+    (obj as ISearchHistoryItem).itemType === "searchHistory"
   );
 }
 

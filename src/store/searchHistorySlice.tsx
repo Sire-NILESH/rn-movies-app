@@ -1,9 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ISearchHistoryItem } from "../../types/typings";
 
-const initialState: ISearchHistoryItem[] = [
-  { id: "wow", itemName: "wow", itemType: "searchHistory" },
-];
+const initialState: ISearchHistoryItem[] = [];
 
 const searchHistorySlice = createSlice({
   name: "searchHistory",

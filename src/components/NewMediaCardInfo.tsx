@@ -32,9 +32,9 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
     : `https://image.tmdb.org/t/p/w${posterImgQuality}${media.poster_path}`;
 
   return (
-    <View className="mt-5 mx-3 justify-between rounded-2xl border border-stone-800/80 overflow-hidden">
+    <View className="justify-between rounded-2xl border border-stone-800/80 overflow-hidden">
       <View
-        className="relative flex-1 "
+        className="relative h-full w-full "
         style={{
           width: "100%",
           aspectRatio: 16 / 9,
@@ -54,9 +54,6 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
 
       <LinearGradient
         colors={[
-          // "rgba(0, 0, 0, 0)",
-          // "rgba(0, 0, 0, 0)",
-
           "rgba(0, 0, 0, 0.5)",
           "rgba(0, 0, 0, 0.5)",
           "rgba(0, 0, 0, 0.4)",
@@ -64,12 +61,17 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
           "rgba(0, 0, 0, 0.1)",
         ]}
         start={{ x: 0.0, y: 1 }}
-        style={{ width: "100%", aspectRatio: 16 / 9 }}
-        className="absolute bg-stone-900/10 rounded-l-2xl py-2 flex-row items-center justify-between"
+        // style={{ width: "100%", aspectRatio: 16 / 9 }}
+        className="absolute w-full h-full bg-stone-900/10 rounded-l-2xl py-2 flex-row items-center justify-between"
       >
         <View className="h-full justify-around items-start flex-wrap">
           <View className="flex-row items-center space-x-2 px-4">
-            <Ionicons name="star" size={18} color={Colors.yellow[300]} />
+            <Ionicons
+              name="star"
+              size={18}
+              color={Colors.yellow[300]}
+              style={styles.textShadow}
+            />
             <Text
               className="font-bold text-text_highLight tracking-widest"
               style={styles.textShadow}
@@ -94,6 +96,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
               name="calendar-outline"
               size={18}
               color={Colors.text_primary}
+              style={styles.textShadow}
             />
             <Text
               className="text-text_highLight font-bold"
@@ -114,6 +117,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
               name={"flag-outline"}
               size={18}
               color={Colors.text_primary}
+              style={styles.textShadow}
             />
             <Text
               className="text-text_highLight font-bold"
@@ -133,6 +137,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
                 name="language-outline"
                 size={18}
                 color={Colors.text_primary}
+                style={styles.textShadow}
               />
               <Text
                 className="text-text_highLight font-bold"
@@ -155,6 +160,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
                 name="time-outline"
                 size={18}
                 color={Colors.text_primary}
+                style={styles.textShadow}
               />
               <Text
                 className="text-text_highLight font-bold"
@@ -171,6 +177,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
                 name="document-text-outline"
                 size={18}
                 color={Colors.text_primary}
+                style={styles.textShadow}
               />
               <Text
                 className="text-text_highLight font-bold"

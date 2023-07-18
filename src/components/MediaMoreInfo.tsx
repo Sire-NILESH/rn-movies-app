@@ -146,7 +146,13 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             ) : null}
 
             {/* MEDIA IMAGE WITH STATS */}
-            <View>
+            <View
+              className="mt-5 px-3"
+              style={{
+                width: "100%",
+                aspectRatio: 16 / 9,
+              }}
+            >
               <NewMediaCardInfo
                 media={media}
                 imgQuality={allImgItemsSettings?.banner?.value}

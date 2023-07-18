@@ -475,6 +475,8 @@ export const networkIds: INetworkIds = {
   ANIMAX: 171,
   "The CW": 71,
   "Comedy Central": 47,
+  Peacock: 3353,
+  "Disney Channel": 54,
 };
 
 export const productionComapnyIds = {

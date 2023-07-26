@@ -352,6 +352,8 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
               </View>
             ) : null}
           </View>
+          {/* Bottom padding, for devices using gestures, a padding from below is good to have */}
+          <View className="my-3" />
         </ScrollView>
       )}
     </View>

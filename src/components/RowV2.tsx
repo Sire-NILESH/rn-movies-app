@@ -72,29 +72,21 @@ function RowV2({ title, medias, playlist, thumbnailQualitySettings }: Props) {
               size={12}
               color={Colors.neutral[100]}
             />
-            {/* <Ionicons
-            name={"arrow-forward-circle-outline"}
-            size={18}
-            color={Colors.neutral[100]}
-          /> */}
           </Pressable>
         </View>
       </View>
-      {/* <View className="flex-row space-x-4 mb-2">
-        <Text className="pl-5 text-sm font-semibold text-text_primary">
-          {title}
-        </Text>
-      </View> */}
 
       <View className="">
-        {renderFlatList(
-          medias,
-          title,
-          playlist,
-          isThumbnailText,
-          navigateTo,
-          thumbnailQualitySettings
-        )}
+        {
+          <RenderList
+            medias={medias}
+            title={title}
+            playlist={playlist}
+            isThumbnailText={isThumbnailText}
+            navigateTo={navigateTo}
+            thumbnailQualitySettings={thumbnailQualitySettings}
+          />
+        }
       </View>
     </View>
   );
@@ -102,14 +94,23 @@ function RowV2({ title, medias, playlist, thumbnailQualitySettings }: Props) {
 
 export default RowV2;
 
-function renderFlatList(
-  medias: Media[],
-  title: string,
-  playlist: IPlaylist,
-  isThumbnailText: ThumbnailTextPermission,
-  navigateTo: (screen: string, paramOption: Object) => void,
-  thumbnailQualitySettings?: IImgItemSettingsDB
-) {
+interface IRenderList {
+  medias: Media[];
+  title: string;
+  playlist: IPlaylist;
+  isThumbnailText: ThumbnailTextPermission;
+  navigateTo: (screen: string, paramOption: Object) => void;
+  thumbnailQualitySettings?: IImgItemSettingsDB;
+}
+
+function RenderList({
+  medias,
+  title,
+  playlist,
+  isThumbnailText,
+  navigateTo,
+  thumbnailQualitySettings,
+}: IRenderList) {
   //   const { isThumbnailText } = useThumbnailTextSettingHooks();
 
   const renderItem = useCallback(
@@ -132,12 +133,14 @@ function renderFlatList(
 
   return (
     <FlashList
-      ListFooterComponent={renderFooterItemFunction(
-        medias,
-        title,
-        playlist,
-        navigateTo
-      )}
+      ListFooterComponent={
+        <RenderFooterItemFunction
+          medias={medias}
+          title={title}
+          playlist={playlist}
+          navigateTo={navigateTo}
+        />
+      }
       bounces
       data={medias}
       ListHeaderComponent={() => <View className="pl-2 w-0" />}
@@ -152,12 +155,17 @@ function renderFlatList(
   );
 }
 
-function renderFooterItemFunction(
-  medias: any[],
-  title: string,
-  playlist: IPlaylist,
-  navigateTo: (screen: string, paramOption: Object) => void
-) {
+function RenderFooterItemFunction({
+  medias,
+  title,
+  playlist,
+  navigateTo,
+}: {
+  medias: any[];
+  title: string;
+  playlist: IPlaylist;
+  navigateTo: (screen: string, paramOption: Object) => void;
+}) {
   return (
     <View
       className="w-14 h-14 my-auto rounded-full [elevation: 2] overflow-hidden mx-5"

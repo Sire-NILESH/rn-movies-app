@@ -26,8 +26,8 @@ const searchHistorySlice = createSlice({
         state.unshift(temp);
       }
 
-      //  we only keep 10 most recent search history items
-      if (state.length > 10) {
+      //  we only keep 50 most recent search history items
+      if (state.length > 50) {
         state.pop();
       }
     },

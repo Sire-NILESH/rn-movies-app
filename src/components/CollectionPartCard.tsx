@@ -47,12 +47,12 @@ const CollectionPartCard: React.FC<IProps> = ({
           <View>
             {/* Title and genres */}
             <Text
-              className="w-[97%] text-base font-base font-semibold text-text_tertiary"
+              className="w-[97%] text-base font-semibold text-text_tertiary"
               numberOfLines={2}
             >
-              {collectionPart.title}
+              {`${order + 1}: ${collectionPart.title}`}
             </Text>
-            <View className="flex-row items-start space-x-2">
+            <View className="flex-row items-start space-x-2 mt-1">
               <Text
                 className="text-text_dark text-xs"
                 style={{ lineHeight: 20 }}
@@ -105,14 +105,14 @@ const CollectionPartCard: React.FC<IProps> = ({
               </View>
 
               {/* Part */}
-              <Text className="text-sm text-text_tertiary font-semibold">
+              {/* <Text className="text-sm text-text_tertiary font-semibold">
                 {`Part ${order + 1} `}{" "}
-              </Text>
+              </Text> */}
             </View>
           </View>
 
           {/* Buttons */}
-          <View className="flex-row items-center w-full space-x-4">
+          <View className="flex-row items-center w-full pt-3">
             <ThemeCircleButton
               text={"More info"}
               onPressHandler={() => {

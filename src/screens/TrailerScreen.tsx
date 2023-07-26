@@ -117,6 +117,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
                 // contentContainerStyle={{ paddingVertical: 4 }}
                 keyExtractor={(itemObj) => itemObj.id}
                 renderItem={(vObj) => renderItem(vObj)}
+                ListFooterComponent={() => <View className="my-3" />}
               />
             </View>
           </>

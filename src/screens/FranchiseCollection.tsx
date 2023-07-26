@@ -196,6 +196,7 @@ const FranchiseCollection: React.FunctionComponent<IStackScreenProps> = (
                 <View className="border border-b-stone-800 mx-10 my-4" />
               )}
               renderItem={(partObj) => renderItem(partObj)}
+              ListFooterComponent={() => <View className="my-3" />}
             />
           </View>
         )

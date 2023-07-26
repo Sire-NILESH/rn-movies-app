@@ -356,7 +356,7 @@ function renderFlatList(
       data={
         searchQueryResult && searchQueryResult?.length > 0
           ? searchQueryResult
-          : searchHistory
+          : searchHistory.slice(0, 10)
       }
       keyExtractor={(item, i) => `${item.id}-${i}`}
       // initialNumToRender={20}

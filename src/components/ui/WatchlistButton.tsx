@@ -22,6 +22,8 @@ import {
   mediaExistsInCollection,
   removeMediaFromCollection,
 } from "../../storage/database";
+import { useAppDispatch } from "../../hooks/reduxHooks";
+import { setDbCollectionModified } from "../../store/dbCollectionModifiedSlice";
 
 interface IProps {
   media: MovieMediaExtended | TvMediaExtended | MovieMedia | TvMedia;
@@ -39,6 +41,8 @@ const WatchlistButton: React.FC<IProps> = ({
   const setIsWatchlistedHandler = () => {
     setIsWatchlisted((prev) => !prev);
   };
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const isWatchlistedInDB = async () => {
@@ -74,6 +78,14 @@ const WatchlistButton: React.FC<IProps> = ({
             : media.original_name
         }' was added to Watchlist`
       );
+
+      // Mark the DB as updated so collection screens can check it and fetch the data from DB when in focus.
+      dispatch(
+        setDbCollectionModified({
+          collectionType: "watchlist",
+          mediaType: mediaType,
+        })
+      );
     } catch (err) {
       showErrorToast();
     }
@@ -91,6 +103,14 @@ const WatchlistButton: React.FC<IProps> = ({
             ? media.name
             : media.original_name
         }' was removed from Watchlist`
+      );
+
+      // Mark the DB as updated so collection screens can check it and fetch the data from DB when in focus.
+      dispatch(
+        setDbCollectionModified({
+          collectionType: "watchlist",
+          mediaType: mediaType,
+        })
       );
     } catch (err) {
       showErrorToast();

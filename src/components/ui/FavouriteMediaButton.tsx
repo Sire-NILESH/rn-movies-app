@@ -22,6 +22,8 @@ import {
   mediaExistsInCollection,
   removeMediaFromCollection,
 } from "../../storage/database";
+import { useAppDispatch } from "../../hooks/reduxHooks";
+import { setDbCollectionModified } from "../../store/dbCollectionModifiedSlice";
 
 interface IProps {
   mediaId: number;
@@ -39,6 +41,8 @@ const FavouriteMediaButton: React.FC<IProps> = ({
   const setIsFavouritedHandler = () => {
     setIsFavourite((prev) => !prev);
   };
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const isWatchlistedInDB = async () => {
@@ -73,6 +77,14 @@ const FavouriteMediaButton: React.FC<IProps> = ({
             : media.original_name
         }' was added to Favourites`
       );
+
+      // Mark the DB as updated so collection screens can check it and fetch the data from DB when in focus.
+      dispatch(
+        setDbCollectionModified({
+          collectionType: "favourites",
+          mediaType: mediaType,
+        })
+      );
     } catch (err) {
       showErrorToast();
     }
@@ -90,6 +102,14 @@ const FavouriteMediaButton: React.FC<IProps> = ({
             ? media.name
             : media.original_name
         }' was removed from Favourites`
+      );
+
+      // Mark the DB as updated so collection screens can check it and fetch the data from DB when in focus.
+      dispatch(
+        setDbCollectionModified({
+          collectionType: "favourites",
+          mediaType: mediaType,
+        })
       );
     } catch (err) {
       showErrorToast();

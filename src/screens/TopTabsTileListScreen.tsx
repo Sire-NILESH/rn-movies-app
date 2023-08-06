@@ -20,9 +20,18 @@ import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import FloatingButton from "../components/ui/FloatingButton";
 import { Colors } from "../utils/Colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useAppSelector } from "../hooks/reduxHooks";
 
 // Calculate and pass the dimensions from the parent(here) to the thumbnails. So every thumbnail wont have to calculate them separately.
 const windowWidth = getDeviceDimensions("window").width;
+
+type TDbCollectionUpdateTypes = "dbUpdate" | "forceUpdate";
+
+type TDBUpdateChecklist = {
+  [Key in TDbCollectionUpdateTypes]: {
+    timeStamp: null | number;
+  };
+};
 
 const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
   const { navigation, collectionType, screenMediaType } = props;
@@ -32,6 +41,31 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
   const [isFirstLoad, setisFirstLoad] = useState(true);
   const listRef = useRef();
   const [invertList, setnvertList] = useState(false);
+
+  const [dbUpdatesChecklist, setdbUpdatesChecklist] =
+    useState<TDBUpdateChecklist>({
+      dbUpdate: {
+        timeStamp: null,
+      },
+      forceUpdate: {
+        timeStamp: null,
+      },
+    });
+
+  const isDbUpdatetimeStampChecked = (
+    dbUpdateType: TDbCollectionUpdateTypes,
+    timeStamp: number | null
+  ) => {
+    return dbUpdatesChecklist[dbUpdateType].timeStamp === timeStamp;
+  };
+
+  const dBUpdatedTimeStamp = useAppSelector(
+    (state) => state.dBUpdatedTimeStamp[collectionType]
+  );
+
+  const dBForceUpdateTimeStamp = useAppSelector(
+    (state) => state.dBUpdatedTimeStamp.forceUpdate
+  );
 
   function toggleInvertList() {
     setnvertList((prev) => !prev);
@@ -68,14 +102,73 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
   }, [navigation]);
 
   // Prepare all the heavylifting/building data for the render only when screen was focused/in-front-of-the-user which is kown by the refresh state.
+
   useEffect(() => {
+    const fetchCollectionInfo = (callbackFn: undefined | (() => void)) => {
+      getMediasFromCollection(
+        screenMediaType,
+        collectionType
+        // invertList ? "ASC" : "DESC"
+      )
+        .then((data) => {
+          setMedias(data.rows._array);
+          if (isFirstLoad) {
+            setisFirstLoad(false);
+          }
+          callbackFn && callbackFn();
+        })
+        .catch((err) => {});
+    };
+
     if (refresh) {
-      getMediasFromCollection(screenMediaType, collectionType).then((data) => {
-        setMedias(data.rows._array);
-        if (isFirstLoad) {
-          setisFirstLoad(false);
-        }
-      });
+      if (isFirstLoad) {
+        fetchCollectionInfo(() => {
+          // after fetching for first load, mark that time stamp as checked for both forcedUpdate and dbUpdate.
+
+          setdbUpdatesChecklist((prev) => {
+            const temp = { ...prev };
+            temp["forceUpdate"].timeStamp = dBForceUpdateTimeStamp.timeStamp;
+
+            temp["dbUpdate"].timeStamp = dBForceUpdateTimeStamp.timeStamp;
+
+            return temp;
+          });
+        });
+      } else if (
+        !isFirstLoad &&
+        !isDbUpdatetimeStampChecked(
+          "forceUpdate",
+          dBForceUpdateTimeStamp.timeStamp
+        )
+      ) {
+        fetchCollectionInfo(() => {
+          // after fetching, mark that time stamp as checked.
+
+          setdbUpdatesChecklist((prev) => {
+            const temp = { ...prev };
+            temp["forceUpdate"].timeStamp = dBForceUpdateTimeStamp.timeStamp;
+
+            return temp;
+          });
+        });
+      } else if (
+        !isFirstLoad &&
+        !isDbUpdatetimeStampChecked(
+          "dbUpdate",
+          dBUpdatedTimeStamp[screenMediaType].timeStamp
+        )
+      ) {
+        fetchCollectionInfo(() => {
+          // after fetching, mark that time stamp as checked.
+          setdbUpdatesChecklist((prev) => {
+            const temp = { ...prev };
+            temp["dbUpdate"].timeStamp =
+              dBUpdatedTimeStamp[screenMediaType].timeStamp;
+
+            return temp;
+          });
+        });
+      }
     }
   }, [refresh]);
 
@@ -117,7 +210,6 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
         <View
           style={{
             minWidth: "96%",
-            paddingVertical: 8,
           }}
         >
           {pass ? (
@@ -134,6 +226,8 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
                 // }}
                 estimatedItemSize={(windowWidth * 0.31 * 3) / 2}
                 renderItem={(media) => renderItem(media)}
+                ListHeaderComponent={<View className="w-full h-2" />}
+                ListFooterComponent={<View className="w-full h-8" />}
                 keyExtractor={(media) => {
                   return String(media.mediaId);
                 }}

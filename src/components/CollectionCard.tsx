@@ -24,7 +24,7 @@ const CollectionCard: React.FC<IProps> = ({
   const imgQuality = imgThumbnailQuality ? imgThumbnailQuality : "300";
 
   return (
-    <View className="flex-1 space-y-4 mt-8 mx-2">
+    <View className="flex-1 space-y-4 mt-8 mx-2 px-2">
       {/* Divider */}
       {/* <View className="w-[90%] border border-tertiary" /> */}
       <Text className="ml-4 font-semibold text-text_tertiary">
@@ -35,7 +35,7 @@ const CollectionCard: React.FC<IProps> = ({
       <View className="flex-row items-start space-x-5">
         {/* IMAGE CARD */}
         <View
-          className="ml-2 rounded-lg border border-stone-800 overflow-hidden"
+          className="rounded-lg border border-stone-800 overflow-hidden"
           style={{ width: "33%", aspectRatio: 2 / 3 }}
         >
           <Image
@@ -53,7 +53,7 @@ const CollectionCard: React.FC<IProps> = ({
         <View className="mt-2 w-[60%] justify-between">
           {/* Text data */}
           <View className="">
-            <Text className="font-semibold text-text_tertiary">
+            <Text className="font-semibold text-text_tertiary text-sm">
               {collection.name}
             </Text>
             <View className="flex-row items-start space-x-2">

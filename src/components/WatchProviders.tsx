@@ -205,12 +205,13 @@ function renderFlatlist(
   };
 
   return (
-    <View className="space-y-3 py-4 mx-2 rounded-xl bg-accent border border-stone-800">
+    <View className="space-y-3 py-4 mx-2 rounded-xl bg-accent border border-green-900/40">
       <Text className="font-bold text-text_highLight uppercase tracking-[2px] ml-4">
         {availableType}
       </Text>
       <FlatList
         horizontal
+        showsHorizontalScrollIndicator={false}
         data={providerType}
         keyExtractor={(provider) => String(provider.provider_id)}
         contentContainerStyle={{

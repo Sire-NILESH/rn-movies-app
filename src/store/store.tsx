@@ -17,11 +17,13 @@ import allowNsfwContentReducer from "./allowNsfwContentSlice";
 import blurHomeScreenBannerReducer from "./blurHomeScreenBannerSlice";
 import thumbnailTextSettingReducer from "./thumbnailTextSettingSlice";
 import searchHistorySliceReducer from "./searchHistorySlice";
+import dbCollectionModifiedReducer from "./dbCollectionModifiedSlice";
 
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
   version: 1,
+  blacklist: ["dBUpdatedTimeStamp"],
 };
 
 const rootReducer = combineReducers({
@@ -32,12 +34,14 @@ const rootReducer = combineReducers({
   blurHomeScreenBanner: blurHomeScreenBannerReducer,
   thumbnailTextSetting: thumbnailTextSettingReducer,
   searchHistory: searchHistorySliceReducer,
+  dBUpdatedTimeStamp: dbCollectionModifiedReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
+  // reducer: { ...persistedReducer, isDBUpdated: dbCollectionModifiedReducer },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

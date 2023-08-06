@@ -13,11 +13,15 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "../../utils/helpers/helper";
+import { forceUpdateDbCollectionModified } from "../../store/dbCollectionModifiedSlice";
+import { useAppDispatch } from "../../hooks/reduxHooks";
 
 const DeleteSettings = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [deletingItem, setDeletingItem] =
     useState<TDbCollectionType>("watched");
+
+  const dispatch = useAppDispatch();
 
   function deletingItemHandler(item: TDbCollectionType) {
     setDeletingItem(item);
@@ -31,6 +35,9 @@ const DeleteSettings = () => {
     //  and only on confirmation
     deleteCollection(deletingItem)
       .then(() => {
+        // force update the collection screens
+        dispatch(forceUpdateDbCollectionModified());
+
         showSuccessToast(
           "Deleted !",
           `Your '${capitalizeString(

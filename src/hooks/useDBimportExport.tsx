@@ -5,9 +5,12 @@ import * as FileSystem from "expo-file-system";
 import * as DocumentPicker from "expo-document-picker";
 import { dbClose, dbOpen, initCollectionDB } from "../storage/database";
 import { showErrorToast, showSuccessToast } from "../utils/helpers/helper";
+import { useAppDispatch } from "./reduxHooks";
+import { forceUpdateDbCollectionModified } from "../store/dbCollectionModifiedSlice";
 
 const useDBimportExport = () => {
   const [isLoadingImportExport, setIsLoadingImportExport] = useState(true);
+  const dispatch = useAppDispatch();
 
   const exportDb = async () => {
     if (Platform.OS === "android") {
@@ -118,6 +121,9 @@ const useDBimportExport = () => {
           "Imported !",
           "Your backup was imported successfully."
         );
+
+        // force update the collection screens
+        dispatch(forceUpdateDbCollectionModified());
       }
     } catch (err) {
       showErrorToast("Error !", "Something went wrong while importing backup");

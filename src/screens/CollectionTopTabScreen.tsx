@@ -12,9 +12,18 @@ import { getDeviceDimensions, showSuccessToast } from "../utils/helpers/helper";
 import FloatingButton from "../components/ui/FloatingButton";
 import { Colors } from "../utils/Colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useAppSelector } from "../hooks/reduxHooks";
 
 const windowWidth = getDeviceDimensions("window").width;
 const THUMBNAIL_HEIGHT = (windowWidth * 0.31 * 3) / 2;
+
+type TDbCollectionUpdateTypes = "dbUpdate" | "forceUpdate";
+
+type TDBUpdateChecklist = {
+  [Key in TDbCollectionUpdateTypes]: {
+    timeStamp: null | number;
+  };
+};
 
 const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   const { navigation, collectionType, screenMediaType } = props;
@@ -30,6 +39,31 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   const yesterday = new Date(
     currentDate.setDate(currentDate.getDate() - 1)
   ).toDateString();
+
+  const [dbUpdatesChecklist, setdbUpdatesChecklist] =
+    useState<TDBUpdateChecklist>({
+      dbUpdate: {
+        timeStamp: null,
+      },
+      forceUpdate: {
+        timeStamp: null,
+      },
+    });
+
+  const isDbUpdatetimeStampChecked = (
+    dbUpdateType: TDbCollectionUpdateTypes,
+    timeStamp: number | null
+  ) => {
+    return dbUpdatesChecklist[dbUpdateType].timeStamp === timeStamp;
+  };
+
+  const dBUpdatedTimeStamp = useAppSelector(
+    (state) => state.dBUpdatedTimeStamp[collectionType]
+  );
+
+  const dBForceUpdateTimeStamp = useAppSelector(
+    (state) => state.dBUpdatedTimeStamp.forceUpdate
+  );
 
   function toggleInvertList() {
     setnvertList((prev) => !prev);
@@ -71,8 +105,6 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
     // bulid the date based media collection.
     screenTypeMedias.forEach((media) => {
       const date = media.dateAddedString;
-      // const date = new Date(media.dateAdded).toDateString();
-
       // if that date collection doesn't exist, create it
       if (!(date in dateCollectionTemp)) {
         dateCollectionTemp[date] = [media];
@@ -90,7 +122,7 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   // CollectionRow was memoized, so now when newer media is added, only the part concerning that will be re exe and not everything else.
 
   useEffect(() => {
-    if (refresh) {
+    const fetchCollectionInfo = (callbackFn: undefined | (() => void)) => {
       getMediasFromCollection(
         screenMediaType,
         collectionType
@@ -101,8 +133,60 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
           if (isFirstLoad) {
             setisFirstLoad(false);
           }
+          callbackFn && callbackFn();
         })
         .catch((err) => {});
+    };
+
+    if (refresh) {
+      if (isFirstLoad) {
+        fetchCollectionInfo(() => {
+          // after fetching for first load, mark that time stamp as checked for both forcedUpdate and dbUpdate.
+
+          setdbUpdatesChecklist((prev) => {
+            const temp = { ...prev };
+            temp["forceUpdate"].timeStamp = dBForceUpdateTimeStamp.timeStamp;
+
+            temp["dbUpdate"].timeStamp = dBForceUpdateTimeStamp.timeStamp;
+
+            return temp;
+          });
+        });
+      } else if (
+        !isFirstLoad &&
+        !isDbUpdatetimeStampChecked(
+          "forceUpdate",
+          dBForceUpdateTimeStamp.timeStamp
+        )
+      ) {
+        fetchCollectionInfo(() => {
+          // after fetching, mark that time stamp as checked.
+
+          setdbUpdatesChecklist((prev) => {
+            const temp = { ...prev };
+            temp["forceUpdate"].timeStamp = dBForceUpdateTimeStamp.timeStamp;
+
+            return temp;
+          });
+        });
+      } else if (
+        !isFirstLoad &&
+        !isDbUpdatetimeStampChecked(
+          "dbUpdate",
+          dBUpdatedTimeStamp[screenMediaType].timeStamp
+        )
+      ) {
+        fetchCollectionInfo(() => {
+          // after fetching, mark that time stamp as checked.
+          setdbUpdatesChecklist((prev) => {
+            const temp = { ...prev };
+            temp["dbUpdate"].timeStamp =
+              dBUpdatedTimeStamp[screenMediaType].timeStamp;
+
+            return temp;
+          });
+        });
+      }
     }
   }, [refresh]);
 

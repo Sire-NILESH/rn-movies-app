@@ -1,8 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
+import * as NavigationBar from "expo-navigation-bar";
 import { initCollectionDB, initSettingsDB } from "../storage/database";
+import { Colors } from "./../utils/Colors";
 
 /**
- * A custom hook to initialize the database for the application
+ * A custom hook to initialize the database for the application and set the system navigation buttons color to dark color.
  *
  * @returns `databaseSetupStatus` an object that has the following properties:
  *
@@ -16,7 +18,11 @@ const useDBInitialize = () => {
   const [dbInitLoading, setDbInitLoading] = useState(false);
 
   const setupDB = useCallback(() => {
-    initSettingsDB()
+    // first force a dark color for the system navigation buttons
+    NavigationBar.setBackgroundColorAsync("rgb(0, 0, 0)")
+      .then(() => {
+        return initSettingsDB();
+      })
       .then(() => {
         return initCollectionDB();
       })

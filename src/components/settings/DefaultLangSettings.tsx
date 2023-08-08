@@ -8,7 +8,7 @@ const DefaultLangSettings = () => {
     <SettingsCardWrapper
       iconName="language"
       title="Default Language"
-      subtitle={`Set a default language to find medias of that lanuage only.`}
+      subtitle={`Set a default language to find medias of that language only.`}
     >
       <CardRow rowTitle="Select a Language">
         <LanguageDropdown saveMode="applicationWide" bgColor={"transparent"} />

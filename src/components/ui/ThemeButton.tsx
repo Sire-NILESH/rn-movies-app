@@ -23,7 +23,7 @@ const ThemeButton: React.FC<IProps> = ({ text, iconName, onPressHandler }) => {
             size={iconName === "md-logo-youtube" ? 15 : 18}
             color={Colors.stone[400]}
           />
-          <Text className="font-bold text-text_highLight">{text}</Text>
+          <Text className="font-semibold text-text_highLight">{text}</Text>
         </View>
       </Pressable>
     </View>

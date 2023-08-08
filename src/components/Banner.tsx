@@ -65,9 +65,9 @@ const Banner: React.FC<IProps> = ({ mediaList }) => {
       >
         <LinearGradient
           colors={[
-            "rgba(23, 23, 23, 0.7)",
-            "rgba(23, 23, 23, 0.7)",
-            "rgba(23, 23, 23, 0.7)",
+            "rgba(0, 0, 0, 0.6)",
+            "rgba(0, 0, 0, 0.6)",
+            "rgba(0, 0, 0, 0.5)",
             Colors.secondary,
           ]}
           style={styles.rootScreen}
@@ -79,7 +79,7 @@ const Banner: React.FC<IProps> = ({ mediaList }) => {
             resizeMode="cover" //similar to web, "cover", "contain", etc.
             style={styles.rootScreen} //for View dimensions internally
             imageStyle={styles.backgroundImage} //for Image styles internally.
-            blurRadius={isHomeScreenBannerBlur.blur ? 10 : undefined}
+            blurRadius={isHomeScreenBannerBlur.blur ? 8 : undefined}
           ></ImageBackground>
         </LinearGradient>
       </View>
@@ -206,7 +206,7 @@ const Banner: React.FC<IProps> = ({ mediaList }) => {
                     size={18}
                     color={Colors.stone[400]}
                   />
-                  <Text className="font-bold text-gray-50">More Info</Text>
+                  <Text className="font-semibold text-gray-50">More Info</Text>
                 </View>
               </CustomButton>
             </View>

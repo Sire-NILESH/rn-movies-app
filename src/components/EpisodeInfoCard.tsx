@@ -113,7 +113,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({
       {/* DIRECTOR */}
       <View className="px-4 pt-3">
         <Text className="text-text_tertiary mb-1">Directed by:</Text>
-        <Text className="text-text_highLight text-base font-semibold">
+        <Text className="text-text_highLight text-base font-normal">
           {directedBy.length > 0 ? directedBy : "--"}
         </Text>
       </View>
@@ -122,7 +122,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({
       <View className="px-4 pt-3">
         <Text className="text-text_tertiary mb-1">Guest appearances:</Text>
         <Text
-          className="text-text_highLight text-sm font-semibold"
+          className="text-text_highLight text-sm font-normal"
           style={{ lineHeight: 24 }}
         >
           {episode.guest_stars?.length > 0

@@ -96,7 +96,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
               className="px-4 w-[100%]"
               style={{ marginTop: windowHeight * 0.33 }}
             >
-              <Text className="text-[40px] font-bold text-text_highLight object-cover">
+              <Text className="text-[40px] font-semibold text-text_highLight object-cover">
                 {getTitle()}
               </Text>
 

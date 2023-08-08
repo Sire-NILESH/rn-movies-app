@@ -73,11 +73,10 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
               style={styles.textShadow}
             />
             <Text
-              className="font-bold text-text_highLight tracking-widest"
+              className="text-sm font-semibold text-text_highLight tracking-widest"
               style={styles.textShadow}
             >
               <Text
-                className="font-bold"
                 style={{
                   color:
                     media.vote_average > 4.0
@@ -99,7 +98,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
               style={styles.textShadow}
             />
             <Text
-              className="text-text_highLight font-bold"
+              className="text-text_highLight text-sm font-semibold"
               style={styles.textShadow}
             >
               {isMovie(media)
@@ -120,7 +119,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
               style={styles.textShadow}
             />
             <Text
-              className="text-text_highLight font-bold"
+              className="text-text_highLight text-sm font-semibold"
               style={styles.textShadow}
             >
               {isMovieExtended(media)
@@ -140,7 +139,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
                 style={styles.textShadow}
               />
               <Text
-                className="text-text_highLight font-bold"
+                className="text-text_highLight text-sm font-semibold"
                 style={styles.textShadow}
               >
                 {media.original_language === "cn"
@@ -163,7 +162,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
                 style={styles.textShadow}
               />
               <Text
-                className="text-text_highLight font-bold"
+                className="text-text_highLight text-sm font-semibold"
                 style={styles.textShadow}
               >
                 {toHoursAndMinutes(media.runtime)}
@@ -180,7 +179,7 @@ const NewMediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
                 style={styles.textShadow}
               />
               <Text
-                className="text-text_highLight font-bold"
+                className="text-text_highLight text-sm font-semibold"
                 style={styles.textShadow}
               >
                 {media.type}
@@ -198,7 +197,7 @@ export default NewMediaCardInfo;
 const styles = StyleSheet.create({
   textShadow: {
     textShadowColor: Colors.stone[700],
-    textShadowOffset: { height: 2, width: 0 },
-    textShadowRadius: 3,
+    textShadowOffset: { height: 1, width: 0 },
+    textShadowRadius: 5,
   },
 });

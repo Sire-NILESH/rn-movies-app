@@ -165,7 +165,7 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             style={{ minHeight: 45 }}
           >
             <Text className="text-text_tertiary text-sm">
-              {`All your requests that are made to the api are cached for a specified amount of time and will be cleared automatically.
+              {`All your requests that are made to the api are cached for a specific amount of time and will be cleared automatically.
               \nIf you wish to see the most updated content (episodes, tv/movie listing, charts), you can just clear the request cache from the apps settings screen.
               \nIf you find the app crashing again and again when visiting the trailer screen, you can just clear the request cache from the apps settings screen.
                 \nAll images inside the app is cached to improve app's performance. You can delete them manually by clearing the app's cache from your device's settings app.

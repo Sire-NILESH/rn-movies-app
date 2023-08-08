@@ -26,7 +26,7 @@ const RevenueStats: React.FC<IProps> = ({ budget, revenue }) => {
     >
       {/* STAT 1 */}
       <View className="flex-1 items-center py-3">
-        <Text className="text-text_secondary text-lg font-bold text-center">
+        <Text className="text-text_secondary text-lg font-semibold text-center">
           {budget === 0 ? "--" : "$" + formatCurrencyNumbers(budget)}
         </Text>
         <View className="mt-1 flex-row items-center space-x-2 justify-center">
@@ -41,7 +41,7 @@ const RevenueStats: React.FC<IProps> = ({ budget, revenue }) => {
 
       {/* STAT 2 */}
       <View className="flex-1 items-center py-3">
-        <Text className="text-text_secondary text-lg font-bold text-center">
+        <Text className="text-text_secondary text-lg font-semibold text-center">
           {revenue === 0 ? "--" : "$" + formatCurrencyNumbers(revenue)}
         </Text>
         <View className="mt-1 flex-row items-center space-x-2 justify-center">
@@ -54,7 +54,7 @@ const RevenueStats: React.FC<IProps> = ({ budget, revenue }) => {
       {/* STAT 3 */}
       <View className="flex-1 items-center py-3">
         <Text
-          className="text-lg font-bold text-center"
+          className="text-lg font-semibold text-center"
           style={{
             color:
               revenue === 0 || budget === 0

@@ -42,13 +42,13 @@ const ProfileCard: React.FC<IProps> = (props) => {
         <View className="justify-start w-full items-center px-1">
           <Text
             numberOfLines={1}
-            className="text-text_primary font-bold text-xs mt-1 text-center"
+            className="text-text_primary font-semibold text-xs mt-1 text-center"
           >
             {p.name}
           </Text>
 
           <Text
-            className="text-center text-text_dark text-xs font-bold"
+            className="text-center text-text_dark text-xs font-semibold"
             numberOfLines={2}
           >
             {/* {p.popularity.toFixed(2)}/100 */}
@@ -88,7 +88,7 @@ const ProfileCard: React.FC<IProps> = (props) => {
           </View>
 
           <Text
-            className="w-[100] mt-4 text-center text-text_tertiary text-xs font-bold"
+            className="w-[100] mt-4 text-center text-text_tertiary text-xs font-semibold"
             numberOfLines={2}
           >
             {p.creditTitle === "" ? "Cast member" : p.creditTitle}

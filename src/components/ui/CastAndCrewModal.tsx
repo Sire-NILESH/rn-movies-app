@@ -39,7 +39,7 @@ const CastAndCrewModal: React.FC<IProps> = (props) => {
           {/* Header Title */}
           <View className="w-[78%] flex-row items-center space-x-2">
             <Text
-              className="text-text_highLight text-lg font-bold"
+              className="text-text_highLight text-lg font-semibold"
               numberOfLines={1}
             >
               {props.tvShowName}
@@ -65,7 +65,7 @@ const CastAndCrewModal: React.FC<IProps> = (props) => {
         {/* SEASON AND SEASON NUMBER */}
         <View className="mt-4 mx-4 mb-3 space-y-1">
           <Text
-            className="text-text_highLight text-2xl font-semibold"
+            className="text-text_highLight text-2xl font-normal"
             numberOfLines={2}
           >
             {props.castAndCrew?.episdodeName}

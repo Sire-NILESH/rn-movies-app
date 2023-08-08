@@ -44,9 +44,8 @@ const MediaStats: React.FC<IProps> = ({ media }) => {
     <View className="mx-12 mt-4 flex-row items-center justify-evenly">
       {/* STAT 1 */}
       <View className="flex-1 items-center py-2">
-        <Text className="text-lg font-bold text-text_highLight tracking-widest">
+        <Text className="text-lg font-semibold text-text_highLight tracking-widest">
           <Text
-            className="font-bold"
             style={{
               color:
                 media.popularity > 100
@@ -69,7 +68,7 @@ const MediaStats: React.FC<IProps> = ({ media }) => {
 
       {/* STAT 2 */}
       <View className="flex-1 items-center py-2">
-        <Text className="text-text_secondary text-lg font-bold text-center">
+        <Text className="text-text_secondary text-lg font-semibold text-center">
           {isMovie(media) ? "Movie" : "TV Show"}
         </Text>
         <View className="mt-[6px] flex-row items-center space-x-2 justify-center">
@@ -89,7 +88,7 @@ const MediaStats: React.FC<IProps> = ({ media }) => {
       {/* STAT 3 */}
       <View className="flex-1 items-center py-2">
         <View className="min-w-[20px] border border-neutral-500 my-1 px-2 rounded-sm items-center">
-          <Text className="text-sm text-text_secondary font-bold">
+          <Text className="text-sm text-text_secondary font-semibold">
             {mediaCertificate ? mediaCertificate : media.adult ? "ADULT" : "--"}
           </Text>
         </View>

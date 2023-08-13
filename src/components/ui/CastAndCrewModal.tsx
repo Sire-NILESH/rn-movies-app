@@ -31,6 +31,7 @@ const CastAndCrewModal: React.FC<IProps> = (props) => {
       animationType="fade"
       transparent={true}
       visible={props.isVisible}
+      onRequestClose={props.closeModal}
       className="items-center justify-center"
     >
       <View className="absolute my-[40%] mx-[5%] w-[90%] bg-zinc-900 rounded-xl pb-4 border border-neutral-700/60 [elevation:10] overflow-hidden">

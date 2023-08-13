@@ -29,6 +29,7 @@ const WarningModal: React.FC<IProps> = (props) => {
       animationType="fade"
       transparent={true}
       visible={props.isVisible}
+      onRequestClose={props.closeModal}
       className="items-center justify-center"
     >
       <View className="absolute mt-[55%] mx-[5%] w-[90%] bg-stone-800 rounded-xl pb-2  [elevation:10] px-4 py-4 border border-neutral-700/60">

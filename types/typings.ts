@@ -100,7 +100,7 @@ export interface Media {
   poster_path: string;
   vote_average: number;
   vote_count: number;
-  type: MediaTypes;
+  type: string;
   backdrop_path: string;
 }
 
@@ -170,7 +170,7 @@ export interface TvMediaExtended extends TvMedia {
      | "Scripted"
      | "Talk Show"
      | "Video" */
-  type: string;
+  // type: string;
   // type:
   //   | "Documentary"
   //   | "News"
@@ -322,7 +322,7 @@ export interface EpisodeCastAndCrew {
 }
 
 // Define a type for the watchlist slice state
-interface IReduxListMedia {
+export interface IReduxListMedia {
   mediaId: number;
   mediaType: MediaTypes;
   dateAdded: number;
@@ -421,10 +421,12 @@ export interface IProductionComapnyIds {
   "Warner Bros": 17;
   "20th Century Fox": 25;
   "Metro-Goldwyn-Mayer": 21;
+  "New Line Cinema": "12";
   "Universal Pictures": 33;
   "Lions Gate Films": 35;
   "Sony Pictures": 34;
   DreamWorks: "521";
+
   // DreamWorks: [
   //   7, 521, 3486, 15258, 42141, 73933, 114185, 114539, 125083, 144867, 183771,
   // ],

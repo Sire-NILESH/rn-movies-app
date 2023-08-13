@@ -28,6 +28,13 @@
       },
       "package": "com.sire.maven"
     },
+    "androidNavigationBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#000"
+    },
+    "androidStatusBar": {
+      "barStyle": "light-content"
+    },
     "web": {
       "favicon": "./assets/favicon.png"
     },

@@ -22,7 +22,7 @@ const SearchTileListScreen: React.FunctionComponent<IStackScreenProps> = (
     });
   }, []);
 
-  return <SearchResultsTopTabsNavigator searchQuery={title} />;
+  return <SearchResultsTopTabsNavigator searchQuery={title.toLowerCase()} />;
 };
 
 export default SearchTileListScreen;

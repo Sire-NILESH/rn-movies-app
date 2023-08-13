@@ -139,9 +139,10 @@ const TilesFilterModal: React.FC<IProps> = (props) => {
 
   return (
     <Modal
-      animationType="slide"
+      animationType="fade"
       transparent={true}
       visible={props.isVisible}
+      onRequestClose={props.closeModal}
       className="items-center justify-center"
     >
       <View className="absolute my-[25%] mx-[5%] h-[85%] w-[90%] bg-neutral-800 rounded-xl pb-2 border border-neutral-700/60 [elevation:10]">

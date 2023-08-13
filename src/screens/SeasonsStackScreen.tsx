@@ -9,7 +9,8 @@ import { Ionicons } from "@expo/vector-icons";
 
 const TopTabs = createMaterialTopTabNavigator();
 
-const TAB_WIDTH = 128;
+// const TAB_WIDTH = 128;
+const TAB_WIDTH = 140;
 const BACK_BTN_WIDTH = 44;
 
 const SeasonsStackScreen: React.FunctionComponent<IStackScreenProps> = (
@@ -55,11 +56,13 @@ const SeasonsStackScreen: React.FunctionComponent<IStackScreenProps> = (
       <TopTabs.Navigator
         screenOptions={{
           tabBarLabelStyle: {
-            fontSize: 14,
+            // fontSize: 14,
+            fontSize: 13,
             fontWeight: "600",
             letterSpacing: 2,
             // lineHeight: 16,
           },
+          tabBarAllowFontScaling: false,
           tabBarScrollEnabled: true,
           tabBarStyle: {
             marginLeft: BACK_BTN_WIDTH,
@@ -71,7 +74,9 @@ const SeasonsStackScreen: React.FunctionComponent<IStackScreenProps> = (
           tabBarInactiveTintColor: Colors.text_dark,
           tabBarAndroidRipple: { borderless: false },
           tabBarPressColor: "#e9e9e9",
-          tabBarItemStyle: { width: TAB_WIDTH },
+          tabBarItemStyle: {
+            minWidth: TAB_WIDTH,
+          },
           tabBarIndicatorStyle: {
             backgroundColor: Colors.neutral[100],
           },

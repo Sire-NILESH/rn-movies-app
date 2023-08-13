@@ -130,6 +130,7 @@ export const moviePlaylist = [
     buildMoviePlaylist("Pixar Movies", "Pixar"),
     buildMoviePlaylist("DreamWorks", "DreamWorks"),
     buildMoviePlaylist("Metro-Goldwyn-Mayer", "Metro-Goldwyn-Mayer"),
+    buildMoviePlaylist("New Line Cinema", "New Line Cinema"),
     buildMoviePlaylist("20th Century Fox", "20th Century Fox"),
     buildMoviePlaylist("Universal Pictures", "Universal Pictures"),
     buildMoviePlaylist("Lions Gate Films", "Lions Gate Films"),

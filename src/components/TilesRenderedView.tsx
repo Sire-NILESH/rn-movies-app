@@ -104,6 +104,7 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
         }
         ListFooterComponent={renderLoader}
         // could have gone higher but it is better to not flood the server with too many requests when user is scrolling really fast.
+        // since app is for personal use, using a higher number here, but for actual production app the number should be lower.
         onEndReachedThreshold={2}
         onEndReached={props.loadMoreItem}
         estimatedItemSize={(windowWidth * 0.31 * 3) / 2}

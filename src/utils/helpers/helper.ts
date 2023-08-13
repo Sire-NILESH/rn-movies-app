@@ -493,6 +493,7 @@ export const productionComapnyIds = {
   "Warner Bros": 17,
   "20th Century Fox": 25,
   "Metro-Goldwyn-Mayer": 21,
+  "New Line Cinema": "12",
   "Universal Pictures": 33,
   "Lions Gate Films": 35,
   "Sony Pictures": 34,

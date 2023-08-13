@@ -68,7 +68,8 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   } = useSearchHistoryHooks();
 
   function setSearchQueryHandler(text: string): void {
-    const enteredQuery = text.toLocaleLowerCase().trim();
+    // const enteredQuery = text.toLocaleLowerCase().trim();
+    const enteredQuery = text.trim();
     if (enteredQuery.length > 0) {
       setSearchQuery(enteredQuery);
     }
@@ -79,7 +80,7 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
     async function fetchSearchQuery() {
       const data = await searchRequest(
-        searchQuery ? searchQuery : "",
+        searchQuery ? searchQuery.toLocaleLowerCase() : "",
         "multi",
         1,
         allowNsfwContent.nsfw,

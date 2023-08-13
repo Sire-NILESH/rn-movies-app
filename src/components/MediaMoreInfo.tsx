@@ -170,7 +170,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
 
             {/* DESCRIPTION */}
             {media.overview ? (
-              <View className="px-4 mt-4 space-y-2">
+              <View className="px-4 mt-4">
                 {/* <Text className="font-semibold text-text_tertiary">
                   Overview
                 </Text> */}

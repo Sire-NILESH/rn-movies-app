@@ -10,9 +10,7 @@ import {
   IDBEpisode,
   IDropdownYearsObj,
   IImageQuality,
-  INetworkIds,
   IPersonTVMedia,
-  IProductionComapnyIds,
   IQueryParams,
   IReduxListMedia,
   ISOLang,
@@ -31,6 +29,12 @@ import {
 } from "../../../types/typings";
 import { Alert, Dimensions } from "react-native";
 import Toast from "react-native-toast-message";
+import {
+  TNetworkCompany,
+  TProductionCompany,
+  networkCompanyIdConst,
+  productionComapnyIdsConst,
+} from "../constants";
 
 export function isMovie(
   media: MovieMedia | TvMedia | TvMediaExtended | MovieMediaExtended | null
@@ -447,72 +451,17 @@ export function showGenericErrorToast() {
 }
 
 // ----------------- CONSTANTS AND BUILDERS --------------------
-export const networkIds: INetworkIds = {
-  Netflix: 213,
-  HBO: 49,
-  FOX: 19,
-  HULU: 453,
-  "Amazon Prime": 1024,
-  "Disney+": 2739,
-  "Apple TV+": 2552,
-  "Cartoon Network": 56,
-  "Adult Swim": 80,
-  AMC: 174,
-  PBS: 14,
-  CBS: 16,
-  "History Tv": 65,
-  "BBC One": 4,
-  "BBC Two": 332,
-  "Sky Atlantic": 1063,
-  CuriosityStream: 2349,
-  "National Geographic": 43,
-  Discovery: 64,
-  ShowTime: 67,
-  ABC: 2,
-  Nickelodeon: 13,
-  "Toon Disney": 142,
-  "Disney XD": 44,
-  ANIMAX: 171,
-  "The CW": 71,
-  "Comedy Central": 47,
-  Peacock: 3353,
-  "Disney Channel": 54,
-};
-
-export const productionComapnyIds = {
-  // Netflix: "145174,178464,171251,185004,186222,192478",
-  Lucasfilm: 1,
-  HBO: 3268,
-  "Adult Swim": 6759,
-  Miramax: 14,
-  Paramount: 4,
-  "Columbia Pictures": 5,
-  "Village Roadshow Pictures": 79,
-  "Cartoon Network": 7899,
-  Pixar: 3,
-  "Warner Bros": 17,
-  "20th Century Fox": 25,
-  "Metro-Goldwyn-Mayer": 21,
-  "New Line Cinema": "12",
-  "Universal Pictures": 33,
-  "Lions Gate Films": 35,
-  "Sony Pictures": 34,
-  DreamWorks: "521",
-  // DreamWorks: [
-  //   7, 521, 3486, 15258, 42141, 73933, 114185, 114539, 125083, 144867, 183771,
-  // ],
-};
 
 // ----------------- PLAYLIST BUILDERS --------------------
 export function buildTvPlaylist(
   name: string,
-  networkId: keyof INetworkIds
+  networkId: keyof TNetworkCompany
 ): IUrlObject {
   return {
     name: name,
     url: `/discover/tv`,
     queryParams: {
-      with_networks: String(networkIds[networkId]),
+      with_networks: String(networkCompanyIdConst[networkId]),
       include_null_first_air_dates: true,
       language: "en-US",
     },
@@ -535,13 +484,13 @@ export function buildDiscoverPlaylist(
 
 export function buildMoviePlaylist(
   name: string,
-  productionCompanyId: keyof IProductionComapnyIds
+  productionCompanyId: keyof TProductionCompany
 ): IUrlObject {
   return {
     name: name,
     url: `/discover/movie`,
     queryParams: {
-      with_companies: String(productionComapnyIds[productionCompanyId]),
+      with_companies: String(productionComapnyIdsConst[productionCompanyId]),
       include_null_first_air_dates: true,
       language: "en-US",
     },

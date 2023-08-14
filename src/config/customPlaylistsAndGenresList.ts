@@ -84,6 +84,7 @@ export const tvPlaylist = [
     buildTvPlaylist("PBS Shows", "PBS"),
     buildTvPlaylist("CBS Shows", "CBS"),
     buildTvPlaylist("Peacock", "Peacock"),
+    buildTvPlaylist("Starz", "Starz"),
     buildTvPlaylist("ShowTime", "ShowTime"),
     buildTvPlaylist("BBC 1", "BBC One"),
     buildTvPlaylist("BBC 2", "BBC Two"),

@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Linking } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
 import {
   MediaTypes,
@@ -17,7 +17,7 @@ import {
   isTvExtended,
 } from "../utils/helpers/helper";
 import GenreTags from "./GenreTags";
-import NewMediaCardInfo from "./NewMediaCardInfo";
+import MediaCardInfo from "./MediaCardInfo";
 import TrailerButton from "./ui/TrailerButton";
 import WatchlistButton from "./ui/WatchlistButton";
 import WatchedMediaButton from "./ui/WatchedMediaButton";
@@ -30,9 +30,8 @@ import RevenueStats from "./ui/RevenueStats";
 import useImgSettings from "../hooks/useImgSettings";
 import MoreInfoBackdrop from "./MoreInfoBackdrop";
 import CollectionCard from "./CollectionCard";
-import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "../utils/Colors";
 import MediaStats from "./ui/MediaStats";
+import LinkButton from "./ui/LinkButton";
 
 interface IProps {
   media: MovieMediaHybrid | TvMediaHybrid;
@@ -153,7 +152,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
                 aspectRatio: 16 / 9,
               }}
             >
-              <NewMediaCardInfo
+              <MediaCardInfo
                 media={media}
                 imgQuality={allImgItemsSettings?.banner?.value}
               />
@@ -225,19 +224,12 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
               </Text>
 
               <View className="rounded-full overflow-hidden">
-                <Pressable
-                  className="h-10 w-10 items-center justify-center space-x-2 rounded-full"
-                  onPress={() => {
-                    Linking.openURL(
-                      `https://www.themoviedb.org/${
-                        isMovie(media) ? "movie" : "tv"
-                      }/${media.id}/`
-                    );
-                  }}
-                  android_ripple={{ color: "#eee" }}
-                >
-                  <Ionicons name="link" size={20} color={Colors.blue[500]} />
-                </Pressable>
+                <LinkButton
+                  linkURL={`https://www.themoviedb.org/${
+                    isMovie(media) ? "movie" : "tv"
+                  }/${media.id}/`}
+                  size="small"
+                />
               </View>
             </View>
           </View>

@@ -1,5 +1,4 @@
 import { MovieMedia, TvMedia } from "../../types/typings";
-import { useState, useEffect, memo } from "react";
 import {
   Text,
   View,
@@ -19,14 +18,12 @@ import { by639_1 } from "iso-language-codes";
 import { useBlurHomeScreenBannerHooks } from "../hooks/reduxHooks";
 
 interface IProps {
-  mediaList: MovieMedia[] | TvMedia[];
+  media: MovieMedia | TvMedia;
 }
 
 const screenDimensions = Dimensions.get("screen");
 
-const Banner: React.FC<IProps> = ({ mediaList }) => {
-  const [media, setMedia] = useState<MovieMedia | TvMedia | null>(null);
-
+const Banner: React.FC<IProps> = ({ media }) => {
   const { isHomeScreenBannerBlur } = useBlurHomeScreenBannerHooks();
 
   const imgUri = `https://image.tmdb.org/t/p/w1280${media?.backdrop_path}`;
@@ -36,12 +33,6 @@ const Banner: React.FC<IProps> = ({ mediaList }) => {
   // }${media?.backdrop_path}`;
 
   const navigation = useNavigation();
-
-  useEffect(() => {
-    if (mediaList) {
-      setMedia(mediaList[Math.floor(Math.random() * mediaList.length)]);
-    }
-  }, [mediaList]);
 
   function infoButtonPressHandler(): void {
     // @ts-ignore
@@ -217,7 +208,7 @@ const Banner: React.FC<IProps> = ({ mediaList }) => {
   );
 };
 
-export default memo(Banner);
+export default Banner;
 
 const styles = StyleSheet.create({
   rootScreen: {

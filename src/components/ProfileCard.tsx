@@ -88,7 +88,7 @@ const ProfileCard: React.FC<IProps> = (props) => {
           </View>
 
           <Text
-            className="w-[100] mt-4 text-center text-text_tertiary text-xs font-semibold"
+            className="w-[100] mt-4 text-center text-text_tertiary text-xs font-medium"
             numberOfLines={2}
           >
             {p.creditTitle === "" ? "Cast member" : p.creditTitle}

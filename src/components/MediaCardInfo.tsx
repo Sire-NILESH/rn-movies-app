@@ -1,79 +1,203 @@
-import { View, Text } from "react-native";
+import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
-import { MovieMedia, TvMedia, TvMediaExtended } from "../../types/typings";
-import { isMovie, isTvExtended } from "../utils/helpers/helper";
-// @ts-ignore
-import ExpoFastImage from "expo-fast-image";
-import { supportedLangs } from "../utils/helpers/langs";
+import {
+  MovieMedia,
+  MovieMediaHybrid,
+  TvMedia,
+  TvMediaHybrid,
+} from "../../types/typings";
+import {
+  dateFormatter,
+  isMovie,
+  isMovieExtended,
+  isTvExtended,
+  toHoursAndMinutes,
+} from "../utils/helpers/helper";
+import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
+import { Colors } from "../utils/Colors";
+import ImagePlaceholder from "./ui/ImagePlaceholder";
+import { by639_1 } from "iso-language-codes";
 
 interface IProps {
-  media: MovieMedia | TvMedia | TvMediaExtended;
+  media: MovieMedia | TvMedia | MovieMediaHybrid | TvMediaHybrid;
+  imgQuality?: string;
 }
 
-const MediaCardInfo: React.FC<IProps> = ({ media }) => {
+const MediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
+  const posterImgQuality = imgQuality ? imgQuality : 400;
+
   const imageUrl = media.backdrop_path
-    ? `https://image.tmdb.org/t/p/w500${media.backdrop_path}`
-    : `https://image.tmdb.org/t/p/w500${media.poster_path}`;
+    ? `https://image.tmdb.org/t/p/w${posterImgQuality}${media.backdrop_path}`
+    : `https://image.tmdb.org/t/p/w${posterImgQuality}${media.poster_path}`;
 
   return (
-    <View className="mt-5 mx-3 flex-row justify-between max-h-[200]">
-      <View className="flex-1 rounded-l-2xl">
-        <ExpoFastImage
-          source={
-            imageUrl
-              ? { uri: imageUrl }
-              : require("../../assets/images/placeholders/posterPlaceHolder.png")
-          }
-          className="rounded-l-2xl"
-          cacheKey={media.id + "backdrop"}
-          resizeMode={"cover"}
-          style={{
-            width: "100%",
-            height: "100%",
-          }}
-        />
-      </View>
-      <View className=" bg-stone-800/50 border border-l-0 border-gray-800 flex-1 rounded-r-2xl py-6 space-y-4 justify-center">
-        <Text className="text-stone-400 px-4">
-          Rating:{"  "}
-          <Text className="text-green-100">
-            {media.vote_average.toFixed(2)}/10
-          </Text>
-        </Text>
-        <Text className="text-stone-400 px-4">
-          Media:{"  "}
-          <Text className="text-green-100">
-            {isMovie(media) ? "Movie" : "TV"}
-          </Text>
-        </Text>
-        <Text className="text-stone-400 px-4">
-          Release:{"  "}
-          <Text className="text-green-100">
-            {isMovie(media) ? media.release_date : media.first_air_date}
-          </Text>
-        </Text>
-        {isTvExtended(media) && (
-          <Text className="text-stone-400 px-4">
-            Status:{"  "}
-            <Text className="text-green-100">{media.status}</Text>
-          </Text>
+    <View className="justify-between rounded-2xl border border-stone-800/80 overflow-hidden">
+      <View
+        className="relative h-full w-full "
+        style={{
+          width: "100%",
+          aspectRatio: 16 / 9,
+          // height: 250,
+        }}
+      >
+        {imageUrl ? (
+          <Image
+            source={{ uri: imageUrl }}
+            resizeMode="cover"
+            className="h-full w-full rounded-2xl"
+          />
+        ) : (
+          <ImagePlaceholder />
         )}
-
-        {media.original_language ? (
-          <Text className="text-stone-400 px-4">
-            Language:{"  "}
-            <Text className="text-green-100">
-              {/*  @ts-ignore */}
-              {supportedLangs[media.original_language]?.english_name
-                ? // @ts-ignore
-                  supportedLangs[media.original_language]?.english_name
-                : media.original_language}
-            </Text>
-          </Text>
-        ) : null}
       </View>
+
+      <LinearGradient
+        colors={[
+          "rgba(0, 0, 0, 0.5)",
+          "rgba(0, 0, 0, 0.5)",
+          "rgba(0, 0, 0, 0.4)",
+          "rgba(0, 0, 0, 0.3)",
+          "rgba(0, 0, 0, 0.1)",
+        ]}
+        start={{ x: 0.0, y: 1 }}
+        // style={{ width: "100%", aspectRatio: 16 / 9 }}
+        className="absolute w-full h-full bg-stone-900/10 rounded-l-2xl py-2 flex-row items-center justify-between"
+      >
+        <View className="h-full justify-around items-start flex-wrap">
+          <View className="flex-row items-center space-x-2 px-4">
+            <Ionicons
+              name="star"
+              size={18}
+              color={Colors.yellow[300]}
+              style={styles.textShadow}
+            />
+            <Text
+              className="text-sm font-semibold text-text_highLight tracking-widest"
+              style={styles.textShadow}
+            >
+              <Text
+                style={{
+                  color:
+                    media.vote_average > 4.0
+                      ? Colors.green[500]
+                      : Colors.red[400],
+                }}
+              >
+                {media.vote_average.toFixed(2)}
+              </Text>
+              /10
+            </Text>
+          </View>
+
+          <View className="flex-row items-center space-x-2 px-4">
+            <Ionicons
+              name="calendar-outline"
+              size={18}
+              color={Colors.text_primary}
+              style={styles.textShadow}
+            />
+            <Text
+              className="text-text_highLight text-sm font-semibold"
+              style={styles.textShadow}
+            >
+              {isMovie(media)
+                ? media.release_date
+                  ? dateFormatter(media.release_date)
+                  : "--"
+                : media.first_air_date
+                ? dateFormatter(media.first_air_date)
+                : "--"}
+            </Text>
+          </View>
+
+          <View className="flex-row items-center space-x-2 px-4">
+            <Ionicons
+              name={"flag-outline"}
+              size={18}
+              color={Colors.text_primary}
+              style={styles.textShadow}
+            />
+            <Text
+              className="text-text_highLight text-sm font-semibold"
+              style={styles.textShadow}
+            >
+              {isMovieExtended(media)
+                ? media.status
+                : isTvExtended(media)
+                ? media.status
+                : "--"}
+            </Text>
+          </View>
+
+          {media.original_language ? (
+            <View className="flex-row items-center space-x-2 px-4">
+              <Ionicons
+                name="language-outline"
+                size={18}
+                color={Colors.text_primary}
+                style={styles.textShadow}
+              />
+              <Text
+                className="text-text_highLight text-sm font-semibold"
+                style={styles.textShadow}
+              >
+                {media.original_language === "cn"
+                  ? "Cantonese"
+                  : media.original_language === "zh"
+                  ? "Mandarin"
+                  : by639_1[media.original_language]?.name
+                  ? by639_1[media.original_language]?.name
+                  : media.original_language}
+              </Text>
+            </View>
+          ) : null}
+
+          {isMovieExtended(media) && (
+            <View className="flex-row items-center space-x-2 px-4">
+              <Ionicons
+                name="time-outline"
+                size={18}
+                color={Colors.text_primary}
+                style={styles.textShadow}
+              />
+              <Text
+                className="text-text_highLight text-sm font-semibold"
+                style={styles.textShadow}
+              >
+                {toHoursAndMinutes(media.runtime)}
+              </Text>
+            </View>
+          )}
+
+          {isTvExtended(media) && (
+            <View className="flex-row items-center space-x-2 px-4">
+              <Ionicons
+                name="document-text-outline"
+                size={18}
+                color={Colors.text_primary}
+                style={styles.textShadow}
+              />
+              <Text
+                className="text-text_highLight text-sm font-semibold"
+                style={styles.textShadow}
+              >
+                {media.type}
+              </Text>
+            </View>
+          )}
+        </View>
+      </LinearGradient>
     </View>
   );
 };
 
 export default MediaCardInfo;
+
+const styles = StyleSheet.create({
+  textShadow: {
+    textShadowColor: Colors.stone[700],
+    textShadowOffset: { height: 1, width: 0 },
+    textShadowRadius: 5,
+  },
+});

@@ -1,4 +1,4 @@
-import { View, ScrollView } from "react-native";
+import { View } from "react-native";
 import {
   IImgItemSettingsDB,
   IPlaylist,
@@ -16,7 +16,7 @@ import {
   tvScreenPlaylists,
 } from "../../config/homeScreensPlaylistsConfig";
 import { homeScreenCacheConfig } from "../../config/requestCacheConfig";
-import RowV2 from "../RowV2";
+import Row from "../Row";
 import Animated from "react-native-reanimated";
 
 interface IProps {
@@ -45,6 +45,10 @@ function getPlaylistsToFetch(screenType: ScreenTypes) {
   return playlistsToFetch;
 }
 
+function randomNumber(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 const ScreenBuilder: React.FC<IProps> = ({
   screenType,
   imgItemsSetting,
@@ -59,11 +63,16 @@ const ScreenBuilder: React.FC<IProps> = ({
     cacheTime: homeScreenCacheConfig.cacheTime,
   });
 
-  const getNonEmptyArray = () => {
+  const getRandomMedia = () => {
     if (screenProps !== undefined) {
-      return screenProps.filter((arr) => arr.length > 0)[0];
+      const nonEmptyMedias = screenProps.filter((arr) => arr.length > 0);
+
+      const top2 = [nonEmptyMedias[0], nonEmptyMedias[1]];
+
+      const row = top2[randomNumber(0, 1)];
+
+      return row[randomNumber(0, row.length - 1)];
     }
-    return [];
   };
 
   return (
@@ -80,19 +89,19 @@ const ScreenBuilder: React.FC<IProps> = ({
       ) : status === "success" && imgItemsSetting ? (
         //   when no error and props
         <View className="flex-1">
-          {screenProps ? (
+          {screenProps?.length > 0 ? (
             <Animated.ScrollView
               className="space-y-10"
               onScroll={scrollHandler}
               scrollEventThrottle={16}
             >
-              <Banner mediaList={getNonEmptyArray()} />
+              <Banner media={getRandomMedia()} />
 
               <View className="pt-4">
                 {playlistsToFetch.map((p, i) => {
                   if (screenProps[i]?.length > 0) {
                     return (
-                      <RowV2
+                      <Row
                         key={p.name}
                         title={p.name}
                         medias={screenProps[i]}

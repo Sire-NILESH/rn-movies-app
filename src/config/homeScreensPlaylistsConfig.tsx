@@ -8,8 +8,9 @@ import {
 export const homeScreenPlaylists: IPlaylist[] = [
   // "Trending TV shows"
   buildTrendingPlaylist("Trending TV Shows", "tv"),
-  // "Popular Movies"
-  buildPopularPlaylist("Popular Movies", "movie"),
+  // "Trending"
+  buildTrendingPlaylist("Trending", "movie"),
+
   // "Animation"
   buildGenrePlaylist("movie", { id: 16, name: "Animated Delights" }),
   // "Comedy"
@@ -25,8 +26,8 @@ export const homeScreenPlaylists: IPlaylist[] = [
 ];
 
 export const movieScreenPlaylists: IPlaylist[] = [
-  // "Trending"
-  buildTrendingPlaylist("Trending", "movie"),
+  // "Popular Movies"
+  buildPopularPlaylist("Popular Movies", "movie"),
   // "Comedy"
   buildGenrePlaylist("movie", { id: 35, name: "Comedy Corner" }),
   // "Adventure"

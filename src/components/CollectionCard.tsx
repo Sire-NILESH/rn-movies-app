@@ -56,7 +56,7 @@ const CollectionCard: React.FC<IProps> = ({
             <Text className="font-semibold text-text_tertiary text-sm">
               {collection.name}
             </Text>
-            <View className="flex-row items-start space-x-2">
+            <View className="mt-1 flex-row items-start space-x-2">
               <Text
                 className="text-text_dark text-xs"
                 style={{ lineHeight: 20 }}

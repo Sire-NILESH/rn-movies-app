@@ -15,6 +15,7 @@ import { personScreenCacheConfig } from "../../config/requestCacheConfig";
 import { getPersonInfo } from "../../utils/requests";
 import NothingToShow from "../NothingToShow";
 import Loader from "./Loader";
+import LinkButton from "./LinkButton";
 
 interface IProps {
   isVisible: boolean;
@@ -133,22 +134,11 @@ const PersonDetailModal: React.FC<IProps> = (props) => {
                         {"IMDB Page"}
                       </Text>
 
-                      <View className="h-10 rounded-full overflow-hidden">
-                        <Pressable
-                          className="h-10 w-10 items-center justify-center space-x-2 rounded-full"
-                          onPress={() => {
-                            Linking.openURL(
-                              `https://www.imdb.com/name/${personInfo.imdb_id}/`
-                            );
-                          }}
-                          android_ripple={{ color: "#eee" }}
-                        >
-                          <Ionicons
-                            name="link"
-                            size={20}
-                            color={Colors.blue[500]}
-                          />
-                        </Pressable>
+                      <View className="overflow-hidden">
+                        <LinkButton
+                          linkURL={`https://www.imdb.com/name/${personInfo.imdb_id}/`}
+                          size="small"
+                        />
                       </View>
                     </View>
                   ) : null}
@@ -211,18 +201,11 @@ const PersonDetailModal: React.FC<IProps> = (props) => {
                 <Text className="font-bold text-text_highLight">{"TMDB"}</Text>
               </Text>
 
-              <View className="rounded-full overflow-hidden">
-                <Pressable
-                  className="h-10 w-10 items-center justify-center space-x-2 rounded-full"
-                  onPress={() => {
-                    Linking.openURL(
-                      `https://www.themoviedb.org/person/${personInfo.id}/`
-                    );
-                  }}
-                  android_ripple={{ color: "#eee" }}
-                >
-                  <Ionicons name="link" size={20} color={Colors.blue[500]} />
-                </Pressable>
+              <View className="">
+                <LinkButton
+                  linkURL={`https://www.themoviedb.org/person/${personInfo.id}/`}
+                  size="small"
+                />
               </View>
             </View>
           </ScrollView>

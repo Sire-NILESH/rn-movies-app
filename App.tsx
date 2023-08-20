@@ -16,7 +16,6 @@ import { useState } from "react";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import toastConfig from "./src/config/toastMessageConfig";
 import { Colors } from "./src/utils/Colors";
-// import useLoadMyFonts from "./src/hooks/useLoadMyFonts";
 
 // Create a client
 export const queryClient = new QueryClient({

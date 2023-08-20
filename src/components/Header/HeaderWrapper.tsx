@@ -58,7 +58,10 @@ const HeaderWrapper: React.FC<TProps> = (props) => {
         </View>
 
         <View className="flex-1">
-          <Text className="font-semibold text-text_highLight text-2xl text-center">
+          <Text
+            className="font-semibold text-text_highLight text-xl text-center"
+            allowFontScaling={false}
+          >
             {props.title}
           </Text>
         </View>

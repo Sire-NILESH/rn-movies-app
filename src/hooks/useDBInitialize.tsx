@@ -2,9 +2,10 @@ import { useState, useEffect, useCallback } from "react";
 import * as NavigationBar from "expo-navigation-bar";
 import { initCollectionDB, initSettingsDB } from "../storage/database";
 import { Colors } from "./../utils/Colors";
+import useFontSettings from "./useFontSettings";
 
 /**
- * A custom hook to initialize the database for the application and set the system navigation buttons color to dark color.
+ * A custom hook to initialize the database for the application and set other init settings like app nav theme to dark and font scaling settings.
  *
  * @returns `databaseSetupStatus` an object that has the following properties:
  *
@@ -17,7 +18,12 @@ const useDBInitialize = () => {
   const [dbInitError, setDbInitError] = useState(false);
   const [dbInitLoading, setDbInitLoading] = useState(false);
 
-  const setupDB = useCallback(() => {
+  // Currently, it sets the 'allowFontScaling' property for Text globally according to the current font scaling settings
+  const loadGlobalFontSettings = useFontSettings();
+
+  const setup = useCallback(() => {
+    loadGlobalFontSettings();
+
     // first force a dark color for the system navigation buttons
     NavigationBar.setBackgroundColorAsync("rgb(0, 0, 0)")
       .then(() => {
@@ -39,7 +45,7 @@ const useDBInitialize = () => {
   useEffect(() => {
     setDbInitLoading(true);
     setDbInitError(false);
-    setupDB();
+    setup();
     setDbInitLoading(false);
   }, []);
 

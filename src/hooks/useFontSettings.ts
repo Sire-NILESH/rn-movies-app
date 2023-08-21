@@ -19,12 +19,12 @@ const useFontSettings = () => {
         const response = await getStorageObjectValue("@allowFontScaling");
 
         if (response === null) {
-          setFontScalingGlobally(false);
+          setFontScalingGlobally(true);
         } else {
           setFontScalingGlobally(response.allowFontScaling);
         }
       } catch (err) {
-        setFontScalingGlobally(false);
+        setFontScalingGlobally(true);
       }
     }
 

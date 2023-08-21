@@ -67,9 +67,9 @@ const ScreenBuilder: React.FC<IProps> = ({
     if (screenProps !== undefined) {
       const nonEmptyMedias = screenProps.filter((arr) => arr.length > 0);
 
-      const top2 = [nonEmptyMedias[0], nonEmptyMedias[1]];
+      // const top2 = [nonEmptyMedias[0], nonEmptyMedias[1]];
 
-      const row = top2[randomNumber(0, 1)];
+      const row = nonEmptyMedias[randomNumber(0, nonEmptyMedias.length - 1)];
 
       return row[randomNumber(0, row.length - 1)];
     }

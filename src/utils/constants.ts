@@ -61,3 +61,15 @@ export const networkCompanyIdConst = {
 } as const;
 
 export type TNetworkCompany = typeof networkCompanyIdConst;
+
+export const tvMediaType = {
+  0: "Documentary",
+  1: "News",
+  2: "Miniseries",
+  3: "Reality",
+  4: "Scripted",
+  5: "Talk Show",
+  6: "Video",
+} as const;
+
+export type TTvMediaType = typeof tvMediaType;

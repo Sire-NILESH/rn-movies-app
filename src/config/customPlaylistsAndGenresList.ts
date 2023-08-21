@@ -4,10 +4,13 @@ import {
   buildGenrePlaylist,
   buildLanguagePlaylist,
   buildMoviePlaylist,
+  buildMultiGenresPlaylist,
   buildNowPlayingPlaylist,
   buildPopularPlaylist,
   buildTopRatedPlaylist,
   buildTrendingPlaylist,
+  buildTvMediaTypePlaylist,
+  buildTvNetworkTvMediaTypePlaylist,
   buildTvPlaylist,
   buildUpcomingPlaylist,
   movieGenresList,
@@ -60,14 +63,43 @@ export const tvPlaylist = [
     buildTopRatedPlaylist("Top Rated", "tv"),
     buildDiscoverPlaylist("Discover", "tv"),
     buildAiringTodayPlaylist("Airing Today", "tv"),
+    buildMultiGenresPlaylist("Fantasy and Drama", "tv", [
+      { id: 10759, name: "Action & Adventure" },
+      { id: 18, name: "Drama" },
+      { id: 10765, name: "Sci-Fi & Fantasy" },
+    ]),
+    buildMultiGenresPlaylist("Comedy Drama", "tv", [
+      { id: 35, name: "Comedy" },
+      { id: 18, name: "Drama" },
+    ]),
+    buildMultiGenresPlaylist("Animation", "tv", [
+      { id: 16, name: "Animation" },
+    ]),
+    buildMultiGenresPlaylist("Animation Comedy", "tv", [
+      { id: 16, name: "Animation" },
+      { id: 35, name: "Comedy" },
+    ]),
+    buildMultiGenresPlaylist("Mystery Crime", "tv", [
+      { id: 9648, name: "Mystery" },
+      { id: 80, name: "Crime" },
+    ]),
+    buildMultiGenresPlaylist("Crime Documentaries", "tv", [
+      { id: 80, name: "Crime" },
+      { id: 99, name: "Documentary" },
+    ]),
+    buildTvMediaTypePlaylist("Miniseries", 2),
     buildTvPlaylist("Netflix Shows", "Netflix"),
+    buildTvNetworkTvMediaTypePlaylist("Netflix Miniseries", 2, "Netflix"),
     buildTvPlaylist("HBO Shows", "HBO"),
+    buildTvNetworkTvMediaTypePlaylist("HBO Miniseries", 2, "HBO"),
     buildTvPlaylist("FOX", "FOX"),
     buildTvPlaylist("HULU Shows", "HULU"),
+    buildTvNetworkTvMediaTypePlaylist("HULU Miniseries", 2, "HULU"),
     buildTvPlaylist("Amazon Prime Shows", "Amazon Prime"),
     buildTvPlaylist("Disney+ Shows", "Disney+"),
     buildTvPlaylist("The CW", "The CW"),
     buildTvPlaylist("Apple TV+ Shows", "Apple TV+"),
+    buildTvNetworkTvMediaTypePlaylist("Apple TV+ Miniseries", 2, "Apple TV+"),
     buildTvPlaylist("Adult Swim Shows", "Adult Swim"),
     buildTvPlaylist("AMC", "AMC"),
     buildTvPlaylist("ABC", "ABC"),
@@ -93,6 +125,7 @@ export const tvPlaylist = [
     buildTvPlaylist("Curiosity stream", "CuriosityStream"),
     buildTvPlaylist("National Geographic", "National Geographic"),
     buildTvPlaylist("Discovery", "Discovery"),
+    buildTvMediaTypePlaylist("OVA / DVD / VHS", 6),
   ],
   [...tvGenresPlaylists],
 ];
@@ -112,7 +145,90 @@ export const moviePlaylist = [
     buildDiscoverPlaylist("Discover", "movie"),
     // buildAiringTodayPlaylist("Airing Today", "movie"),
     buildNowPlayingPlaylist("Playing in Theatres", "movie"),
+
     buildUpcomingPlaylist("New Releases", "movie"),
+
+    buildMultiGenresPlaylist("Epic Adventures", "movie", [
+      { id: 12, name: "Adventure" },
+      { id: 14, name: "Fantasy" },
+    ]),
+
+    buildMultiGenresPlaylist("Comedy", "movie", [{ id: 35, name: "Comedy" }]),
+
+    buildMultiGenresPlaylist("Kids & Family Movies", "movie", [
+      { id: 16, name: "Animation" },
+      { id: 14, name: "Fantasy" },
+      { id: 10751, name: "Family" },
+    ]),
+
+    buildMultiGenresPlaylist("Action and Adventure", "movie", [
+      { id: 28, name: "Action" },
+      { id: 12, name: "Adventure" },
+    ]),
+
+    buildMultiGenresPlaylist("Mystical Mysteries", "movie", [
+      { id: 9648, name: "Mystery" },
+      { id: 14, name: "Fantasy" },
+    ]),
+
+    buildMultiGenresPlaylist("American Western", "movie", [
+      { id: 37, name: "Western" },
+    ]),
+
+    buildMultiGenresPlaylist("Comedy with family", "movie", [
+      { id: 10751, name: "Family" },
+      { id: 35, name: "Comedy" },
+    ]),
+
+    buildMultiGenresPlaylist("Sci-Fi & Fantasy", "movie", [
+      { id: 878, name: "Science Fiction" },
+      { id: 14, name: "Fantasy" },
+    ]),
+
+    buildMultiGenresPlaylist("Crimes", "movie", [
+      { id: 80, name: "Crime" },
+      { id: 18, name: "Drama" },
+    ]),
+
+    buildMultiGenresPlaylist("Mystery Thrillers", "movie", [
+      { id: 9648, name: "Mystery" },
+      { id: 53, name: "Thriller" },
+    ]),
+
+    buildMultiGenresPlaylist("Chronic Crimes", "movie", [
+      { id: 80, name: "Crime" },
+      { id: 18, name: "Drama" },
+      { id: 9648, name: "Mystery" },
+    ]),
+
+    buildMultiGenresPlaylist("Chills of Horror", "movie", [
+      { id: 27, name: "Horror" },
+      { id: 9648, name: "Mystery" },
+    ]),
+
+    buildMultiGenresPlaylist("Retro Sci-Fi Horror", "movie", [
+      { id: 878, name: "Science Fiction" },
+      { id: 27, name: "Horror" },
+    ]),
+
+    buildMultiGenresPlaylist("Rom-com", "movie", [
+      { id: 35, name: "Comedy" },
+      { id: 10749, name: "Romance" },
+      { id: 18, name: "Drama" },
+    ]),
+
+    buildMultiGenresPlaylist("War Action", "movie", [
+      { id: 10752, name: "War" },
+      { id: 28, name: "Action" },
+    ]),
+
+    buildMultiGenresPlaylist("War History", "movie", [
+      { id: 10752, name: "War" },
+      // { id: 28, name: "Action" },
+      // { id: 12, name: "Adventure" },
+      { id: 36, name: "History" },
+    ]),
+
     buildLanguagePlaylist("Bollywood", "movie", bollywoodHindi, 0),
     buildLanguagePlaylist(`Hindi, ${currentYear}`, "movie", bollywoodHindi),
     buildLanguagePlaylist(`Tamil, ${currentYear}`, "movie", bollywoodTamil),

@@ -32,6 +32,7 @@ import Toast from "react-native-toast-message";
 import {
   TNetworkCompany,
   TProductionCompany,
+  TTvMediaType,
   networkCompanyIdConst,
   productionComapnyIdsConst,
 } from "../constants";
@@ -553,6 +554,39 @@ export function buildAiringTodayPlaylist(
   };
 }
 
+export function buildTvMediaTypePlaylist(
+  name: string,
+  tvMediaType: keyof TTvMediaType
+): IUrlObject {
+  return {
+    name: name,
+    url: `/discover/tv`,
+    queryParams: {
+      language: "en-US",
+      with_type: tvMediaType,
+    },
+    additionalFiltersUnsupported: true,
+  };
+}
+
+export function buildTvNetworkTvMediaTypePlaylist(
+  name: string,
+  tvMediaType: keyof TTvMediaType,
+  networkId: keyof TNetworkCompany
+): IUrlObject {
+  return {
+    name: name,
+    url: `/discover/tv`,
+    queryParams: {
+      language: "en-US",
+      with_type: tvMediaType,
+      with_networks: String(networkCompanyIdConst[networkId]),
+      include_null_first_air_dates: true,
+    },
+    additionalFiltersUnsupported: true,
+  };
+}
+
 export function buildNowPlayingPlaylist(
   name: string,
   mediaType: MediaTypes
@@ -593,6 +627,27 @@ export function buildGenrePlaylist(
       with_genres: String(genre.id),
       language: "en-US",
     },
+    showGenresRibbon: true,
+    additionalFiltersUnsupported: true,
+  };
+}
+
+export function buildMultiGenresPlaylist(
+  name: string,
+  mediaType: MediaTypes,
+  genres: Genre[]
+): IUrlObject {
+  const commaSeperatedGenreIds = genres.map((g) => g.id).join(",");
+
+  return {
+    name: name,
+    url: `/discover/${mediaType}`,
+    queryParams: {
+      with_genres: commaSeperatedGenreIds,
+      language: "en-US",
+      include_adult: false,
+    },
+    showGenresRibbon: false,
     additionalFiltersUnsupported: true,
   };
 }

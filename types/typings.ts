@@ -1,4 +1,5 @@
 import { RootState } from "../src/store/store";
+import { TTvMediaType } from "../src/utils/constants";
 
 export interface ICountry {
   name: string;
@@ -391,6 +392,7 @@ export interface IQueryParams {
   watch_region?: string;
   sort_by?: TGenresSortByValue;
   append_to_response?: string;
+  with_type?: keyof TTvMediaType;
 
   // for movie
   primary_release_year?: string;
@@ -411,6 +413,7 @@ export interface IUrlObject {
   name: string;
   url: string;
   queryParams: IQueryParams;
+  showGenresRibbon?: boolean;
   additionalFiltersUnsupported?: boolean;
 }
 

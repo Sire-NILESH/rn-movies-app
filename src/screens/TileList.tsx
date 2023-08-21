@@ -252,7 +252,9 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   return (
     <View className="relative flex-1 bg-secondary min-w-full w-full items-center">
       {/* Genre Tags Scrollable Row on top, if user selected some genres */}
-      {genreIds && genreIds.length > 1 ? (
+      {genreIds &&
+      genreIds.length > 1 &&
+      currentShowingPlaylists[0].showGenresRibbon !== false ? (
         <View className="w-full h-10 justify-start">
           <GenreTags genreIdList={genreIds} backgroundType="colored" />
         </View>

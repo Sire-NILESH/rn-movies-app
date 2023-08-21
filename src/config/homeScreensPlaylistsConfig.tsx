@@ -1,28 +1,54 @@
 import { IPlaylist } from "../../types/typings";
 import {
   buildGenrePlaylist,
+  buildMultiGenresPlaylist,
   buildPopularPlaylist,
   buildTrendingPlaylist,
+  buildUpcomingPlaylist,
 } from "../utils/helpers/helper";
 
 export const homeScreenPlaylists: IPlaylist[] = [
   // "Trending TV shows"
   buildTrendingPlaylist("Trending TV Shows", "tv"),
-  // "Trending"
-  buildTrendingPlaylist("Trending", "movie"),
+  // "Trending Movies"
+  buildTrendingPlaylist("Trending Movies", "movie"),
 
-  // "Animation"
-  buildGenrePlaylist("movie", { id: 16, name: "Animated Delights" }),
-  // "Comedy"
-  buildGenrePlaylist("movie", { id: 35, name: "Comedy Corner" }),
-  // "Drama"
-  buildGenrePlaylist("tv", { id: 18, name: "Drama Central" }),
-  // "War"
-  buildGenrePlaylist("movie", { id: 10752, name: "War Stories" }),
-  // "Documentary"
-  buildGenrePlaylist("tv", { id: 99, name: "Documentary" }),
-  // "Family"
-  buildGenrePlaylist("movie", { id: 10751, name: "Family Favorites" }),
+  // "Animation Comedy"
+  buildMultiGenresPlaylist("Animation Comedy", "tv", [
+    { id: 16, name: "Animation" },
+    { id: 35, name: "Comedy" },
+  ]),
+  // "Mystery Thrillers"
+  buildMultiGenresPlaylist("Mystery Thrillers", "movie", [
+    { id: 9648, name: "Mystery" },
+    { id: 53, name: "Thriller" },
+  ]),
+  // "Chronic Crimes"
+  // buildMultiGenresPlaylist("Chronic Crimes", "movie", [
+  //   { id: 80, name: "Crime" },
+  //   { id: 18, name: "Drama" },
+  //   { id: 9648, name: "Mystery" },
+  // ]),
+  // "Comedy Drama"
+  buildMultiGenresPlaylist("Comedy Drama", "tv", [
+    { id: 35, name: "Comedy" },
+    { id: 18, name: "Drama" },
+  ]),
+  // "War Action"
+  buildMultiGenresPlaylist("War Action", "movie", [
+    { id: 10752, name: "War" },
+    { id: 28, name: "Action" },
+  ]),
+  // "Crime Documentaries"
+  buildMultiGenresPlaylist("Crime Documentaries", "tv", [
+    { id: 80, name: "Crime" },
+    { id: 99, name: "Documentary" },
+  ]),
+  // "Epic Adventures"
+  buildMultiGenresPlaylist("Epic Adventures", "movie", [
+    { id: 12, name: "Adventure" },
+    { id: 14, name: "Fantasy" },
+  ]),
 ];
 
 export const movieScreenPlaylists: IPlaylist[] = [
@@ -38,8 +64,11 @@ export const movieScreenPlaylists: IPlaylist[] = [
   buildGenrePlaylist("movie", { id: 28, name: "Action Busters" }),
   // "Animation"
   buildGenrePlaylist("movie", { id: 16, name: "Animated Delights" }),
-  // "Horror"
-  buildGenrePlaylist("movie", { id: 27, name: "Horrors & Nightmares" }),
+  // "Chills of Horror"
+  buildMultiGenresPlaylist("Chills of Horror", "movie", [
+    { id: 27, name: "Horror" },
+    { id: 9648, name: "Mystery" },
+  ]),
   // "Science Fiction"
   buildGenrePlaylist("movie", { id: 878, name: "Science Fiction" }),
   // "Documentary"

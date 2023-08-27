@@ -10,7 +10,11 @@ import CustomButton from "./ui/CustomButton";
 import { Colors } from "./../utils/Colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
-import { dateFormatter, isMovie } from "./../utils/helpers/helper";
+import {
+  dateFormatter,
+  idToGenresMapped,
+  isMovie,
+} from "./../utils/helpers/helper";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import WatchlistButton from "./ui/WatchlistButton";
@@ -77,20 +81,35 @@ const Banner: React.FC<IProps> = ({ media }) => {
 
       {/* Text Contents and Buttons */}
       {media ? (
-        <View className="px-4 mt-10 space-y-3">
+        <View className="px-4 mt-10">
           {/* Title/Name */}
           <Text
-            className="text-[38px] max-w-xs font-semibold text-text_highLight"
+            className="text-[34px] max-w-xs font-semibold text-text_highLight"
             numberOfLines={2}
+            allowFontScaling={false}
           >
             {isMovie(media) ? media.title : media?.name}
+          </Text>
+
+          {/* Genres */}
+          <Text
+            className="mt-1 text-text_secondary text-xs"
+            style={{ lineHeight: 20 }}
+          >
+            {media?.genre_ids
+              .map((g, i) => {
+                // @ts-ignore
+                return idToGenresMapped[String(g)];
+              })
+              .join(" • ")}
+            {""}
           </Text>
 
           {/* Ratings and other stats */}
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
-            className="space-x-4"
+            className="mt-3 space-x-4"
             contentContainerStyle={{
               flexDirection: "row",
               alignItems: "center",
@@ -134,10 +153,10 @@ const Banner: React.FC<IProps> = ({ media }) => {
               <Text className="text-text_primary font-semibold">
                 {isMovie(media)
                   ? media.release_date
-                    ? dateFormatter(media.release_date)
+                    ? dateFormatter(media.release_date).split(" ")[2]
                     : "--"
                   : media.first_air_date
-                  ? dateFormatter(media.first_air_date)
+                  ? dateFormatter(media.first_air_date).split(" ")[2]
                   : "--"}
               </Text>
             </View>
@@ -150,10 +169,17 @@ const Banner: React.FC<IProps> = ({ media }) => {
                   color={Colors.text_secondary}
                 />
                 <Text className="text-text_primary font-semibold">
-                  {/*  @ts-ignore */}
+                  {/* @ts-ignore
                   {by639_1[media.original_language]?.name
                     ? // @ts-ignore
                       by639_1[media.original_language]?.name
+                    : media.original_language} */}
+                  {media.original_language === "cn"
+                    ? "Cantonese"
+                    : media.original_language === "zh"
+                    ? "Mandarin"
+                    : by639_1[media.original_language]?.name
+                    ? by639_1[media.original_language]?.name
                     : media.original_language}
                 </Text>
               </View>
@@ -162,13 +188,13 @@ const Banner: React.FC<IProps> = ({ media }) => {
 
           {/* OverView */}
           <Text
-            className="max-w-[95%] text-xs font-semibold text-text_tertiary"
+            className="mt-3 max-w-[95%] text-xs font-medium text-text_secondary"
             numberOfLines={3}
           >
             {media?.overview}
           </Text>
 
-          <View className="flex-row space-x-3">
+          <View className="mt-3 flex-row space-x-3">
             <View className="mt-5 w-[120]">
               <WatchlistButton
                 media={media}

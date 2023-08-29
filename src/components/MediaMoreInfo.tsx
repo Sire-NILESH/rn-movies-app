@@ -205,7 +205,7 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
               <View className="flex-row items-start space-x-2 px-4 mt-4">
                 <Text className="text-text_dark" style={{ lineHeight: 20 }}>
                   <Text className="font-semibold text-text_tertiary">
-                    Latest :{" "}
+                    Update :{" "}
                   </Text>
                   {`Episode S${media.next_episode_to_air.season_number}E${
                     media.next_episode_to_air.episode_number

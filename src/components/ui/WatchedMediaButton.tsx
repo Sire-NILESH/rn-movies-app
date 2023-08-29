@@ -113,12 +113,9 @@ const WatchedMediaButton: React.FC<IProps> = ({ media, mediaType }) => {
   return (
     <CustomButton
       color={isWatched ? Colors.stone[50] : Colors.neutral[800]}
-      height={38}
+      height={40}
       width={"100%"}
       radius={8}
-      styledClassName={`border ${
-        isWatched ? "border-stone-50" : "border-neutral-800"
-      } `}
       method={() => {
         if (isWatched) {
           setIsWatchedHandler();

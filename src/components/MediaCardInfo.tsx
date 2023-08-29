@@ -125,7 +125,13 @@ const MediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
               {isMovieExtended(media)
                 ? media.status
                 : isTvExtended(media)
-                ? media.status
+                ? media.status.toLowerCase() === "ended"
+                  ? `${media.status} (${
+                      dateFormatter(media.last_episode_to_air.air_date).split(
+                        " "
+                      )[2]
+                    })`
+                  : media.status
                 : "--"}
             </Text>
           </View>

@@ -126,11 +126,15 @@ const MediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
                 ? media.status
                 : isTvExtended(media)
                 ? media.status.toLowerCase() === "ended"
-                  ? `${media.status} (${
-                      dateFormatter(media.last_episode_to_air.air_date).split(
-                        " "
-                      )[2]
-                    })`
+                  ? `${media.status} ${
+                      media.last_episode_to_air.air_date
+                        ? `(${
+                            dateFormatter(
+                              media.last_episode_to_air.air_date
+                            ).split(" ")[2]
+                          })`
+                        : ""
+                    }`
                   : media.status
                 : "--"}
             </Text>

@@ -112,7 +112,8 @@ const AboutScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
           />
 
           <AboutScreenContentRow
-            content={`Tip! You can long press on the thumbnails to jump to recommended/similar content screen.`}
+            content={`Tip! You can long press on the thumbnails to jump to recommended/similar content screen.
+            \nTip! You can long press on the media title to copy it on the clipboard.`}
           />
 
           <AboutScreenContentRow

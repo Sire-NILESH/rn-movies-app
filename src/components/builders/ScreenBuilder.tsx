@@ -1,23 +1,23 @@
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
 import { View } from "react-native";
+import Animated from "react-native-reanimated";
 import {
   IImgItemSettingsDB,
   IPlaylist,
   ScreenTypes,
 } from "../../../types/typings";
-import Banner from "../Banner";
-import NothingToShow from "../NothingToShow";
-import Loader from "../ui/Loader";
-import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import { sendUrlObjApiRequestV2 } from "../../utils/requests";
 import {
   homeScreenPlaylists,
   movieScreenPlaylists,
   tvScreenPlaylists,
 } from "../../config/homeScreensPlaylistsConfig";
 import { homeScreenCacheConfig } from "../../config/requestCacheConfig";
+import { sendUrlObjApiRequestV2 } from "../../utils/requests";
+import Banner from "../Banner";
+import NothingToShow from "../NothingToShow";
 import Row from "../Row";
-import Animated from "react-native-reanimated";
+import Loader from "../ui/Loader";
 
 interface IProps {
   screenType: ScreenTypes;

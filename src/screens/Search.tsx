@@ -1,9 +1,9 @@
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Text, View, TextInput, SafeAreaView, Pressable } from "react-native";
-import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
-import { Colors } from "./../utils/Colors";
-import { searchRequest } from "../utils/requests";
+import { Pressable, SafeAreaView, Text, TextInput, View } from "react-native";
 import {
   ICreditPerson,
   ISearchHistoryItem,
@@ -11,20 +11,20 @@ import {
   MovieMedia,
   TvMedia,
 } from "../../types/typings";
+import {
+  useAllowNsfwContentHooks,
+  useSearchHistoryHooks,
+} from "../hooks/reduxHooks";
+import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
+import { searchRequest } from "../utils/requests";
 import HeaderSearchButton from "./../components/ui/HeaderSearchButton";
+import { Colors } from "./../utils/Colors";
 import {
   isISearchHistoryItem,
   isMovie,
   isPerson,
   isTv,
 } from "./../utils/helpers/helper";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import {
-  useAllowNsfwContentHooks,
-  useSearchHistoryHooks,
-} from "../hooks/reduxHooks";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 
 import CustomButton from "./../components/ui/CustomButton";
 
@@ -36,18 +36,37 @@ interface ISearchInputProps {
   inputText: string | null;
   searchCategory: MediaTypes;
   onTextChangeHandler: (text: string) => void;
+  clearSearchQueryHandler(): void;
 }
 
 const SearchInput: React.FC<ISearchInputProps> = (props) => {
+  const val = props.inputText ? props.inputText : undefined;
   return (
-    <View className="flex-1 bg-tertiary min-w-[250] mt-[10]">
+    <View className="flex-1 bg-tertiary w-[260] mt-[10]">
       <TextInput
         placeholder="Search something..."
-        className="bg-stone-700 px-6 py-1 rounded-md text-gray-100"
+        className="bg-stone-700 pl-3 pr-12 py-1 rounded-md text-gray-100"
         placeholderTextColor={Colors.stone[400]}
         onChangeText={props.onTextChangeHandler}
-        //   value={props.inputText ? props.inputText : null}
+        value={val}
+        maxLength={100}
       />
+      {/* clear all button */}
+      {val ? (
+        <View className="h-8 w-8 absolute right-0 bottom-0 -translate-y-3 -translate-x-[3px] rounded-full overflow-hidden">
+          <Pressable
+            android_ripple={{ color: "#e8e8e8" }}
+            className="flex-1 items-center justify-center"
+            onPress={props.clearSearchQueryHandler}
+          >
+            <Ionicons
+              name="close-circle"
+              size={20}
+              color={Colors.text_tertiary}
+            />
+          </Pressable>
+        </View>
+      ) : null}
     </View>
   );
 };
@@ -67,20 +86,35 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
     removeSearchHistoryItemHandler,
   } = useSearchHistoryHooks();
 
-  function setSearchQueryHandler(text: string): void {
-    // const enteredQuery = text.toLocaleLowerCase().trim();
-    const enteredQuery = text.trim();
+  function setSearchQueryHandler(enteredQuery: string): void {
     if (enteredQuery.length > 0) {
       setSearchQuery(enteredQuery);
+    } else {
+      setSearchQuery(null);
     }
   }
 
+  function getValidSearchQuery(): string {
+    const enteredQuery = searchQuery?.trim();
+    // const enteredQuery = searchQuery;
+    searchQuery?.trim();
+    if (enteredQuery && enteredQuery.length > 0) {
+      return enteredQuery.toLocaleLowerCase();
+    }
+    return "";
+  }
+
+  function clearSearchQueryHandler(): void {
+    setSearchQuery(null);
+  }
+
+  // auto fetch on search query
   useEffect(() => {
     const abortController: AbortController = new AbortController();
 
-    async function fetchSearchQuery() {
+    async function fetchSearchQuery(fetchQuery: string) {
       const data = await searchRequest(
-        searchQuery ? searchQuery.toLocaleLowerCase() : "",
+        fetchQuery,
         "multi",
         1,
         allowNsfwContent.nsfw,
@@ -89,19 +123,20 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       data && setSearchQueryResult(data);
     }
 
-    const timer = setTimeout(() => {
+    const timerCallback = setTimeout(() => {
       try {
-        if (searchQuery != null && searchQuery.length >= 0) {
-          fetchSearchQuery();
+        const fetchQuery = getValidSearchQuery();
+        if (searchQuery != null && fetchQuery.length > 0) {
+          fetchSearchQuery(fetchQuery);
         }
       } catch (err: any) {
         // console.log(err.message);
       }
-    }, 100);
+    }, 400);
 
     return () => {
       abortController.abort();
-      clearTimeout(timer);
+      clearTimeout(timerCallback);
     };
   }, [searchQuery]);
 
@@ -114,6 +149,7 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             inputText={searchQuery}
             searchCategory={searchCategory}
             onTextChangeHandler={setSearchQueryHandler}
+            clearSearchQueryHandler={clearSearchQueryHandler}
           />
         );
       },
@@ -123,13 +159,14 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             gotoList={true}
             title={searchQuery}
             searchCategory={searchCategory}
+            clearSearchQueryHandler={clearSearchQueryHandler}
             disabled={searchQuery && searchQuery.length > 0 ? false : true}
             addSearchHistoryItemHandler={addSearchHistoryItemHandler}
           />
         </View>
       ),
     });
-  }, [searchQueryResult]);
+  }, [searchQueryResult, searchQuery]);
 
   return (
     <>

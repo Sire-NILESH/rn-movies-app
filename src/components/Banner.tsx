@@ -5,6 +5,7 @@ import {
   Dimensions,
   ImageBackground,
   StyleSheet,
+  Pressable,
 } from "react-native";
 import CustomButton from "./ui/CustomButton";
 import { Colors } from "./../utils/Colors";
@@ -20,6 +21,8 @@ import { ScrollView } from "react-native-gesture-handler";
 import WatchlistButton from "./ui/WatchlistButton";
 import { by639_1 } from "iso-language-codes";
 import { useBlurHomeScreenBannerHooks } from "../hooks/reduxHooks";
+import * as Clipboard from "expo-clipboard";
+import ClipboardableText from "./ui/ClipboardableText";
 
 interface IProps {
   media: MovieMedia | TvMedia;
@@ -45,6 +48,11 @@ const Banner: React.FC<IProps> = ({ media }) => {
       media: media,
     });
   }
+
+  const copyToClipboard = async (content: string) => {
+    await Clipboard.setStringAsync(content);
+    console.log("copied");
+  };
 
   return (
     <View className="flex-1 w-[100%]">
@@ -83,13 +91,10 @@ const Banner: React.FC<IProps> = ({ media }) => {
       {media ? (
         <View className="px-4 mt-10">
           {/* Title/Name */}
-          <Text
-            className="text-[34px] max-w-xs font-semibold text-text_highLight"
-            numberOfLines={2}
-            allowFontScaling={false}
-          >
-            {isMovie(media) ? media.title : media?.name}
-          </Text>
+          <ClipboardableText
+            styleClassName="text-[34px] max-w-xs font-semibold text-text_highLight"
+            content={isMovie(media) ? media.title : media?.name}
+          />
 
           {/* Genres */}
           <Text
@@ -223,7 +228,7 @@ const Banner: React.FC<IProps> = ({ media }) => {
                     size={18}
                     color={Colors.stone[400]}
                   />
-                  <Text className="font-semibold text-gray-50">More Info</Text>
+                  <Text className="font-medium text-gray-50">More Info</Text>
                 </View>
               </CustomButton>
             </View>

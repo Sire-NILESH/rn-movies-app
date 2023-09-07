@@ -1,6 +1,6 @@
-import { View, Text, Modal, Pressable } from "react-native";
-import { Colors } from "../../utils/Colors";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Modal, Pressable, Text, View } from "react-native";
+import { Colors } from "../../utils/Colors";
 import CustomButton from "./CustomButton";
 
 interface IProps {

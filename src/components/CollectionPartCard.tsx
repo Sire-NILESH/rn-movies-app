@@ -1,9 +1,10 @@
-import { View, Text, Image } from "react-native";
-import React from "react";
-import { CollectionPart, TImgQualityValues } from "../../types/typings";
-import { idToGenresMapped } from "../utils/helpers/helper";
 import { Ionicons } from "@expo/vector-icons";
+import React from "react";
+import { Image, Text, View } from "react-native";
+import { CollectionPart, TImgQualityValues } from "../../types/typings";
 import { Colors } from "../utils/Colors";
+import { idToGenresMapped } from "../utils/helpers/helper";
+import ClipboardableText from "./ui/ClipboardableText";
 import ThemeCircleButton from "./ui/ThemeCircleButton";
 
 interface IProps {
@@ -46,12 +47,14 @@ const CollectionPartCard: React.FC<IProps> = ({
         <View className="w-[55%] flex-col justify-between">
           <View>
             {/* Title and genres */}
-            <Text
-              className="w-[97%] text-base font-semibold text-text_tertiary"
+
+            <ClipboardableText
+              styleClassName="w-[97%] text-base font-semibold text-text_tertiary"
               numberOfLines={2}
-            >
-              {`${order + 1}: ${collectionPart.title}`}
-            </Text>
+              content={`${order + 1}: ${collectionPart.title}`}
+              clipboardText={collectionPart.title}
+            />
+
             <View className="flex-row items-start space-x-2 mt-1">
               <Text
                 className="text-text_dark text-xs"

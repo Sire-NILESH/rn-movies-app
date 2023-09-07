@@ -1,14 +1,9 @@
-import { Pressable, View } from "react-native";
-import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import IconButton from "./IconButton";
+import React from "react";
+import { Pressable, View } from "react-native";
+import { ISearchHistoryItem, MediaTypes } from "../../../types/typings";
 import { Colors } from "./../../utils/Colors";
-import {
-  ISearchHistoryItem,
-  MediaTypes,
-  MovieMedia,
-  TvMedia,
-} from "../../../types/typings";
+import IconButton from "./IconButton";
 
 interface IProps {
   gotoList?: boolean;
@@ -16,6 +11,7 @@ interface IProps {
   searchCategory?: MediaTypes;
   disabled?: boolean;
   addSearchHistoryItemHandler?: (seachHistoryItem: ISearchHistoryItem) => void;
+  clearSearchQueryHandler?: () => void;
 }
 
 export default function HeaderSearchButton({
@@ -24,6 +20,7 @@ export default function HeaderSearchButton({
   searchCategory,
   disabled,
   addSearchHistoryItemHandler,
+  clearSearchQueryHandler,
 }: IProps) {
   const navigation = useNavigation();
 
@@ -39,7 +36,11 @@ export default function HeaderSearchButton({
       }
 
       // @ts-ignore
-      navigation.push("Search Tiles", { title, searchCategory });
+      navigation.push("Search Tiles", {
+        title,
+        searchCategory,
+        clearSearchQueryHandler,
+      });
     } else {
       // @ts-ignore
       navigation.navigate("Search", { searchCategory: searchCategory });

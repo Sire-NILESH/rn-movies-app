@@ -1,14 +1,13 @@
-import { View, Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
+import { Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import {
   MediaTypes,
   MovieMediaHybrid,
   TvMediaHybrid,
 } from "../../types/typings";
-import { useNavigation } from "@react-navigation/native";
-import Loader from "./ui/Loader";
-import NothingToShow from "./NothingToShow";
-import { ScrollView } from "react-native-gesture-handler";
+import useImgSettings from "../hooks/useImgSettings";
 import {
   getDeviceDimensions,
   isMovie,
@@ -16,22 +15,24 @@ import {
   isTv,
   isTvExtended,
 } from "../utils/helpers/helper";
+import Cast from "./Cast";
+import CollectionCard from "./CollectionCard";
 import GenreTags from "./GenreTags";
 import MediaCardInfo from "./MediaCardInfo";
-import TrailerButton from "./ui/TrailerButton";
-import WatchlistButton from "./ui/WatchlistButton";
-import WatchedMediaButton from "./ui/WatchedMediaButton";
-import NetworkList from "./NetworkList";
-import ProductionCompaines from "./ProductionCompaines";
-import MoreInfoFooterButton from "./ui/MoreInfoFooterButton";
-import WatchProviders from "./WatchProviders";
-import Cast from "./Cast";
-import RevenueStats from "./ui/RevenueStats";
-import useImgSettings from "../hooks/useImgSettings";
 import MoreInfoBackdrop from "./MoreInfoBackdrop";
-import CollectionCard from "./CollectionCard";
-import MediaStats from "./ui/MediaStats";
+import NetworkList from "./NetworkList";
+import NothingToShow from "./NothingToShow";
+import ProductionCompaines from "./ProductionCompaines";
+import WatchProviders from "./WatchProviders";
 import LinkButton from "./ui/LinkButton";
+import Loader from "./ui/Loader";
+import MediaStats from "./ui/MediaStats";
+import MoreInfoFooterButton from "./ui/MoreInfoFooterButton";
+import RevenueStats from "./ui/RevenueStats";
+import TrailerButton from "./ui/TrailerButton";
+import WatchedMediaButton from "./ui/WatchedMediaButton";
+import WatchlistButton from "./ui/WatchlistButton";
+import ClipboardableText from "./ui/ClipboardableText";
 
 interface IProps {
   media: MovieMediaHybrid | TvMediaHybrid;
@@ -95,9 +96,10 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
               className="px-4 w-[100%]"
               style={{ marginTop: windowHeight * 0.33 }}
             >
-              <Text className="text-[40px] font-semibold text-text_highLight object-cover">
-                {getTitle()}
-              </Text>
+              <ClipboardableText
+                styleClassName="text-[40px] font-semibold text-text_highLight object-cover"
+                content={getTitle()}
+              />
 
               {isMovie(media) && media.original_title !== media.title ? (
                 <Text className="text-sm text-text_tertiary pt-2">

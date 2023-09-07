@@ -1,6 +1,6 @@
 import { useLayoutEffect } from "react";
+import { MediaTypes } from "../../types/typings";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
-import { MediaTypes, MovieMedia, TvMedia } from "../../types/typings";
 import SearchResultsTopTabsNavigator from "../navigators/TopTabs/SearchResultsTopTabsNavigator";
 
 const SearchTileListScreen: React.FunctionComponent<IStackScreenProps> = (

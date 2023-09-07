@@ -1,6 +1,6 @@
-import { View, ImageBackground } from "react-native";
-import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
+import React from "react";
+import { ImageBackground, View } from "react-native";
 import { Colors } from "../utils/Colors";
 import { getDeviceDimensions } from "../utils/helpers/helper";
 

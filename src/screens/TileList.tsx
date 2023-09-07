@@ -1,10 +1,8 @@
-import { useCallback } from "react";
-import { View, Text, Pressable } from "react-native";
-import { useLayoutEffect, useState, useEffect } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
-import { Colors } from "../utils/Colors";
-import HeaderSearchButton from "../components/ui/HeaderSearchButton";
+import { useQuery } from "@tanstack/react-query";
+import cloneDeep from "lodash.clonedeep";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import { Pressable, Text, View } from "react-native";
 import {
   IQueryParams,
   IUrlObject,
@@ -12,23 +10,24 @@ import {
   MovieMedia,
   TvMedia,
 } from "../../types/typings";
+import GenreTags from "../components/GenreTags";
+import MediaWizardModal from "../components/MediaWizardModal/MediaWizardModal";
+import NothingToShow from "../components/NothingToShow";
+import TilesFilterModal from "../components/TilesFilterModal";
+import TilesRenderedView from "../components/TilesRenderedView";
+import HeaderSearchButton from "../components/ui/HeaderSearchButton";
+import Loader from "../components/ui/Loader";
+import { tileScreenCacheConfig } from "../config/requestCacheConfig";
+import useImageItemSetting from "../hooks/useImageItemSetting";
+import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
+import { Colors } from "../utils/Colors";
 import {
   isMovieArray,
   isTvArray,
   showErrorToast,
 } from "../utils/helpers/helper";
 import { getTileListScreenMedias } from "../utils/requests";
-import GenreTags from "../components/GenreTags";
-import TilesRenderedView from "../components/TilesRenderedView";
-import NothingToShow from "../components/NothingToShow";
-import MediaWizardModal from "../components/MediaWizardModal/MediaWizardModal";
-import useImageItemSetting from "../hooks/useImageItemSetting";
 import FilterTilesButton from "./../components/ui/FilterTilesButton";
-import TilesFilterModal from "../components/TilesFilterModal";
-import cloneDeep from "lodash.clonedeep";
-import { useQuery } from "@tanstack/react-query";
-import Loader from "../components/ui/Loader";
-import { tileScreenCacheConfig } from "../config/requestCacheConfig";
 
 const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [showGenresModal, setShowGenresModal] = useState<boolean>(false);

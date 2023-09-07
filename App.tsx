@@ -1,20 +1,20 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
 import "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { persistor, store } from "./src/store/store";
-import { Provider } from "react-redux";
-import Loader from "./src/components/ui/Loader";
-import NothingToShow from "./src/components/NothingToShow";
-import useDBInitialize from "./src/hooks/useDBInitialize";
-import { PersistGate } from "redux-persist/integration/react";
-import RootNavigator from "./src/navigators/RootNavigator";
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
-import { useState } from "react";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import NothingToShow from "./src/components/NothingToShow";
+import Loader from "./src/components/ui/Loader";
 import toastConfig from "./src/config/toastMessageConfig";
+import useDBInitialize from "./src/hooks/useDBInitialize";
+import RootNavigator from "./src/navigators/RootNavigator";
+import { persistor, store } from "./src/store/store";
 import { Colors } from "./src/utils/Colors";
 
 // Create a client

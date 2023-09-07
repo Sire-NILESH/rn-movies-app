@@ -1,21 +1,22 @@
-import { View, Text, Image } from "react-native";
-import React, { useCallback, useRef, useState } from "react";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { LinearGradient } from "expo-linear-gradient";
-import { Colors } from "../utils/Colors";
-import ThemeButton from "./ui/ThemeButton";
-import useNavigateTo from "../hooks/useNavigateTo";
+import React, { useCallback, useRef, useState } from "react";
+import { Image, Text, View } from "react-native";
 import {
   Episode,
   EpisodeCastAndCrew,
   Season,
   SeasonDetails,
 } from "../../types/typings";
+import useNavigateTo from "../hooks/useNavigateTo";
+import { Colors } from "../utils/Colors";
 import { dateFormatter, showSuccessToast } from "../utils/helpers/helper";
 import EpisodeInfoCard from "./EpisodeInfoCard";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import FlashlistScrollButtonGrp from "./ui/FlashlistScrollButtonGrp";
+import ClipboardableText from "./ui/ClipboardableText";
 import CustomButton from "./ui/CustomButton";
+import FlashlistScrollButtonGrp from "./ui/FlashlistScrollButtonGrp";
+import ThemeButton from "./ui/ThemeButton";
 
 interface IProps {
   tvMediaSeasons: Season[];
@@ -120,12 +121,12 @@ const EpisodeList: React.FC<IProps> = ({
               </View>
               <View className="w-[59%] justify-between">
                 {/* Title */}
-                <Text
-                  className="text-text_highLight text-xl font-bold"
+                <ClipboardableText
+                  styleClassName="text-text_highLight text-xl font-bold"
                   numberOfLines={3}
-                >
-                  {tvMediaName}
-                </Text>
+                  content={tvMediaName}
+                />
+
                 <View className="mt-1">
                   <Text className="text-text_secondary text-lg">
                     Season{" "}

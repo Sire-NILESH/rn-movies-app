@@ -1,16 +1,16 @@
-import { View, StatusBar } from "react-native";
-import React, { useState } from "react";
-import { ITopTabEpisodeListScreenProps } from "../library/NavigatorScreenProps/TopTabEpisodeListScreenProps";
-import EpisodeList from "../components/EpisodeList";
-import CastAndCrewModal from "../components/ui/CastAndCrewModal";
 import { useQuery } from "@tanstack/react-query";
+import React, { useState } from "react";
+import { StatusBar, View } from "react-native";
 import { EpisodeCastAndCrew, SeasonDetails } from "../../types/typings";
-import { fetchSeasonDetails } from "../utils/requests";
-import { episodesScreenCacheConfig } from "../config/requestCacheConfig";
-import { showErrorToast } from "../utils/helpers/helper";
-import { Colors } from "../utils/Colors";
-import Loader from "../components/ui/Loader";
+import EpisodeList from "../components/EpisodeList";
 import NothingToShow from "../components/NothingToShow";
+import CastAndCrewModal from "../components/ui/CastAndCrewModal";
+import Loader from "../components/ui/Loader";
+import { episodesScreenCacheConfig } from "../config/requestCacheConfig";
+import { ITopTabEpisodeListScreenProps } from "../library/NavigatorScreenProps/TopTabEpisodeListScreenProps";
+import { Colors } from "../utils/Colors";
+import { showErrorToast } from "../utils/helpers/helper";
+import { fetchSeasonDetails } from "../utils/requests";
 
 const TopTabEpisodeListScreen: React.FC<ITopTabEpisodeListScreenProps> = ({
   // name,

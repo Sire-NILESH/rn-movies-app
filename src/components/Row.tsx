@@ -1,4 +1,7 @@
+import { MaterialIcons } from "@expo/vector-icons";
+import { FlashList } from "@shopify/flash-list";
 import React, { useCallback } from "react";
+import { ListRenderItemInfo, Pressable, Text, View } from "react-native";
 import {
   IImgItemSettingsDB,
   IPlaylist,
@@ -6,18 +9,17 @@ import {
   MovieMedia,
   TvMedia,
 } from "../../types/typings";
-import Thumbnail from "./Thumbnail";
-import { Text, View, ListRenderItemInfo } from "react-native";
-import IconButton from "./ui/IconButton";
-import { Colors } from "../utils/Colors";
-import { Pressable } from "react-native";
-import { getDeviceDimensions, isMovieArray } from "../utils/helpers/helper";
-import { isMovie } from "../utils/helpers/helper";
-import useNavigateTo from "../hooks/useNavigateTo";
-import { useThumbnailTextSettingHooks } from "../hooks/reduxHooks";
-import { FlashList } from "@shopify/flash-list";
 import { ThumbnailTextPermission } from "../config/disableThumbnailText";
-import { MaterialIcons } from "@expo/vector-icons";
+import { useThumbnailTextSettingHooks } from "../hooks/reduxHooks";
+import useNavigateTo from "../hooks/useNavigateTo";
+import { Colors } from "../utils/Colors";
+import {
+  getDeviceDimensions,
+  isMovie,
+  isMovieArray,
+} from "../utils/helpers/helper";
+import Thumbnail from "./Thumbnail";
+import IconButton from "./ui/IconButton";
 
 interface Props {
   title: string;

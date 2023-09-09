@@ -1,7 +1,7 @@
-import { View, Text, Image } from "react-native";
-import React from "react";
-import { Episode, EpisodeCastAndCrew } from "../../types/typings";
 import { Ionicons } from "@expo/vector-icons";
+import React from "react";
+import { Image, Text, View } from "react-native";
+import { Episode, EpisodeCastAndCrew } from "../../types/typings";
 import { Colors } from "../utils/Colors";
 import { dateFormatter } from "../utils/helpers/helper";
 import ThemeButton from "./ui/ThemeButton";
@@ -34,8 +34,10 @@ const EpisodeInfoCard: React.FC<IProps> = ({
     <View className="justify-between">
       {/* TITLE AND EPISODE NUMBER */}
       <View className="flex-row items-center mx-3 space-x-2 mb-3">
-        <Text className="ml-2 text-text_highLight w-[90%]">
-          <Text className="text-xl font-semibold">{`${episode.episode_number}: ${episode.name}`}</Text>
+        <Text className="ml-2 text-text_highLight w-[90%] text-xl font-semibold ">
+          {episode.episode_number}
+          <Text className="text-text_dark">{" | "}</Text>
+          {episode.name}
         </Text>
       </View>
 
@@ -164,7 +166,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({
           {/* SHOW MORE BUTTON */}
           <View>
             <ThemeButton
-              text={"Show more credits"}
+              text={"Credits Info"}
               iconName={"information-circle"}
               onPressHandler={() =>
                 castandCrewModalHandler({

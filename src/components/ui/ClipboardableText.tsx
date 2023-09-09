@@ -1,6 +1,6 @@
-import { Text, Pressable } from "react-native";
-import React from "react";
 import * as Clipboard from "expo-clipboard";
+import React from "react";
+import { Pressable, Text } from "react-native";
 import { showSuccessToast } from "../../utils/helpers/helper";
 
 interface IProps {
@@ -24,7 +24,6 @@ const ClipboardableText = ({
   return (
     <Pressable
       onLongPress={() => {
-        console.log(content);
         copyToClipboard(content);
       }}
     >

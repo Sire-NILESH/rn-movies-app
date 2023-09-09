@@ -102,19 +102,27 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
               />
 
               {isMovie(media) && media.original_title !== media.title ? (
-                <Text className="text-sm text-text_tertiary pt-2">
-                  Original Title:{"  "}
-                  <Text className="text-text_primary">
-                    {media.original_title}
+                <View className="flex-row items-center">
+                  <Text className="text-sm text-text_tertiary pt-2">
+                    Original Title:{"  "}
                   </Text>
-                </Text>
+
+                  <ClipboardableText
+                    styleClassName="text-sm pt-2 text-text_primary"
+                    content={media.original_title}
+                  />
+                </View>
               ) : isTv(media) && media.original_name !== media.name ? (
-                <Text className="text-sm text-text_tertiary pt-2">
-                  Original Title:{"  "}
-                  <Text className="text-text_primary">
-                    {media.original_name}
+                <View className="flex-row items-center">
+                  <Text className="text-sm text-text_tertiary pt-2">
+                    Original Title:{"  "}
                   </Text>
-                </Text>
+
+                  <ClipboardableText
+                    styleClassName="text-sm pt-2 text-text_primary"
+                    content={media.original_name}
+                  />
+                </View>
               ) : (isTvExtended(media) || isMovieExtended(media)) &&
                 media.tagline ? (
                 <Text className="text-sm text-text_tertiary pt-2">

@@ -1,8 +1,13 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { LinearGradient } from "expo-linear-gradient";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Image, Text, View } from "react-native";
+import Animated, {
+  useAnimatedRef,
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from "react-native-reanimated";
 import {
   Episode,
   EpisodeCastAndCrew,
@@ -15,7 +20,7 @@ import { dateFormatter, showSuccessToast } from "../utils/helpers/helper";
 import EpisodeInfoCard from "./EpisodeInfoCard";
 import ClipboardableText from "./ui/ClipboardableText";
 import CustomButton from "./ui/CustomButton";
-import FlashlistScrollButtonGrp from "./ui/FlashlistScrollButtonGrp";
+import FlashlistScrollButtonGrp from "./ui/FlashlistScrollToTopBtn";
 import ThemeButton from "./ui/ThemeButton";
 
 interface IProps {
@@ -27,6 +32,8 @@ interface IProps {
   castandCrewModalHandler(castAndCrew: EpisodeCastAndCrew): void;
 }
 
+const AnimatedFlashList = Animated.createAnimatedComponent(FlashList<Episode>);
+
 const EpisodeList: React.FC<IProps> = ({
   tvMediaSeasons,
   selectedSeason,
@@ -37,8 +44,17 @@ const EpisodeList: React.FC<IProps> = ({
 }) => {
   // So every one of them wont have to calculate them separately.
   const { navigateTo } = useNavigateTo();
-  const listRef = useRef();
+
+  const listRef = useAnimatedRef();
   const [invertList, setnvertList] = useState(false);
+
+  const scrollY = useSharedValue(0);
+  const scrollDirection = useSharedValue<number>(0);
+
+  const scrollHandler = useAnimatedScrollHandler((event) => {
+    scrollY.value = event.contentOffset.y;
+    scrollDirection.value = event.velocity === undefined ? 0 : event.velocity.y;
+  });
 
   function toggleInvertList() {
     setnvertList((prev) => !prev);
@@ -78,8 +94,10 @@ const EpisodeList: React.FC<IProps> = ({
   );
 
   return (
-    <View className="flex-1">
-      <FlashList
+    <View className="flex-1 relative">
+      <AnimatedFlashList
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}
         ListHeaderComponent={
           <View className="mb-8">
             <LinearGradient
@@ -215,7 +233,11 @@ const EpisodeList: React.FC<IProps> = ({
       />
 
       {/* SCOLL TOP/BOTTOM BUTTONS GRP */}
-      <FlashlistScrollButtonGrp listRef={listRef} />
+      <FlashlistScrollButtonGrp
+        listRef={listRef}
+        scrollY={scrollY}
+        scrollDirection={scrollDirection}
+      />
     </View>
   );
 };

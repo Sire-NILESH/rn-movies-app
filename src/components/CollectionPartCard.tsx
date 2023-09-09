@@ -51,7 +51,7 @@ const CollectionPartCard: React.FC<IProps> = ({
             <ClipboardableText
               styleClassName="w-[97%] text-base font-semibold text-text_tertiary"
               numberOfLines={2}
-              content={`${order + 1}: ${collectionPart.title}`}
+              content={`${order + 1} : ${collectionPart.title}`}
               clipboardText={collectionPart.title}
             />
 

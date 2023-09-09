@@ -11,7 +11,6 @@ interface IProps {
   searchCategory?: MediaTypes;
   disabled?: boolean;
   addSearchHistoryItemHandler?: (seachHistoryItem: ISearchHistoryItem) => void;
-  clearSearchQueryHandler?: () => void;
 }
 
 export default function HeaderSearchButton({
@@ -20,7 +19,6 @@ export default function HeaderSearchButton({
   searchCategory,
   disabled,
   addSearchHistoryItemHandler,
-  clearSearchQueryHandler,
 }: IProps) {
   const navigation = useNavigation();
 
@@ -29,7 +27,7 @@ export default function HeaderSearchButton({
       // add to the search history
       if (addSearchHistoryItemHandler) {
         addSearchHistoryItemHandler({
-          id: title ? title : "",
+          id: Date.now().toString(),
           itemName: title ? title : "",
           itemType: "searchHistory",
         });
@@ -39,7 +37,6 @@ export default function HeaderSearchButton({
       navigation.push("Search Tiles", {
         title,
         searchCategory,
-        clearSearchQueryHandler,
       });
     } else {
       // @ts-ignore

@@ -1,11 +1,11 @@
-import React, { memo, useCallback, useLayoutEffect } from "react";
+import { Ionicons } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
+import React, { memo, useCallback, useLayoutEffect } from "react";
+import { Pressable, View } from "react-native";
 import { Season } from "../../types/typings";
+import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { Colors } from "./../utils/Colors";
 import TopTabEpisodeListScreen from "./TopTabEpisodeListScreen";
-import { Pressable, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 
 const TopTabs = createMaterialTopTabNavigator();
 

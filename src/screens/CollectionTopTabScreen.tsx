@@ -1,21 +1,24 @@
-import React, { useEffect, memo, useState, useCallback, useMemo } from "react";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { View } from "react-native";
-import { ITopTabScreenProps } from "../library/NavigatorScreenProps/TopTabScreenProps";
+import Animated from "react-native-reanimated";
 import { IDBCollectionMedia } from "../../types/typings";
 import CollectionRow from "../components/CollectionRow";
-import { getMediasFromCollection } from "../storage/database";
 import NothingToShow from "../components/NothingToShow";
-import useImageItemSetting from "../hooks/useImageItemSetting";
+import AutoHideOnScrollFloatingBtn from "../components/ui/AutoHideOnScrollFloatingBtn";
+import FlashlistScrollToTopBtn from "../components/ui/FlashlistScrollToTopBtn";
 import Loader from "../components/ui/Loader";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
-import { getDeviceDimensions, showSuccessToast } from "../utils/helpers/helper";
-import FloatingButton from "../components/ui/FloatingButton";
-import { Colors } from "../utils/Colors";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useAppSelector } from "../hooks/reduxHooks";
+import useFlashlistScroll from "../hooks/useFlashlistScroll";
+import useImageItemSetting from "../hooks/useImageItemSetting";
+import { ITopTabScreenProps } from "../library/NavigatorScreenProps/TopTabScreenProps";
+import { getMediasFromCollection } from "../storage/database";
+import { getDeviceDimensions, showSuccessToast } from "../utils/helpers/helper";
 
 const windowWidth = getDeviceDimensions("window").width;
 const THUMBNAIL_HEIGHT = (windowWidth * 0.31 * 3) / 2;
+
+const AnimatedFlashList = Animated.createAnimatedComponent(FlashList<string>);
 
 type TDbCollectionUpdateTypes = "dbUpdate" | "forceUpdate";
 
@@ -32,6 +35,10 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
   const [refresh, setRefresh] = useState(false);
   const [isFirstLoad, setisFirstLoad] = useState(true);
   const [invertList, setnvertList] = useState(false);
+
+  // list scroll related items, scroll to top
+  const { listRef, scrollY, scrollDirection, scrollHandler } =
+    useFlashlistScroll();
 
   const currentDate = new Date(Date.now());
   const currentYear = currentDate.getFullYear();
@@ -235,7 +242,11 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
       <View className="flex-1" style={{ minHeight: 36 + THUMBNAIL_HEIGHT }}>
         {pass ? (
           <View className="flex-1">
-            <FlashList
+            <AnimatedFlashList
+              // @ts-ignore
+              ref={listRef}
+              onScroll={scrollHandler}
+              scrollEventThrottle={16}
               // className=""
               // data={Object.keys(dateCollection)}
               data={
@@ -262,16 +273,19 @@ const CollectionTopTabScreen: React.FC<ITopTabScreenProps> = (props) => {
 
       {/* INVERT ORDER FLOATING BUTTON */}
       {pass && (
-        <FloatingButton onClickHandler={toggleInvertList}>
-          <MaterialCommunityIcons
-            style={{
-              transform: [{ rotateZ: "90deg" }],
-            }}
-            name="rotate-3d-variant"
-            size={24}
-            color={Colors.gray[200]}
+        <>
+          {/* SCOLL TOP */}
+          <FlashlistScrollToTopBtn
+            listRef={listRef}
+            scrollY={scrollY}
+            scrollDirection={scrollDirection}
           />
-        </FloatingButton>
+
+          <AutoHideOnScrollFloatingBtn
+            scrollY={scrollY}
+            onClickHandler={toggleInvertList}
+          />
+        </>
       )}
     </View>
   );

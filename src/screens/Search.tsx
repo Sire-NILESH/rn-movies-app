@@ -159,7 +159,6 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             gotoList={true}
             title={searchQuery}
             searchCategory={searchCategory}
-            clearSearchQueryHandler={clearSearchQueryHandler}
             disabled={searchQuery && searchQuery.length > 0 ? false : true}
             addSearchHistoryItemHandler={addSearchHistoryItemHandler}
           />
@@ -241,7 +240,7 @@ function renderFlatList(
             // when the search result is of a movie media
             if (isMovie(mediaObj.item)) {
               addSearchHistoryItemHandler({
-                id: mediaObj.item.title,
+                id: Date.now().toString(),
                 itemName: mediaObj.item.title,
                 itemType: "searchHistory",
               });
@@ -255,7 +254,7 @@ function renderFlatList(
             // when the search result is of a person media
             else if (isPerson(mediaObj.item)) {
               addSearchHistoryItemHandler({
-                id: mediaObj.item.name,
+                id: Date.now().toString(),
                 itemName: mediaObj.item.name,
                 itemType: "searchHistory",
               });
@@ -282,7 +281,7 @@ function renderFlatList(
              * */
             else if (isTv(mediaObj.item)) {
               addSearchHistoryItemHandler({
-                id: mediaObj.item.name,
+                id: Date.now().toString(),
                 itemName: mediaObj.item.name,
                 itemType: "searchHistory",
               });

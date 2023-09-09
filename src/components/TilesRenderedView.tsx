@@ -1,12 +1,15 @@
-import { useCallback, useMemo } from "react";
-import { View, ActivityIndicator } from "react-native";
-import { getDeviceDimensions } from "../utils/helpers/helper";
 import { useNavigation } from "@react-navigation/native";
-import { IImgItemSettingsDB } from "../../types/typings";
-import SearchPersonCard from "./SearchPersonCard";
-import { useThumbnailTextSettingHooks } from "../hooks/reduxHooks";
 import { FlashList } from "@shopify/flash-list";
+import { useCallback, useMemo } from "react";
+import { ActivityIndicator, View } from "react-native";
+import Animated from "react-native-reanimated";
+import { IImgItemSettingsDB } from "../../types/typings";
+import { useThumbnailTextSettingHooks } from "../hooks/reduxHooks";
+import useFlashlistScroll from "../hooks/useFlashlistScroll";
+import { getDeviceDimensions } from "../utils/helpers/helper";
+import SearchPersonCard from "./SearchPersonCard";
 import Thumbnail from "./Thumbnail";
+import FlashlistScrollToTopBtn from "./ui/FlashlistScrollToTopBtn";
 
 interface IProps {
   medias: any[];
@@ -21,12 +24,17 @@ interface IProps {
   contentType?: "tiles" | "card";
 }
 
+const AnimatedFlashList = Animated.createAnimatedComponent(FlashList<any>);
+
 // Calculate and pass the dimensioins from the parent(here) to the thumbnails.
 // So every thumbnail wont have to calculate them separately.
 const windowWidth = getDeviceDimensions("window").width;
 
 const TilesRenderedView: React.FC<IProps> = (props) => {
   const navigation = useNavigation();
+
+  const { listRef, scrollY, scrollDirection, scrollHandler } =
+    useFlashlistScroll();
 
   const { isThumbnailText } = useThumbnailTextSettingHooks();
 
@@ -76,8 +84,12 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
 
   return (
     <View className="flex-1 relative">
-      <FlashList
+      <AnimatedFlashList
         data={props.medias}
+        // @ts-ignore
+        ref={listRef}
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}
         ItemSeparatorComponent={() => (
           <View
             style={{
@@ -88,7 +100,6 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
             }}
           />
         )}
-        className="w-full"
         contentContainerStyle={{
           paddingVertical: 8,
         }}
@@ -108,6 +119,13 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
         onEndReachedThreshold={2}
         onEndReached={props.loadMoreItem}
         estimatedItemSize={(windowWidth * 0.31 * 3) / 2}
+      />
+
+      {/* SCOLL TOP/BOTTOM BUTTONS GRP */}
+      <FlashlistScrollToTopBtn
+        listRef={listRef}
+        scrollY={scrollY}
+        scrollDirection={scrollDirection}
       />
     </View>
   );

@@ -1,11 +1,9 @@
-import { View, Text } from "react-native";
-import { Pressable } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "../../utils/Colors";
 import { DrawerNavigationOptions } from "@react-navigation/drawer";
-import { PropsWithChildren, memo } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
+import { PropsWithChildren, memo } from "react";
+import { Pressable, Text, View } from "react-native";
 import Animated, {
   SharedValue,
   interpolateColor,
@@ -13,6 +11,7 @@ import Animated, {
   useDerivedValue,
   withTiming,
 } from "react-native-reanimated";
+import { Colors } from "../../utils/Colors";
 
 type TProps = PropsWithChildren<{
   scrollY: SharedValue<number>;

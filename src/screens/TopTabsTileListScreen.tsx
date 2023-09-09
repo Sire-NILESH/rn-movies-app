@@ -1,29 +1,27 @@
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  memo,
-  useCallback,
-  useMemo,
-} from "react";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { View } from "react-native";
-import { ITopTabScreenProps } from "../library/NavigatorScreenProps/TopTabScreenProps";
-import { getDeviceDimensions, showSuccessToast } from "../utils/helpers/helper";
-import CollectionThumbnail from "../components/CollectionThumbnail";
+import Animated from "react-native-reanimated";
 import { IDBCollectionMedia } from "../../types/typings";
-import { getMediasFromCollection } from "../storage/database";
+import CollectionThumbnail from "../components/CollectionThumbnail";
 import NothingToShow from "../components/NothingToShow";
+import AutoHideOnScrollFloatingBtn from "../components/ui/AutoHideOnScrollFloatingBtn";
+import FlashlistScrollToTopBtn from "../components/ui/FlashlistScrollToTopBtn";
+import Loader from "../components/ui/Loader";
+import { useAppSelector } from "../hooks/reduxHooks";
+import useFlashlistScroll from "../hooks/useFlashlistScroll";
 import useImageItemSetting from "../hooks/useImageItemSetting";
 import useNavigateTo from "../hooks/useNavigateTo";
-import Loader from "../components/ui/Loader";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
-import FloatingButton from "../components/ui/FloatingButton";
-import { Colors } from "../utils/Colors";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useAppSelector } from "../hooks/reduxHooks";
+import { ITopTabScreenProps } from "../library/NavigatorScreenProps/TopTabScreenProps";
+import { getMediasFromCollection } from "../storage/database";
+import { getDeviceDimensions, showSuccessToast } from "../utils/helpers/helper";
 
 // Calculate and pass the dimensions from the parent(here) to the thumbnails. So every thumbnail wont have to calculate them separately.
 const windowWidth = getDeviceDimensions("window").width;
+
+const AnimatedFlashList = Animated.createAnimatedComponent(
+  FlashList<IDBCollectionMedia>
+);
 
 type TDbCollectionUpdateTypes = "dbUpdate" | "forceUpdate";
 
@@ -39,8 +37,11 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
   const [medias, setMedias] = useState<IDBCollectionMedia[]>([]);
   const [refresh, setRefresh] = useState(false);
   const [isFirstLoad, setisFirstLoad] = useState(true);
-  const listRef = useRef();
   const [invertList, setnvertList] = useState(false);
+
+  // list scroll related items, scroll to top
+  const { listRef, scrollY, scrollDirection, scrollHandler } =
+    useFlashlistScroll();
 
   const [dbUpdatesChecklist, setdbUpdatesChecklist] =
     useState<TDBUpdateChecklist>({
@@ -214,10 +215,12 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
         >
           {pass ? (
             <View className="flex-1">
-              <FlashList
+              <AnimatedFlashList
                 bounces
                 // @ts-ignore
                 ref={listRef}
+                onScroll={scrollHandler}
+                scrollEventThrottle={16}
                 data={invertList ? medias.slice().reverse() : medias}
                 ItemSeparatorComponent={() => <View style={{ height: 4 }} />}
                 // contentContainerStyle={{
@@ -242,16 +245,19 @@ const TopTabsTileListScreen: React.FC<ITopTabScreenProps> = (props) => {
 
       {/* INVERT LIST FLOATING BUTTON */}
       {pass && (
-        <FloatingButton onClickHandler={toggleInvertList}>
-          <MaterialCommunityIcons
-            style={{
-              transform: [{ rotateZ: "90deg" }],
-            }}
-            name="rotate-3d-variant"
-            size={24}
-            color={Colors.gray[200]}
+        <>
+          {/* SCOLL TOP */}
+          <FlashlistScrollToTopBtn
+            listRef={listRef}
+            scrollY={scrollY}
+            scrollDirection={scrollDirection}
           />
-        </FloatingButton>
+
+          <AutoHideOnScrollFloatingBtn
+            scrollY={scrollY}
+            onClickHandler={toggleInvertList}
+          />
+        </>
       )}
     </View>
   );

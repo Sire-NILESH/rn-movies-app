@@ -1,28 +1,26 @@
-import { MovieMedia, TvMedia } from "../../types/typings";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
+import { by639_1 } from "iso-language-codes";
 import {
-  Text,
-  View,
   Dimensions,
   ImageBackground,
   StyleSheet,
-  Pressable,
+  Text,
+  View,
 } from "react-native";
-import CustomButton from "./ui/CustomButton";
+import { ScrollView } from "react-native-gesture-handler";
+import { MovieMedia, TvMedia } from "../../types/typings";
+import { useBlurHomeScreenBannerHooks } from "../hooks/reduxHooks";
 import { Colors } from "./../utils/Colors";
-import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
 import {
   dateFormatter,
   idToGenresMapped,
   isMovie,
 } from "./../utils/helpers/helper";
-import { Ionicons } from "@expo/vector-icons";
-import { ScrollView } from "react-native-gesture-handler";
-import WatchlistButton from "./ui/WatchlistButton";
-import { by639_1 } from "iso-language-codes";
-import { useBlurHomeScreenBannerHooks } from "../hooks/reduxHooks";
-import * as Clipboard from "expo-clipboard";
 import ClipboardableText from "./ui/ClipboardableText";
+import CustomButton from "./ui/CustomButton";
+import WatchlistButton from "./ui/WatchlistButton";
 
 interface IProps {
   media: MovieMedia | TvMedia;
@@ -48,11 +46,6 @@ const Banner: React.FC<IProps> = ({ media }) => {
       media: media,
     });
   }
-
-  const copyToClipboard = async (content: string) => {
-    await Clipboard.setStringAsync(content);
-    console.log("copied");
-  };
 
   return (
     <View className="flex-1 w-[100%]">

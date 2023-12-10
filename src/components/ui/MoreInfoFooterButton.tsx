@@ -14,23 +14,23 @@ interface IProps {
 const MoreInfoFooterButton: React.FC<IProps> = (props) => {
   return (
     <LinearGradient
-      className="h-32 rounded-xl overflow-hidden border border-stone-800"
+      className="h-24 rounded-xl overflow-hidden border border-stone-800/80"
       colors={[
-        "rgba(28, 25, 23, 0.5)",
-        "rgba(41, 37, 36, 0.5)",
-        "rgba(28, 25, 23, 0.9)",
+        "rgba(28, 25, 23, 0.2)",
+        "rgba(41, 37, 36, 0.4)",
         "rgba(28, 25, 23, 0.6)",
-        Colors.black,
+        "rgba(28, 25, 23, 0.2)",
       ]}
-      start={{ x: 0.1, y: 0.2 }}
+      start={{ x: 0.6, y: -0.4 }}
     >
       <Pressable
-        className="flex-1 px-4 py-4 justify-between"
+        className="flex-1 px-4 justify-center gap-y-2"
         onPress={() => props.onPressHandler()}
         android_ripple={{ color: "#eee" }}
       >
-        <View className="flex-row items-center gap-2">
+        <View className="flex-row items-center gap-x-2">
           <Text className="text-2xl text-text_highLight">{props.title}</Text>
+
           <Ionicons
             name="arrow-forward"
             size={18}

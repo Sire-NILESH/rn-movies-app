@@ -17,6 +17,7 @@ import CountriesDropdown from "./ui/CountriesDropdown";
 import ImageCached from "./ui/ImageCached";
 import { useDefaultRegionHooks } from "../hooks/reduxHooks";
 import useNavigateTo from "../hooks/useNavigateTo";
+import { Colors } from "../utils/Colors";
 
 interface IProps {
   mediaId: number;
@@ -51,8 +52,8 @@ const WatchProviders: React.FC<IProps> = ({
   return (
     <View className="flex-1 mt-10 space-y-5">
       <View
-        className="flex-row items-center justify-between px-4 mt-2 mx-2 rounded-xl"
-        style={{ backgroundColor: "rgb(4, 20, 10)" }}
+        className="flex-row items-center justify-between px-4 mt-2 mx-2 rounded-xl bg-neutral-900/80"
+        // style={{ backgroundColor: "rgb(4, 20, 10)" }}
       >
         <Text className="text-text_tertiary mx-4">
           Watch providers for this in{" "}
@@ -61,6 +62,7 @@ const WatchProviders: React.FC<IProps> = ({
         <CountriesDropdown
           currentCountry={currentCountry}
           setCountryHandler={setCountryHandler}
+          bgColor={Colors.neutral[800]}
         />
       </View>
 
@@ -130,13 +132,13 @@ const WatchProviders: React.FC<IProps> = ({
           // style={{ backgroundColor: "rgb(16, 16, 16)" }}
         >
           <Text className="w-[60%] text-text_secondary text-base text-center font-bold mb-2">
-            No Providers...
+            No Providers . . .
           </Text>
           <Text
-            className="w-[85%] text-text_dark text-xs text-center"
+            className="w-[95%] text-text_dark text-xs text-center"
             style={{ lineHeight: 20 }}
           >
-            {` Currently no known providers for '${mediaTitle}' is available in ${currentCountry.name} region`}
+            {`Currently, there are no known providers available for \n '${mediaTitle}' in the ${currentCountry.name} region`}
           </Text>
         </View>
       )}
@@ -205,7 +207,7 @@ function renderFlatlist(
   };
 
   return (
-    <View className="space-y-3 py-4 mx-2 rounded-xl bg-accent border border-green-900/40">
+    <View className="space-y-3 py-4 mx-2 bg-neutral-900/60 border border-neutral-800/50 rounded-xl">
       <Text className="font-bold text-text_highLight uppercase tracking-[2px] ml-4">
         {availableType}
       </Text>

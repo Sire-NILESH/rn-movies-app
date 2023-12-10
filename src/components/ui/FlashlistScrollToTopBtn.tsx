@@ -9,7 +9,6 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { Colors } from "../../utils/Colors";
-import { getDeviceDimensions } from "../../utils/helpers/helper";
 
 interface IProps {
   listRef: React.MutableRefObject<any>;
@@ -19,15 +18,12 @@ interface IProps {
 
 const SHOW_TOP_SCROLL_HEIGHT = 420 * 14;
 // const SHOW_TOP_SCROLL_HEIGHT = 120;
-const windowWidth = getDeviceDimensions("window").width;
 
 const FlashlistScrollToTopBtn: React.FC<IProps> = ({
   listRef,
   scrollY,
   scrollDirection,
 }) => {
-  const translateXValue = Math.ceil(windowWidth / 2 - 160 / 2) + 10;
-
   function scrollToTop() {
     // @ts-ignore
     listRef.current?.scrollToOffset({ offset: 0 });
@@ -67,7 +63,7 @@ const FlashlistScrollToTopBtn: React.FC<IProps> = ({
         android_ripple={{ color: "#eee" }}
       >
         <Ionicons name="arrow-up" size={20} color={Colors.neutral[100]} />
-        <Text className="font-medium text-text_primary">{"Scroll to top"}</Text>
+        <Text className="font-medium text-text_primary">{"Jump to top"}</Text>
       </Pressable>
     </Animated.View>
   );

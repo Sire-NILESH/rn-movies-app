@@ -121,19 +121,7 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
   }, [blockNewLoads, status]);
 
   return (
-    <View className="flex-1 relative bg-secondary min-w-full w-full items-center">
-      {/* Genre Tags Scrollable Row on top, if user selected some genres */}
-      {genreIdsFromFilter && genreIdsFromFilter.length > 0 ? (
-        <View className="absolute z-50 rounded-xl my-2 w-[97%] py-2 bg-neutral-900/90 overflow-hidden border border-neutral-700/50">
-          <View>
-            <GenreTags
-              genreIdList={genreIdsFromFilter}
-              backgroundType="transparent"
-            />
-          </View>
-        </View>
-      ) : null}
-
+    <View className="flex-1 bg-secondary min-w-full w-full items-center">
       {showFilterModal ? (
         <TilesFilterModal
           isVisible={showFilterModal}
@@ -167,11 +155,17 @@ const WatchProviderScreenBuilder: React.FC<IProps> = ({
           <>
             <TilesRenderedView
               tilesHeader={() => {
-                if (genreIdsFromFilter && genreIdsFromFilter.length > 0) {
-                  return <View className="h-14 mt-1" />;
-                } else {
-                  return null;
-                }
+                // Genre Tags Scrollable Row on top, if user selected some genres
+                if (genreIdsFromFilter && genreIdsFromFilter.length > 0)
+                  return (
+                    <View className="h-10 my-2">
+                      <GenreTags
+                        genreIdList={genreIdsFromFilter}
+                        backgroundType="transparent"
+                      />
+                    </View>
+                  );
+                return null;
               }}
               medias={medias}
               loadingNewMedias={status === "loading" ? true : false}

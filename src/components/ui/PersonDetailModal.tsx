@@ -9,7 +9,6 @@ import {
   dateFormatter,
   getGender,
 } from "../../utils/helpers/helper";
-import * as Linking from "expo-linking";
 import { useQuery } from "@tanstack/react-query";
 import { personScreenCacheConfig } from "../../config/requestCacheConfig";
 import { getPersonInfo } from "../../utils/requests";
@@ -124,12 +123,12 @@ const PersonDetailModal: React.FC<IProps> = (props) => {
 
                 <View className="flex-1 justify-end">
                   {personInfo.imdb_id ? (
-                    <View className="mt-3 w-40 flex-row gap-2 items-center justify-center">
-                      <FontAwesome
+                    <View className="mt-3 flex-row gap-2 items-center">
+                      {/* <FontAwesome
                         name={"imdb"}
                         size={36}
                         color={Colors.yellow[400]}
-                      />
+                      /> */}
                       <Text className="font-bold text-text_highLight">
                         {"IMDB Page"}
                       </Text>

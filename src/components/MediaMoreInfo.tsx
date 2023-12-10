@@ -314,21 +314,11 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
           </View>
 
           {/* Footer, contains 'Similar' and 'Seasons and episodes' bttons */}
-          <View className="mt-12 flex-row items-center space-x-5 w-full px-4">
-            {/* Realated/Similar Button */}
-            <View className="max-w-xl">
-              <MoreInfoFooterButton
-                title={"Similar"}
-                subtitle={"Show more like this"}
-                onPressHandler={() => {
-                  //  @ts-ignore
-                  navigation.push("Related", {
-                    relatedToMediaId: media.id,
-                    mediaType: mediaType,
-                  });
-                }}
-              />
-            </View>
+          <View
+            className={`mt-12 mb-5 justify-center space-y-5 w-full px-2 ${
+              isTv(media) ? "h-52" : "h-28"
+            }`}
+          >
             {/* TV seasons and episodes,for TVs only */}
             {isTv(media) ? (
               <View className="flex-1">
@@ -353,9 +343,22 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
                 />
               </View>
             ) : null}
+
+            {/* Realated/Similar Button */}
+            <View className="max-w-xl">
+              <MoreInfoFooterButton
+                title={"Similar"}
+                subtitle={"Show recommendations similar to this"}
+                onPressHandler={() => {
+                  //  @ts-ignore
+                  navigation.push("Related", {
+                    relatedToMediaId: media.id,
+                    mediaType: mediaType,
+                  });
+                }}
+              />
+            </View>
           </View>
-          {/* Bottom padding, for devices using gestures, a padding from below is good to have */}
-          <View className="my-1" />
         </ScrollView>
       )}
     </View>

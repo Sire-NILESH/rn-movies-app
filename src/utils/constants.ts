@@ -16,8 +16,8 @@ export const productionComapnyIdsConst = {
   "Universal Pictures": 33,
   "Lions Gate Films": 35,
   "Sony Pictures": 34,
-  DreamWorks: "521",
-
+  DreamWorks: 521,
+  "Walt Disney Pictures": 2,
   // DreamWorks: [
   //   7, 521, 3486, 15258, 42141, 73933, 114185, 114539, 125083, 144867, 183771,
   // ],

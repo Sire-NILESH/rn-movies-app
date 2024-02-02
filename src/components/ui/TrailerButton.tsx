@@ -35,7 +35,7 @@ const TrailerButton: React.FC<IProps> = (props) => {
     >
       <Ionicons
         size={16}
-        name="md-logo-youtube"
+        name="logo-youtube"
         color={Colors.stone[500]}
       ></Ionicons>
       <Text className="text-text_primary ml-2">Trailer</Text>

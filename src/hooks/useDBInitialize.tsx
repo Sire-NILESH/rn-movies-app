@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import * as NavigationBar from "expo-navigation-bar";
 import { initCollectionDB, initSettingsDB } from "../storage/database";
-import { Colors } from "./../utils/Colors";
 import useFontSettings from "./useFontSettings";
 
 /**

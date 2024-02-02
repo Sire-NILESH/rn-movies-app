@@ -51,8 +51,6 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
   // img setttings state
   const { allImgItemsSettings } = useImgSettings();
 
-  // console.log(isMovie(media) ? media.release_dates : media.content_ratings);
-
   const credits =
     media && isMovie(media) ? media?.credits : media?.aggregate_credits;
   const cast = credits?.cast;
@@ -180,9 +178,6 @@ const MediaMoreInfo: React.FC<IProps> = (props) => {
             {/* DESCRIPTION */}
             {media.overview ? (
               <View className="px-4 mt-4">
-                {/* <Text className="font-semibold text-text_tertiary">
-                  Overview
-                </Text> */}
                 <Text className="text-text_dark text-sm">
                   <Text className="font-semibold text-text_tertiary">
                     {"Overview :  "}

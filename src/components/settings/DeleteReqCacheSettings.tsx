@@ -33,7 +33,7 @@ const DeleteReqCacheSettings = () => {
 
   return (
     <SettingsCardWrapper
-      iconName="ios-trash-bin-outline"
+      iconName="trash-bin-outline"
       title="Clear request cache"
       subtitle={
         "Do it if you find the application behaving unexpectedly or if you wish to see latest content."

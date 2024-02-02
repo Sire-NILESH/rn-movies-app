@@ -113,8 +113,6 @@ function RenderList({
   navigateTo,
   thumbnailQualitySettings,
 }: IRenderList) {
-  //   const { isThumbnailText } = useThumbnailTextSettingHooks();
-
   const renderItem = useCallback(
     (media: ListRenderItemInfo<any>) => (
       <View className="ml-1 bg-tertiary rounded-md">

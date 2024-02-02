@@ -48,7 +48,7 @@ const SearchInput: React.FC<ISearchInputProps> = (props) => {
         className="bg-stone-700 pl-3 pr-12 py-1 rounded-md text-gray-100"
         placeholderTextColor={Colors.stone[400]}
         onChangeText={props.onTextChangeHandler}
-        value={val}
+        defaultValue={val}
         maxLength={100}
       />
       {/* clear all button */}
@@ -165,7 +165,7 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         </View>
       ),
     });
-  }, [searchQueryResult, searchQuery]);
+  }, [searchQuery]);
 
   return (
     <>

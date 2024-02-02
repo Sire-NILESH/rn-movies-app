@@ -1,9 +1,4 @@
-import {
-  MediaTypes,
-  MovieMedia,
-  TImgQualityValues,
-  TvMedia,
-} from "../../types/typings";
+import { MovieMedia, TImgQualityValues, TvMedia } from "../../types/typings";
 import {
   View,
   Pressable,
@@ -11,17 +6,16 @@ import {
   StyleProp,
   ViewStyle,
   ImageStyle,
-  Image,
 } from "react-native";
+import { Image } from "expo-image";
 import { isIPersonTVMedia, isMovie } from "../utils/helpers/helper";
 import { LinearGradient } from "expo-linear-gradient";
-import ImageCached from "./ui/ImageCached";
-import ImagePlaceholder from "./ui/ImagePlaceholder";
-import React from "react";
+
+type Orientation = "portrait" | "landscape";
 
 export interface IThumbnailProps {
   media: MovieMedia | TvMedia;
-  orientation: "portrait" | "landscape";
+  orientation: Orientation;
   windowWidth: number;
   navigateTo: (screen: string, paramOption: Object) => void;
   imgType?: "cached" | "regular";
@@ -29,15 +23,15 @@ export interface IThumbnailProps {
   disableText?: boolean;
 }
 
-function Thumbnail({
-  media,
-  orientation,
-  windowWidth,
-  imgType,
-  quality,
-  navigateTo,
-  disableText,
-}: IThumbnailProps) {
+type Styles = {
+  containerView: StyleProp<ViewStyle>;
+  containerImage: StyleProp<ImageStyle>;
+};
+
+const getThumbnailDimensions = (
+  windowWidth: number,
+  orientation: Orientation
+) => {
   const thumbnailDimensions = {
     landscape: {
       width: 245,
@@ -54,12 +48,18 @@ function Thumbnail({
     },
   };
 
-  const dimensions = thumbnailDimensions[orientation];
+  return thumbnailDimensions[orientation];
+};
 
-  type Styles = {
-    containerView: StyleProp<ViewStyle>;
-    containerImage: StyleProp<ImageStyle>;
-  };
+function Thumbnail({
+  media,
+  orientation,
+  windowWidth,
+  quality,
+  navigateTo,
+  disableText,
+}: IThumbnailProps) {
+  const dimensions = getThumbnailDimensions(windowWidth, orientation);
 
   const containerStyles: Styles = {
     containerView: {
@@ -109,17 +109,20 @@ function Thumbnail({
           });
         }}
       >
-        {imageURL ? (
-          <ImageView
-            imageURL={imageURL}
-            imgType={imgType && imgType === "cached" ? "cached" : "regular"}
-            mediaId={media.id}
-            orientation={orientation}
-            mediaType={mediaType}
-          />
-        ) : (
-          <ImagePlaceholder />
-        )}
+        <Image
+          key={
+            orientation === "portrait"
+              ? `${media.id}-${mediaType}-poster`
+              : `${media.id}-${mediaType}-backdrop`
+          }
+          source={{ uri: imageURL }}
+          className="h-full w-full"
+          contentFit="cover"
+          placeholder={require("../../assets/images/placeholders/posterPlaceHolder.png")}
+          transition={{
+            duration: 150,
+          }}
+        />
 
         {/* Movie Title and date box */}
         {!disableText ? (
@@ -178,41 +181,3 @@ function Thumbnail({
 }
 
 export default Thumbnail;
-
-interface IImageView {
-  imgType: "cached" | "regular";
-  imageURL: string;
-  mediaId: number;
-  mediaType: MediaTypes;
-  orientation: "portrait" | "landscape";
-}
-
-function ImageView({
-  imgType,
-  imageURL,
-  mediaId,
-  mediaType,
-  orientation,
-}: IImageView) {
-  return (
-    <>
-      {imgType === "cached" ? (
-        <ImageCached
-          imageURL={imageURL}
-          cacheKey={
-            orientation === "portrait"
-              ? `${mediaId}-${mediaType === "movie" ? "movie" : "tv"}-poster`
-              : `${mediaId}-${mediaType === "tv" ? "tv" : "movie"}-backdrop`
-          }
-        />
-      ) : (
-        <Image
-          source={{ uri: imageURL }}
-          className="h-full w-full"
-          resizeMode="cover"
-          fadeDuration={400}
-        />
-      )}
-    </>
-  );
-}

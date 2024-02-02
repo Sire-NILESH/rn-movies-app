@@ -10,6 +10,7 @@ import {
   MovieMedia,
   TvMedia,
 } from "../../types/typings";
+
 import GenreTags from "../components/GenreTags";
 import MediaWizardModal from "../components/MediaWizardModal/MediaWizardModal";
 import NothingToShow from "../components/NothingToShow";
@@ -17,6 +18,8 @@ import TilesFilterModal from "../components/TilesFilterModal";
 import TilesRenderedView from "../components/TilesRenderedView";
 import HeaderSearchButton from "../components/ui/HeaderSearchButton";
 import Loader from "../components/ui/Loader";
+import FilterTilesButton from "./../components/ui/FilterTilesButton";
+
 import { tileScreenCacheConfig } from "../config/requestCacheConfig";
 import useImageItemSetting from "../hooks/useImageItemSetting";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
@@ -27,7 +30,6 @@ import {
   showErrorToast,
 } from "../utils/helpers/helper";
 import { getTileListScreenMedias } from "../utils/requests";
-import FilterTilesButton from "./../components/ui/FilterTilesButton";
 
 const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   const [showGenresModal, setShowGenresModal] = useState<boolean>(false);
@@ -160,10 +162,10 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
   const onCloseWithConfirmFiltersModal = (playlists: IUrlObject[]) => {
     if (playlists.length > 0) {
-      // setError(null);
       setUserSelectedPlaylists(playlists);
       setPageNumber(1);
       setMedias([]);
+      setGenreIds([]);
       setShowFilterModal(false);
 
       const genrelist = playlists[0].queryParams.with_genres
@@ -253,7 +255,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       {/* Genre Tags Scrollable Row on top, if user selected some genres */}
       {genreIds &&
       genreIds.length > 1 &&
-      currentShowingPlaylists[0].showGenresRibbon !== false ? (
+      currentShowingPlaylists[0].name === "Custom Genres" ? (
         <View className="w-full h-10 justify-start">
           <GenreTags genreIdList={genreIds} backgroundType="colored" />
         </View>
@@ -276,12 +278,12 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         />
       ) : null}
 
+      {/* Genres and other customization modal for already selected playlist */}
       {showFilterModal ? (
         <TilesFilterModal
           isVisible={showFilterModal}
           closeModal={onCloseFilterModal}
           mediaListType={currentListType}
-          // playlist={currentShowingPlaylists[0]}
           playlist={
             userSelectedPlaylists.length > 0
               ? userSelectedPlaylists[0]
@@ -319,14 +321,16 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
               thumbnailQuality={thumbnailQuality}
             />
 
+            {/* Hover Btn to open genres and customisation modal for already selected playlist */}
             {currentShowingPlaylists[0].additionalFiltersUnsupported ? null : (
               <FilterTilesButton onShowFilterModal={onToggleFilterModal} />
             )}
           </>
-        ) : status !== "loading" && medias.length === 0 ? (
+        ) : status === "success" && medias.length === 0 ? (
           <>
             <NothingToShow problemType="nothing" />
 
+            {/* Hover Btn to open genres and customisation modal for already selected playlist */}
             {currentShowingPlaylists[0].additionalFiltersUnsupported ? null : (
               <FilterTilesButton onShowFilterModal={onToggleFilterModal} />
             )}

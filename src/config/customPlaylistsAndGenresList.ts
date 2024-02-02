@@ -235,6 +235,7 @@ export const moviePlaylist = [
     buildLanguagePlaylist(`Telugu, ${currentYear}`, "movie", bollywoodTelugu),
     buildLanguagePlaylist(`Kannada, ${currentYear}`, "movie", bollywoodKannada),
     buildMoviePlaylist("Lucasfilm", "Lucasfilm"),
+    buildMoviePlaylist("Walt Disney Pictures", "Walt Disney Pictures"),
     buildMoviePlaylist("HBO Movies", "HBO"),
     buildMoviePlaylist("Warner Bros. Entertainment", "Warner Bros"),
     buildMoviePlaylist("Paramount", "Paramount"),

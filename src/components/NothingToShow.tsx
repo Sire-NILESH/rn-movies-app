@@ -1,5 +1,6 @@
-import { View, Text, Image } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
+import { Image } from "expo-image";
 
 interface IProps {
   title?: string | null;
@@ -24,7 +25,7 @@ const NothingToShow: React.FC<IProps> = (props) => {
           >
             <Image
               source={require("../../assets/images/placeholders/somethingWentWrongV4.png")}
-              resizeMode="contain"
+              contentFit="contain"
               style={{
                 width: "100%",
                 height: "100%",
@@ -41,7 +42,7 @@ const NothingToShow: React.FC<IProps> = (props) => {
           >
             <Image
               source={require("../../assets/images/placeholders/nothingToShowV8.png")}
-              resizeMode="cover"
+              contentFit="cover"
               style={{
                 width: "100%",
                 height: "100%",

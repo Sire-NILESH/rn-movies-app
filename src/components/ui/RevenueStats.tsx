@@ -30,11 +30,7 @@ const RevenueStats: React.FC<IProps> = ({ budget, revenue }) => {
           {budget === 0 ? "--" : "$" + formatCurrencyNumbers(budget)}
         </Text>
         <View className="mt-1 flex-row items-center space-x-2 justify-center">
-          <Ionicons
-            name="ios-wallet-outline"
-            size={14}
-            color={Colors.text_dark}
-          />
+          <Ionicons name="wallet-outline" size={14} color={Colors.text_dark} />
           <Text className="text-text_dark text-center">Budget</Text>
         </View>
       </View>

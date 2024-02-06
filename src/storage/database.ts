@@ -18,8 +18,8 @@ import {
 export type TValidTableNames = "medias" | "collection" | "image_qualities";
 export type TValidDBNames = "settingsDatabase" | "collectionDatabase";
 
-let settingsDatabase: SQlite.WebSQLDatabase;
-let collectionDatabase: SQlite.WebSQLDatabase;
+let settingsDatabase: SQlite.SQLiteDatabase;
+let collectionDatabase: SQlite.SQLiteDatabase;
 
 export const dbOpen = () => {
   settingsDatabase = SQlite.openDatabase("app_settings.db");

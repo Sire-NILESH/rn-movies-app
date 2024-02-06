@@ -108,7 +108,7 @@ const MediaWizardModal: React.FC<IProps> = ({
       visible={isVisible}
       onRequestClose={onClose}
     >
-      <View className="absolute my-[25%] mx-[5%] h-[85%] w-[90%] bg-neutral-800 rounded-xl pb-2 border border-neutral-700/60 [elevation:10]">
+      <View className="absolute my-[18%] mx-[5%] h-[85%] w-[90%] bg-neutral-800 rounded-xl pb-2 border border-neutral-700/60 [elevation:10]">
         {/* HEADER */}
         <View className="flex-row items-center justify-between h-[42] bg-tertiary rounded-t-xl px-[20]">
           {/* Header Title */}

@@ -165,7 +165,7 @@ const SearchScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
         </View>
       ),
     });
-  }, [searchQueryResult, searchQuery]);
+  }, [searchQuery]);
 
   return (
     <>

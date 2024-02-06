@@ -145,7 +145,7 @@ const TilesFilterModal: React.FC<IProps> = (props) => {
       onRequestClose={props.closeModal}
       className="items-center justify-center"
     >
-      <View className="absolute my-[25%] mx-[5%] h-[85%] w-[90%] bg-neutral-800 rounded-xl pb-2 border border-neutral-700/60 [elevation:10]">
+      <View className="absolute my-[18%] mx-[5%] h-[85%] w-[90%] bg-neutral-800 rounded-xl pb-2 border border-neutral-700/60 [elevation:10]">
         {/* HEADER */}
         <View className="mt-1 flex-row items-center justify-between h-[42] px-[20]">
           {/* Header Title */}

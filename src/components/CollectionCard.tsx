@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
 import {
   IBelongsToCollection,
@@ -7,6 +7,7 @@ import {
 } from "../../types/typings";
 import useNavigateTo from "../hooks/useNavigateTo";
 import ThemeCircleButton from "./ui/ThemeCircleButton";
+import { Image } from "expo-image";
 
 interface IProps {
   collection: IBelongsToCollection;
@@ -46,7 +47,8 @@ const CollectionCard: React.FC<IProps> = ({
                   }
                 : require("../../assets/images/placeholders/posterPlaceHolder.png")
             }
-            style={{ width: "100%", height: "100%", resizeMode: "cover" }}
+            contentFit="cover"
+            style={{ width: "100%", height: "100%" }}
           />
         </View>
 

@@ -20,7 +20,7 @@ const ThemeButton: React.FC<IProps> = ({ text, iconName, onPressHandler }) => {
         <View className="flex-row gap-1 items-center">
           <Ionicons
             name={iconName}
-            size={iconName === "md-logo-youtube" ? 15 : 18}
+            size={iconName === "logo-youtube" ? 15 : 18}
             color={Colors.stone[400]}
           />
           <Text className="font-semibold text-text_highLight">{text}</Text>

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ImageBackground } from "react-native";
+import { View, Text } from "react-native";
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
@@ -7,6 +7,7 @@ import {
 } from "@react-navigation/drawer";
 
 import { LinearGradient } from "expo-linear-gradient";
+import { ImageBackground } from "expo-image";
 
 const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
   return (
@@ -40,7 +41,7 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
             <ImageBackground //wrapping the main entry screen with this <ImageBackground> component
               source={require("../../assets/icon.png")}
               // source={require("../../assets/images/drawerImage/maven_main.png")}
-              resizeMode="cover" //similar to web, "cover", "contain", etc.
+              contentFit="cover" //similar to web, "cover", "contain", etc.
               style={{
                 width: "100%",
                 height: "100%",

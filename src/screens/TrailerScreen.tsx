@@ -51,6 +51,9 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       title: "Trailers",
+      headerStyle: {
+        backgroundColor: Colors.primary,
+      },
     });
   }, []);
 
@@ -67,7 +70,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
   return (
     <>
-      <StatusBar animated={true} backgroundColor={Colors.tertiary} />
+      <StatusBar animated={true} backgroundColor={Colors.primary} />
       <View className="flex-1 bg-secondary">
         {/* Loader */}
         <Loader loading={loading} />
@@ -94,7 +97,7 @@ const TrailerScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
             </View>
 
             {/* Title and date Dock */}
-            <View className="w-full bg-tertiary px-4 space-y-1 justify-center items-start py-5 [elevation:5]">
+            <View className="w-full bg-primary px-4 space-y-1 justify-center items-start py-5 border-b border-b-neutral-900">
               <Text className="text-text_primary font-bold" numberOfLines={3}>
                 {selectedVideo?.name}
               </Text>

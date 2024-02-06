@@ -52,7 +52,11 @@ const HeaderWrapper: React.FC<TProps> = (props) => {
         <View className="flex-1">
           {/* @ts-ignore */}
           <Pressable onPress={() => navigation.toggleDrawer()}>
-            <Ionicons name="md-menu" size={28} color={Colors.text_primary} />
+            <Ionicons
+              name="menu-outline"
+              size={28}
+              color={Colors.text_primary}
+            />
           </Pressable>
         </View>
 

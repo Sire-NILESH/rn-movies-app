@@ -118,7 +118,7 @@ const TilesRenderedView: React.FC<IProps> = (props) => {
         // since app is for personal use, using a higher number here, but for actual production app the number should be lower.
         onEndReachedThreshold={2}
         onEndReached={props.loadMoreItem}
-        estimatedItemSize={(windowWidth * 0.31 * 3) / 2}
+        estimatedItemSize={4 + (windowWidth * 0.31 * 3) / 2}
       />
 
       {/* SCOLL TOP/BOTTOM BUTTONS GRP */}

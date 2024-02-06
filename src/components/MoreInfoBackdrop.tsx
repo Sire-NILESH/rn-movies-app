@@ -1,8 +1,9 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { ImageBackground, View } from "react-native";
+import { View } from "react-native";
 import { Colors } from "../utils/Colors";
 import { getDeviceDimensions } from "../utils/helpers/helper";
+import { ImageBackground } from "expo-image";
 
 interface IProps {
   mediaPosterPath: string;
@@ -42,11 +43,16 @@ const MoreInfoBackdrop: React.FC<IProps> = ({
           source={{
             uri: imgUrl,
           }}
-          resizeMode="cover" //similar to web, "cover", "contain", etc.
+          transition={{
+            // duration: 300,
+            effect: "cross-dissolve",
+            timing: "ease-in-out",
+          }}
+          contentFit="cover" //similar to web, "cover", "contain", etc.
           style={{ flex: 1 }} //for View dimensions internally
           imageStyle={{ zIndex: -100 }} //for Image styles internally.
           // blurRadius={10}
-        ></ImageBackground>
+        />
       </LinearGradient>
     </View>
   );

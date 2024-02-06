@@ -19,9 +19,11 @@ import ImageCached from "./ui/ImageCached";
 import ImagePlaceholder from "./ui/ImagePlaceholder";
 import React from "react";
 
+type Orientation = "portrait" | "landscape";
+
 export interface IThumbnailProps {
   media: MovieMedia | TvMedia;
-  orientation: "portrait" | "landscape";
+  orientation: Orientation;
   windowWidth: number;
   navigateTo: (screen: string, paramOption: Object) => void;
   imgType?: "cached" | "regular";
@@ -29,15 +31,10 @@ export interface IThumbnailProps {
   disableText?: boolean;
 }
 
-function Thumbnail({
-  media,
-  orientation,
-  windowWidth,
-  imgType,
-  quality,
-  navigateTo,
-  disableText,
-}: IThumbnailProps) {
+const getThumbnailDimensions = (
+  windowWidth: number,
+  orientation: Orientation
+) => {
   const thumbnailDimensions = {
     landscape: {
       width: 245,
@@ -54,7 +51,19 @@ function Thumbnail({
     },
   };
 
-  const dimensions = thumbnailDimensions[orientation];
+  return thumbnailDimensions[orientation];
+};
+
+function Thumbnail({
+  media,
+  orientation,
+  windowWidth,
+  imgType,
+  quality,
+  navigateTo,
+  disableText,
+}: IThumbnailProps) {
+  const dimensions = getThumbnailDimensions(windowWidth, orientation);
 
   type Styles = {
     containerView: StyleProp<ViewStyle>;

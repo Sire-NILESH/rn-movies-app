@@ -160,10 +160,10 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
 
   const onCloseWithConfirmFiltersModal = (playlists: IUrlObject[]) => {
     if (playlists.length > 0) {
-      // setError(null);
       setUserSelectedPlaylists(playlists);
       setPageNumber(1);
       setMedias([]);
+      setGenreIds([]);
       setShowFilterModal(false);
 
       const genrelist = playlists[0].queryParams.with_genres
@@ -253,7 +253,7 @@ const TileListScreen: React.FunctionComponent<IStackScreenProps> = (props) => {
       {/* Genre Tags Scrollable Row on top, if user selected some genres */}
       {genreIds &&
       genreIds.length > 1 &&
-      currentShowingPlaylists[0].showGenresRibbon !== false ? (
+      currentShowingPlaylists[0].name === "Custom Genres" ? (
         <View className="w-full h-10 justify-start">
           <GenreTags genreIdList={genreIds} backgroundType="colored" />
         </View>

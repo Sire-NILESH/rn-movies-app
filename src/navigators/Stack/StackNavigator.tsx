@@ -53,7 +53,6 @@ const StackNavigator = () => {
         }}
       >
         {/* List of all the routes for the Stack Screen is maintained in the 'routes' separately */}
-        {/* {routes.map((r, i) => ( */}
         {stackRoutes.map((r, i) => (
           <Stack.Screen key={i} name={r.name}>
             {(props) => {

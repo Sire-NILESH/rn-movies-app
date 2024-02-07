@@ -16,7 +16,6 @@ import {
 import { isIPersonTVMedia, isMovie } from "../utils/helpers/helper";
 import { LinearGradient } from "expo-linear-gradient";
 import ImageCached from "./ui/ImageCached";
-import ImagePlaceholder from "./ui/ImagePlaceholder";
 import React from "react";
 
 type Orientation = "portrait" | "landscape";
@@ -118,17 +117,13 @@ function Thumbnail({
           });
         }}
       >
-        {imageURL ? (
-          <ImageView
-            imageURL={imageURL}
-            imgType={imgType && imgType === "cached" ? "cached" : "regular"}
-            mediaId={media.id}
-            orientation={orientation}
-            mediaType={mediaType}
-          />
-        ) : (
-          <ImagePlaceholder />
-        )}
+        <ImageView
+          imageURL={imageURL}
+          imgType={imgType && imgType === "cached" ? "cached" : "regular"}
+          mediaId={media.id}
+          orientation={orientation}
+          mediaType={mediaType}
+        />
 
         {/* Movie Title and date box */}
         {!disableText ? (
@@ -190,7 +185,7 @@ export default Thumbnail;
 
 interface IImageView {
   imgType: "cached" | "regular";
-  imageURL: string;
+  imageURL: string | undefined;
   mediaId: number;
   mediaType: MediaTypes;
   orientation: "portrait" | "landscape";
@@ -216,7 +211,11 @@ function ImageView({
         />
       ) : (
         <Image
-          source={{ uri: imageURL }}
+          source={
+            imageURL
+              ? { uri: imageURL }
+              : require("../../assets/images/placeholders/posterPlaceHolder.png")
+          }
           className="h-full w-full"
           resizeMode="cover"
           fadeDuration={400}

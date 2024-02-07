@@ -15,7 +15,6 @@ import {
 
 import { LinearGradient } from "expo-linear-gradient";
 import ImageCached from "./ui/ImageCached";
-import ImagePlaceholder from "./ui/ImagePlaceholder";
 import React from "react";
 
 export interface ICollectionThumbnailProps {
@@ -99,17 +98,13 @@ function CollectionThumbnail({
           });
         }}
       >
-        {imageURL ? (
-          <ImageView
-            imageURL={imageURL}
-            imgType={imgType && imgType === "cached" ? "cached" : "regular"}
-            mediaId={media.mediaId}
-            orientation={orientation}
-            mediaType={media.mediaType}
-          />
-        ) : (
-          <ImagePlaceholder />
-        )}
+        <ImageView
+          imageURL={imageURL}
+          imgType={imgType && imgType === "cached" ? "cached" : "regular"}
+          mediaId={media.mediaId}
+          orientation={orientation}
+          mediaType={media.mediaType}
+        />
 
         {/* Movie Title and date box */}
         <LinearGradient
@@ -156,7 +151,7 @@ export default React.memo(CollectionThumbnail);
 
 interface IImageView {
   imgType: "cached" | "regular";
-  imageURL: string;
+  imageURL: string | undefined;
   mediaId: number;
   mediaType: MediaTypes;
   orientation: "portrait" | "landscape";
@@ -182,7 +177,11 @@ function ImageView({
         />
       ) : (
         <Image
-          source={{ uri: imageURL }}
+          source={
+            imageURL
+              ? { uri: imageURL }
+              : require("../../assets/images/placeholders/posterPlaceHolder.png")
+          }
           className="h-full w-full"
           resizeMode="cover"
           fadeDuration={400}

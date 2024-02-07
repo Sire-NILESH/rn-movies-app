@@ -16,7 +16,6 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
-import ImagePlaceholder from "./ui/ImagePlaceholder";
 import { by639_1 } from "iso-language-codes";
 
 interface IProps {
@@ -41,15 +40,15 @@ const MediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
           // height: 250,
         }}
       >
-        {imageUrl ? (
-          <Image
-            source={{ uri: imageUrl }}
-            resizeMode="cover"
-            className="h-full w-full rounded-2xl"
-          />
-        ) : (
-          <ImagePlaceholder />
-        )}
+        <Image
+          source={
+            imageUrl
+              ? { uri: imageUrl }
+              : require("../../assets/images/placeholders/posterPlaceHolderLandscape.png")
+          }
+          resizeMode="cover"
+          className="h-full w-full rounded-2xl"
+        />
       </View>
 
       <LinearGradient
@@ -61,7 +60,6 @@ const MediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
           "rgba(0, 0, 0, 0.1)",
         ]}
         start={{ x: 0.0, y: 1 }}
-        // style={{ width: "100%", aspectRatio: 16 / 9 }}
         className="absolute w-full h-full bg-stone-900/10 rounded-l-2xl py-2 flex-row items-center justify-between"
       >
         <View className="h-full justify-around items-start flex-wrap">

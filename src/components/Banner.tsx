@@ -1,11 +1,10 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { ImageBackground } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { by639_1 } from "iso-language-codes";
 import {
   Dimensions,
-  // ImageBackground,
+  ImageBackground,
   StyleSheet,
   Text,
   View,
@@ -73,8 +72,7 @@ const Banner: React.FC<IProps> = ({ media }) => {
             source={{
               uri: imgUri,
             }}
-            transition={300}
-            contentFit="cover" //similar to web, "cover", "contain", etc.
+            resizeMode="cover" //similar to web, "cover", "contain", etc.
             style={styles.rootScreen} //for View dimensions internally
             imageStyle={styles.backgroundImage} //for Image styles internally.
             blurRadius={isHomeScreenBannerBlur.blur ? 8 : undefined}

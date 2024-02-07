@@ -14,10 +14,10 @@ import {
   WatchProviderForCountry,
 } from "../../types/typings";
 import CountriesDropdown from "./ui/CountriesDropdown";
+import ImageCached from "./ui/ImageCached";
 import { useDefaultRegionHooks } from "../hooks/reduxHooks";
 import useNavigateTo from "../hooks/useNavigateTo";
 import { Colors } from "../utils/Colors";
-import { Image } from "expo-image";
 
 interface IProps {
   mediaId: number;
@@ -189,11 +189,9 @@ function renderFlatlist(
               aspectRatio: 1 / 1,
             }}
           >
-            <Image
-              key={p.provider_id + "watchProvider"}
-              source={{ uri: baseImgUrl + p.logo_path }}
-              className="h-full w-full"
-              contentFit="cover"
+            <ImageCached
+              imageURL={baseImgUrl + p.logo_path}
+              cacheKey={p.provider_id + "watchProvider"}
             />
           </View>
           <Text

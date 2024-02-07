@@ -1,32 +1,40 @@
 import {
-  ImageStyle,
-  Pressable,
-  StyleProp,
-  Text,
+  IReduxListMedia,
+  MediaTypes,
+  TImgQualityValues,
+} from "../../types/typings";
+import {
   View,
+  Pressable,
+  Text,
+  StyleProp,
   ViewStyle,
+  ImageStyle,
+  Image,
 } from "react-native";
-import { IReduxListMedia, TImgQualityValues } from "../../types/typings";
 
-import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
+import ImageCached from "./ui/ImageCached";
+import ImagePlaceholder from "./ui/ImagePlaceholder";
 import React from "react";
-
-type Orientation = "portrait" | "landscape";
 
 export interface ICollectionThumbnailProps {
   media: IReduxListMedia;
-  orientation: Orientation;
+  orientation: "portrait" | "landscape";
   windowWidth: number;
   imgType?: "cached" | "regular";
   quality?: TImgQualityValues;
   navigateTo: (screen: string, paramOption: Object) => void;
 }
 
-const getThumbnailDimensions = (
-  windowWidth: number,
-  orientation: Orientation
-) => {
+function CollectionThumbnail({
+  media,
+  orientation,
+  windowWidth,
+  imgType,
+  quality,
+  navigateTo,
+}: ICollectionThumbnailProps) {
   const thumbnailDimensions = {
     landscape: {
       width: 245,
@@ -43,17 +51,7 @@ const getThumbnailDimensions = (
     },
   };
 
-  return thumbnailDimensions[orientation];
-};
-
-function CollectionThumbnail({
-  media,
-  orientation,
-  windowWidth,
-  quality,
-  navigateTo,
-}: ICollectionThumbnailProps) {
-  const dimensions = getThumbnailDimensions(windowWidth, orientation);
+  const dimensions = thumbnailDimensions[orientation];
 
   type Styles = {
     containerView: StyleProp<ViewStyle>;
@@ -101,20 +99,17 @@ function CollectionThumbnail({
           });
         }}
       >
-        <Image
-          key={
-            orientation === "portrait"
-              ? `${media.mediaId}-${media.mediaType}-poster`
-              : `${media.mediaId}-${media.mediaType}-backdrop`
-          }
-          source={{ uri: imageURL }}
-          className="h-full w-full"
-          contentFit="cover"
-          placeholder={require("../../assets/images/placeholders/posterPlaceHolder.png")}
-          transition={{
-            duration: 150,
-          }}
-        />
+        {imageURL ? (
+          <ImageView
+            imageURL={imageURL}
+            imgType={imgType && imgType === "cached" ? "cached" : "regular"}
+            mediaId={media.mediaId}
+            orientation={orientation}
+            mediaType={media.mediaType}
+          />
+        ) : (
+          <ImagePlaceholder />
+        )}
 
         {/* Movie Title and date box */}
         <LinearGradient
@@ -157,4 +152,42 @@ function CollectionThumbnail({
   );
 }
 
-export default CollectionThumbnail;
+export default React.memo(CollectionThumbnail);
+
+interface IImageView {
+  imgType: "cached" | "regular";
+  imageURL: string;
+  mediaId: number;
+  mediaType: MediaTypes;
+  orientation: "portrait" | "landscape";
+}
+
+function ImageView({
+  imgType,
+  imageURL,
+  mediaId,
+  mediaType,
+  orientation,
+}: IImageView) {
+  return (
+    <>
+      {imgType === "cached" ? (
+        <ImageCached
+          imageURL={imageURL}
+          cacheKey={
+            orientation === "portrait"
+              ? `${mediaId}-${mediaType === "movie" ? "movie" : "tv"}-poster`
+              : `${mediaId}-${mediaType === "tv" ? "movie" : "tv"}-backdrop`
+          }
+        />
+      ) : (
+        <Image
+          source={{ uri: imageURL }}
+          className="h-full w-full"
+          resizeMode="cover"
+          fadeDuration={400}
+        />
+      )}
+    </>
+  );
+}

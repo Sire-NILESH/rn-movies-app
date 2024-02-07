@@ -1,5 +1,5 @@
-import { StyleSheet } from "react-native";
-import { Image } from "expo-image";
+import { StyleSheet, Image } from "react-native";
+import React from "react";
 
 const ImagePlaceholder = () => {
   const imagePath = "../../../assets/images/placeholders/posterPlaceHolder.png";
@@ -7,7 +7,7 @@ const ImagePlaceholder = () => {
   return (
     <Image
       source={require(imagePath)}
-      contentFit={"cover"}
+      resizeMode={"cover"}
       style={styles.imageStyle}
     />
   );

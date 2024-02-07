@@ -2,7 +2,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useCallback, useState } from "react";
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import Animated, {
   useAnimatedRef,
   useAnimatedScrollHandler,
@@ -22,7 +22,6 @@ import ClipboardableText from "./ui/ClipboardableText";
 import CustomButton from "./ui/CustomButton";
 import FlashlistScrollButtonGrp from "./ui/FlashlistScrollToTopBtn";
 import ThemeButton from "./ui/ThemeButton";
-import { Image } from "expo-image";
 
 interface IProps {
   tvMediaSeasons: Season[];
@@ -134,9 +133,9 @@ const EpisodeList: React.FC<IProps> = ({
                         }
                       : require("../../assets/images/placeholders/posterPlaceHolder.png")
                   }
-                  contentFit="cover" //similar to web, "cover", "contain", etc.
+                  resizeMode="cover" //similar to web, "cover", "contain", etc.
                   style={{ width: "100%", height: "100%" }}
-                />
+                ></Image>
               </View>
               <View className="w-[59%] justify-between">
                 {/* Title */}
@@ -188,7 +187,7 @@ const EpisodeList: React.FC<IProps> = ({
                     <View>
                       <ThemeButton
                         text={"Trailer"}
-                        iconName={"logo-youtube"}
+                        iconName={"md-logo-youtube"}
                         // /tv/{series_id}/season/{season_number}/videos
                         onPressHandler={() => {
                           navigateTo("Trailer", {

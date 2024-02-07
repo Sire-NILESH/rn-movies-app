@@ -1,4 +1,4 @@
-import { View, Text, FlatList, ListRenderItemInfo } from "react-native";
+import { View, Text, FlatList, Image, ListRenderItemInfo } from "react-native";
 import React, { useLayoutEffect, useCallback } from "react";
 import { IStackScreenProps } from "../library/NavigatorScreenProps/StackScreenProps";
 import { CollectionPart, IUrlObject } from "../../types/typings";
@@ -13,7 +13,6 @@ import CollectionPartCard from "../components/CollectionPartCard";
 import useNavigateTo from "../hooks/useNavigateTo";
 import useImgSettings from "../hooks/useImgSettings";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { Image } from "expo-image";
 
 const FranchiseCollection: React.FunctionComponent<IStackScreenProps> = (
   props
@@ -107,9 +106,9 @@ const FranchiseCollection: React.FunctionComponent<IStackScreenProps> = (
                               }
                             : require("../../assets/images/placeholders/posterPlaceHolder.png")
                         }
-                        contentFit="cover" //similar to web, "cover", "contain", etc.
+                        resizeMode="cover" //similar to web, "cover", "contain", etc.
                         style={{ width: "100%", height: "100%" }}
-                      />
+                      ></Image>
                     </View>
                     <View className="w-[59%] justify-between">
                       {/* Title */}

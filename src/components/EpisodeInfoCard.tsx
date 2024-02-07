@@ -1,11 +1,10 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { Episode, EpisodeCastAndCrew } from "../../types/typings";
 import { Colors } from "../utils/Colors";
 import { dateFormatter } from "../utils/helpers/helper";
 import ThemeButton from "./ui/ThemeButton";
-import { Image } from "expo-image";
 // import WatchedEpisodeButton from "./ui/WatchedEpisodeButton";
 
 interface IProps {
@@ -49,17 +48,14 @@ const EpisodeInfoCard: React.FC<IProps> = ({
           style={{ width: "60%", aspectRatio: 16 / 9 }}
         >
           <Image
-            key={episode.id}
             source={
               episode.still_path
                 ? {
                     uri: `https://image.tmdb.org/t/p/w500${episode.still_path}`,
                   }
-                : require("../../assets/images/placeholders/posterPlaceHolderLandscape.png")
+                : require("../../assets/images/placeholders/posterPlaceHolder.png")
             }
-            contentFit="cover"
-            transition={100}
-            style={{ width: "100%", height: "100%" }}
+            style={{ width: "100%", height: "100%", resizeMode: "cover" }}
           />
         </View>
 
@@ -154,7 +150,7 @@ const EpisodeInfoCard: React.FC<IProps> = ({
           <View className="">
             <ThemeButton
               text={"Trailer"}
-              iconName={"logo-youtube"}
+              iconName={"md-logo-youtube"}
               onPressHandler={() => {
                 navigateTo("Trailer", {
                   name: "Trailer Videos",

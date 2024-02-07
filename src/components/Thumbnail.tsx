@@ -1,4 +1,9 @@
-import { MovieMedia, TImgQualityValues, TvMedia } from "../../types/typings";
+import {
+  MediaTypes,
+  MovieMedia,
+  TImgQualityValues,
+  TvMedia,
+} from "../../types/typings";
 import {
   View,
   Pressable,
@@ -6,10 +11,13 @@ import {
   StyleProp,
   ViewStyle,
   ImageStyle,
+  Image,
 } from "react-native";
-import { Image } from "expo-image";
 import { isIPersonTVMedia, isMovie } from "../utils/helpers/helper";
 import { LinearGradient } from "expo-linear-gradient";
+import ImageCached from "./ui/ImageCached";
+import ImagePlaceholder from "./ui/ImagePlaceholder";
+import React from "react";
 
 type Orientation = "portrait" | "landscape";
 
@@ -22,11 +30,6 @@ export interface IThumbnailProps {
   quality?: TImgQualityValues;
   disableText?: boolean;
 }
-
-type Styles = {
-  containerView: StyleProp<ViewStyle>;
-  containerImage: StyleProp<ImageStyle>;
-};
 
 const getThumbnailDimensions = (
   windowWidth: number,
@@ -55,11 +58,17 @@ function Thumbnail({
   media,
   orientation,
   windowWidth,
+  imgType,
   quality,
   navigateTo,
   disableText,
 }: IThumbnailProps) {
   const dimensions = getThumbnailDimensions(windowWidth, orientation);
+
+  type Styles = {
+    containerView: StyleProp<ViewStyle>;
+    containerImage: StyleProp<ImageStyle>;
+  };
 
   const containerStyles: Styles = {
     containerView: {
@@ -109,20 +118,17 @@ function Thumbnail({
           });
         }}
       >
-        <Image
-          key={
-            orientation === "portrait"
-              ? `${media.id}-${mediaType}-poster`
-              : `${media.id}-${mediaType}-backdrop`
-          }
-          source={{ uri: imageURL }}
-          className="h-full w-full"
-          contentFit="cover"
-          placeholder={require("../../assets/images/placeholders/posterPlaceHolder.png")}
-          transition={{
-            duration: 150,
-          }}
-        />
+        {imageURL ? (
+          <ImageView
+            imageURL={imageURL}
+            imgType={imgType && imgType === "cached" ? "cached" : "regular"}
+            mediaId={media.id}
+            orientation={orientation}
+            mediaType={mediaType}
+          />
+        ) : (
+          <ImagePlaceholder />
+        )}
 
         {/* Movie Title and date box */}
         {!disableText ? (
@@ -181,3 +187,41 @@ function Thumbnail({
 }
 
 export default Thumbnail;
+
+interface IImageView {
+  imgType: "cached" | "regular";
+  imageURL: string;
+  mediaId: number;
+  mediaType: MediaTypes;
+  orientation: "portrait" | "landscape";
+}
+
+function ImageView({
+  imgType,
+  imageURL,
+  mediaId,
+  mediaType,
+  orientation,
+}: IImageView) {
+  return (
+    <>
+      {imgType === "cached" ? (
+        <ImageCached
+          imageURL={imageURL}
+          cacheKey={
+            orientation === "portrait"
+              ? `${mediaId}-${mediaType === "movie" ? "movie" : "tv"}-poster`
+              : `${mediaId}-${mediaType === "tv" ? "tv" : "movie"}-backdrop`
+          }
+        />
+      ) : (
+        <Image
+          source={{ uri: imageURL }}
+          className="h-full w-full"
+          resizeMode="cover"
+          fadeDuration={400}
+        />
+      )}
+    </>
+  );
+}

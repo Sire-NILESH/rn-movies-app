@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
 import {
   MovieMedia,
@@ -18,7 +18,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../utils/Colors";
 import ImagePlaceholder from "./ui/ImagePlaceholder";
 import { by639_1 } from "iso-language-codes";
-import { Image } from "expo-image";
 
 interface IProps {
   media: MovieMedia | TvMedia | MovieMediaHybrid | TvMediaHybrid;
@@ -39,17 +38,13 @@ const MediaCardInfo: React.FC<IProps> = ({ media, imgQuality }) => {
         style={{
           width: "100%",
           aspectRatio: 16 / 9,
+          // height: 250,
         }}
       >
         {imageUrl ? (
           <Image
-            transition={{
-              // duration: 300,
-              effect: "cross-dissolve",
-              timing: "ease-in-out",
-            }}
             source={{ uri: imageUrl }}
-            contentFit="cover"
+            resizeMode="cover"
             className="h-full w-full rounded-2xl"
           />
         ) : (

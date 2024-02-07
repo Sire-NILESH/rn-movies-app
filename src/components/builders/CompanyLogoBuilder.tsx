@@ -7,6 +7,8 @@ import {
   ListRenderItemInfo,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+// @ts-ignore
+import ExpoFastImage from "expo-fast-image";
 
 import {
   IProductionCompany,
@@ -15,7 +17,6 @@ import {
 } from "../../../types/typings";
 import { Colors } from "../../utils/Colors";
 import useNavigateTo from "../../hooks/useNavigateTo";
-import { Image } from "expo-image";
 
 interface IProps {
   company: IProductionCompany[] | Network[];
@@ -137,10 +138,10 @@ function RenderLogo({
 
   return (
     <>
-      <Image
-        source={{ uri: imgPath }}
-        key={`${id}-${mediaType === "movie" ? "production" : "network"}`}
-        contentFit={"contain"}
+      <ExpoFastImage
+        uri={imgPath}
+        cacheKey={`${id}-${mediaType === "movie" ? "production" : "network"}`}
+        resizeMode={"contain"}
         className="border-stone-500 relative"
         onLoad={() => {
           setFallbackImagehandler(false);

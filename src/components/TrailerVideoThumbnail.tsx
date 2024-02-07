@@ -1,8 +1,7 @@
 import { Trailer } from "../../types/typings";
-import { View, Pressable, Text } from "react-native";
+import { View, Image, Pressable, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
-import { Image } from "expo-image";
 
 interface IProps {
   video: Trailer;
@@ -40,11 +39,11 @@ const TrailerVideoThumbnail: React.FC<IProps> = (props) => {
               `https://img.youtube.com/vi/${props.video.key}/mqdefault.jpg`
             );
           }}
-          contentFit="cover"
           className="relative rounded-2xl bg-black "
           style={{
             width: "100%",
             height: "100%",
+            resizeMode: "cover",
           }}
         />
 

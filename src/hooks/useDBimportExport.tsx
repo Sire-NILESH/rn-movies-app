@@ -80,12 +80,10 @@ const useDBimportExport = () => {
         copyToCacheDirectory: true,
       });
 
-      console.log(result);
-
       /** when we got something, we proceed by first checking if we have the original db file's path setup.
        * remember that when we exe the '.openDatabase(originalDatabase)', the database will be created under the app's documents directory, i.e. ${FileSystem.documentDirectory}/SQLite/${originalDatabase}.
        */
-      if (!result.canceled || result.assets !== null) {
+      if (result.type === "success") {
         if (
           !(
             await FileSystem.getInfoAsync(
@@ -102,12 +100,9 @@ const useDBimportExport = () => {
         /** now that the directory is setup for storing the db to app's data directory,
          * we will now read the picked backup file
          */
-        const base64 = await FileSystem.readAsStringAsync(
-          result.assets[0].uri,
-          {
-            encoding: FileSystem.EncodingType.Base64,
-          }
-        );
+        const base64 = await FileSystem.readAsStringAsync(result.uri, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
 
         // write the read file as original db to the app's data directory of /SQlite/mediaCollection.db
         await FileSystem.writeAsStringAsync(

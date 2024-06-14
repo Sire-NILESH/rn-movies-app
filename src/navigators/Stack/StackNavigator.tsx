@@ -1,6 +1,9 @@
 import React from "react";
 import { stackRoutes } from "../../library/NavigationRoutes/StackRoutes";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  TransitionPresets,
+} from "@react-navigation/stack";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import DrawerNavigator from "../Drawer/DrawerNavigator";
 import { enableScreens } from "react-native-screens";
@@ -45,7 +48,7 @@ const StackNavigator = () => {
           // ...TransitionPresets.SlideFromRightIOS,
           // ...TransitionPresets.BottomSheetAndroid,
           // ...TransitionPresets.ModalFadeTransition,
-          // ...TransitionPresets.FadeFromBottomAndroid,
+          ...TransitionPresets.FadeFromBottomAndroid,
           // ...TransitionPresets.ModalPresentationIOS,
           // ...TransitionPresets.RevealFromBottomAndroid,
           // ...TransitionPresets.ModalTransition,
